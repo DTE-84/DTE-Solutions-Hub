@@ -145,6 +145,92 @@
 				background: white;
 				color: black;
 			}
+
+			/* 3D Pulse Sphere Orbit */
+			.hero-3d-space {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 0;
+				height: 0;
+				transform: perspective(1200px) rotateX(75deg) rotateY(12deg);
+				transform-style: preserve-3d;
+				z-index: 0;
+				pointer-events: none;
+			}
+			.orbit-ring {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 800px;
+				height: 800px;
+				margin-left: -400px;
+				margin-top: -400px;
+				border-radius: 50%;
+				border: 2px solid rgba(14, 165, 233, 0.15);
+				border-left: 2px solid transparent;
+				border-right: 2px solid transparent;
+				transform-style: preserve-3d;
+				box-shadow: inset 0 0 40px rgba(14, 165, 233, 0.05);
+				animation: ring-pulse 4s ease-in-out infinite alternate;
+			}
+			.sphere-wrapper {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 800px;
+				height: 800px;
+				margin-left: -400px;
+				margin-top: -400px;
+				animation: orbit-rotate 16s linear infinite;
+				transform-style: preserve-3d;
+			}
+			.pulse-sphere {
+				position: absolute;
+				top: -24px;
+				left: calc(50% - 24px);
+				width: 48px;
+				height: 48px;
+				border-radius: 50%;
+				/* Electric Cyan contrast */
+				background: radial-gradient(
+					circle at 30% 30%,
+					#f0f9ff,
+					#0ea5e9 45%,
+					#075985 90%
+				);
+				box-shadow:
+					0 0 25px #0ea5e9,
+					0 0 50px rgba(14, 165, 233, 0.6),
+					inset 0 0 10px rgba(255, 255, 255, 0.4);
+				animation: counter-orbit-rotate 16s linear infinite;
+			}
+			@keyframes orbit-rotate {
+				0% {
+					transform: rotateZ(0deg);
+				}
+				100% {
+					transform: rotateZ(360deg);
+				}
+			}
+			@keyframes counter-orbit-rotate {
+				0% {
+					transform: rotateZ(0deg) rotateX(-75deg) rotateY(-12deg);
+				}
+				100% {
+					transform: rotateZ(-360deg) rotateX(-75deg) rotateY(-12deg);
+				}
+			}
+			@keyframes ring-pulse {
+				0% {
+					opacity: 0.3;
+					transform: scale(0.98) translateZ(-10px);
+				}
+				100% {
+					opacity: 1;
+					transform: scale(1.02) translateZ(10px);
+				}
+			}
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
@@ -220,6 +306,14 @@
 						<div class="orb"></div>
 						<div class="orb"></div>
 						<div class="orb"></div>
+					</div>
+
+					<!-- 3D Pulse Sphere Orbit -->
+					<div class="hero-3d-space">
+						<div class="orbit-ring"></div>
+						<div class="sphere-wrapper">
+							<div class="pulse-sphere"></div>
+						</div>
 					</div>
 				</div>
 			</div>
