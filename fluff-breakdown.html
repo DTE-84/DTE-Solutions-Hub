@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluff | Biomechanic Analyst Breakdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --kinetic-green: #30C476;
+            --charcoal: #111111;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Bebas Neue', cursive; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--kinetic-green);
+            background: rgba(15, 15, 15, 0.9);
+        }
+        .text-gradient-green {
+            background: linear-gradient(135deg, #30C476, #4ADE80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .green-glow { filter: drop-shadow(0 0 10px rgba(48, 196, 118, 0.4)); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="selection:bg-green-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#30C476]/40 rounded flex items-center justify-center font-black text-[#30C476] group-hover:bg-[#30C476] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
+            <a href="#vision" class="hover:text-white transition-colors">Vision</a>
+            <a href="#tech" class="hover:text-white transition-colors">Tech</a>
+            <a href="https://dte-84.github.io/Fluff/" class="text-[#30C476]">Launch Lab</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(48,196,118,0.1),transparent_70%)]"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 scale-90 md:scale-100">
+                <i data-lucide="target" class="w-4 h-4 text-[#30C476]"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Elite PGA-Grade Biomechanic Analyst</span>
+            </div>
+
+            <h1 class="font-display text-7xl md:text-[11rem] tracking-tighter leading-[0.9] mb-6 text-gradient-green green-glow">
+                FLUFF
+            </h1>
+
+            <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
+                "Precision isnt a feeling  <span class="text-white font-medium">Fluff</span> measures it, tracks it, and helps you <span class="italic text-[#30C476]">perfect it</span>."
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://dte-84.github.io/Fluff/" class="px-10 py-5 bg-[#30C476] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#30C476]/20 hover:scale-105 transition-all inline-block">Launch Application</a>
+                <button class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all">Technical Spec</button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/10 flex flex-col items-center">
+            <div class="w-px h-16 bg-gradient-to-b from-[#30C476] to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row gap-20 items-center mb-20">
+            <div class="flex-1">
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">The Advantage</span>
+                <h2 class="font-display text-6xl md:text-8xl text-white leading-none">ELITE <br/><span class="text-white/10">ANALYSIS.</span></h2>
+                <p class="text-lg text-white/40 mt-6 max-w-xl leading-relaxed">
+                    Fluff uses computer vision to track kinetic chain movement in real-time. Whether you're on the range or in a tournament, get high-fidelity feedback on your swing mechanics.
+                </p>
+            </div>
+            <div class="flex-1 glass-card p-4">
+                <img src="assets/flufflogo.png" alt="Fluff Analysis" class="rounded-2xl border border-white/5 opacity-80">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // Fluff Division // Engineered with Intention</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NestLegacy | Digital Trust Layer Breakdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --gold: #D4AF37;
+            --charcoal: #111111;
+            --steel: #8B9BAE;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Bebas Neue', cursive; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--gold);
+            background: rgba(15, 15, 15, 0.9);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #D4AF37, #F4E4C1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-glow { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4)); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+        .animate-pulse-slow { animation: pulse-slow 8s ease-in-out infinite; }
+    </style>
+</head>
+<body class="selection:bg-yellow-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#D4AF37]/40 rounded flex items-center justify-center font-black text-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
+            <a href="#vision" class="hover:text-white transition-colors">Vision</a>
+            <a href="#logic" class="hover:text-white transition-colors">Logic</a>
+            <a href="#tech" class="hover:text-white transition-colors">Architecture</a>
+            <a href="https://dte-84.github.io/NestLegacy/" class="text-[#D4AF37]">Launch App</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.1),transparent_70%)]"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 scale-90 md:scale-100">
+                <i data-lucide="shield" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Digital Trust Layer for Wealth Transfer</span>
+            </div>
+
+            <h1 class="font-display text-7xl md:text-[11rem] tracking-tighter leading-[0.9] mb-6 text-gradient-gold gold-glow">
+                NESTLEGACY
+            </h1>
+
+            <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
+                "The $84 Trillion transfer is coming. <span class="text-white font-medium">NestLegacy</span> ensures the transition is seamless, secure, and <span class="italic font-serif text-[#D4AF37]">fiduciary-ready</span>."
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://dte-84.github.io/NestLegacy/" class="px-10 py-5 bg-[#D4AF37] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#D4AF37]/20 hover:scale-105 transition-all inline-block">Launch Application</a>
+                <button class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all">Strategic Spec</button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/10 flex flex-col items-center">
+            <div class="w-px h-16 bg-gradient-to-b from-[#D4AF37] to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row gap-20 items-center mb-20">
+            <div class="flex-1">
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#D4AF37] font-bold block mb-4">Problem Context</span>
+                <h2 class="font-display text-6xl md:text-8xl text-white leading-none">THE TRUST <br/><span class="text-white/10">VACUUM.</span></h2>
+                <p class="text-lg text-white/40 mt-6 max-w-xl leading-relaxed">
+                    Most inheritance tools are antiquated. NestLegacy provides a high-fidelity interface that qualifies prospects through behavioral modeling, calculating wealth longevity before professional handoff.
+                </p>
+            </div>
+            <div class="flex-1 glass-card p-10 flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black">
+                <div class="text-center">
+                    <div class="text-6xl font-display text-[#D4AF37] mb-2">$84T</div>
+                    <div class="text-[10px] font-tech uppercase tracking-[0.4em] text-white/20">Intergenerational Shift</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // NestLegacy Division // Engineered with Intention</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
