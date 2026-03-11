@@ -69,19 +69,19 @@
 			.orb-ring-1 {
 				width: 110%;
 				height: 110%;
-				border: 1px solid rgba(0, 255, 204, 0.15);
+				border: 2px solid rgba(0, 255, 204, 0.3);
 				animation: spin 12s linear infinite;
 			}
 			.orb-ring-2 {
 				width: 125%;
 				height: 125%;
-				border: 1px solid rgba(0, 255, 204, 0.1);
+				border: 2px solid rgba(0, 255, 204, 0.25);
 				animation: spin-reverse 20s linear infinite;
 			}
 			.orb-ring-3 {
 				width: 140%;
 				height: 140%;
-				border: 1px solid rgba(0, 255, 204, 0.05);
+				border: 2px solid rgba(0, 255, 204, 0.2);
 				animation: spin 15s linear infinite;
 			}
 			.orb {
@@ -93,32 +93,38 @@
 				display: block;
 			}
 			/* Position orbs - 3 orbs per ring at 0, 120, and 240 degrees */
-			.orb-ring .orb:nth-child(1) {
+			.orb-ring-1 .orb:nth-child(1),
+			.orb-ring-2 .orb:nth-child(1),
+			.orb-ring-3 .orb:nth-child(1) {
 				top: 0%;
 				left: 50%;
 			}
-			.orb-ring .orb:nth-child(2) {
+			.orb-ring-1 .orb:nth-child(2),
+			.orb-ring-2 .orb:nth-child(2),
+			.orb-ring-3 .orb:nth-child(2) {
 				top: 86.6%;
 				left: 93.3%;
 			}
-			.orb-ring .orb:nth-child(3) {
+			.orb-ring-1 .orb:nth-child(3),
+			.orb-ring-2 .orb:nth-child(3),
+			.orb-ring-3 .orb:nth-child(3) {
 				top: 86.6%;
 				left: 6.7%;
 			}
 
 			.orb-ring-1 .orb {
-				width: 8px;
-				height: 8px;
+				width: 10px;
+				height: 10px;
 			}
 			.orb-ring-2 .orb {
+				width: 8px;
+				height: 8px;
+				opacity: 0.9;
+			}
+			.orb-ring-3 .orb {
 				width: 6px;
 				height: 6px;
 				opacity: 0.8;
-			}
-			.orb-ring-3 .orb {
-				width: 4px;
-				height: 4px;
-				opacity: 0.6;
 			}
 
 			@keyframes spin {
