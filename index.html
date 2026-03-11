@@ -16,7 +16,7 @@
 			content="Engineering high-fidelity analytical ecosystems. Pure data integrity meets behavioral intelligence." />
 		<meta
 			property="og:image"
-			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/dtesolutionslogoblk.png" />
+			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.png?v=2" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 
@@ -31,7 +31,7 @@
 			content="Engineering high-fidelity analytical ecosystems. Pure data integrity meets behavioral intelligence." />
 		<meta
 			property="twitter:image"
-			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/dtesolutionslogoblk.png" />
+			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.png?v=2" />
 
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link
@@ -65,12 +65,12 @@
 				height: 100%;
 			}
 			.glass-card:hover {
-				border-color: var(--kinetic-teal);
+				border-color: #00AAFA;
 				background: #080808;
 				transform: translateY(-8px);
 				box-shadow:
 					0 20px 40px rgba(0, 0, 0, 0.8),
-					0 0 20px rgba(0, 255, 204, 0.15);
+					0 0 20px rgba(0, 170, 250, 0.25);
 			}
 			.focus-card {
 				background: linear-gradient(135deg, #050505 0%, #080808 100%);
@@ -79,7 +79,7 @@
 				overflow: hidden;
 			}
 			.text-gradient-teal {
-				background: linear-gradient(135deg, #00ffcc, #00ead0);
+				background: linear-gradient(135deg, #00ffcc, #00AAFA, #008CD4);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -104,9 +104,9 @@
 			.orb-ring-1 {
 				width: 110%;
 				height: 110%;
-				border: 1px solid rgba(0, 255, 204, 0.3);
+				border: 1px solid rgba(0, 170, 250, 0.3);
 				margin-left: -55%;
-				margin-top: -25%; /* Was -55%, now -55% + 20% = -35% */
+				margin-top: -25%;
 				animation: spin-reverse 45s ease-in-out infinite;
 			}
 
@@ -115,43 +115,54 @@
 				height: 125%;
 				border: 1px solid rgba(0, 255, 204, 0.25);
 				margin-left: -62.5%;
-				margin-top: -22.5%; /* Was -62.5%, now -62.5% + 20% = -42.5% */
+				margin-top: -22.5%;
 				animation: spin 20s ease-in-out infinite;
 			}
 
 			.orb-ring-3 {
 				width: 140%;
 				height: 140%;
-				border: 1px solid rgba(0, 255, 204, 0.2);
+				border: 1px solid rgba(0, 140, 212, 0.2);
 				margin-left: -70%;
-				margin-top: -30%; /* Was -70%, now -70% + 20% = -50% */
+				margin-top: -30%;
 				animation: spin 60s ease-in-out infinite;
 			}
 
 			/* Pulsing, glowing orbs with staggered timing */
 			.orb {
 				position: absolute;
-				background: #00ffcc;
 				border-radius: 50%;
 				display: block;
 				animation: orb-magic 3s ease-in-out infinite;
 			}
+
+			.orb-ring-1 .orb:nth-child(1) { background: #00AAFA; }
+			.orb-ring-1 .orb:nth-child(2) { background: #00ffcc; }
+			.orb-ring-1 .orb:nth-child(3) { background: #008CD4; }
+
+			.orb-ring-2 .orb:nth-child(1) { background: #008CD4; }
+			.orb-ring-2 .orb:nth-child(2) { background: #00AAFA; }
+			.orb-ring-2 .orb:nth-child(3) { background: #00ffcc; }
+
+			.orb-ring-3 .orb:nth-child(1) { background: #00ffcc; }
+			.orb-ring-3 .orb:nth-child(2) { background: #008CD4; }
+			.orb-ring-3 .orb:nth-child(3) { background: #00AAFA; }
 
 			@keyframes orb-magic {
 				0%,
 				100% {
 					transform: translate(-50%, -50%) scale(1);
 					box-shadow:
-						0 0 15px #00ffcc,
-						0 0 30px #00ffcc;
+						0 0 15px currentColor,
+						0 0 30px currentColor;
 					opacity: 0.9;
 				}
 				50% {
 					transform: translate(-50%, -50%) scale(1.4);
 					box-shadow:
-						0 0 25px #00ffcc,
-						0 0 50px #00ffcc,
-						0 0 75px rgba(0, 255, 204, 0.6);
+						0 0 25px currentColor,
+						0 0 50px currentColor,
+						0 0 75px currentColor;
 					opacity: 1;
 				}
 			}
