@@ -131,6 +131,20 @@
 				cursor: pointer;
 			}
 			input[type="range"] { accent-color: var(--kinetic-teal); }
+
+			#textEditInput {
+				position: absolute;
+				background: rgba(0, 255, 204, 0.1);
+				border: 1px solid var(--kinetic-teal);
+				color: white;
+				padding: 4px 8px;
+				border-radius: 4px;
+				font-family: "Inter", sans-serif;
+				font-size: 14px;
+				z-index: 1000;
+				outline: none;
+				backdrop-filter: blur(5px);
+			}
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
@@ -144,7 +158,7 @@
 					<span class="font-tech tracking-[0.6em] uppercase text-[7px] text-white/20 mt-1">Utility Division</span>
 				</div>
 			</a>
-			<a href="index.html" class="font-tech text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-all">Back to Hub</a>
+			<a href="index.html" class="font-tech text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-all">Back to Nexus</a>
 		</nav>
 
 		<main class="py-16 px-8 max-w-7xl mx-auto">
@@ -178,7 +192,7 @@
 							<button data-tool="text" class="toolbar-btn">Text</button>
 							<button data-tool="highlight" class="toolbar-btn">Highlight</button>
 							<button data-tool="image" class="toolbar-btn">Image</button>
-							<button id="clearBtn" class="toolbar-btn hover:text-red-400">Delete</button>
+							<button data-tool="delete" id="clearBtn" class="toolbar-btn hover:text-red-400">Delete</button>
 						</div>
 						<button id="saveBtn" class="btn-primary px-8 py-4 rounded-xl text-[10px]">Finalize & Download</button>
 					</div>
@@ -198,17 +212,9 @@
 						</div>
 						<div class="flex items-center gap-3">
 							<span class="font-tech text-[9px] uppercase text-white/30">Size</span>
-							<input type="number" id="sizeInput" value="12" class="control-input w-full">
+							<input type="number" id="sizeInput" value="14" class="control-input w-full">
 						</div>
 					</div>
-				</div>
-
-				<!-- Place this *inside* the .wrapper, right after the .controls div -->
-				<div class="text-edit-wrapper hidden">
-					<input type="text"
-						   id="textEditInput"
-						   class="border-none w-full bg-surface text-surface rounded px-2 py-1"
-						   autocomplete="off">
 				</div>
 
 				<div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -216,7 +222,8 @@
 						<h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">Pages</h4>
 						<div class="thumb-list space-y-2 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar" id="thumbList"></div>
 					</div>
-					<div class="lg:col-span-4">
+					<div class="lg:col-span-4 relative">
+						<input type="text" id="textEditInput" class="hidden" autocomplete="off">
 						<div class="glass-panel p-1 relative overflow-hidden flex justify-center bg-black">
 							<canvas id="pdfCanvas"></canvas>
 						</div>
@@ -246,6 +253,7 @@
 			const saveBtn = document.getElementById('saveBtn');
 			const clearBtn = document.getElementById('clearBtn');
 			const thumbList = document.getElementById('thumbList');
+			const textEditInput = document.getElementById('textEditInput');
 
 			// State
 			let pdfDoc = null;
@@ -255,6 +263,8 @@
 			let isDrawing = false;
 			let currentPath = [];
 			let pdfFile = null;
+			let selectedTextIdx = null;
+			let isEditingText = false;
 
 			// 1. File Handling Implementation
 			fileInput.addEventListener('change', handleFile);
@@ -267,7 +277,6 @@
 					
 					try {
 						if (!window.pdfjsLib) throw new Error('PDF Engine Loading...');
-						
 						const loadingTask = pdfjsLib.getDocument(url);
 						pdfDoc = await loadingTask.promise;
 
@@ -287,22 +296,13 @@
 			async function renderPage(pageNum = 1) {
 				if (!pdfDoc) return;
 				currentPage = pageNum;
-				
 				const page = await pdfDoc.getPage(pageNum);
 				const viewport = page.getViewport({ scale: 1.5 });
-				
 				canvas.width = viewport.width;
 				canvas.height = viewport.height;
-
-				const renderContext = {
-					canvasContext: ctx,
-					viewport: viewport
-				};
-
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				const renderContext = { canvasContext: ctx, viewport: viewport };
 				await page.render(renderContext).promise;
 				drawSavedAnnotations();
-
 				document.querySelectorAll('.thumb').forEach(t => {
 					t.classList.toggle('active', parseInt(t.dataset.page) === pageNum);
 				});
@@ -326,7 +326,6 @@
 					ctx.strokeStyle = ann.color;
 					ctx.fillStyle = ann.color;
 					ctx.globalAlpha = ann.opacity || 1;
-					
 					if (ann.type === 'text') {
 						ctx.font = `${ann.size}px ${ann.font}`;
 						ctx.fillText(ann.text, ann.x, ann.y);
@@ -345,124 +344,22 @@
 				});
 			}
 
-			/* ------------------------------------------------------------
-			   GLOBAL STATE FOR TEXT EDITING
-			---------------------------------------------------------------- */
-			let selectedTextIdx = null;
-			let editingText = false;
-
-			/* ------------------------------------------------------------
-			   Helper: open the small inline input for editing text
-			---------------------------------------------------------------- */
-			function openTextEdit(annotationIndex) {
-				selectedTextIdx = annotationIndex;
-				const ann = annotations[annotationIndex];
-
-				const input = document.getElementById('textEditInput');
-				input.value = ann.text || '';
-				input.classList.remove('hidden');
-
-				const rect = canvas.getBoundingClientRect();
-				const {x, y} = ann;
-				input.style.position = 'absolute';
-				input.style.left = (x + rect.left) + 'px';
-				input.style.top = (y + rect.top) + 'px';
-
-				input.focus();
-				input.select();
-
-				editingText = true;
-			}
-
-			/* ------------------------------------------------------------
-			   When the user presses Enter or leaves the field → save
-			---------------------------------------------------------------- */
-			function closeTextEdit(save = true) {
-				if (!editingText) return;
-				const input = document.getElementById('textEditInput');
-				input.classList.add('hidden');
-
-				if (save && input.value.trim()) {
-					if (input.dataset.isNew === 'true') {
-						// Adding new text
-						annotations.push({
-							type: 'text',
-							page: currentPage,
-							x: parseFloat(input.dataset.x),
-							y: parseFloat(input.dataset.y),
-							text: input.value,
-							color: colorPicker.value,
-							opacity: parseFloat(opacitySlider.value),
-							font: fontInput.value,
-							size: parseInt(sizeInput.value)
-						});
-						renderPage(currentPage);
-					} else if (selectedTextIdx !== null) {
-						// Editing existing text
-						const newStr = input.value;
-						const ann = annotations[selectedTextIdx];
-						if (newStr !== ann.text) {
-							ann.text = newStr;
-							renderPage(currentPage);
-						}
-					}
-				}
-				
-				// Reset state
-				delete input.dataset.isNew;
-				delete input.dataset.x;
-				delete input.dataset.y;
-				selectedTextIdx = null;
-				editingText = false;
-			}
-
-			let listenersAttached = false;
 			function attachCanvasListeners() {
-				if (listenersAttached) return;
-				canvas.addEventListener('mousedown', startAction);
+				canvas.addEventListener('mousedown', (e) => {
+					if (isEditingText) {
+						closeTextEdit(true);
+						return;
+					}
+					startAction(e);
+				});
 				canvas.addEventListener('mousemove', performAction);
 				canvas.addEventListener('mouseup', endAction);
 				canvas.addEventListener('mouseleave', endAction);
 				
-				/* Click on existing text to edit */
-				canvas.addEventListener('click', e => {
-					if (!editingText && currentTool !== 'text') {
-						const rect = canvas.getBoundingClientRect();
-						const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
-						const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
-						
-						for (let i = 0; i < annotations.length; i++) {
-							if (annotations[i].type === 'text' && annotations[i].page === currentPage) {
-								const a = annotations[i];
-								const pad = 20;
-								if (clickX >= a.x - pad && clickX <= a.x + 100 &&
-									clickY >= a.y - pad && clickY <= a.y + pad) {
-									openTextEdit(i);
-									return;
-								}
-							}
-						}
-					}
+				textEditInput.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter') closeTextEdit(true);
+					if (e.key === 'Escape') closeTextEdit(false);
 				});
-				
-				/* Hide edit input when clicking elsewhere */
-				document.addEventListener('click', e => {
-					if (editingText && !e.target.closest('#textEditInput') && e.target !== canvas) {
-						closeTextEdit();
-					}
-				});
-				
-				/* Text input event handlers */
-				const input = document.getElementById('textEditInput');
-				input.addEventListener('keydown', e => {
-					if (e.key === 'Enter') {
-						e.preventDefault();
-						closeTextEdit(true);
-					}
-				});
-				input.addEventListener('blur', () => closeTextEdit(true));
-				
-				listenersAttached = true;
 			}
 
 			function startAction(e) {
@@ -471,40 +368,62 @@
 				const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
 				if (currentTool === 'text') {
-					// Show inline input for new text
-					const input = document.getElementById('textEditInput');
-					input.value = '';
-					input.classList.remove('hidden');
-					input.style.position = 'absolute';
-					input.style.left = (x * (rect.width / canvas.width) + rect.left) + 'px';
-					input.style.top = (y * (rect.height / canvas.height) + rect.top) + 'px';
-					input.focus();
-					
-					// Store position for when user presses Enter
-					input.dataset.x = x;
-					input.dataset.y = y;
-					input.dataset.isNew = 'true';
-					editingText = true;
-				} else if (currentTool === 'image') {
-					const imgInput = document.createElement('input');
-					imgInput.type = 'file';
-					imgInput.accept = 'image/*';
-					imgInput.onchange = async (ev) => {
-						const file = ev.target.files[0];
-						if (file) {
-							const img = new Image();
-							img.onload = () => {
-								annotations.push({ type: 'image', page: currentPage, x, y, img });
-								renderPage(currentPage);
-							};
-							img.src = URL.createObjectURL(file);
+					// Check if clicking existing text
+					for (let i = 0; i < annotations.length; i++) {
+						const a = annotations[i];
+						if (a.type === 'text' && a.page === currentPage) {
+							if (Math.abs(x - a.x) < 50 && Math.abs(y - a.y) < 20) {
+								openTextEdit(i, e.clientX - rect.left, e.clientY - rect.top);
+								return;
+							}
 						}
-					};
-					imgInput.click();
-				} else {
+					}
+					openTextEdit(null, e.clientX - rect.left, e.clientY - rect.top, x, y);
+				} else if (currentTool === 'image') {
+					addImage(x, y);
+				} else if (currentTool !== 'delete') {
 					isDrawing = true;
 					currentPath = [{ x, y }];
 				}
+			}
+
+			function openTextEdit(idx, clientX, clientY, x, y) {
+				selectedTextIdx = idx;
+				isEditingText = true;
+				textEditInput.value = idx !== null ? annotations[idx].text : '';
+				textEditInput.classList.remove('hidden');
+				textEditInput.style.left = clientX + 'px';
+				textEditInput.style.top = clientY + 'px';
+				textEditInput.focus();
+				if (idx === null) {
+					textEditInput.dataset.x = x;
+					textEditInput.dataset.y = y;
+				}
+			}
+
+			function closeTextEdit(save) {
+				if (!isEditingText) return;
+				if (save && textEditInput.value.trim()) {
+					if (selectedTextIdx !== null) {
+						annotations[selectedTextIdx].text = textEditInput.value;
+					} else {
+						annotations.push({
+							type: 'text',
+							page: currentPage,
+							text: textEditInput.value,
+							x: parseFloat(textEditInput.dataset.x),
+							y: parseFloat(textEditInput.dataset.y),
+							color: colorPicker.value,
+							opacity: parseFloat(opacitySlider.value),
+							font: fontInput.value,
+							size: parseInt(sizeInput.value)
+						});
+					}
+				}
+				textEditInput.classList.add('hidden');
+				isEditingText = false;
+				selectedTextIdx = null;
+				renderPage(currentPage);
 			}
 
 			async function performAction(e) {
@@ -513,14 +432,12 @@
 				const x = (e.clientX - rect.left) * (canvas.width / rect.width);
 				const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 				currentPath.push({ x, y });
-				
 				await renderPage(currentPage); 
 				ctx.beginPath();
 				ctx.strokeStyle = colorPicker.value;
 				ctx.globalAlpha = currentTool === 'highlight' ? 0.3 : parseFloat(opacitySlider.value);
 				ctx.lineWidth = currentTool === 'highlight' ? 20 : 2;
-				ctx.lineJoin = 'round';
-				ctx.lineCap = 'round';
+				ctx.lineJoin = 'round'; ctx.lineCap = 'round';
 				ctx.moveTo(currentPath[0].x, currentPath[0].y);
 				currentPath.forEach(p => ctx.lineTo(p.x, p.y));
 				ctx.stroke();
@@ -531,9 +448,7 @@
 				if (!isDrawing) return;
 				isDrawing = false;
 				annotations.push({
-					type: currentTool,
-					page: currentPage,
-					path: [...currentPath],
+					type: currentTool, page: currentPage, path: [...currentPath],
 					color: colorPicker.value,
 					opacity: currentTool === 'highlight' ? 0.3 : parseFloat(opacitySlider.value)
 				});
@@ -547,15 +462,11 @@
 					document.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
 					e.target.classList.add('active');
 					currentTool = tool;
+					if (tool === 'delete') {
+						if (confirm('Purge all data layers?')) { annotations = []; renderPage(currentPage); }
+					}
 				}
 			});
-
-			clearBtn.onclick = () => {
-				if (confirm('Purge all data layers?')) {
-					annotations = [];
-					renderPage(currentPage);
-				}
-			};
 
 			saveBtn.onclick = async () => {
 				if (!pdfFile) return;
@@ -564,18 +475,15 @@
 					const arrayBuffer = await pdfFile.arrayBuffer();
 					const pdfDocLib = await PDFLib.PDFDocument.load(arrayBuffer);
 					const pages = pdfDocLib.getPages();
-
 					for (const ann of annotations) {
 						const page = pages[ann.page - 1];
 						const { width, height } = page.getSize();
 						const scaleX = width / canvas.width;
 						const scaleY = height / canvas.height;
 						const color = hexToRgb(ann.color);
-
 						if (ann.type === 'text') {
 							page.drawText(ann.text, {
-								x: ann.x * scaleX,
-								y: height - (ann.y * scaleY),
+								x: ann.x * scaleX, y: height - (ann.y * scaleY),
 								size: ann.size * scaleY,
 								color: PDFLib.rgb(color.r, color.g, color.b),
 								opacity: ann.opacity
@@ -598,21 +506,30 @@
 					link.href = URL.createObjectURL(blob);
 					link.download = `DTE_SECURED_${Date.now()}.pdf`;
 					link.click();
-				} catch (err) {
-					console.error(err);
-					alert('Finalization failed.');
-				} finally {
-					saveBtn.innerText = 'FINALIZE & DOWNLOAD';
-				}
+				} catch (err) { console.error(err); alert('Export failed.'); }
+				finally { saveBtn.innerText = 'FINALIZE & DOWNLOAD'; }
 			};
 
 			function hexToRgb(hex) {
 				const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-				return result ? {
-					r: parseInt(result[1], 16) / 255,
-					g: parseInt(result[2], 16) / 255,
-					b: parseInt(result[3], 16) / 255
-				} : { r: 0, g: 1, b: 0.8 };
+				return result ? { r: parseInt(result[1], 16) / 255, g: parseInt(result[2], 16) / 255, b: parseInt(result[3], 16) / 255 } : { r: 0, g: 1, b: 0.8 };
+			}
+
+			function addImage(x, y) {
+				const imgInput = document.createElement('input');
+				imgInput.type = 'file'; imgInput.accept = 'image/*';
+				imgInput.onchange = async (ev) => {
+					const file = ev.target.files[0];
+					if (file) {
+						const img = new Image();
+						img.onload = () => {
+							annotations.push({ type: 'image', page: currentPage, x, y, img });
+							renderPage(currentPage);
+						};
+						img.src = URL.createObjectURL(file);
+					}
+				};
+				imgInput.click();
 			}
 
 			uploadContainer.addEventListener('dragover', (e) => { e.preventDefault(); uploadContainer.classList.add('active'); });

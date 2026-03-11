@@ -74,6 +74,57 @@
 				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
 			}
 
+			/* Rings & Orbs */
+			.orb-ring {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border-radius: 50%;
+				pointer-events: none;
+				aspect-ratio: 1/1;
+			}
+			.orb-ring-1 {
+				width: 110%;
+				border: 1px solid rgba(0, 255, 204, 0.3);
+				animation: spin 30s linear infinite;
+			}
+			.orb-ring-2 {
+				width: 125%;
+				border: 1px solid rgba(0, 255, 204, 0.25);
+				animation: spin-reverse 40s linear infinite;
+			}
+			.orb-ring-3 {
+				width: 140%;
+				border: 1px solid rgba(0, 255, 204, 0.2);
+				animation: spin 35s linear infinite;
+			}
+			.orb {
+				position: absolute;
+				background: #00ffcc;
+				border-radius: 50%;
+				box-shadow: 0 0 20px #00ffcc;
+				transform: translate(-50%, -50%);
+				display: block;
+			}
+			/* Precision Orbit: 0, 120, 240 degrees */
+			.orb:nth-child(1) { top: 0%; left: 50%; }
+			.orb:nth-child(2) { top: 75%; left: 93.3%; }
+			.orb:nth-child(3) { top: 75%; left: 6.7%; }
+
+			.orb-ring-1 .orb { width: 8px; height: 8px; }
+			.orb-ring-2 .orb { width: 7px; height: 7px; opacity: 0.9; }
+			.orb-ring-3 .orb { width: 6px; height: 6px; opacity: 0.8; }
+
+			@keyframes spin {
+				from { transform: translate(-50%, -50%) rotate(0deg); }
+				to { transform: translate(-50%, -50%) rotate(360deg); }
+			}
+			@keyframes spin-reverse {
+				from { transform: translate(-50%, -50%) rotate(360deg); }
+				to { transform: translate(-50%, -50%) rotate(0deg); }
+			}
+
 			/* High-Fidelity Video Background */
 			.bg-video-wrapper {
 				position: fixed;
@@ -114,6 +165,8 @@
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
+		<!-- Main Content Wrapper -->
+		<div class="relative z-10">
 		<!-- Navigation -->
 		<nav
 			class="p-8 flex justify-between items-center max-w-7xl mx-auto border-b border-white/5">
@@ -850,5 +903,6 @@
 				);
 			});
 		</script>
+		</div><!-- End Main Content Wrapper -->
 	</body>
 </html>
