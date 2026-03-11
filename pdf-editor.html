@@ -99,23 +99,34 @@
 				background: rgba(0, 255, 255, 0.05);
 				color: var(--neon-blue);
 			}
+			.control-input {
+				background: rgba(255, 255, 255, 0.03);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				color: white;
+				border-radius: 8px;
+				padding: 0.5rem;
+				font-family: "Jura", sans-serif;
+				font-size: 10px;
+				outline: none;
+			}
+			.control-input:focus {
+				border-color: var(--kinetic-teal);
+			}
 			input[type="color"] {
 				-webkit-appearance: none;
 				border: none;
-				width: 32px;
-				height: 32px;
-				border-radius: 8px;
+				width: 24px;
+				height: 24px;
+				border-radius: 4px;
 				background: transparent;
 				cursor: pointer;
 			}
-			input[type="color"]::-webkit-color-swatch {
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				border-radius: 8px;
+			input[type="range"] {
+				accent-color: var(--kinetic-teal);
 			}
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
-		<!-- Navigation -->
 		<nav class="p-8 flex justify-between items-center max-w-7xl mx-auto border-b border-white/5">
 			<a href="index.html" class="flex items-center gap-4 group cursor-pointer">
 				<div class="flex flex-col">
@@ -129,18 +140,17 @@
 			<a href="index.html" class="font-tech text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-all">Back to Nexus</a>
 		</nav>
 
-		<main class="py-20 px-8 max-w-6xl mx-auto">
-			<header class="text-center mb-16">
+		<main class="py-16 px-8 max-w-7xl mx-auto">
+			<header class="text-center mb-12">
 				<span class="font-tech text-[10px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold mb-4 block">Analytical Toolset</span>
 				<h1 class="font-display text-6xl md:text-7xl text-white mb-6">PDF <span class="text-[#00ffcc]">INTEGRITY</span> EDITOR</h1>
-				<p class="text-white/40 max-w-2xl mx-auto font-light">High-fidelity document manipulation. Purely client-side processing for maximum data security. No files ever touch our servers.</p>
+				<p class="text-white/40 max-w-2xl mx-auto font-light">High-fidelity document manipulation. Purely client-side processing for maximum data security.</p>
 			</header>
 
-			<!-- Upload Area -->
 			<div id="uploadContainer" class="glass-panel p-16 text-center drop-zone">
 				<input type="file" id="fileInput" accept="application/pdf" class="hidden" />
 				<div class="space-y-6">
-					<div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto border border-white/10 group-hover:border-[#00ffcc]/30 transition-all">
+					<div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto border border-white/10 group-hover:border-[#00ffcc]/30 transition-all">
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#00ffcc]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
 						</svg>
@@ -153,33 +163,46 @@
 				</div>
 			</div>
 
-			<!-- Editor Workspace -->
-			<div id="editorContainer" class="hidden space-y-8 animate-in fade-in duration-700">
-				<div class="flex flex-wrap justify-between items-center gap-6 bg-zinc-900/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl">
-					<div class="flex flex-wrap gap-3" id="toolbar">
-						<button data-tool="pen" class="toolbar-btn active">Pen</button>
-						<button data-tool="text" class="toolbar-btn">Text</button>
-						<button data-tool="highlight" class="toolbar-btn">Highlight</button>
-						<button id="clearBtn" class="toolbar-btn hover:text-red-400 hover:border-red-400/20">Clear All</button>
-					</div>
-					<div class="flex items-center gap-6">
-						<div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
-							<span class="font-tech text-[9px] uppercase tracking-widest text-white/30">Color</span>
-							<input type="color" id="colorPicker" value="#00ffcc">
+			<div id="editorContainer" class="hidden space-y-6 animate-in fade-in duration-700">
+				<div class="flex flex-col gap-4 bg-zinc-900/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl">
+					<div class="flex flex-wrap justify-between items-center gap-6">
+						<div class="flex flex-wrap gap-2" id="toolbar">
+							<button data-tool="pen" class="toolbar-btn active">Pen</button>
+							<button data-tool="text" class="toolbar-btn">Text</button>
+							<button data-tool="highlight" class="toolbar-btn">Highlight</button>
+							<button data-tool="image" class="toolbar-btn">Image</button>
+							<button id="clearBtn" class="toolbar-btn hover:text-red-400">Delete</button>
 						</div>
 						<button id="saveBtn" class="btn-primary px-8 py-4 rounded-xl text-[10px]">Finalize & Download</button>
 					</div>
-				</div>
-
-				<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-					<div class="lg:col-span-1 space-y-4">
-						<h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20 mb-6">Pages</h4>
-						<div class="thumb-list space-y-3" id="thumbList">
-							<!-- Thumbs injected here -->
+					
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/5">
+						<div class="flex items-center gap-3">
+							<span class="font-tech text-[9px] uppercase text-white/30">Color</span>
+							<input type="color" id="colorPicker" value="#00ffcc">
+						</div>
+						<div class="flex items-center gap-3">
+							<span class="font-tech text-[9px] uppercase text-white/30">Opacity</span>
+							<input type="range" id="opacitySlider" min="0.1" max="1" step="0.1" value="1" class="w-full">
+						</div>
+						<div class="flex items-center gap-3">
+							<span class="font-tech text-[9px] uppercase text-white/30">Font</span>
+							<input type="text" id="fontInput" value="Arial" class="control-input w-full">
+						</div>
+						<div class="flex items-center gap-3">
+							<span class="font-tech text-[9px] uppercase text-white/30">Size</span>
+							<input type="number" id="sizeInput" value="12" class="control-input w-full">
 						</div>
 					</div>
-					<div class="lg:col-span-3">
-						<div class="glass-panel p-2 relative overflow-hidden">
+				</div>
+
+				<div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+					<div class="lg:col-span-1 space-y-4">
+						<h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">Pages</h4>
+						<div class="thumb-list space-y-2 max-h-[600px] overflow-y-auto pr-2" id="thumbList"></div>
+					</div>
+					<div class="lg:col-span-4">
+						<div class="glass-panel p-1 relative overflow-hidden flex justify-center bg-black">
 							<canvas id="pdfCanvas"></canvas>
 						</div>
 					</div>
@@ -187,7 +210,7 @@
 			</div>
 		</main>
 
-		<footer class="py-16 text-center border-t border-white/5">
+		<footer class="py-12 text-center border-t border-white/5">
 			<p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
 				© 2026 DTE Solutions // Document Compliance Secured
 			</p>
@@ -204,6 +227,9 @@
 			const ctx = canvas.getContext('2d');
 			const toolbar = document.getElementById('toolbar');
 			const colorPicker = document.getElementById('colorPicker');
+			const opacitySlider = document.getElementById('opacitySlider');
+			const fontInput = document.getElementById('fontInput');
+			const sizeInput = document.getElementById('sizeInput');
 			const saveBtn = document.getElementById('saveBtn');
 			const clearBtn = document.getElementById('clearBtn');
 			const thumbList = document.getElementById('thumbList');
@@ -216,7 +242,6 @@
 			let currentPath = [];
 			let pdfFile = null;
 
-			// Handle File Selection
 			fileInput.addEventListener('change', async (e) => {
 				const file = e.target.files[0];
 				if (file && file.type === 'application/pdf') {
@@ -230,11 +255,10 @@
 				}
 			});
 
-			// Render PDF Page
 			async function renderPage(pageNum) {
 				currentPage = pageNum;
 				const page = await pdfDoc.getPage(pageNum);
-				const viewport = page.getViewport({ scale: 2 });
+				const viewport = page.getViewport({ scale: 1.5 });
 				
 				canvas.width = viewport.width;
 				canvas.height = viewport.height;
@@ -246,32 +270,48 @@
 				await page.render(renderContext).promise;
 				drawAnnotations();
 
-				// Update thumb active state
 				document.querySelectorAll('.thumb').forEach(t => {
 					t.classList.toggle('active', parseInt(t.dataset.page) === pageNum);
 				});
 			}
 
-			// Build Thumbnail List
 			function buildThumbs() {
 				thumbList.innerHTML = '';
 				for (let i = 1; i <= Math.min(pdfDoc.numPages, 10); i++) {
 					const thumb = document.createElement('div');
 					thumb.className = 'thumb';
 					thumb.dataset.page = i;
-					thumb.innerHTML = `<span class="opacity-40">PAGE</span> ${i}`;
+					thumb.innerHTML = i;
 					thumb.onclick = () => renderPage(i);
 					thumbList.appendChild(thumb);
 				}
 			}
 
-			// Drawing Logic
-			canvas.addEventListener('mousedown', startDrawing);
-			canvas.addEventListener('mousemove', draw);
-			canvas.addEventListener('mouseup', stopDrawing);
-			canvas.addEventListener('mouseleave', stopDrawing);
+			function drawAnnotations() {
+				annotations.filter(a => a.page === currentPage).forEach(ann => {
+					ctx.strokeStyle = ann.color;
+					ctx.fillStyle = ann.color;
+					ctx.globalAlpha = ann.opacity || 1;
+					
+					if (ann.type === 'text') {
+						ctx.font = `${ann.size}px ${ann.font}`;
+						ctx.fillText(ann.text, ann.x, ann.y);
+					} else if (ann.type === 'pen' || ann.type === 'highlight') {
+						ctx.beginPath();
+						ctx.lineWidth = ann.type === 'highlight' ? 20 : 2;
+						ctx.lineJoin = 'round';
+						ctx.lineCap = 'round';
+						ctx.moveTo(ann.path[0].x, ann.path[0].y);
+						ann.path.forEach(p => ctx.lineTo(p.x, p.y));
+						ctx.stroke();
+					} else if (ann.type === 'image' && ann.img) {
+						ctx.drawImage(ann.img, ann.x, ann.y, 100, 100);
+					}
+					ctx.globalAlpha = 1;
+				});
+			}
 
-			function startDrawing(e) {
+			canvas.addEventListener('mousedown', (e) => {
 				const rect = canvas.getBoundingClientRect();
 				const x = (e.clientX - rect.left) * (canvas.width / rect.width);
 				const y = (e.clientY - rect.top) * (canvas.height / rect.height);
@@ -283,78 +323,73 @@
 							type: 'text',
 							page: currentPage,
 							x, y, text,
-							color: colorPicker.value
+							color: colorPicker.value,
+							opacity: parseFloat(opacitySlider.value),
+							font: fontInput.value,
+							size: parseInt(sizeInput.value)
 						});
-						drawAnnotations();
+						renderPage(currentPage);
 					}
-					return;
+				} else if (currentTool === 'image') {
+					const imgInput = document.createElement('input');
+					imgInput.type = 'file';
+					imgInput.accept = 'image/*';
+					imgInput.onchange = async (ev) => {
+						const file = ev.target.files[0];
+						if (file) {
+							const img = new Image();
+							img.onload = () => {
+								annotations.push({
+									type: 'image',
+									page: currentPage,
+									x, y, img
+								});
+								renderPage(currentPage);
+							};
+							img.src = URL.createObjectURL(file);
+						}
+					};
+					imgInput.click();
+				} else {
+					isDrawing = true;
+					currentPath = [{ x, y }];
 				}
+			});
 
-				isDrawing = true;
-				currentPath = [{ x, y }];
-			}
-
-			function draw(e) {
-				if (!isDrawing || (currentTool !== 'pen' && currentTool !== 'highlight')) return;
-				
+			canvas.addEventListener('mousemove', (e) => {
+				if (!isDrawing) return;
 				const rect = canvas.getBoundingClientRect();
 				const x = (e.clientX - rect.left) * (canvas.width / rect.width);
 				const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-				
 				currentPath.push({ x, y });
 				
-				// Preview current path
-				drawAnnotations();
+				// Live Preview
 				ctx.beginPath();
 				ctx.strokeStyle = colorPicker.value;
-				ctx.lineWidth = currentTool === 'highlight' ? 20 : 3;
-				ctx.globalAlpha = currentTool === 'highlight' ? 0.3 : 1;
+				ctx.globalAlpha = currentTool === 'highlight' ? 0.3 : parseFloat(opacitySlider.value);
+				ctx.lineWidth = currentTool === 'highlight' ? 20 : 2;
 				ctx.lineJoin = 'round';
 				ctx.lineCap = 'round';
-				ctx.moveTo(currentPath[0].x, currentPath[0].y);
-				currentPath.forEach(p => ctx.lineTo(p.x, p.y));
+				ctx.moveTo(currentPath[currentPath.length-2].x, currentPath[currentPath.length-2].y);
+				ctx.lineTo(x, y);
 				ctx.stroke();
 				ctx.globalAlpha = 1;
-			}
+			});
 
-			function stopDrawing() {
+			canvas.addEventListener('mouseup', () => {
 				if (!isDrawing) return;
 				isDrawing = false;
 				annotations.push({
 					type: currentTool,
 					page: currentPage,
 					path: currentPath,
-					color: colorPicker.value
+					color: colorPicker.value,
+					opacity: currentTool === 'highlight' ? 0.3 : parseFloat(opacitySlider.value)
 				});
 				currentPath = [];
-				drawAnnotations();
-			}
+				renderPage(currentPage);
+			});
 
-			function drawAnnotations() {
-				// Re-render page background first would be too slow, so we just clear and re-render if needed
-				// For this simple editor, we draw over the existing canvas
-				annotations.filter(a => a.page === currentPage).forEach(ann => {
-					ctx.strokeStyle = ann.color;
-					ctx.fillStyle = ann.color;
-					
-					if (ann.type === 'text') {
-						ctx.font = '30px Inter';
-						ctx.fillText(ann.text, ann.x, ann.y);
-					} else if (ann.type === 'pen' || ann.type === 'highlight') {
-						ctx.beginPath();
-						ctx.lineWidth = ann.type === 'highlight' ? 20 : 3;
-						ctx.globalAlpha = ann.type === 'highlight' ? 0.3 : 1;
-						ctx.lineJoin = 'round';
-						ctx.lineCap = 'round';
-						ctx.moveTo(ann.path[0].x, ann.path[0].y);
-						ann.path.forEach(p => ctx.lineTo(p.x, p.y));
-						ctx.stroke();
-						ctx.globalAlpha = 1;
-					}
-				});
-			}
-
-			// Toolbar Logic
 			toolbar.addEventListener('click', (e) => {
 				if (e.target.dataset.tool) {
 					document.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
@@ -364,42 +399,34 @@
 			});
 
 			clearBtn.onclick = () => {
-				if (confirm('Delete all annotations on this page?')) {
-					annotations = annotations.filter(a => a.page !== currentPage);
+				if (confirm('Clear annotations?')) {
+					annotations = [];
 					renderPage(currentPage);
 				}
 			};
 
-			// Save/Download Logic: High-Fidelity PDF Generation
 			saveBtn.onclick = async () => {
 				if (!pdfFile) return;
-
 				try {
-					saveBtn.innerText = 'PROCESING...';
-					saveBtn.disabled = true;
-
+					saveBtn.innerText = 'PROCESSING...';
 					const existingPdfBytes = await pdfFile.arrayBuffer();
 					const pdfDocLib = await PDFLib.PDFDocument.load(existingPdfBytes);
 					const pages = pdfDocLib.getPages();
 
-					// Apply all annotations to the actual PDF
 					for (const ann of annotations) {
 						const page = pages[ann.page - 1];
 						const { width, height } = page.getSize();
-						
-						// Scale factors (Canvas vs PDF points)
-						// PDF-Lib uses points (1/72 inch), Canvas uses pixels
 						const scaleX = width / canvas.width;
 						const scaleY = height / canvas.height;
-
 						const color = hexToRgb(ann.color);
 
 						if (ann.type === 'text') {
 							page.drawText(ann.text, {
 								x: ann.x * scaleX,
-								y: height - (ann.y * scaleY), // PDF coordinate system is bottom-up
-								size: 20 * scaleY,
+								y: height - (ann.y * scaleY),
+								size: ann.size * scaleY,
 								color: PDFLib.rgb(color.r, color.g, color.b),
+								opacity: ann.opacity
 							});
 						} else if (ann.type === 'pen' || ann.type === 'highlight') {
 							for (let i = 0; i < ann.path.length - 1; i++) {
@@ -408,40 +435,22 @@
 									end: { x: ann.path[i+1].x * scaleX, y: height - (ann.path[i+1].y * scaleY) },
 									thickness: (ann.type === 'highlight' ? 15 : 2) * scaleY,
 									color: PDFLib.rgb(color.r, color.g, color.b),
-									opacity: ann.type === 'highlight' ? 0.3 : 1,
+									opacity: ann.opacity
 								});
 							}
 						}
 					}
-
 					const pdfBytes = await pdfDocLib.save();
-					
-					// Option 1: Client-Side Download (Live Now)
 					const blob = new Blob([pdfBytes], { type: 'application/pdf' });
 					const link = document.createElement('a');
 					link.href = URL.createObjectURL(blob);
 					link.download = `DTE_SECURED_${Date.now()}.pdf`;
 					link.click();
-
-					/* 
-					   Option 2: Backend Uplink (Placeholder for future expansion)
-					   ----------------------------------------------------------
-					   const formData = new FormData();
-					   formData.append('file', blob, 'edited.pdf');
-					   formData.append('metadata', JSON.stringify(annotations));
-					   
-					   fetch('https://api.dte-solutions.icu/v1/save-doc', {
-					       method: 'POST',
-					       body: formData
-					   }).then(res => console.log('Nexus Uplink Confirmed'));
-					*/
-
 				} catch (err) {
-					console.error('PDF Generation Error:', err);
-					alert('Document finalization failed. Integrity maintained.');
+					console.error(err);
+					alert('Export failed.');
 				} finally {
 					saveBtn.innerText = 'FINALIZE & DOWNLOAD';
-					saveBtn.disabled = false;
 				}
 			};
 
@@ -451,14 +460,10 @@
 					r: parseInt(result[1], 16) / 255,
 					g: parseInt(result[2], 16) / 255,
 					b: parseInt(result[3], 16) / 255
-				} : { r: 0, g: 1, b: 0.8 }; // Default kinetic teal
+				} : { r: 0, g: 1, b: 0.8 };
 			}
 
-			// Drag & Drop
-			uploadContainer.addEventListener('dragover', (e) => {
-				e.preventDefault();
-				uploadContainer.classList.add('active');
-			});
+			uploadContainer.addEventListener('dragover', (e) => { e.preventDefault(); uploadContainer.classList.add('active'); });
 			uploadContainer.addEventListener('dragleave', () => uploadContainer.classList.remove('active'));
 			uploadContainer.addEventListener('drop', (e) => {
 				e.preventDefault();
