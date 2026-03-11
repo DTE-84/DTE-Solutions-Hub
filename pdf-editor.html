@@ -10,13 +10,21 @@
 			rel="stylesheet" />
 		<!-- PDF-Lib for Manipulation -->
 		<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-		<!-- PDF.js Legacy Stable (Bulletproof) -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+		<!-- PDF.js Dynamic Loader -->
 		<script>
-			// Reliable initialization for PDF.js
-			const pdfjsLib = window['pdfjs-dist/build/pdf'];
-			pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-			console.log('Nexus PDF Engine Online');
+			const core = document.createElement('script');
+			core.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+			core.onload = () => {
+				const worker = document.createElement('script');
+				worker.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+				worker.onload = () => {
+					window.pdfjsLib = window['pdfjs-dist/build/pdf'];
+					pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+					console.log('Nexus PDF Engine Online');
+				};
+				document.head.appendChild(worker);
+			};
+			document.head.appendChild(core);
 		</script>
 		<style>
 			:root {
@@ -31,12 +39,8 @@
 				font-family: "Inter", sans-serif;
 				min-height: 100vh;
 			}
-			.font-display {
-				font-family: "Bebas Neue", cursive;
-			}
-			.font-tech {
-				font-family: "Jura", sans-serif;
-			}
+			.font-display { font-family: "Bebas Neue", cursive; }
+			.font-tech { font-family: "Jura", sans-serif; }
 			.glass-panel {
 				background: rgba(8, 8, 8, 0.8);
 				backdrop-filter: blur(20px);
@@ -116,9 +120,7 @@
 				font-size: 10px;
 				outline: none;
 			}
-			.control-input:focus {
-				border-color: var(--kinetic-teal);
-			}
+			.control-input:focus { border-color: var(--kinetic-teal); }
 			input[type="color"] {
 				-webkit-appearance: none;
 				border: none;
@@ -128,9 +130,7 @@
 				background: transparent;
 				cursor: pointer;
 			}
-			input[type="range"] {
-				accent-color: var(--kinetic-teal);
-			}
+			input[type="range"] { accent-color: var(--kinetic-teal); }
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
@@ -258,29 +258,24 @@
 					const url = URL.createObjectURL(file);
 					
 					try {
-						// Await getDocument and store pdfDoc
+						if (!window.pdfjsLib) throw new Error('PDF Engine Loading...');
+						
 						const loadingTask = pdfjsLib.getDocument(url);
 						pdfDoc = await loadingTask.promise;
 
 						uploadContainer.classList.add('hidden');
 						editorContainer.classList.remove('hidden');
 
-						// Render first page immediately
 						await renderPage(1);
-
-						// Create thumbnails after known numPages
 						buildThumbs();
-
-						// Attach listeners after valid context
 						attachCanvasListeners();
 					} catch (err) {
 						console.error('File Handle Error:', err);
-						alert('Uplink failed. Check document integrity.');
+						alert('Uplink failed. Nexus initializing...');
 					}
 				}
 			}
 
-			// 2. Rendering Implementation
 			async function renderPage(pageNum = 1) {
 				if (!pdfDoc) return;
 				currentPage = pageNum;
@@ -298,11 +293,8 @@
 
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				await page.render(renderContext).promise;
-				
-				// Keep background and saved annotations in sync
 				drawSavedAnnotations();
 
-				// Update thumbnails
 				document.querySelectorAll('.thumb').forEach(t => {
 					t.classList.toggle('active', parseInt(t.dataset.page) === pageNum);
 				});
@@ -345,7 +337,6 @@
 				});
 			}
 
-			// 3. Interaction Implementation
 			let listenersAttached = false;
 			function attachCanvasListeners() {
 				if (listenersAttached) return;
@@ -365,9 +356,7 @@
 					const text = prompt('Enter protocol string:');
 					if (text) {
 						annotations.push({
-							type: 'text',
-							page: currentPage,
-							x, y, text,
+							type: 'text', page: currentPage, x, y, text,
 							color: colorPicker.value,
 							opacity: parseFloat(opacitySlider.value),
 							font: fontInput.value,
@@ -402,10 +391,8 @@
 				const rect = canvas.getBoundingClientRect();
 				const x = (e.clientX - rect.left) * (canvas.width / rect.width);
 				const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-				
 				currentPath.push({ x, y });
 				
-				// Redraw to show live path
 				await renderPage(currentPage); 
 				ctx.beginPath();
 				ctx.strokeStyle = colorPicker.value;
@@ -433,7 +420,6 @@
 				renderPage(currentPage);
 			}
 
-			// 4. Toolbar & Export Implementation
 			toolbar.addEventListener('click', (e) => {
 				const tool = e.target.dataset.tool;
 				if (tool) {
@@ -444,8 +430,8 @@
 			});
 
 			clearBtn.onclick = () => {
-				if (confirm('Purge all page data layers?')) {
-					annotations = annotations.filter(a => a.page !== currentPage);
+				if (confirm('Purge all data layers?')) {
+					annotations = [];
 					renderPage(currentPage);
 				}
 			};
@@ -454,8 +440,6 @@
 				if (!pdfFile) return;
 				try {
 					saveBtn.innerText = 'PROCESSING...';
-					saveBtn.disabled = true;
-
 					const arrayBuffer = await pdfFile.arrayBuffer();
 					const pdfDocLib = await PDFLib.PDFDocument.load(arrayBuffer);
 					const pages = pdfDocLib.getPages();
@@ -471,7 +455,7 @@
 							page.drawText(ann.text, {
 								x: ann.x * scaleX,
 								y: height - (ann.y * scaleY),
-								size: ann.size * (height / canvas.height),
+								size: ann.size * scaleY,
 								color: PDFLib.rgb(color.r, color.g, color.b),
 								opacity: ann.opacity
 							});
@@ -494,11 +478,10 @@
 					link.download = `DTE_SECURED_${Date.now()}.pdf`;
 					link.click();
 				} catch (err) {
-					console.error('Export Error:', err);
-					alert('Document finalization failed.');
+					console.error(err);
+					alert('Finalization failed.');
 				} finally {
 					saveBtn.innerText = 'FINALIZE & DOWNLOAD';
-					saveBtn.disabled = false;
 				}
 			};
 
@@ -511,13 +494,9 @@
 				} : { r: 0, g: 1, b: 0.8 };
 			}
 
-			// Drag & Drop
 			uploadContainer.addEventListener('dragover', (e) => { e.preventDefault(); uploadContainer.classList.add('active'); });
 			uploadContainer.addEventListener('dragleave', () => uploadContainer.classList.remove('active'));
-			uploadContainer.addEventListener('drop', (e) => {
-				e.preventDefault();
-				handleFile(e);
-			});
+			uploadContainer.addEventListener('drop', (e) => { e.preventDefault(); handleFile(e); });
 		</script>
 	</body>
 </html>
