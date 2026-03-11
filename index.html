@@ -73,17 +73,22 @@
             border: 1px solid rgba(45, 212, 191, 0.05);
             animation: spin 15s linear infinite;
         }
-        .orb-ring::after {
-            content: "";
+        .orb {
             position: absolute;
-            top: -5px;
-            left: 50%;
-            width: 8px;
-            height: 8px;
             background: var(--kinetic-teal);
             border-radius: 50%;
             box-shadow: 0 0 20px var(--kinetic-teal);
+            transform: translate(-50%, -50%);
         }
+        /* Position orbs at 0, 120, and 240 degrees */
+        .orb:nth-child(1) { top: 0; left: 50%; }
+        .orb:nth-child(2) { top: 75%; left: 93.3%; }
+        .orb:nth-child(3) { top: 75%; left: 6.7%; }
+
+        .orb-ring-1 .orb { width: 8px; height: 8px; }
+        .orb-ring-2 .orb { width: 6px; height: 6px; opacity: 0.8; }
+        .orb-ring-3 .orb { width: 4px; height: 4px; opacity: 0.6; }
+
         @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
         @keyframes spin-reverse { from { transform: translate(-50%, -50%) rotate(360deg); } to { transform: translate(-50%, -50%) rotate(0deg); } }
         
@@ -127,9 +132,21 @@
         <div class="flex justify-center mb-12 relative">
             <div class="relative w-full max-w-xl md:max-w-2xl h-auto flex items-center justify-center">
                 <img src="assets/dtesolutionslogoblk.png" alt="DTE Solutions" class="w-full h-auto opacity-90 relative z-10">
-                <div class="orb-ring orb-ring-1"></div>
-                <div class="orb-ring orb-ring-2"></div>
-                <div class="orb-ring orb-ring-3"></div>
+                <div class="orb-ring orb-ring-1">
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                </div>
+                <div class="orb-ring orb-ring-2">
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                </div>
+                <div class="orb-ring orb-ring-3">
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                    <div class="orb"></div>
+                </div>
             </div>
         </div>
         <h1 class="font-display text-5xl md:text-7xl tracking-tighter leading-none mb-10 text-white">
