@@ -396,9 +396,8 @@
 				}
 
 				// 2. Add new text if tool active
-				if (pendingAddNewText) {
+				if (currentTool === 'text') {
 					openChatBox('', e.clientX - rect.left, e.clientY - rect.top, x, y);
-					pendingAddNewText = false;
 				}
 			}
 
