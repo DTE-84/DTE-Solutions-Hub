@@ -10,20 +10,13 @@
 			rel="stylesheet" />
 		<!-- PDF-Lib for Manipulation -->
 		<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-		<!-- PDF.js Core & Worker -->
+		<!-- PDF.js Legacy Stable (Bulletproof) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 		<script>
-			window.pdfjsLib = null;
-			const pdfjsLibUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.160/pdf.min.js';
-			const pdfjsWorkerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.160/pdf.worker.min.js';
-
-			Promise.all([
-				fetch(pdfjsLibUrl).then(r => r.text()).then(eval),
-				fetch(pdfjsWorkerUrl).then(r => r.text()).then(eval)
-			]).then(() => { 
-				window.pdfjsLib = pdfjsLib;
-				pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
-				console.log('Nexus PDF Engine Online');
-			}).catch(err => console.error('PDF.js Load Error:', err));
+			// Reliable initialization for PDF.js
+			const pdfjsLib = window['pdfjs-dist/build/pdf'];
+			pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+			console.log('Nexus PDF Engine Online');
 		</script>
 		<style>
 			:root {
