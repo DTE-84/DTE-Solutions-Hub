@@ -58,28 +58,6 @@
 			.teal-glow {
 				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
 			}
-			.old-orb {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 110%;
-            height: 110%;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            border-radius: 50%;
-            animation: spin 10s linear infinite;
-        }
-        .orb-ring::after {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            background: var(--kinetic-green);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--kinetic-green);
-        }
 			.orb-ring {
 				position: absolute;
 				top: 50%;
@@ -113,18 +91,22 @@
 				box-shadow: 0 0 20px var(--kinetic-teal);
 				transform: translate(-50%, -50%);
 			}
-			/* Position orbs at 0, 120, and 240 degrees */
+			/* Position orbs - 4 orbs per ring at 0, 90, 180, 270 degrees */
 			.orb:nth-child(1) {
 				top: 0;
 				left: 50%;
 			}
 			.orb:nth-child(2) {
-				top: 75%;
-				left: 93.3%;
+				top: 50%;
+				left: 100%;
 			}
 			.orb:nth-child(3) {
-				top: 75%;
-				left: 6.7%;
+				top: 100%;
+				left: 50%;
+			}
+			.orb:nth-child(4) {
+				top: 50%;
+				left: 0;
 			}
 
 			.orb-ring-1 .orb {
@@ -150,7 +132,14 @@
 					transform: translate(-50%, -50%) rotate(360deg);
 				}
 			}
-			
+			@keyframes spin-reverse {
+				from {
+					transform: translate(-50%, -50%) rotate(360deg);
+				}
+				to {
+					transform: translate(-50%, -50%) rotate(0deg);
+				}
+			}
 
 			.annex-link {
 				border: 1px solid rgba(255, 255, 255, 0.1);
@@ -197,9 +186,9 @@
 				<a href="#pedigree" class="hover:text-white transition-colors"
 					>Case Studies</a
 				>
-				<button id="contactBtn" class="hover:text-white transition-colors"
-					>Contact</button
-				>
+				<button id="contactBtn" class="hover:text-white transition-colors">
+					Contact
+				</button>
 				<a
 					href="https://dte-84.github.io/DTE-E-Portfolio/"
 					target="_blank"
@@ -226,13 +215,16 @@
 						<div class="orb"></div>
 						<div class="orb"></div>
 						<div class="orb"></div>
+						<div class="orb"></div>
 					</div>
 					<div class="orb-ring orb-ring-2">
 						<div class="orb"></div>
 						<div class="orb"></div>
 						<div class="orb"></div>
+						<div class="orb"></div>
 					</div>
 					<div class="orb-ring orb-ring-3">
+						<div class="orb"></div>
 						<div class="orb"></div>
 						<div class="orb"></div>
 						<div class="orb"></div>
@@ -386,18 +378,32 @@
 			</div>
 
 			<div class="grid grid-cols-1 gap-8">
-				<div class="glass-card focus-card p-10 group flex flex-col md:flex-row items-center gap-12">
-					<div class="w-full md:w-1/3 aspect-video bg-zinc-900/50 rounded-2xl border border-white/5 overflow-hidden relative group-hover:border-[#00ffcc]/30 transition-all">
-						<img src="assets/dtesolutionspdf.png" alt="PDF Integrity Editor" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
-						<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+				<div
+					class="glass-card focus-card p-10 group flex flex-col md:flex-row items-center gap-12">
+					<div
+						class="w-full md:w-1/3 aspect-video bg-zinc-900/50 rounded-2xl border border-white/5 overflow-hidden relative group-hover:border-[#00ffcc]/30 transition-all">
+						<img
+							src="assets/dtesolutionspdf.png"
+							alt="PDF Integrity Editor"
+							class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 					</div>
 					<div class="flex-grow space-y-6">
 						<div>
-							<h3 class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">PDF Integrity Editor</h3>
-							<p class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30 mt-2">Zero-Server Data Compliance</p>
+							<h3
+								class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">
+								PDF Integrity Editor
+							</h3>
+							<p
+								class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30 mt-2">
+								Zero-Server Data Compliance
+							</p>
 						</div>
 						<p class="text-sm text-white/50 leading-relaxed max-w-xl">
-							A high-fidelity document editor provided free to the community. Securely modify, annotate, and finalize PDFs without compromising data integrity. All processing happens locally in your browser.
+							A high-fidelity document editor provided free to the community.
+							Securely modify, annotate, and finalize PDFs without compromising
+							data integrity. All processing happens locally in your browser.
 						</p>
 						<div class="flex flex-wrap gap-4">
 							<a
@@ -407,95 +413,190 @@
 							>
 							<button
 								onclick="openInstructionsModal()"
-								class="inline-block px-10 py-5 border border-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white/5 transition-all"
-								>Technical Brief</button
-							>
+								class="inline-block px-10 py-5 border border-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white/5 transition-all">
+								Technical Brief
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 
-						<!-- Instructions Modal -->
-						<div id="instructionsModal" class="fixed inset-0 z-[4000] flex items-center justify-center bg-black/95 backdrop-blur-xl transition-all duration-500 opacity-0 pointer-events-none">
-						<div class="relative w-[90%] max-w-2xl bg-[#080808] border border-[#00ffcc]/20 rounded-3xl p-12 overflow-hidden shadow-2xl scale-95 transition-all duration-500" id="instructionsContainer">
-						<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00ffcc] to-transparent opacity-50"></div>
-						<button onclick="closeInstructionsModal()" class="absolute top-8 right-8 text-white/40 hover:text-[#00ffcc] transition-colors text-2xl font-light">&times;</button>
+		<!-- Instructions Modal -->
+		<div
+			id="instructionsModal"
+			class="fixed inset-0 z-[4000] flex items-center justify-center bg-black/95 backdrop-blur-xl transition-all duration-500 opacity-0 pointer-events-none">
+			<div
+				class="relative w-[90%] max-w-2xl bg-[#080808] border border-[#00ffcc]/20 rounded-3xl p-12 overflow-hidden shadow-2xl scale-95 transition-all duration-500"
+				id="instructionsContainer">
+				<div
+					class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00ffcc] to-transparent opacity-50"></div>
+				<button
+					onclick="closeInstructionsModal()"
+					class="absolute top-8 right-8 text-white/40 hover:text-[#00ffcc] transition-colors text-2xl font-light">
+					&times;
+				</button>
 
-						<div class="mb-10">
-						<span class="font-tech text-[9px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold block mb-2">Protocol Briefing</span>
-						<h3 class="font-display text-5xl text-white">OPERATIONAL GUIDE</h3>
-						</div>
+				<div class="mb-10">
+					<span
+						class="font-tech text-[9px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold block mb-2"
+						>Protocol Briefing</span
+					>
+					<h3 class="font-display text-5xl text-white">OPERATIONAL GUIDE</h3>
+				</div>
 
-						<div class="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">01</span>
+				<div
+					class="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>01</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Open Document</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Drag a PDF onto the uplink zone or click to select from your local directory.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Open Document
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Drag a PDF onto the uplink zone or click to select from your
+								local directory.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">02</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>02</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Visual Verification</h4>
-							<p class="text-xs text-white/40 leading-relaxed">The document integrity check completes and the first page renders on the primary canvas.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Visual Verification
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								The document integrity check completes and the first page
+								renders on the primary canvas.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">03</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>03</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Page Navigation</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Switch between document layers (Pages 1-10) using the side-panel analytical thumbnails.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Page Navigation
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Switch between document layers (Pages 1-10) using the side-panel
+								analytical thumbnails.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">04</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>04</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Precision Markup</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Select PEN, choose a tactical color, and draw in real-time with zero latency sync.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Precision Markup
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Select PEN, choose a tactical color, and draw in real-time with
+								zero latency sync.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">05</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>05</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Data Annotation</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Click TEXT, input your string, and click the canvas to lock the metadata at those coordinates.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Data Annotation
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Click TEXT, input your string, and click the canvas to lock the
+								metadata at those coordinates.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">06</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>06</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Structural Highlighting</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Select HIGHLIGHT and drag over critical data areas to apply non-destructive overlays.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Structural Highlighting
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Select HIGHLIGHT and drag over critical data areas to apply
+								non-destructive overlays.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">07</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>07</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Asset Insertion</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Select IMAGE to uplink an external visual asset and place it directly into the PDF flow.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Asset Insertion
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Select IMAGE to uplink an external visual asset and place it
+								directly into the PDF flow.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">08</span>
+					</div>
+					<div class="flex gap-6 items-start group">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>08</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-white uppercase tracking-widest mb-1">Buffer Purge</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Select DELETE to clear all local annotations and reset the integrity environment.</p>
+							<h4
+								class="font-tech text-xs text-white uppercase tracking-widest mb-1">
+								Buffer Purge
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Select DELETE to clear all local annotations and reset the
+								integrity environment.
+							</p>
 						</div>
-						</div>
-						<div class="flex gap-6 items-start group border-t border-white/5 pt-6">
-						<span class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity">09</span>
+					</div>
+					<div
+						class="flex gap-6 items-start group border-t border-white/5 pt-6">
+						<span
+							class="font-tech text-[#00ffcc] opacity-30 group-hover:opacity-100 transition-opacity"
+							>09</span
+						>
 						<div>
-							<h4 class="font-tech text-xs text-[#00ffcc] uppercase tracking-widest mb-1 font-bold">Finalize Uplink</h4>
-							<p class="text-xs text-white/40 leading-relaxed">Click FINALIZE to compile all layers into a new, high-fidelity PDF file for local storage.</p>
+							<h4
+								class="font-tech text-xs text-[#00ffcc] uppercase tracking-widest mb-1 font-bold">
+								Finalize Uplink
+							</h4>
+							<p class="text-xs text-white/40 leading-relaxed">
+								Click FINALIZE to compile all layers into a new, high-fidelity
+								PDF file for local storage.
+							</p>
 						</div>
-						</div>
-						</div>
-						</div>
-						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-						<!-- Enterprise Pedigree (The Case Study) -->
+		<!-- Enterprise Pedigree (The Case Study) -->
 		<section
 			id="pedigree"
 			class="py-24 px-8 max-w-7xl mx-auto border-t border-white/5">
@@ -511,14 +612,15 @@
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 				<!-- PCSP App Demo Video -->
-				<video 
-					autoplay 
-					loop 
-					muted 
-					playsinline 
-					class="w-full bg-zinc-900/50 border border-white/5 rounded-xl"
-				>
-					<source src="assets/CaseStudy-PCSP-1771755500766.mp4" type="video/mp4">
+				<video
+					autoplay
+					loop
+					muted
+					playsinline
+					class="w-full bg-zinc-900/50 border border-white/5 rounded-xl">
+					<source
+						src="assets/CaseStudy-PCSP-1771755500766.mp4"
+						type="video/mp4" />
 				</video>
 				<!-- PCSP Case Study -->
 				<div class="glass-card p-10 group">
@@ -565,83 +667,125 @@
 		<!-- Footer -->
 		<footer class="py-16 px-8 text-center mt-12 border-t border-white/5">
 			<div class="max-w-7xl mx-auto space-y-6">
-				<div class="flex flex-wrap justify-center gap-6 text-[10px] font-tech uppercase tracking-[0.3em] text-white/30">
-					<button id="contactBtnFooter" class="hover:text-[#00ffcc] transition-colors">Contact</button>
-					<a href="#privacy" class="hover:text-[#00ffcc] transition-colors">Privacy Policy</a>
-					<a href="#terms" class="hover:text-[#00ffcc] transition-colors">Terms of Service</a>
-					<a href="https://linkedin.com/in/dte84" target="_blank" class="hover:text-[#00ffcc] transition-colors">LinkedIn</a>
+				<div
+					class="flex flex-wrap justify-center gap-6 text-[10px] font-tech uppercase tracking-[0.3em] text-white/30">
+					<button
+						id="contactBtnFooter"
+						class="hover:text-[#00ffcc] transition-colors">
+						Contact
+					</button>
+					<a href="#privacy" class="hover:text-[#00ffcc] transition-colors"
+						>Privacy Policy</a
+					>
+					<a href="#terms" class="hover:text-[#00ffcc] transition-colors"
+						>Terms of Service</a
+					>
+					<a
+						href="https://linkedin.com/in/dte84"
+						target="_blank"
+						class="hover:text-[#00ffcc] transition-colors"
+						>LinkedIn</a
+					>
 				</div>
-				<p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
+				<p
+					class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
 					© 2026 DTE Solutions LLC // All Rights Reserved
 				</p>
 			</div>
 		</footer>
 
 		<!-- Contact Modal -->
-		<div id="contactModal" class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/90 backdrop-blur-[10px] transition-all duration-500 opacity-0 pointer-events-none">
-			<div class="modal-container relative w-[95%] max-w-[950px] max-h-[85vh] bg-[#1e293b] rounded-xl flex border border-[#00ffcc]/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 scale-95">
-				
+		<div
+			id="contactModal"
+			class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/90 backdrop-blur-[10px] transition-all duration-500 opacity-0 pointer-events-none">
+			<div
+				class="modal-container relative w-[95%] max-w-[950px] max-h-[85vh] bg-[#1e293b] rounded-xl flex border border-[#00ffcc]/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 scale-95">
 				<!-- Loading Overlay -->
-				<div id="loadingOverlay" class="absolute inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm">
-					<div class="w-16 h-16 border-4 border-[#00ffcc]/20 border-t-[#00ffcc] rounded-full animate-spin"></div>
+				<div
+					id="loadingOverlay"
+					class="absolute inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm">
+					<div
+						class="w-16 h-16 border-4 border-[#00ffcc]/20 border-t-[#00ffcc] rounded-full animate-spin"></div>
 				</div>
 
 				<!-- Success Overlay -->
-				<div id="successOverlay" class="absolute inset-0 z-[100] hidden flex-col items-center justify-center bg-[#00ffcc] text-black font-black uppercase tracking-widest text-center px-10">
+				<div
+					id="successOverlay"
+					class="absolute inset-0 z-[100] hidden flex-col items-center justify-center bg-[#00ffcc] text-black font-black uppercase tracking-widest text-center px-10">
 					<div class="text-8xl mb-6">✓</div>
 					<h2 class="text-3xl mb-4 font-display">Uplink Successful</h2>
 					<p class="text-sm">Response protocol initiated</p>
 				</div>
 
 				<!-- About Section -->
-				<div class="modal-about w-1/2 p-[35px] flex-col justify-center bg-[#00ffcc] text-black hidden md:flex transition-all duration-700">
-					<h3 class="text-2xl font-bold mb-4 uppercase tracking-widest font-display">DTE Solutions</h3>
-					<h4 class="text-black/60 font-bold mb-4 uppercase tracking-widest text-[10px]">Behavioral Intelligence Division</h4>
+				<div
+					class="modal-about w-1/2 p-[35px] flex-col justify-center bg-[#00ffcc] text-black hidden md:flex transition-all duration-700">
+					<h3
+						class="text-2xl font-bold mb-4 uppercase tracking-widest font-display">
+						DTE Solutions
+					</h3>
+					<h4
+						class="text-black/60 font-bold mb-4 uppercase tracking-widest text-[10px]">
+						Behavioral Intelligence Division
+					</h4>
 					<p class="leading-relaxed text-black/80 text-sm font-medium">
-						Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer. Pure data integrity meets behavioral intelligence.
+						Engineering high-fidelity analytical ecosystems for the $84 Trillion
+						Great Wealth Transfer. Pure data integrity meets behavioral
+						intelligence.
 					</p>
 				</div>
 
 				<!-- Contact Form -->
-				<div class="modal-contact w-full md:w-1/2 p-[35px] flex flex-col justify-center bg-[#1e293b] text-[#d7e3fc] relative transition-all duration-700">
-					<button id="closeModal" class="absolute top-6 right-8 text-3xl cursor-pointer text-[#00ffcc] transition-transform z-50 p-2 hover:rotate-90 hover:scale-110">
+				<div
+					class="modal-contact w-full md:w-1/2 p-[35px] flex flex-col justify-center bg-[#1e293b] text-[#d7e3fc] relative transition-all duration-700">
+					<button
+						id="closeModal"
+						class="absolute top-6 right-8 text-3xl cursor-pointer text-[#00ffcc] transition-transform z-50 p-2 hover:rotate-90 hover:scale-110">
 						×
 					</button>
-					<h3 class="text-2xl font-bold mb-6 uppercase tracking-widest text-[#00ffcc] font-display">Contact</h3>
+					<h3
+						class="text-2xl font-bold mb-6 uppercase tracking-widest text-[#00ffcc] font-display">
+						Contact
+					</h3>
 					<form id="contactForm" class="space-y-4">
 						<div>
-							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Name</label>
+							<label
+								class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]"
+								>Name</label
+							>
 							<input
 								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none font-mono text-xs uppercase placeholder:text-black/30"
 								placeholder="NAME..."
 								name="user_name"
 								type="text"
-								required
-							/>
+								required />
 						</div>
 						<div>
-							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Email</label>
+							<label
+								class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]"
+								>Email</label
+							>
 							<input
 								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none font-mono text-xs uppercase placeholder:text-black/30"
 								placeholder="EMAIL..."
 								name="user_email"
 								type="email"
-								required
-							/>
+								required />
 						</div>
 						<div>
-							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Message</label>
+							<label
+								class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]"
+								>Message</label
+							>
 							<textarea
 								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none h-32 font-mono text-xs uppercase placeholder:text-black/30"
 								placeholder="MESSAGE..."
 								name="message"
-								required
-							></textarea>
+								required></textarea>
 						</div>
 						<button
 							type="submit"
-							class="w-full py-3 border-2 border-[#00ffcc] text-[#00ffcc] font-bold uppercase tracking-widest hover:bg-[#00ffcc] hover:text-black transition-all text-xs disabled:opacity-50"
-						>
+							class="w-full py-3 border-2 border-[#00ffcc] text-[#00ffcc] font-bold uppercase tracking-widest hover:bg-[#00ffcc] hover:text-black transition-all text-xs disabled:opacity-50">
 							Send Message
 						</button>
 					</form>
@@ -652,89 +796,98 @@
 		<!-- EmailJS SDK -->
 		<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 		<script>
-			(function() {
-				emailjs.init('zmPiRmxRkScwdiYFX');
+			(function () {
+				emailjs.init("zmPiRmxRkScwdiYFX");
 			})();
 
-			const modal = document.getElementById('contactModal');
-			const modalContainer = document.querySelector('.modal-container');
-			const contactBtn = document.getElementById('contactBtn');
-			const contactBtnFooter = document.getElementById('contactBtnFooter');
-			const closeModal = document.getElementById('closeModal');
-			const contactForm = document.getElementById('contactForm');
-			const loadingOverlay = document.getElementById('loadingOverlay');
-			const successOverlay = document.getElementById('successOverlay');
-			const instructionsModal = document.getElementById('instructionsModal');
-			const instructionsContainer = document.getElementById('instructionsContainer');
+			const modal = document.getElementById("contactModal");
+			const modalContainer = document.querySelector(".modal-container");
+			const contactBtn = document.getElementById("contactBtn");
+			const contactBtnFooter = document.getElementById("contactBtnFooter");
+			const closeModal = document.getElementById("closeModal");
+			const contactForm = document.getElementById("contactForm");
+			const loadingOverlay = document.getElementById("loadingOverlay");
+			const successOverlay = document.getElementById("successOverlay");
+			const instructionsModal = document.getElementById("instructionsModal");
+			const instructionsContainer = document.getElementById(
+				"instructionsContainer",
+			);
 
 			function openInstructionsModal() {
-				instructionsModal.classList.remove('opacity-0', 'pointer-events-none');
-				instructionsModal.classList.add('opacity-100', 'pointer-events-auto');
+				instructionsModal.classList.remove("opacity-0", "pointer-events-none");
+				instructionsModal.classList.add("opacity-100", "pointer-events-auto");
 				setTimeout(() => {
-					instructionsContainer.classList.remove('scale-95');
-					instructionsContainer.classList.add('scale-100');
+					instructionsContainer.classList.remove("scale-95");
+					instructionsContainer.classList.add("scale-100");
 				}, 50);
 			}
 
 			function closeInstructionsModal() {
-				instructionsContainer.classList.remove('scale-100');
-				instructionsContainer.classList.add('scale-95');
+				instructionsContainer.classList.remove("scale-100");
+				instructionsContainer.classList.add("scale-95");
 				setTimeout(() => {
-					instructionsModal.classList.add('opacity-0', 'pointer-events-none');
-					instructionsModal.classList.remove('opacity-100', 'pointer-events-auto');
+					instructionsModal.classList.add("opacity-0", "pointer-events-none");
+					instructionsModal.classList.remove(
+						"opacity-100",
+						"pointer-events-auto",
+					);
 				}, 300);
 			}
 
 			function openModal() {
-				modal.classList.remove('opacity-0', 'pointer-events-none');
-				modal.classList.add('opacity-100', 'pointer-events-auto');
+				modal.classList.remove("opacity-0", "pointer-events-none");
+				modal.classList.add("opacity-100", "pointer-events-auto");
 				setTimeout(() => {
-					modalContainer.classList.remove('scale-95');
-					modalContainer.classList.add('scale-100');
+					modalContainer.classList.remove("scale-95");
+					modalContainer.classList.add("scale-100");
 				}, 50);
 			}
 
 			function closeModalFunc() {
-				modalContainer.classList.remove('scale-100');
-				modalContainer.classList.add('scale-95');
+				modalContainer.classList.remove("scale-100");
+				modalContainer.classList.add("scale-95");
 				setTimeout(() => {
-					modal.classList.add('opacity-0', 'pointer-events-none');
-					modal.classList.remove('opacity-100', 'pointer-events-auto');
+					modal.classList.add("opacity-0", "pointer-events-none");
+					modal.classList.remove("opacity-100", "pointer-events-auto");
 				}, 300);
 			}
 
-			contactBtn.addEventListener('click', openModal);
-			contactBtnFooter.addEventListener('click', openModal);
-			closeModal.addEventListener('click', closeModalFunc);
-			modal.addEventListener('click', (e) => {
+			contactBtn.addEventListener("click", openModal);
+			contactBtnFooter.addEventListener("click", openModal);
+			closeModal.addEventListener("click", closeModalFunc);
+			modal.addEventListener("click", (e) => {
 				if (e.target === modal) closeModalFunc();
 			});
 
-			contactForm.addEventListener('submit', function(e) {
+			contactForm.addEventListener("submit", function (e) {
 				e.preventDefault();
-				
-				loadingOverlay.classList.remove('hidden');
-				loadingOverlay.classList.add('flex');
 
-				emailjs.sendForm('service_akgmg6r', 'template_nx4fvkb', this)
-					.then(function() {
-						loadingOverlay.classList.add('hidden');
-						loadingOverlay.classList.remove('flex');
-						successOverlay.classList.remove('hidden');
-						successOverlay.classList.add('flex');
-						
+				loadingOverlay.classList.remove("hidden");
+				loadingOverlay.classList.add("flex");
+
+				emailjs.sendForm("service_akgmg6r", "template_nx4fvkb", this).then(
+					function () {
+						loadingOverlay.classList.add("hidden");
+						loadingOverlay.classList.remove("flex");
+						successOverlay.classList.remove("hidden");
+						successOverlay.classList.add("flex");
+
 						setTimeout(() => {
-							successOverlay.classList.add('hidden');
-							successOverlay.classList.remove('flex');
+							successOverlay.classList.add("hidden");
+							successOverlay.classList.remove("flex");
 							closeModalFunc();
 							contactForm.reset();
 						}, 3000);
-					}, function(error) {
-						loadingOverlay.classList.add('hidden');
-						loadingOverlay.classList.remove('flex');
-						console.error('EmailJS Error:', error);
-						alert('Direct uplink failed. Please email dte.solutions.llc@gmail.com');
-					});
+					},
+					function (error) {
+						loadingOverlay.classList.add("hidden");
+						loadingOverlay.classList.remove("flex");
+						console.error("EmailJS Error:", error);
+						alert(
+							"Direct uplink failed. Please email dte.solutions.llc@gmail.com",
+						);
+					},
+				);
 			});
 		</script>
 	</body>
