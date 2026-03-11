@@ -75,27 +75,34 @@
 			}
 			.orb-ring {
 				position: absolute;
-				top: 50%;
+				top: 112%;
 				left: 50%;
-				transform: translate(-50%, -50%);
 				border-radius: 50%;
 				pointer-events: none;
-				aspect-ratio: 1/1;
 			}
 			.orb-ring-1 {
-				width: 110%;
+				width: 84%;
+				height: 84%;
 				border: 1px solid rgba(0, 255, 204, 0.3);
 				animation: spin 30s linear infinite;
+				margin-left: -42%;
+				margin-top: -42%;
 			}
 			.orb-ring-2 {
-				width: 125%;
+				width: 96%;
+				height: 96%;
 				border: 1px solid rgba(0, 255, 204, 0.25);
 				animation: spin-reverse 40s linear infinite;
+				margin-left: -48%;
+				margin-top: -48%;
 			}
 			.orb-ring-3 {
-				width: 140%;
+				width: 108%;
+				height: 108%;
 				border: 1px solid rgba(0, 255, 204, 0.2);
 				animation: spin 35s linear infinite;
+				margin-left: -54%;
+				margin-top: -54%;
 			}
 			.orb {
 				position: absolute;
@@ -106,21 +113,21 @@
 				display: block;
 			}
 			/* Precision Orbit: 0, 120, 240 degrees */
-			.orb:nth-child(1) { top: 0%; left: 50%; }
-			.orb:nth-child(2) { top: 75%; left: 93.3%; }
-			.orb:nth-child(3) { top: 75%; left: 6.7%; }
+			.orb:nth-child(1) { top: 2%; left: 50%; }
+			.orb:nth-child(2) { top: 85%; left: 91%; }
+			.orb:nth-child(3) { top: 85%; left: 9%; }
 
 			.orb-ring-1 .orb { width: 8px; height: 8px; }
 			.orb-ring-2 .orb { width: 7px; height: 7px; opacity: 0.9; }
 			.orb-ring-3 .orb { width: 6px; height: 6px; opacity: 0.8; }
 
 			@keyframes spin {
-				from { transform: translate(-50%, -50%) rotate(0deg); }
-				to { transform: translate(-50%, -50%) rotate(360deg); }
+				from { transform: rotate(0deg); }
+				to { transform: rotate(360deg); }
 			}
 			@keyframes spin-reverse {
-				from { transform: translate(-50%, -50%) rotate(360deg); }
-				to { transform: translate(-50%, -50%) rotate(0deg); }
+				from { transform: rotate(360deg); }
+				to { transform: rotate(0deg); }
 			}
 
 			.annex-link {
