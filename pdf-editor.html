@@ -203,6 +203,14 @@
 					</div>
 				</div>
 
+				<!-- Place this *inside* the .wrapper, right after the .controls div -->
+				<div class="text-edit-wrapper hidden">
+					<input type="text"
+						   id="textEditInput"
+						   class="border-none w-full bg-surface text-surface rounded px-2 py-1"
+						   autocomplete="off">
+				</div>
+
 				<div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
 					<div class="lg:col-span-1 space-y-4">
 						<h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">Pages</h4>
@@ -337,6 +345,55 @@
 				});
 			}
 
+			/* ------------------------------------------------------------
+			   GLOBAL STATE FOR TEXT EDITING
+			---------------------------------------------------------------- */
+			let selectedTextIdx = null;
+			let editingText = false;
+
+			/* ------------------------------------------------------------
+			   Helper: open the small inline input for editing text
+			---------------------------------------------------------------- */
+			function openTextEdit(annotationIndex) {
+				selectedTextIdx = annotationIndex;
+				const ann = annotations[annotationIndex];
+
+				const input = document.getElementById('textEditInput');
+				input.value = ann.text || '';
+				input.classList.remove('hidden');
+
+				const rect = canvas.getBoundingClientRect();
+				const {x, y} = ann;
+				input.style.position = 'absolute';
+				input.style.left = (x + rect.left) + 'px';
+				input.style.top = (y + rect.top) + 'px';
+
+				input.focus();
+				input.select();
+
+				editingText = true;
+			}
+
+			/* ------------------------------------------------------------
+			   When the user presses Enter or leaves the field → save
+			---------------------------------------------------------------- */
+			function closeTextEdit(save = true) {
+				if (!editingText) return;
+				const input = document.getElementById('textEditInput');
+				input.classList.add('hidden');
+
+				if (save && selectedTextIdx !== null) {
+					const newStr = input.value;
+					const ann = annotations[selectedTextIdx];
+					if (newStr !== ann.text) {
+						ann.text = newStr;
+						renderPage(currentPage);
+					}
+				}
+				selectedTextIdx = null;
+				editingText = false;
+			}
+
 			let listenersAttached = false;
 			function attachCanvasListeners() {
 				if (listenersAttached) return;
@@ -344,6 +401,45 @@
 				canvas.addEventListener('mousemove', performAction);
 				canvas.addEventListener('mouseup', endAction);
 				canvas.addEventListener('mouseleave', endAction);
+				
+				/* Click on existing text to edit */
+				canvas.addEventListener('click', e => {
+					if (!editingText && currentTool !== 'text') {
+						const rect = canvas.getBoundingClientRect();
+						const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
+						const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
+						
+						for (let i = 0; i < annotations.length; i++) {
+							if (annotations[i].type === 'text' && annotations[i].page === currentPage) {
+								const a = annotations[i];
+								const pad = 20;
+								if (clickX >= a.x - pad && clickX <= a.x + 100 &&
+									clickY >= a.y - pad && clickY <= a.y + pad) {
+									openTextEdit(i);
+									return;
+								}
+							}
+						}
+					}
+				});
+				
+				/* Hide edit input when clicking elsewhere */
+				document.addEventListener('click', e => {
+					if (editingText && !e.target.closest('#textEditInput') && e.target !== canvas) {
+						closeTextEdit();
+					}
+				});
+				
+				/* Text input event handlers */
+				const input = document.getElementById('textEditInput');
+				input.addEventListener('keydown', e => {
+					if (e.key === 'Enter') {
+						e.preventDefault();
+						closeTextEdit(true);
+					}
+				});
+				input.addEventListener('blur', () => closeTextEdit(true));
+				
 				listenersAttached = true;
 			}
 
