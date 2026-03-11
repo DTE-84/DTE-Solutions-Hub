@@ -3,19 +3,19 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>DTE Solutions | High-Fidelity Behavioral Tech Nexus</title>
+		<title>DTE Solutions | High-Fidelity Behavioral Tech Applications</title>
 		
 		<!-- Open Graph / Link Thumbnail -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://dte-solutions.icu/" />
-		<meta property="og:title" content="DTE Solutions | Behavioral Tech Nexus" />
+		<meta property="og:title" content="DTE Solutions | Behavioral Tech Applications" />
 		<meta property="og:description" content="Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer." />
 		<meta property="og:image" content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.jpg" />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content="https://dte-solutions.icu/" />
-		<meta property="twitter:title" content="DTE Solutions | Behavioral Tech Nexus" />
+		<meta property="twitter:title" content="DTE Solutions | Behavioral Tech Applications" />
 		<meta property="twitter:description" content="Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer." />
 		<meta property="twitter:image" content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.jpg" />
 
@@ -73,61 +73,33 @@
 			.teal-glow {
 				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
 			}
-			.orb-ring {
+
+			/* High-Fidelity Video Background */
+			.bg-video-wrapper {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+				overflow: hidden;
+				background: black;
+			}
+			.bg-video-content {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				opacity: 0.35;
+				filter: brightness(0.7) contrast(1.1);
+			}
+			.bg-video-vignette {
 				position: absolute;
-				top: 112%;
-				left: 50%;
-				border-radius: 50%;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
 				pointer-events: none;
-			}
-			.orb-ring-1 {
-				width: 84%;
-				height: 84%;
-				border: 1px solid rgba(0, 255, 204, 0.3);
-				animation: spin 30s linear infinite;
-				margin-left: -42%;
-				margin-top: -42%;
-			}
-			.orb-ring-2 {
-				width: 96%;
-				height: 96%;
-				border: 1px solid rgba(0, 255, 204, 0.25);
-				animation: spin-reverse 40s linear infinite;
-				margin-left: -48%;
-				margin-top: -48%;
-			}
-			.orb-ring-3 {
-				width: 108%;
-				height: 108%;
-				border: 1px solid rgba(0, 255, 204, 0.2);
-				animation: spin 35s linear infinite;
-				margin-left: -54%;
-				margin-top: -54%;
-			}
-			.orb {
-				position: absolute;
-				background: var(--kinetic-teal);
-				border-radius: 50%;
-				box-shadow: 0 0 20px var(--kinetic-teal);
-				transform: translate(-50%, -50%);
-				display: block;
-			}
-			/* Precision Orbit: 0, 120, 240 degrees */
-			.orb:nth-child(1) { top: 2%; left: 50%; }
-			.orb:nth-child(2) { top: 85%; left: 91%; }
-			.orb:nth-child(3) { top: 85%; left: 9%; }
-
-			.orb-ring-1 .orb { width: 8px; height: 8px; }
-			.orb-ring-2 .orb { width: 7px; height: 7px; opacity: 0.9; }
-			.orb-ring-3 .orb { width: 6px; height: 6px; opacity: 0.8; }
-
-			@keyframes spin {
-				from { transform: rotate(0deg); }
-				to { transform: rotate(360deg); }
-			}
-			@keyframes spin-reverse {
-				from { transform: rotate(360deg); }
-				to { transform: rotate(0deg); }
 			}
 
 			.annex-link {
@@ -163,7 +135,7 @@
 					</div>
 					<span
 						class="font-tech tracking-[0.6em] uppercase text-[7px] text-white/20 mt-1"
-						>Behavioral Nexus Hub</span
+						>Behavioral Tech Hub</span
 					>
 				</div>
 			</div>
@@ -191,7 +163,7 @@
 		<header class="py-32 px-8 text-center max-w-5xl mx-auto">
 			<span
 				class="font-tech text-[10px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold mb-12 block"
-				>Behavioral Intelligence Nexus</span
+				>Behavioral Intelligence Hub</span
 			>
 			<div class="flex justify-center mb-12 relative">
 				<div

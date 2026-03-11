@@ -1,8 +1,8 @@
-﻿# DTE Solutions | High-Fidelity Behavioral Tech Nexus
+﻿# DTE Solutions | High-Fidelity Behavioral Tech Hub
 
 **Pure Data Integrity. Behavioral Intelligence. Engineering Performance.**
 
-This repository serves as the **Corporate Nexus** for DTE Solutions LLC, accessible live at [dte-solutions.icu](https://dte-solutions.icu). 
+This repository serves as the **Corporate Hub** for DTE Solutions LLC, accessible live at [dte-solutions.icu](https://dte-solutions.icu). 
 
 We engineer the digital trust layer between human behavior and financial growth, specializing in high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer.
 
