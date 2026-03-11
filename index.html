@@ -1,267 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTE Solutions | High-Fidelity Behavioral Tech Nexus</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --obsidian: #000000;
-            --kinetic-teal: #00ffcc;
-            --charcoal: #080808;
-        }
-        body {
-            background-color: var(--obsidian);
-            color: #FFFFFF;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .font-display { font-family: 'Bebas Neue', cursive; }
-        .font-tech { font-family: 'Jura', sans-serif; }
-        .glass-card {
-            background: #050505;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .glass-card:hover {
-            border-color: var(--kinetic-teal);
-            background: #080808;
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 204, 0.15);
-        }
-        .focus-card {
-            background: linear-gradient(135deg, #050505 0%, #080808 100%);
-            border: 1px solid rgba(0, 255, 204, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .text-gradient-teal {
-            background: linear-gradient(135deg, #00ffcc, #00ead0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .teal-glow { filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4)); }
-        .orb-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        .orb-ring-1 {
-            width: 110%;
-            height: 110%;
-            border: 1px solid rgba(0, 255, 204, 0.15);
-            animation: spin 12s linear infinite;
-        }
-        .orb-ring-2 {
-            width: 125%;
-            height: 125%;
-            border: 1px solid rgba(0, 255, 204, 0.1);
-            animation: spin-reverse 20s linear infinite;
-        }
-        .orb-ring-3 {
-            width: 140%;
-            height: 140%;
-            border: 1px solid rgba(0, 255, 204, 0.05);
-            animation: spin 15s linear infinite;
-        }
-        .orb {
-            position: absolute;
-            background: var(--kinetic-teal);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--kinetic-teal);
-            transform: translate(-50%, -50%);
-        }
-        /* Position orbs at 0, 120, and 240 degrees */
-        .orb:nth-child(1) { top: 0; left: 50%; }
-        .orb:nth-child(2) { top: 75%; left: 93.3%; }
-        .orb:nth-child(3) { top: 75%; left: 6.7%; }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DTE Solutions | High-Fidelity Behavioral Tech Nexus</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap"
+			rel="stylesheet" />
+		<style>
+			:root {
+				--obsidian: #000000;
+				--kinetic-teal: #00ffcc;
+				--charcoal: #080808;
+			}
+			body {
+				background-color: var(--obsidian);
+				color: #ffffff;
+				font-family: "Inter", sans-serif;
+				scroll-behavior: smooth;
+			}
+			.font-display {
+				font-family: "Bebas Neue", cursive;
+			}
+			.font-tech {
+				font-family: "Jura", sans-serif;
+			}
+			.glass-card {
+				background: #050505;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				border-radius: 32px;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+			}
+			.glass-card:hover {
+				border-color: var(--kinetic-teal);
+				background: #080808;
+				transform: translateY(-8px);
+				box-shadow:
+					0 20px 40px rgba(0, 0, 0, 0.8),
+					0 0 20px rgba(0, 255, 204, 0.15);
+			}
+			.focus-card {
+				background: linear-gradient(135deg, #050505 0%, #080808 100%);
+				border: 1px solid rgba(0, 255, 204, 0.2);
+				position: relative;
+				overflow: hidden;
+			}
+			.text-gradient-teal {
+				background: linear-gradient(135deg, #00ffcc, #00ead0);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+			.teal-glow {
+				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
+			}
+			.orb-ring {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border-radius: 50%;
+				pointer-events: none;
+			}
+			.orb-ring-1 {
+				width: 110%;
+				height: 110%;
+				border: 1px solid rgba(0, 255, 204, 0.15);
+				animation: spin 12s linear infinite;
+			}
+			.orb-ring-2 {
+				width: 125%;
+				height: 125%;
+				border: 1px solid rgba(0, 255, 204, 0.1);
+				animation: spin-reverse 20s linear infinite;
+			}
+			.orb-ring-3 {
+				width: 140%;
+				height: 140%;
+				border: 1px solid rgba(0, 255, 204, 0.05);
+				animation: spin 15s linear infinite;
+			}
+			.orb {
+				position: absolute;
+				background: var(--kinetic-teal);
+				border-radius: 50%;
+				box-shadow: 0 0 20px var(--kinetic-teal);
+				transform: translate(-50%, -50%);
+			}
+			/* Position orbs at 0, 120, and 240 degrees */
+			.orb:nth-child(1) {
+				top: 0;
+				left: 50%;
+			}
+			.orb:nth-child(2) {
+				top: 75%;
+				left: 93.3%;
+			}
+			.orb:nth-child(3) {
+				top: 75%;
+				left: 6.7%;
+			}
 
-        .orb-ring-1 .orb { width: 8px; height: 8px; }
-        .orb-ring-2 .orb { width: 6px; height: 6px; opacity: 0.8; }
-        .orb-ring-3 .orb { width: 4px; height: 4px; opacity: 0.6; }
+			.orb-ring-1 .orb {
+				width: 8px;
+				height: 8px;
+			}
+			.orb-ring-2 .orb {
+				width: 6px;
+				height: 6px;
+				opacity: 0.8;
+			}
+			.orb-ring-3 .orb {
+				width: 4px;
+				height: 4px;
+				opacity: 0.6;
+			}
 
-        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-        @keyframes spin-reverse { from { transform: translate(-50%, -50%) rotate(360deg); } to { transform: translate(-50%, -50%) rotate(0deg); } }
-        
-        .annex-link {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
-            transition: all 0.3s;
-        }
-        .annex-link:hover {
-            background: white;
-            color: black;
-        }
-    </style>
-</head>
-<body class="selection:bg-cyan-500/30">
+			@keyframes spin {
+				from {
+					transform: translate(-50%, -50%) rotate(0deg);
+				}
+				to {
+					transform: translate(-50%, -50%) rotate(360deg);
+				}
+			}
+			@keyframes spin-reverse {
+				from {
+					transform: translate(-50%, -50%) rotate(360deg);
+				}
+				to {
+					transform: translate(-50%, -50%) rotate(0deg);
+				}
+			}
 
-    <!-- Navigation -->
-    <nav class="p-8 flex justify-between items-center max-w-7xl mx-auto border-b border-white/5">
-        <div class="flex items-center gap-4 group cursor-pointer">
-            <div class="flex flex-col">
-                <div class="flex items-baseline gap-2">
-                    <span class="font-display text-2xl text-white group-hover:text-[#00ffcc] transition-colors">DTE</span>
-                    <span class="font-tech text-[10px] tracking-[0.4em] text-[#00ffcc] font-bold">SOLUTIONS</span>
-                </div>
-                <div class="h-px w-full bg-white/10 overflow-hidden mt-1">
-                    <div class="h-full bg-[#00ffcc] w-1/3 group-hover:translate-x-[200%] transition-transform duration-700"></div>
-                </div>
-                <span class="font-tech tracking-[0.6em] uppercase text-[7px] text-white/20 mt-1">Behavioral Nexus Hub</span>
-            </div>
-        </div>
-        <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest text-white/60 items-center">
-            <a href="#focus" class="hover:text-white transition-colors">Solutions</a>
-            <a href="#pedigree" class="hover:text-white transition-colors">Case Studies</a>
-            <a href="https://dte-84.github.io/DTE-E-Portfolio/" target="_blank" class="annex-link px-4 py-2 rounded-lg">Founder Annex</a>
-        </div>
-    </nav>
+			.annex-link {
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				background: rgba(255, 255, 255, 0.03);
+				transition: all 0.3s;
+			}
+			.annex-link:hover {
+				background: white;
+				color: black;
+			}
+		</style>
+	</head>
+	<body class="selection:bg-cyan-500/30">
+		<!-- Navigation -->
+		<nav
+			class="p-8 flex justify-between items-center max-w-7xl mx-auto border-b border-white/5">
+			<div class="flex items-center gap-4 group cursor-pointer">
+				<div class="flex flex-col">
+					<div class="flex items-baseline gap-2">
+						<span
+							class="font-display text-2xl text-white group-hover:text-[#00ffcc] transition-colors"
+							>DTE</span
+						>
+						<span
+							class="font-tech text-[10px] tracking-[0.4em] text-[#00ffcc] font-bold"
+							>SOLUTIONS</span
+						>
+					</div>
+					<div class="h-px w-full bg-white/10 overflow-hidden mt-1">
+						<div
+							class="h-full bg-[#00ffcc] w-1/3 group-hover:translate-x-[200%] transition-transform duration-700"></div>
+					</div>
+					<span
+						class="font-tech tracking-[0.6em] uppercase text-[7px] text-white/20 mt-1"
+						>Behavioral Nexus Hub</span
+					>
+				</div>
+			</div>
+			<div
+				class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest text-white/60 items-center">
+				<a href="#focus" class="hover:text-white transition-colors"
+					>Solutions</a
+				>
+				<a href="#pedigree" class="hover:text-white transition-colors"
+					>Case Studies</a
+				>
+				<a
+					href="https://dte-84.github.io/DTE-E-Portfolio/"
+					target="_blank"
+					class="annex-link px-4 py-2 rounded-lg"
+					>Founder Annex</a
+				>
+			</div>
+		</nav>
 
-    <!-- Hero Section -->
-    <header class="py-32 px-8 text-center max-w-5xl mx-auto">
-        <span class="font-tech text-[10px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold mb-12 block">Behavioral Intelligence Nexus</span>
-        <div class="flex justify-center mb-12 relative">
-            <div class="relative w-full max-w-xl md:max-w-2xl h-auto flex items-center justify-center">
-                <img src="assets/dtesolutionslogoblk.png" alt="DTE Solutions" class="w-full h-auto opacity-90 relative z-10">
-                <div class="orb-ring orb-ring-1">
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                </div>
-                <div class="orb-ring orb-ring-2">
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                </div>
-                <div class="orb-ring orb-ring-3">
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                    <div class="orb"></div>
-                </div>
-            </div>
-        </div>
-        <h1 class="font-display text-5xl md:text-7xl tracking-tighter leading-none mb-10 text-white">
-            ENGINEERING <span class="text-gradient-teal">PERFORMANCE.</span>
-        </h1>
-        <p class="text-lg md:text-xl text-white/40 font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-            DTE Solutions architects high-fidelity analytical ecosystems. We bridge the gap between human behavior and capital growth through pure data integrity.
-        </p>
-        <div class="flex flex-wrap justify-center gap-6">
-            <a href="#focus" class="px-10 py-5 bg-[#00ffcc] text-black font-black uppercase text-xs rounded-2xl shadow-xl shadow-[#00ffcc]/20 hover:scale-105 transition-all inline-block">Explore Solutions</a>
-            <a href="https://linkedin.com/in/dte84" target="_blank" class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-2xl hover:bg-white/5 transition-all">Strategic Partner</a>
-        </div>
-    </header>
+		<!-- Hero Section -->
+		<header class="py-32 px-8 text-center max-w-5xl mx-auto">
+			<span
+				class="font-tech text-[10px] uppercase tracking-[0.6em] text-[#00ffcc] font-bold mb-12 block"
+				>Behavioral Intelligence Nexus</span
+			>
+			<div class="flex justify-center mb-12 relative">
+				<div
+					class="relative w-full max-w-xl md:max-w-2xl h-auto flex items-center justify-center">
+					<img
+						src="assets/dtesolutionslogoblk.png"
+						alt="DTE Solutions"
+						class="w-full h-auto opacity-90 relative z-10" />
+					<div class="orb-ring orb-ring-1">
+						<div class="orb"></div>
+						<div class="orb"></div>
+						<div class="orb"></div>
+					</div>
+					<div class="orb-ring orb-ring-2">
+						<div class="orb"></div>
+						<div class="orb"></div>
+						<div class="orb"></div>
+					</div>
+					<div class="orb-ring orb-ring-3">
+						<div class="orb"></div>
+						<div class="orb"></div>
+						<div class="orb"></div>
+					</div>
+				</div>
+			</div>
+			<h1
+				class="font-display text-5xl md:text-7xl tracking-tighter leading-none mb-10 text-white">
+				ENGINEERING <span class="text-gradient-teal">PERFORMANCE.</span>
+			</h1>
+			<p
+				class="text-lg md:text-xl text-white/40 font-light leading-relaxed mb-12 max-w-3xl mx-auto">
+				DTE Solutions architects high-fidelity analytical ecosystems. We bridge
+				the gap between human behavior and capital growth through pure data
+				integrity.
+			</p>
+			<div class="flex flex-wrap justify-center gap-6">
+				<a
+					href="#focus"
+					class="px-10 py-5 bg-[#00ffcc] text-black font-black uppercase text-xs rounded-2xl shadow-xl shadow-[#00ffcc]/20 hover:scale-105 transition-all inline-block"
+					>Explore Solutions</a
+				>
+				<a
+					href="https://linkedin.com/in/dte84"
+					target="_blank"
+					class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-2xl hover:bg-white/5 transition-all"
+					>Strategic Partner</a
+				>
+			</div>
+		</header>
 
-    <!-- Focus Products (The Big Three) -->
-    <section id="focus" class="py-24 px-8 max-w-7xl mx-auto">
-        <div class="mb-16 text-center lg:text-left">
-            <span class="font-tech text-[10px] uppercase tracking-[0.4em] text-[#00ffcc] font-bold block mb-4">Core Business Units</span>
-            <h2 class="font-display text-6xl text-white">Subscription Solutions</h2>
-        </div>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Nest Legacy -->
-            <div class="glass-card focus-card p-10 group">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="space-y-2">
-                        <h2 class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">Nest Legacy</h2>
-                        <p class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">Wealth Transfer Engine</p>
-                    </div>
-                    <div class="w-12 h-12 rounded-full border border-[#00ffcc]/40 flex items-center justify-center">
-                        <div class="w-3 h-3 bg-[#00ffcc] rounded-full shadow-[0_0_15px_#00ffcc] animate-pulse"></div>
-                    </div>
-                </div>
-                <p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
-                    Digital Trust Layer for the $84 Trillion Wealth Transfer. Pre-qualifying leads through behavioral financial modeling and AI intelligence.
-                </p>
-                <a href="https://dte-84.github.io/NestLegacy/" target="_blank" class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center">Launch App Demo</a>
-            </div>
+		<!-- Focus Products (The Big Three) -->
+		<section id="focus" class="py-24 px-8 max-w-7xl mx-auto">
+			<div class="mb-16 text-center lg:text-left">
+				<span
+					class="font-tech text-[10px] uppercase tracking-[0.4em] text-[#00ffcc] font-bold block mb-4"
+					>Core Business Units</span
+				>
+				<h2 class="font-display text-6xl text-white">Subscription Solutions</h2>
+			</div>
 
-            <!-- Pulse -->
-            <div class="glass-card focus-card p-10 group">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="space-y-2">
-                        <h2 class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">PULSE</h2>
-                        <p class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">Financial Behavior AI</p>
-                    </div>
-                    <div class="w-16 h-16 rounded-2xl overflow-hidden border border-[#00ffcc]/20">
-                        <img src="assets/PulseNovaLogo.png" alt="Pulse Logo" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
-                    A high-fidelity financial mirror detecting spending rhythms and emotional triggers. Powered by the Nova AI analytical coaching engine.
-                </p>
-                <a href="https://dte-84.github.io/Pulse/" target="_blank" class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center">Open Pulse</a>
-            </div>
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<!-- Nest Legacy -->
+				<div class="glass-card focus-card p-10 group">
+					<div class="flex justify-between items-start mb-8">
+						<div class="space-y-2">
+							<h2
+								class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">
+								Nest Legacy
+							</h2>
+							<p
+								class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">
+								Wealth Transfer Engine
+							</p>
+						</div>
+						<div
+							class="w-12 h-12 rounded-full border border-[#00ffcc]/40 flex items-center justify-center">
+							<div
+								class="w-3 h-3 bg-[#00ffcc] rounded-full shadow-[0_0_15px_#00ffcc] animate-pulse"></div>
+						</div>
+					</div>
+					<p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
+						Digital Trust Layer for the $84 Trillion Wealth Transfer.
+						Pre-qualifying leads through behavioral financial modeling and AI
+						intelligence.
+					</p>
+					<a
+						href="https://dte-84.github.io/NestLegacy/"
+						target="_blank"
+						class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
+						>Launch App Demo</a
+					>
+				</div>
 
-            <!-- Fluff -->
-            <div class="glass-card focus-card p-10 group">
-                <div class="flex justify-between items-start mb-8">
-                    <div class="space-y-2">
-                        <h2 class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">FLUFF</h2>
-                        <p class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">Biomechanic Analyst</p>
-                    </div>
-                    <div class="w-16 h-16 rounded-2xl overflow-hidden border border-[#00ffcc]/20">
-                        <img src="assets/flufflogo.png" alt="Fluff Logo" class="w-full h-full object-cover">
-                    </div>
-                </div>
-                <p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
-                    Elite PGA-grade swing analysis using computer vision. Real-time kinetic chain tracking and competitive performance leaderboards.
-                </p>
-                <a href="https://dte-84.github.io/Fluff/" target="_blank" class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center">Launch Lab</a>
-            </div>
-        </div>
-    </section>
+				<!-- Pulse -->
+				<div class="glass-card focus-card p-10 group">
+					<div class="flex justify-between items-start mb-8">
+						<div class="space-y-2">
+							<h2
+								class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">
+								PULSE
+							</h2>
+							<p
+								class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">
+								Financial Behavior AI
+							</p>
+						</div>
+						<div
+							class="w-16 h-16 rounded-2xl overflow-hidden border border-[#00ffcc]/20">
+							<img
+								src="assets/PulseNovaLogo.png"
+								alt="Pulse Logo"
+								class="w-full h-full object-cover" />
+						</div>
+					</div>
+					<p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
+						A high-fidelity financial mirror detecting spending rhythms and
+						emotional triggers. Powered by the Nova AI analytical coaching
+						engine.
+					</p>
+					<a
+						href="https://dte-84.github.io/Pulse/"
+						target="_blank"
+						class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
+						>Open Pulse</a
+					>
+				</div>
 
-    <!-- Enterprise Pedigree (The Case Study) -->
-    <section id="pedigree" class="py-24 px-8 max-w-7xl mx-auto border-t border-white/5">
-        <div class="mb-16 text-center lg:text-left">
-            <span class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold block mb-4">Enterprise Pedigree</span>
-            <h2 class="font-display text-6xl text-white">Compliance Case Studies</h2>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- PCSP App -->
-            <div class="glass-card p-10 group">
-                <h3 class="font-display text-4xl text-white mb-4">PCSP Assistant Pro</h3>
-                <p class="text-sm text-white/40 leading-relaxed mb-8 flex-grow">Zero-Footprint clinical documentation engine designed for MCSDD agencies. A HIPAA and Missouri-compliant client-side processing application.</p>
-                <img src="assets/casestudypcsp.mp4" target="_blank" class="w-full py-4 bg-zinc-900/50 border border-white/5 rounded-xl text-[9px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-[#00ffcc] hover:border-[#00ffcc]/20 transition-all block text-center">
-            </div>
+				<!-- Fluff -->
+				<div class="glass-card focus-card p-10 group">
+					<div class="flex justify-between items-start mb-8">
+						<div class="space-y-2">
+							<h2
+								class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">
+								FLUFF
+							</h2>
+							<p
+								class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">
+								Biomechanic Analyst
+							</p>
+						</div>
+						<div
+							class="w-16 h-16 rounded-2xl overflow-hidden border border-[#00ffcc]/20">
+							<img
+								src="assets/flufflogo.png"
+								alt="Fluff Logo"
+								class="w-full h-full object-cover" />
+						</div>
+					</div>
+					<p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
+						Elite PGA-grade swing analysis using computer vision. Real-time
+						kinetic chain tracking and competitive performance leaderboards.
+					</p>
+					<a
+						href="https://dte-84.github.io/Fluff/"
+						target="_blank"
+						class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
+						>Launch Lab</a
+					>
+				</div>
+			</div>
+		</section>
 
-            <!-- PCSP Case Study -->
-            <div class="glass-card p-10 group">
-                <h3 class="font-display text-4xl text-white mb-4">MCSDD Case Study</h3>
-                <p class="text-sm text-white/40 leading-relaxed mb-8 flex-grow">Deep-dive into the regulatory discovery and architectural tradeoffs required for state-level healthcare compliance.</p>
-                <a href="https://dte-84.github.io/DTE-E-Portfolio/case-study-pcsp/" target="_blank" class="w-full py-4 bg-zinc-900/50 border border-white/5 rounded-xl text-[9px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-[#00ffcc] hover:border-[#00ffcc]/20 transition-all block text-center">View Case Study</a>
-            </div>
-        </div>
-    </section>
+		<!-- Enterprise Pedigree (The Case Study) -->
+		<section
+			id="pedigree"
+			class="py-24 px-8 max-w-7xl mx-auto border-t border-white/5">
+			<div class="mb-16 text-center lg:text-left">
+				<span
+					class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold block mb-4"
+					>Enterprise Pedigree</span
+				>
+				<h2 class="font-display text-6xl text-white">
+					Compliance Case Studies
+				</h2>
+			</div>
 
-    <!-- Founder Annex Section -->
-    <section class="py-32 px-8 bg-zinc-950 border-y border-white/5 text-center">
-        <div class="max-w-3xl mx-auto space-y-10">
-            <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold">The Human Layer</span>
-            <h2 class="font-display text-7xl leading-none text-white">THE FOUNDER <br/><span class="text-white/10">ANNEX.</span></h2>
-            <p class="text-lg text-white/40 leading-relaxed">
-                Explore the technical foundation, full-stack archive, and mentorship history of the Principal Engineer.
-            </p>
-            <a href="https://dte-84.github.io/DTE-E-Portfolio/" target="_blank" class="px-12 py-6 border border-[#00ffcc] text-[#00ffcc] font-black uppercase text-xs rounded-2xl hover:bg-[#00ffcc] hover:text-black transition-all inline-block">Enter Annex</a>
-        </div>
-    </section>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<!-- PCSP App -->
+				<video
+					controls
+					class="w-full py-4 bg-zinc-900/50 border border-white/5 rounded-xl block text-center"
+					style="outline: none">
+					<source src="assets/casestudypcsp.mp4" type="video/mp4" />
+				</video>
 
-    <!-- Footer -->
-    <footer class="py-16 px-8 text-center mt-12">
-        <p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">© 2026 DTE Solutions // Behavioral Intelligence Nexus</p>
-    </footer>
+				<!-- PCSP Case Study -->
+				<div class="glass-card p-10 group">
+					<h3 class="font-display text-4xl text-white mb-4">
+						MCSDD Case Study
+					</h3>
+					<p class="text-sm text-white/40 leading-relaxed mb-8 flex-grow">
+						Deep-dive into the regulatory discovery and architectural tradeoffs
+						required for state-level healthcare compliance.
+					</p>
+					<a
+						href="https://dte-84.github.io/DTE-E-Portfolio/case-study-pcsp/"
+						target="_blank"
+						class="w-full py-4 bg-zinc-900/50 border border-white/5 rounded-xl text-[9px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-[#00ffcc] hover:border-[#00ffcc]/20 transition-all block text-center"
+						>View Case Study</a
+					>
+				</div>
+			</div>
+		</section>
 
-</body>
+		<!-- Founder Annex Section -->
+		<section class="py-32 px-8 bg-zinc-950 border-y border-white/5 text-center">
+			<div class="max-w-3xl mx-auto space-y-10">
+				<span
+					class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold"
+					>The Human Layer</span
+				>
+				<h2 class="font-display text-7xl leading-none text-white">
+					THE FOUNDER <br /><span class="text-white/10">ANNEX.</span>
+				</h2>
+				<p class="text-lg text-white/40 leading-relaxed">
+					Explore the technical foundation, full-stack archive, and mentorship
+					history of the Principal Engineer.
+				</p>
+				<a
+					href="https://dte-84.github.io/DTE-E-Portfolio/"
+					target="_blank"
+					class="px-12 py-6 border border-[#00ffcc] text-[#00ffcc] font-black uppercase text-xs rounded-2xl hover:bg-[#00ffcc] hover:text-black transition-all inline-block"
+					>Enter Annex</a
+				>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="py-16 px-8 text-center mt-12">
+			<p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
+				© 2026 DTE Solutions // Behavioral Intelligence Nexus
+			</p>
+		</footer>
+	</body>
 </html>
