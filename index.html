@@ -51,12 +51,35 @@
 			}
 			.text-gradient-teal {
 				background: linear-gradient(135deg, #00ffcc, #00ead0);
+				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 			}
 			.teal-glow {
 				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
 			}
+			.old-orb {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110%;
+            height: 110%;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+        .orb-ring::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: var(--kinetic-green);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--kinetic-green);
+        }
 			.orb-ring {
 				position: absolute;
 				top: 50%;
@@ -66,20 +89,20 @@
 				pointer-events: none;
 			}
 			.orb-ring-1 {
-				width: 320px;
-				height: 320px;
+				width: 110%;
+				height: 110%;
 				border: 1px solid rgba(0, 255, 204, 0.15);
 				animation: spin 12s linear infinite;
 			}
 			.orb-ring-2 {
-				width: 380px;
-				height: 380px;
+				width: 125%;
+				height: 125%;
 				border: 1px solid rgba(0, 255, 204, 0.1);
 				animation: spin-reverse 20s linear infinite;
 			}
 			.orb-ring-3 {
-				width: 440px;
-				height: 440px;
+				width: 140%;
+				height: 140%;
 				border: 1px solid rgba(0, 255, 204, 0.05);
 				animation: spin 15s linear infinite;
 			}
@@ -127,14 +150,7 @@
 					transform: translate(-50%, -50%) rotate(360deg);
 				}
 			}
-			@keyframes spin-reverse {
-				from {
-					transform: translate(-50%, -50%) rotate(360deg);
-				}
-				to {
-					transform: translate(-50%, -50%) rotate(0deg);
-				}
-			}
+			
 
 			.annex-link {
 				border: 1px solid rgba(255, 255, 255, 0.1);
