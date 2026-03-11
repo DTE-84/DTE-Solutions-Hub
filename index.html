@@ -10,14 +10,14 @@
 		<meta property="og:url" content="https://dte-solutions.icu/" />
 		<meta property="og:title" content="DTE Solutions | Behavioral Tech Nexus" />
 		<meta property="og:description" content="Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer." />
-		<meta property="og:image" content="assets/blackbglogo.jpg" />
+		<meta property="og:image" content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.jpg" />
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content="https://dte-solutions.icu/" />
 		<meta property="twitter:title" content="DTE Solutions | Behavioral Tech Nexus" />
 		<meta property="twitter:description" content="Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer." />
-		<meta property="twitter:image" content="assets/blackbglogo.jpg" />
+		<meta property="twitter:image" content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.jpg" />
 
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link
@@ -81,28 +81,28 @@
 				pointer-events: none;
 			}
 			.orb-ring-1 {
-				width: 100%;
-				height: 100%;
+				width: 84%;
+				height: 84%;
 				border: 1px solid rgba(0, 255, 204, 0.3);
 				animation: spin 30s linear infinite;
-				margin-left: -50%;
-				margin-top: -50%;
+				margin-left: -42%;
+				margin-top: -42%;
 			}
 			.orb-ring-2 {
-				width: 115%;
-				height: 115%;
+				width: 96%;
+				height: 96%;
 				border: 1px solid rgba(0, 255, 204, 0.25);
 				animation: spin-reverse 40s linear infinite;
-				margin-left: -57.5%;
-				margin-top: -57.5%;
+				margin-left: -48%;
+				margin-top: -48%;
 			}
 			.orb-ring-3 {
-				width: 130%;
-				height: 130%;
+				width: 108%;
+				height: 108%;
 				border: 1px solid rgba(0, 255, 204, 0.2);
 				animation: spin 35s linear infinite;
-				margin-left: -65%;
-				margin-top: -65%;
+				margin-left: -54%;
+				margin-top: -54%;
 			}
 			.orb {
 				position: absolute;
@@ -112,77 +112,22 @@
 				transform: translate(-50%, -50%);
 				display: block;
 			}
-			/* Position orbs - 3 orbs per ring at 0, 120, and 240 degrees */
-			/* Ring 1 - 100% */
-			.orb-ring-1 .orb:nth-child(1) {
-				top: 0%;
-				left: 50%;
-			}
-			.orb-ring-1 .orb:nth-child(2) {
-				top: 86.6%;
-				left: 93.3%;
-			}
-			.orb-ring-1 .orb:nth-child(3) {
-				top: 86.6%;
-				left: 6.7%;
-			}
-			/* Ring 2 - 115% */
-			.orb-ring-2 .orb:nth-child(1) {
-				top: 0%;
-				left: 50%;
-			}
-			.orb-ring-2 .orb:nth-child(2) {
-				top: 86.6%;
-				left: 93.3%;
-			}
-			.orb-ring-2 .orb:nth-child(3) {
-				top: 86.6%;
-				left: 6.7%;
-			}
-			/* Ring 3 - 130% */
-			.orb-ring-3 .orb:nth-child(1) {
-				top: 0%;
-				left: 50%;
-			}
-			.orb-ring-3 .orb:nth-child(2) {
-				top: 86.6%;
-				left: 93.3%;
-			}
-			.orb-ring-3 .orb:nth-child(3) {
-				top: 86.6%;
-				left: 6.7%;
-			}
+			/* Precision Orbit: 0, 120, 240 degrees */
+			.orb:nth-child(1) { top: 2%; left: 50%; }
+			.orb:nth-child(2) { top: 85%; left: 91%; }
+			.orb:nth-child(3) { top: 85%; left: 9%; }
 
-			.orb-ring-1 .orb {
-				width: 8px;
-				height: 8px;
-			}
-			.orb-ring-2 .orb {
-				width: 7px;
-				height: 7px;
-				opacity: 0.9;
-			}
-			.orb-ring-3 .orb {
-				width: 6px;
-				height: 6px;
-				opacity: 0.8;
-			}
+			.orb-ring-1 .orb { width: 8px; height: 8px; }
+			.orb-ring-2 .orb { width: 7px; height: 7px; opacity: 0.9; }
+			.orb-ring-3 .orb { width: 6px; height: 6px; opacity: 0.8; }
 
 			@keyframes spin {
-				from {
-					transform: rotate(0deg);
-				}
-				to {
-					transform: rotate(360deg);
-				}
+				from { transform: rotate(0deg); }
+				to { transform: rotate(360deg); }
 			}
 			@keyframes spin-reverse {
-				from {
-					transform: rotate(360deg);
-				}
-				to {
-					transform: rotate(0deg);
-				}
+				from { transform: rotate(360deg); }
+				to { transform: rotate(0deg); }
 			}
 
 			.annex-link {
