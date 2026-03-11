@@ -12,6 +12,7 @@
 		<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 		<!-- PDF.js Core & Worker -->
 		<script>
+			window.pdfjsLib = null;
 			const pdfjsLibUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.160/pdf.min.js';
 			const pdfjsWorkerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.160/pdf.worker.min.js';
 
@@ -21,6 +22,7 @@
 			]).then(() => { 
 				window.pdfjsLib = pdfjsLib;
 				pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
+				console.log('Nexus PDF Engine Online');
 			}).catch(err => console.error('PDF.js Load Error:', err));
 		</script>
 		<style>
