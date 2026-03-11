@@ -181,6 +181,9 @@
 				<a href="#pedigree" class="hover:text-white transition-colors"
 					>Case Studies</a
 				>
+				<button id="contactBtn" class="hover:text-white transition-colors"
+					>Contact</button
+				>
 				<a
 					href="https://dte-84.github.io/DTE-E-Portfolio/"
 					target="_blank"
@@ -425,10 +428,159 @@
 		</section>
 
 		<!-- Footer -->
-		<footer class="py-16 px-8 text-center mt-12">
-			<p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
-				© 2026 DTE Solutions // Behavioral Intelligence Nexus
-			</p>
+		<footer class="py-16 px-8 text-center mt-12 border-t border-white/5">
+			<div class="max-w-7xl mx-auto space-y-6">
+				<div class="flex flex-wrap justify-center gap-6 text-[10px] font-tech uppercase tracking-[0.3em] text-white/30">
+					<button id="contactBtnFooter" class="hover:text-[#00ffcc] transition-colors">Contact</button>
+					<a href="#privacy" class="hover:text-[#00ffcc] transition-colors">Privacy Policy</a>
+					<a href="#terms" class="hover:text-[#00ffcc] transition-colors">Terms of Service</a>
+					<a href="https://linkedin.com/in/dte84" target="_blank" class="hover:text-[#00ffcc] transition-colors">LinkedIn</a>
+				</div>
+				<p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">
+					© 2026 DTE Solutions LLC // All Rights Reserved
+				</p>
+			</div>
 		</footer>
+
+		<!-- Contact Modal -->
+		<div id="contactModal" class="fixed inset-0 z-[3000] flex items-center justify-center bg-black/90 backdrop-blur-[10px] transition-all duration-500 opacity-0 pointer-events-none">
+			<div class="modal-container relative w-[95%] max-w-[950px] max-h-[85vh] bg-[#1e293b] rounded-xl flex border border-[#00ffcc]/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 scale-95">
+				
+				<!-- Loading Overlay -->
+				<div id="loadingOverlay" class="absolute inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-sm">
+					<div class="w-16 h-16 border-4 border-[#00ffcc]/20 border-t-[#00ffcc] rounded-full animate-spin"></div>
+				</div>
+
+				<!-- Success Overlay -->
+				<div id="successOverlay" class="absolute inset-0 z-[100] hidden flex-col items-center justify-center bg-[#00ffcc] text-black font-black uppercase tracking-widest text-center px-10">
+					<div class="text-8xl mb-6">✓</div>
+					<h2 class="text-3xl mb-4 font-display">Uplink Successful</h2>
+					<p class="text-sm">Response protocol initiated</p>
+				</div>
+
+				<!-- About Section -->
+				<div class="modal-about w-1/2 p-[35px] flex-col justify-center bg-[#00ffcc] text-black hidden md:flex transition-all duration-700">
+					<h3 class="text-2xl font-bold mb-4 uppercase tracking-widest font-display">DTE Solutions</h3>
+					<h4 class="text-black/60 font-bold mb-4 uppercase tracking-widest text-[10px]">Behavioral Intelligence Division</h4>
+					<p class="leading-relaxed text-black/80 text-sm font-medium">
+						Engineering high-fidelity analytical ecosystems for the $84 Trillion Great Wealth Transfer. Pure data integrity meets behavioral intelligence.
+					</p>
+				</div>
+
+				<!-- Contact Form -->
+				<div class="modal-contact w-full md:w-1/2 p-[35px] flex flex-col justify-center bg-[#1e293b] text-[#d7e3fc] relative transition-all duration-700">
+					<button id="closeModal" class="absolute top-6 right-8 text-3xl cursor-pointer text-[#00ffcc] transition-transform z-50 p-2 hover:rotate-90 hover:scale-110">
+						×
+					</button>
+					<h3 class="text-2xl font-bold mb-6 uppercase tracking-widest text-[#00ffcc] font-display">Contact</h3>
+					<form id="contactForm" class="space-y-4">
+						<div>
+							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Name</label>
+							<input
+								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none font-mono text-xs uppercase placeholder:text-black/30"
+								placeholder="NAME..."
+								name="user_name"
+								type="text"
+								required
+							/>
+						</div>
+						<div>
+							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Email</label>
+							<input
+								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none font-mono text-xs uppercase placeholder:text-black/30"
+								placeholder="EMAIL..."
+								name="user_email"
+								type="email"
+								required
+							/>
+						</div>
+						<div>
+							<label class="block text-[9px] font-bold uppercase mb-1 text-[#00ffcc] tracking-[0.2em]">Message</label>
+							<textarea
+								class="w-full p-3 bg-white border border-[#00ffcc]/20 rounded text-black font-bold outline-none h-32 font-mono text-xs uppercase placeholder:text-black/30"
+								placeholder="MESSAGE..."
+								name="message"
+								required
+							></textarea>
+						</div>
+						<button
+							type="submit"
+							class="w-full py-3 border-2 border-[#00ffcc] text-[#00ffcc] font-bold uppercase tracking-widest hover:bg-[#00ffcc] hover:text-black transition-all text-xs disabled:opacity-50"
+						>
+							Send Message
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- EmailJS SDK -->
+		<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+		<script>
+			(function() {
+				emailjs.init('zmPiRmxRkScwdiYFX');
+			})();
+
+			const modal = document.getElementById('contactModal');
+			const modalContainer = document.querySelector('.modal-container');
+			const contactBtn = document.getElementById('contactBtn');
+			const contactBtnFooter = document.getElementById('contactBtnFooter');
+			const closeModal = document.getElementById('closeModal');
+			const contactForm = document.getElementById('contactForm');
+			const loadingOverlay = document.getElementById('loadingOverlay');
+			const successOverlay = document.getElementById('successOverlay');
+
+			function openModal() {
+				modal.classList.remove('opacity-0', 'pointer-events-none');
+				modal.classList.add('opacity-100', 'pointer-events-auto');
+				setTimeout(() => {
+					modalContainer.classList.remove('scale-95');
+					modalContainer.classList.add('scale-100');
+				}, 50);
+			}
+
+			function closeModalFunc() {
+				modalContainer.classList.remove('scale-100');
+				modalContainer.classList.add('scale-95');
+				setTimeout(() => {
+					modal.classList.add('opacity-0', 'pointer-events-none');
+					modal.classList.remove('opacity-100', 'pointer-events-auto');
+				}, 300);
+			}
+
+			contactBtn.addEventListener('click', openModal);
+			contactBtnFooter.addEventListener('click', openModal);
+			closeModal.addEventListener('click', closeModalFunc);
+			modal.addEventListener('click', (e) => {
+				if (e.target === modal) closeModalFunc();
+			});
+
+			contactForm.addEventListener('submit', function(e) {
+				e.preventDefault();
+				
+				loadingOverlay.classList.remove('hidden');
+				loadingOverlay.classList.add('flex');
+
+				emailjs.sendForm('service_akgmg6r', 'template_nx4fvkb', this)
+					.then(function() {
+						loadingOverlay.classList.add('hidden');
+						loadingOverlay.classList.remove('flex');
+						successOverlay.classList.remove('hidden');
+						successOverlay.classList.add('flex');
+						
+						setTimeout(() => {
+							successOverlay.classList.add('hidden');
+							successOverlay.classList.remove('flex');
+							closeModalFunc();
+							contactForm.reset();
+						}, 3000);
+					}, function(error) {
+						loadingOverlay.classList.add('hidden');
+						loadingOverlay.classList.remove('flex');
+						console.error('EmailJS Error:', error);
+						alert('Direct uplink failed. Please email dte.solutions.llc@gmail.com');
+					});
+			});
+		</script>
 	</body>
 </html>
