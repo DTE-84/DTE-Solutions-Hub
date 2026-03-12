@@ -479,30 +479,32 @@
 			}
 
 			function drawSavedAnnotations() {
-				annotations
-					.filter((a) => a.page === currentPage)
-					.forEach((ann) => {
-						if (ann.type === "text") {
-							if (ann.bg !== "transparent") {
-								ctx.fillStyle = ann.bg === "white" ? "white" : "#050505";
-								ctx.fillRect(ann.x, ann.y, ann.w, ann.h);
-							}
-							ctx.fillStyle = ann.color;
-							ctx.font = `${ann.size}px ${ann.font}`;
-							ctx.textBaseline = "top";
-							ctx.fillText(ann.text, ann.x + 5, ann.y + 5);
-						} else if (ann.type === "pen" || ann.type === "highlight") {
-							ctx.strokeStyle = ann.color;
-							ctx.globalAlpha = ann.type === "highlight" ? 0.3 : 1;
-							ctx.lineWidth = ann.type === "highlight" ? 20 : 2;
-							ctx.beginPath();
-							ctx.moveTo(ann.path[0].x, ann.path[0].y);
-							ann.path.forEach((p) => ctx.lineTo(p.x, p.y));
-							ctx.stroke();
-							ctx.globalAlpha = 1;
-						}
-					});
-			}
+  annotations
+    .filter((a) => a.page === currentPage)
+    .sort((a, b) => a.type === "text" ? -1 : 1)
+    .forEach((ann) => {
+      if (ann.type === "text") {
+        if (ann.bg !== "transparent") {
+          ctx.fillStyle = ann.bg === "white" ? "white" : "#050505";
+          ctx.fillRect(ann.x, ann.y, ann.w, ann.h);
+        }
+        ctx.fillStyle = ann.color;
+        ctx.font = `${ann.size}px ${ann.font}`;
+        ctx.textBaseline = "top";
+        ctx.fillText(ann.text, ann.x + 5, ann.y + 5);
+      } else if (ann.type === "pen" || ann.type === "highlight") {
+        ctx.strokeStyle = ann.color;
+        ctx.globalAlpha = ann.type === "highlight" ? 0.3 : 1;
+        ctx.lineWidth = ann.type === "highlight" ? 20 : 2;
+        ctx.beginPath();
+        ctx.moveTo(ann.path[0].x, ann.path[0].y);
+        ann.path.forEach((p) => ctx.lineTo(p.x, p.y));
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    });
+}
+
 
 			function attachCanvasListeners() {
 				canvas.addEventListener("mousedown", startAction);
@@ -600,6 +602,7 @@
   textEditInput.style.fontFamily = fontInput.value;
   textEditInput.style.color = colorPicker.value;
   textEditInput.style.padding = padding + "px";
+  textEditInput.style.background = bgType.value === "match" ? "rgba(8, 8, 8, 0.8)" : bgType.value === "white" ? "white" : "transparent";
   textEditInput.value = "";
   textEditInput.focus();
   textEditInput.onkeydown = (e) => {
@@ -636,6 +639,8 @@
   // Trigger the event listener once to set the initial height
   textEditInput.dispatchEvent(new Event('input'));
 }
+textEditInput.style.background = bgType.value === "match" ? "rgba(8, 8, 8, 0.8)" : bgType.value === "white" ? "white" : "transparent";
+
 
 
 			function zoomIn() {
