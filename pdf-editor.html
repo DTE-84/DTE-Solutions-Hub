@@ -520,8 +520,11 @@
 					selectionBox.classList.remove("hidden");
 					selectionBox.style.left = startX + "px";
 					selectionBox.style.top = startY + "px";
-					selectionBox.style.width = "0px";
-					selectionBox.style.height = "0px";
+					selectionBox.style.fontSize = currentFontSize;
+					selectionBox.style.height = "auto";
+					selectionBox.style.minHeight = "1.2em";
+					selectionBox.style.width = "auto";
+					selectionBox.style.height = "2px";
 				} else {
 					currentPath = [
 						{
