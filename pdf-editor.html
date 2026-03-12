@@ -511,39 +511,23 @@
 			}
 
 			function startAction(e) {
-    const rect = canvas.getBoundingClientRect();
-    startX = e.clientX - rect.left;
-    startY = e.clientY - rect.top;
-    isDrawing = true;
+				const rect = canvas.getBoundingClientRect();
+				startX = e.clientX - rect.left;
+				startY = e.clientY - rect.top;
+				isDrawing = true;
 
-    if (currentTool === "text" || currentTool === "replace") {
-        selectionBox.classList.remove("hidden");
-        selectionBox.style.left = startX + "px";
-        selectionBox.style.top = startY + "px";
-        
-        // --- FIXED SECTION ---
-        selectionBox.style.fontSize = currentFontSize;
-        // Set height to auto temporarily to get natural height, 
-        // then calculate the true scrollHeight
-        selectionBox.style.height = "auto"; 
-        selectionBox.style.minHeight = "1.2em"; // Optional: default height
-        selectionBox.style.width = "auto";
-        // REMOVED: selectionBox.style.height = "2px";
-        // ---------------------
-
-        // You need to ensure the textarea shrinks/grows as you type
-        // This is usually done via input event listener
-        selectionBox.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        });
-        
-        // Trigger it once to set initial size
-        selectionBox.style.height = selectionBox.scrollHeight + 'px';
-    } else {
-        // ... drawing path logic
-    }
-}
+				if (currentTool === "text" || currentTool === "replace") {
+					selectionBox.classList.remove("hidden");
+					selectionBox.style.left = startX + "px";
+					selectionBox.style.top = startY + "px";
+					selectionBox.style.width = "2px";
+					selectionBox.style.height = "2px";
+				} else {
+					currentPath = [{ x: startX * (canvas.width / rect.width), y: startY * (canvas.height / rect.height) }];
+					ctx.beginPath();
+					ctx.moveTo(startX * (canvas.width / rect.width), startY * (canvas.height / rect.height));
+				}
+			}
 			function performAction(e) {
 				if (!isDrawing) return;
 				const rect = canvas.getBoundingClientRect();
@@ -607,7 +591,6 @@
 				const fontSize = parseInt(sizeInput.value);
 				const padding = Math.max(8, fontSize * 0.5);
 				const inputHeight = fontSize + padding * 2;
-
 				textEditInput.classList.remove("hidden");
 				textEditInput.style.left = screenX + "px";
 				textEditInput.style.top = screenY + "px";
@@ -619,7 +602,6 @@
 				textEditInput.style.padding = padding + "px";
 				textEditInput.value = "";
 				textEditInput.focus();
-
 				textEditInput.onkeydown = (e) => {
 					if (e.key === "Enter") {
 						if (textEditInput.value.trim()) {
@@ -646,6 +628,8 @@
 						textEditInput.classList.add("hidden");
 					}
 				};
+				// Add this line to adjust the height of the text input box
+				textEditInput.style.height = textEditInput.scrollHeight + 'px';
 			}
 
 			function zoomIn() {
