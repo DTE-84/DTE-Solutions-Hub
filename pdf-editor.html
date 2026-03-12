@@ -593,13 +593,18 @@
 
 			function openTextInput(cx, cy, cw, ch, screenX, screenY) {
 				const fontSize = parseInt(sizeInput.value);
+				const padding = Math.max(8, fontSize * 0.5);
+				const inputHeight = fontSize + padding * 2;
+
 				textEditInput.classList.remove("hidden");
 				textEditInput.style.left = screenX + "px";
 				textEditInput.style.top = screenY + "px";
 				textEditInput.style.width = Math.max(200, cw) + "px";
+				textEditInput.style.height = inputHeight + "px";
 				textEditInput.style.fontSize = fontSize + "px";
 				textEditInput.style.fontFamily = fontInput.value;
 				textEditInput.style.color = colorPicker.value;
+				textEditInput.style.padding = padding + "px";
 				textEditInput.value = "";
 				textEditInput.focus();
 
