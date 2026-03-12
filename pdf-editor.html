@@ -588,49 +588,55 @@
 			}
 
 			function openTextInput(cx, cy, cw, ch, screenX, screenY) {
-				const fontSize = parseInt(sizeInput.value);
-				const padding = Math.max(8, fontSize * 0.5);
-				const inputHeight = fontSize + padding * 2;
-				textEditInput.classList.remove("hidden");
-				textEditInput.style.left = screenX + "px";
-				textEditInput.style.top = screenY + "px";
-				textEditInput.style.width = Math.max(200, cw) + "px";
-				textEditInput.style.height = inputHeight + "px";
-				textEditInput.style.fontSize = fontSize + "px";
-				textEditInput.style.fontFamily = fontInput.value;
-				textEditInput.style.color = colorPicker.value;
-				textEditInput.style.padding = padding + "px";
-				textEditInput.value = "";
-				textEditInput.focus();
-				textEditInput.onkeydown = (e) => {
-					if (e.key === "Enter") {
-						if (textEditInput.value.trim()) {
-							annotations.push({
-								type: "text",
-								page: currentPage,
-								text: textEditInput.value,
-								x: cx,
-								y: cy,
-								w: cw,
-								h: ch,
-								color: colorPicker.value,
-								bg: bgType.value,
-								size: parseInt(sizeInput.value),
-								font: fontInput.value,
-							});
-							renderPage(currentPage);
-							statusBar.innerText = `Text added: "${textEditInput.value}"`;
-						}
-						textEditInput.value = "";
-						textEditInput.classList.add("hidden");
-					} else if (e.key === "Escape") {
-						textEditInput.value = "";
-						textEditInput.classList.add("hidden");
-					}
-				};
-				// Add this line to adjust the height of the text input box
-				textEditInput.style.height = textEditInput.scrollHeight + 'px';
-			}
+  const fontSize = parseInt(sizeInput.value);
+  const padding = Math.max(8, fontSize * 0.5);
+  const inputHeight = fontSize + padding * 2;
+  textEditInput.classList.remove("hidden");
+  textEditInput.style.left = screenX + "px";
+  textEditInput.style.top = screenY + "px";
+  textEditInput.style.width = Math.max(200, cw) + "px";
+  textEditInput.style.height = inputHeight + "px";
+  textEditInput.style.fontSize = fontSize + "px";
+  textEditInput.style.fontFamily = fontInput.value;
+  textEditInput.style.color = colorPicker.value;
+  textEditInput.style.padding = padding + "px";
+  textEditInput.value = "";
+  textEditInput.focus();
+  textEditInput.onkeydown = (e) => {
+    if (e.key === "Enter") {
+      if (textEditInput.value.trim()) {
+        annotations.push({
+          type: "text",
+          page: currentPage,
+          text: textEditInput.value,
+          x: cx,
+          y: cy,
+          w: cw,
+          h: ch,
+          color: colorPicker.value,
+          bg: bgType.value,
+          size: parseInt(sizeInput.value),
+          font: fontInput.value,
+        });
+        renderPage(currentPage);
+        statusBar.innerText = `Text added: "${textEditInput.value}"`;
+      }
+      textEditInput.value = "";
+      textEditInput.classList.add("hidden");
+    } else if (e.key === "Escape") {
+      textEditInput.value = "";
+      textEditInput.classList.add("hidden");
+    }
+  };
+  // Add this event listener to dynamically adjust the height of the text input box
+  textEditInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  });
+  // Trigger the event listener once to set the initial height
+  textEditInput.dispatchEvent(new Event('input'));
+}
+
 
 			function zoomIn() {
 				zoom = Math.min(3, zoom + 0.25);
