@@ -196,7 +196,8 @@
 							<button data-tool="text" class="toolbar-btn">Add Text</button>
 							<button data-tool="replace" class="toolbar-btn border-[#00ffcc] text-[#00ffcc] bg-[#00ffcc]/5">Replace Text</button>
 							<button data-tool="highlight" class="toolbar-btn">Highlight</button>
-							<button id="clearBtn" class="toolbar-btn hover:text-red-400">Clear Edits</button>
+							<button id="undoBtn" class="toolbar-btn hover:text-[#00ffcc]">Undo</button>
+							<button id="clearBtn" class="toolbar-btn hover:text-red-400">Clear All</button>
 						</div>
 						
 						<div class="flex items-center gap-4">
@@ -260,7 +261,7 @@
 		
 		<footer class="status-bar flex justify-between">
 			<span id="statusBar">Ready for document uplink</span>
-			<span class="font-mono">© 2026 DTE Solutions</span>
+			<span class="font-mono">© 2026 DTE Solutions // Document Security Protocol</span>
 		</footer>
 
 		<script>
@@ -277,6 +278,7 @@
 			const bgType = document.getElementById('bgType');
 			const saveBtn = document.getElementById('saveBtn');
 			const clearBtn = document.getElementById('clearBtn');
+			const undoBtn = document.getElementById('undoBtn');
 			const thumbList = document.getElementById('thumbList');
 			const statusBar = document.getElementById('statusBar');
 			const pageCounter = document.getElementById('pageCounter');
@@ -450,6 +452,22 @@
 			function zoomOut() { zoom = Math.max(0.5, zoom - 0.25); zoomLabel.innerText = `${Math.round(zoom*100)}%`; renderPage(currentPage); }
 			function nextPage() { if (currentPage < pdfDoc.numPages) renderPage(currentPage + 1); }
 			function prevPage() { if (currentPage > 1) renderPage(currentPage - 1); }
+
+			undoBtn.onclick = () => {
+				if (annotations.length > 0) {
+					annotations.pop();
+					renderPage(currentPage);
+					statusBar.innerText = "Last edit removed.";
+				}
+			};
+
+			clearBtn.onclick = () => {
+				if (confirm("Clear all edits from this document?")) {
+					annotations = [];
+					renderPage(currentPage);
+					statusBar.innerText = "All edits cleared.";
+				}
+			};
 
 			function buildThumbs() {
 				thumbList.innerHTML = '';
