@@ -1,3 +1,6 @@
+
+Copy
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -89,6 +92,19 @@
 				color: var(--kinetic-teal);
 				background: rgba(0, 255, 204, 0.05);
 			}
+			.control-input {
+				background: #1a1a1a;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				color: #ffffff;
+				padding: 0.5rem;
+				border-radius: 8px;
+				font-family: "Inter", sans-serif;
+				font-size: 12px;
+			}
+			.control-input:focus {
+				outline: none;
+				border-color: var(--kinetic-teal);
+			}
 			canvas#pdfCanvas {
 				width: 100%;
 				height: auto;
@@ -115,16 +131,20 @@
 			}
 			#textEditInput {
 				position: absolute;
-				background: white;
+				background: #1a1a1a;
 				border: 2px solid var(--kinetic-teal);
-				color: black;
-				padding: 8px;
-				border-radius: 4px;
+				color: #ffffff;
+				padding: 8px 12px;
+				border-radius: 8px;
 				font-family: "Inter", sans-serif;
 				font-size: 14px;
 				z-index: 2000;
 				outline: none;
-				box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+				box-shadow: 0 10px 30px rgba(0,255,204,0.3), 0 0 0 1px rgba(0,255,204,0.1);
+				min-width: 200px;
+			}
+			#textEditInput::placeholder {
+				color: rgba(255, 255, 255, 0.3);
 			}
 			.status-bar {
 				background: rgba(255, 255, 255, 0.02);
@@ -218,7 +238,7 @@
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/5">
 						<div class="flex items-center gap-3">
 							<span class="font-tech text-[9px] uppercase text-white/30">Color</span>
-							<input type="color" id="colorPicker" value="#00ffcc">
+							<input type="color" id="colorPicker" value="#00ffcc" class="h-8 w-16 cursor-pointer">
 						</div>
 						<div class="flex items-center gap-3">
 							<span class="font-tech text-[9px] uppercase text-white/30">Background</span>
@@ -234,7 +254,7 @@
 						</div>
 						<div class="flex items-center gap-3">
 							<span class="font-tech text-[9px] uppercase text-white/30">Size</span>
-							<input type="number" id="sizeInput" value="14" class="control-input w-full">
+							<input type="number" id="sizeInput" value="14" min="6" max="72" class="control-input w-full">
 						</div>
 					</div>
 				</div>
@@ -246,7 +266,7 @@
 					</div>
 					<div class="lg:col-span-4 relative" id="canvasContainer">
 						<div id="selectionBox" class="selection-box hidden"></div>
-						<input type="text" id="textEditInput" class="hidden" autocomplete="off" placeholder="Enter new text...">
+						<input type="text" id="textEditInput" class="hidden" autocomplete="off" placeholder="Type text here...">
 						<div class="glass-panel p-1 relative overflow-hidden flex justify-center bg-black">
 							<canvas id="pdfCanvas"></canvas>
 						</div>
@@ -256,7 +276,7 @@
 		</main>
 
 		<div class="instruction-banner">
-			DRAG TO EDIT: Drag a box over any area to create a text field. Toggle "White Mask" to cover existing text.
+			DRAG TO EDIT: Drag a box over any area to create a text field. Toggle "White Mask" to cover existing text. Press Enter to confirm.
 		</div>
 		
 		<footer class="status-bar flex justify-between">
@@ -272,7 +292,6 @@
 			const ctx = canvas.getContext('2d');
 			const toolbar = document.getElementById('toolbar');
 			const colorPicker = document.getElementById('colorPicker');
-			const opacitySlider = document.getElementById('opacitySlider');
 			const fontInput = document.getElementById('fontInput');
 			const sizeInput = document.getElementById('sizeInput');
 			const bgType = document.getElementById('bgType');
@@ -340,7 +359,8 @@
 						}
 						ctx.fillStyle = ann.color;
 						ctx.font = `${ann.size}px ${ann.font}`;
-						ctx.fillText(ann.text, ann.x + 5, ann.y + (ann.h / 1.5));
+						ctx.textBaseline = 'top';
+						ctx.fillText(ann.text, ann.x + 5, ann.y + 5);
 					} else if (ann.type === 'pen' || ann.type === 'highlight') {
 						ctx.strokeStyle = ann.color;
 						ctx.globalAlpha = ann.type === 'highlight' ? 0.3 : 1;
@@ -366,7 +386,7 @@
 				startY = e.clientY - rect.top;
 				isDrawing = true;
 				
-				if (currentTool === 'text') {
+				if (currentTool === 'text' || currentTool === 'replace') {
 					selectionBox.classList.remove('hidden');
 					selectionBox.style.left = startX + 'px';
 					selectionBox.style.top = startY + 'px';
@@ -383,7 +403,7 @@
 				const curX = e.clientX - rect.left;
 				const curY = e.clientY - rect.top;
 
-				if (currentTool === 'text') {
+				if (currentTool === 'text' || currentTool === 'replace') {
 					const w = curX - startX;
 					const h = curY - startY;
 					selectionBox.style.width = Math.abs(w) + 'px';
@@ -409,17 +429,20 @@
 				const endX = e.clientX - rect.left;
 				const endY = e.clientY - rect.top;
 
-				if (currentTool === 'text') {
+				if (currentTool === 'text' || currentTool === 'replace') {
 					selectionBox.classList.add('hidden');
 					const w = Math.abs(endX - startX);
 					const h = Math.abs(endY - startY);
 					if (w > 10 && h > 10) {
+						const finalX = (endX > startX ? startX : endX);
+						const finalY = (endY > startY ? startY : endY);
 						openTextInput(
-							(endX > startX ? startX : endX) * (canvas.width / rect.width),
-							(endY > startY ? startY : endY) * (canvas.height / rect.height),
+							finalX * (canvas.width / rect.width),
+							finalY * (canvas.height / rect.height),
 							w * (canvas.width / rect.width),
 							h * (canvas.height / rect.height),
-							endX, endY
+							finalX,
+							finalY
 						);
 					}
 				} else {
@@ -428,22 +451,38 @@
 				}
 			}
 
-			function openTextInput(cx, cy, cw, ch, lx, ly) {
+			function openTextInput(cx, cy, cw, ch, screenX, screenY) {
 				textEditInput.classList.remove('hidden');
-				textEditInput.style.left = lx + 'px';
-				textEditInput.style.top = ly + 'px';
+				textEditInput.style.left = screenX + 'px';
+				textEditInput.style.top = screenY + 'px';
+				textEditInput.style.width = Math.max(200, cw) + 'px';
+				textEditInput.value = '';
 				textEditInput.focus();
+				
 				textEditInput.onkeydown = (e) => {
 					if (e.key === 'Enter') {
-						annotations.push({
-							type: 'text', page: currentPage, text: textEditInput.value,
-							x: cx, y: cy, w: cw, h: ch,
-							color: colorPicker.value, bg: bgType.value,
-							size: parseInt(sizeInput.value), font: fontInput.value
-						});
+						if (textEditInput.value.trim()) {
+							annotations.push({
+								type: 'text',
+								page: currentPage,
+								text: textEditInput.value,
+								x: cx,
+								y: cy,
+								w: cw,
+								h: ch,
+								color: colorPicker.value,
+								bg: bgType.value,
+								size: parseInt(sizeInput.value),
+								font: fontInput.value
+							});
+							renderPage(currentPage);
+							statusBar.innerText = `Text added: "${textEditInput.value}"`;
+						}
 						textEditInput.value = '';
 						textEditInput.classList.add('hidden');
-						renderPage(currentPage);
+					} else if (e.key === 'Escape') {
+						textEditInput.value = '';
+						textEditInput.classList.add('hidden');
 					}
 				};
 			}
@@ -502,14 +541,18 @@
 					if (ann.type === 'text') {
 						if (ann.bg !== 'transparent') {
 							page.drawRectangle({
-								x: ann.x * sX, y: height - (ann.y * sY) - (ann.h * sY),
-								width: ann.w * sX, height: ann.h * sY,
+								x: ann.x * sX,
+								y: height - (ann.y * sY) - (ann.h * sY),
+								width: ann.w * sX,
+								height: ann.h * sY,
 								color: ann.bg === 'white' ? PDFLib.rgb(1,1,1) : PDFLib.rgb(0.02,0.02,0.02)
 							});
 						}
 						page.drawText(ann.text, {
-							x: (ann.x + 5) * sX, y: height - (ann.y * sY) - (ann.h * sY / 1.5),
-							size: ann.size * sY, color: hexToRgb(ann.color)
+							x: (ann.x + 5) * sX,
+							y: height - (ann.y + 5 + ann.size) * sY,
+							size: ann.size * sY,
+							color: hexToRgb(ann.color)
 						});
 					} else {
 						for (let i = 0; i < ann.path.length - 1; i++) {
@@ -517,7 +560,8 @@
 								start: { x: ann.path[i].x * sX, y: height - (ann.path[i].y * sY) },
 								end: { x: ann.path[i+1].x * sX, y: height - (ann.path[i+1].y * sY) },
 								thickness: (ann.type === 'highlight' ? 15 : 2) * sY,
-								color: hexToRgb(ann.color), opacity: ann.type === 'highlight' ? 0.3 : 1
+								color: hexToRgb(ann.color),
+								opacity: ann.type === 'highlight' ? 0.3 : 1
 							});
 						}
 					}
@@ -528,6 +572,7 @@
 				link.download = `DTE_EDITED_${Date.now()}.pdf`;
 				link.click();
 				saveBtn.innerText = '💾 Save PDF';
+				statusBar.innerText = 'PDF saved successfully!';
 			};
 
 			function hexToRgb(hex) {
