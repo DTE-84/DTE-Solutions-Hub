@@ -511,30 +511,39 @@
 			}
 
 			function startAction(e) {
-				const rect = canvas.getBoundingClientRect();
-				startX = e.clientX - rect.left;
-				startY = e.clientY - rect.top;
-				isDrawing = true;
+    const rect = canvas.getBoundingClientRect();
+    startX = e.clientX - rect.left;
+    startY = e.clientY - rect.top;
+    isDrawing = true;
 
-				if (currentTool === "text" || currentTool === "replace") {
-					selectionBox.classList.remove("hidden");
-					selectionBox.style.left = startX + "px";
-					selectionBox.style.top = startY + "px";
-					selectionBox.style.fontSize = currentFontSize;
-					selectionBox.style.height = "auto";
-					selectionBox.style.minHeight = "1.2em";
-					selectionBox.style.width = "auto";
-					selectionBox.style.height = "2px";
-				} else {
-					currentPath = [
-						{
-							x: startX * (canvas.width / rect.width),
-							y: startY * (canvas.height / rect.height),
-						},
-					];
-				}
-			}
+    if (currentTool === "text" || currentTool === "replace") {
+        selectionBox.classList.remove("hidden");
+        selectionBox.style.left = startX + "px";
+        selectionBox.style.top = startY + "px";
+        
+        // --- FIXED SECTION ---
+        selectionBox.style.fontSize = currentFontSize;
+        // Set height to auto temporarily to get natural height, 
+        // then calculate the true scrollHeight
+        selectionBox.style.height = "auto"; 
+        selectionBox.style.minHeight = "1.2em"; // Optional: default height
+        selectionBox.style.width = "auto";
+        // REMOVED: selectionBox.style.height = "2px";
+        // ---------------------
 
+        // You need to ensure the textarea shrinks/grows as you type
+        // This is usually done via input event listener
+        selectionBox.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        
+        // Trigger it once to set initial size
+        selectionBox.style.height = selectionBox.scrollHeight + 'px';
+    } else {
+        // ... drawing path logic
+    }
+}
 			function performAction(e) {
 				if (!isDrawing) return;
 				const rect = canvas.getBoundingClientRect();
