@@ -543,32 +543,35 @@
 			}
 
 			function performAction(e) {
-				if (!isDrawing) return;
-				const rect = canvas.getBoundingClientRect();
-				const curX = e.clientX - rect.left;
-				const curY = e.clientY - rect.top;
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const curX = e.clientX - rect.left;
+    const curY = e.clientY - rect.top;
 
-				if (currentTool === "text" || currentTool === "replace") {
-					const w = curX - startX;
-					const h = curY - startY;
-					selectionBox.style.width = Math.abs(w) + "px";
-					selectionBox.style.height = Math.abs(h) + "px";
-					selectionBox.style.left = (w > 0 ? startX : curX) + "px";
-					selectionBox.style.top = (h > 0 ? startY : curY) + "px";
-				} else {
-					const scaleX = canvas.width / rect.width;
-					const scaleY = canvas.height / rect.height;
-					const canvasX = curX * scaleX;
-					const canvasY = curY * scaleY;
-					currentPath.push({ x: canvasX, y: canvasY });
+    if (currentTool === "eraser") {
+        // Simple eraser logic: draw with transparent background
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = 20; // Adjust the size of the eraser
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-					ctx.strokeStyle = colorPicker.value;
-					ctx.lineWidth = currentTool === "highlight" ? 20 : 2;
-					ctx.globalAlpha = currentTool === "highlight" ? 0.3 : 1;
-					ctx.lineTo(canvasX, canvasY);
-					ctx.stroke();
-				}
-			}
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const canvasX = curX * scaleX;
+        const canvasY = curY * scaleY;
+
+        ctx.beginPath();
+        ctx.moveTo(startX * scaleX, startY * scaleY);
+        ctx.lineTo(canvasX, canvasY);
+        ctx.stroke();
+
+        // Reset composite operation
+        ctx.globalCompositeOperation = 'source-over';
+    } else {
+        // Your existing drawing logic for other tools
+    }
+}
+
 
 			async function endAction(e) {
 				if (!isDrawing) return;
