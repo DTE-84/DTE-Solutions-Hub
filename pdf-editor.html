@@ -680,18 +680,48 @@
         }
 
         function nextPage() {
+            // Close text input if open
+            if (textEditInput.style.display === "block") {
+                textEditInput.style.display = "none";
+                textEditInput.value = "";
+                if (currentTextHandler) {
+                    textEditInput.removeEventListener("keydown", currentTextHandler);
+                    currentTextHandler = null;
+                }
+            }
+            
             if (pdfDoc && currentPage < pdfDoc.numPages) {
                 renderPage(currentPage + 1);
             }
         }
 
         function prevPage() {
+            // Close text input if open
+            if (textEditInput.style.display === "block") {
+                textEditInput.style.display = "none";
+                textEditInput.value = "";
+                if (currentTextHandler) {
+                    textEditInput.removeEventListener("keydown", currentTextHandler);
+                    currentTextHandler = null;
+                }
+            }
+            
             if (currentPage > 1) {
                 renderPage(currentPage - 1);
             }
         }
 
         undoBtn.onclick = () => {
+            // Close text input if open
+            if (textEditInput.style.display === "block") {
+                textEditInput.style.display = "none";
+                textEditInput.value = "";
+                if (currentTextHandler) {
+                    textEditInput.removeEventListener("keydown", currentTextHandler);
+                    currentTextHandler = null;
+                }
+            }
+            
             if (annotations.length > 0) {
                 const removed = annotations.pop();
                 renderPage(currentPage);
@@ -702,6 +732,16 @@
         };
 
         clearBtn.onclick = () => {
+            // Close text input if open
+            if (textEditInput.style.display === "block") {
+                textEditInput.style.display = "none";
+                textEditInput.value = "";
+                if (currentTextHandler) {
+                    textEditInput.removeEventListener("keydown", currentTextHandler);
+                    currentTextHandler = null;
+                }
+            }
+            
             if (confirm("Clear all edits from this document?")) {
                 annotations = [];
                 renderPage(currentPage);
