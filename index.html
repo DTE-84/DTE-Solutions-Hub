@@ -16,7 +16,7 @@
 			content="Engineering high-fidelity analytical ecosystems. Pure data integrity meets behavioral intelligence." />
 		<meta
 			property="og:image"
-			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/dtemainlogo2.png?v=2" />
+			content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.png?v=2" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 
@@ -65,7 +65,7 @@
 				height: 100%;
 			}
 			.glass-card:hover {
-				border-color: #00aafa;
+				border-color: #00AAFA;
 				background: #080808;
 				transform: translateY(-8px);
 				box-shadow:
@@ -79,7 +79,7 @@
 				overflow: hidden;
 			}
 			.text-gradient-teal {
-				background: linear-gradient(135deg, #00ffcc, #00aafa, #008cd4);
+				background: linear-gradient(135deg, #00ffcc, #00AAFA, #008CD4);
 				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -136,35 +136,17 @@
 				animation: orb-magic 3s ease-in-out infinite;
 			}
 
-			.orb-ring-1 .orb:nth-child(1) {
-				background: #00aafa;
-			}
-			.orb-ring-1 .orb:nth-child(2) {
-				background: #00ffcc;
-			}
-			.orb-ring-1 .orb:nth-child(3) {
-				background: #008cd4;
-			}
+			.orb-ring-1 .orb:nth-child(1) { background: #00AAFA; }
+			.orb-ring-1 .orb:nth-child(2) { background: #00ffcc; }
+			.orb-ring-1 .orb:nth-child(3) { background: #008CD4; }
 
-			.orb-ring-2 .orb:nth-child(1) {
-				background: #008cd4;
-			}
-			.orb-ring-2 .orb:nth-child(2) {
-				background: #00aafa;
-			}
-			.orb-ring-2 .orb:nth-child(3) {
-				background: #00ffcc;
-			}
+			.orb-ring-2 .orb:nth-child(1) { background: #008CD4; }
+			.orb-ring-2 .orb:nth-child(2) { background: #00AAFA; }
+			.orb-ring-2 .orb:nth-child(3) { background: #00ffcc; }
 
-			.orb-ring-3 .orb:nth-child(1) {
-				background: #00ffcc;
-			}
-			.orb-ring-3 .orb:nth-child(2) {
-				background: #008cd4;
-			}
-			.orb-ring-3 .orb:nth-child(3) {
-				background: #00aafa;
-			}
+			.orb-ring-3 .orb:nth-child(1) { background: #00ffcc; }
+			.orb-ring-3 .orb:nth-child(2) { background: #008CD4; }
+			.orb-ring-3 .orb:nth-child(3) { background: #00AAFA; }
 
 			@keyframes orb-magic {
 				0%,
@@ -374,57 +356,27 @@
 				</div>
 
 				<!-- Mobile Menu Toggle -->
-				<button
-					id="mobileMenuToggle"
+				<button 
+					id="mobileMenuToggle" 
 					class="md:hidden text-white/60 hover:text-[#00ffcc] transition-colors p-2 z-[100]"
 					aria-label="Toggle Menu">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="w-6 h-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor">
-						<path
-							id="menuIcon"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h16" />
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 					</svg>
 				</button>
 
 				<!-- Mobile Dropdown Menu -->
-				<div
-					id="mobileMenu"
+				<div 
+					id="mobileMenu" 
 					class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[90] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
-					<a
-						href="#focus"
-						class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all"
-						>Solutions</a
-					>
-					<a
-						href="#pedigree"
-						class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all"
-						>Case Studies</a
-					>
-					<button
-						id="mobileContactBtn"
-						class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all">
-						Contact
-					</button>
-					<a
-						href="https://dte-84.github.io/DTE-E-Portfolio/"
-						target="_blank"
-						class="mobile-link text-xl font-tech text-[#00ffcc] border border-[#00ffcc]/20 px-8 py-4 rounded-xl mt-4"
-						>Founder Annex</a
-					>
+					<a href="#focus" class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all">Solutions</a>
+					<a href="#pedigree" class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all">Case Studies</a>
+					<button id="mobileContactBtn" class="mobile-link text-4xl font-display text-white hover:text-[#00ffcc] transition-all">Contact</button>
+					<a href="https://dte-84.github.io/DTE-E-Portfolio/" target="_blank" class="mobile-link text-xl font-tech text-[#00ffcc] border border-[#00ffcc]/20 px-8 py-4 rounded-xl mt-4">Founder Annex</a>
 
-					<div
-						class="absolute bottom-12 font-tech text-[10px] tracking-[0.5em] text-white/20 uppercase">
-						DTE Solutions // Nexus
-					</div>
+					<div class="absolute bottom-12 font-tech text-[10px] tracking-[0.5em] text-white/20 uppercase">DTE Solutions // Nexus</div>
 				</div>
-			</nav>
+				</nav>
 			<!-- Hero Section -->
 			<header class="py-32 px-8 text-center max-w-5xl mx-auto">
 				<span
@@ -436,7 +388,7 @@
 						class="relative w-full max-w-xl md:max-w-2xl h-auto flex items-center justify-center">
 						<div class="relative z-10 text-center">
 							<img
-								src="assets/dtesolutionslogoblk.png"
+								src="assets/DTEMAINLOGO2.png"
 								alt="DTE Solutions"
 								class="h-48 md:h-64 opacity-90 mx-auto" />
 						</div>
@@ -557,13 +509,12 @@
 							A high-fidelity financial mirror detecting spending rhythms and
 							emotional triggers. Powered by the Nova AI analytical coaching
 							engine.
-							<a
-								href="pulse-breakdown.html"
-								target="_blank"
-								class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
-								>Open Pulse</a
-							>
-						</p>
+						<a
+							href="pulse-breakdown.html"
+							target="_blank"
+							class="w-full py-5 bg-[#00ffcc] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
+							>Open Pulse</a
+						>
 					</div>
 
 					<!-- Fluff -->
@@ -844,6 +795,8 @@
 				</div>
 			</div>
 
+			
+
 			<!-- Founder Annex Section -->
 			<section
 				class="py-32 px-8 bg-zinc-950 border-y border-white/5 text-center">
@@ -1084,10 +1037,10 @@
 				}
 
 				mobileMenuToggle.addEventListener("click", toggleMobileMenu);
-
-				mobileLinks.forEach((link) => {
+				
+				mobileLinks.forEach(link => {
 					link.addEventListener("click", () => {
-						if (link.id === "mobileContactBtn") {
+						if (link.id === 'mobileContactBtn') {
 							toggleMobileMenu();
 							openModal();
 						} else {
