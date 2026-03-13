@@ -703,7 +703,7 @@
 					this.style.height = "auto";
 					this.style.height = this.scrollHeight + "px";
 				});
-			}
+			
 
 			function zoomIn() {
 				zoom = Math.min(3, zoom + 0.25);
@@ -832,8 +832,4 @@
     deleteText(rect.left, rect.top, rect.width, rect.height);
 });
 
-			renderPage(1);
-			buildThumbs();
-		})();
-	</script>
-</body>
+			
