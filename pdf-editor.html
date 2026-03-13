@@ -206,7 +206,7 @@
                 <div class="flex flex-wrap gap-2" id="toolbar">
                     <button data-tool="pen" class="toolbar-btn active">Pen</button>
                     <button data-tool="text" class="toolbar-btn">Add Text</button>
-                    <button data-tool="replace" class="toolbar-btn border-[#00ffcc] text-[#00ffcc] bg-[#00ffcc]/5">Replace Text</button>
+                    <button data-tool="replace" class="toolbar-btn">Replace Text</button>
                     <button data-tool="eraser" class="toolbar-btn">Eraser</button>
                     <button data-tool="highlight" class="toolbar-btn">Highlight</button>
                     <button id="undoBtn" class="toolbar-btn hover:text-[#00ffcc]">Undo</button>
@@ -612,13 +612,16 @@
         }
 
         // Toolbar Selection
-        toolbar.addEventListener("click", (e) => {
-            if (e.target.dataset.tool) {
-                document.querySelectorAll("[data-tool]").forEach((b) => b.classList.remove("active"));
-                e.target.classList.add("active");
-                currentTool = e.target.dataset.tool;
-            }
-        });
+		toolbar.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-tool]");
+  if (btn && btn.dataset.tool) {
+    document.querySelectorAll("[data-tool]").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentTool = btn.dataset.tool;
+    statusBar.innerText = `Tool: ${btn.dataset.tool.toUpperCase()}`;
+  }
+});
+
 
         // Save PDF
         saveBtn.onclick = async () => {
