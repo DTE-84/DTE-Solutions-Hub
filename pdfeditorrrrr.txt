@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>DTE Solutions | High-Fidelity PDF Editor</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap"
+			rel="stylesheet" />
+		<!-- PDF-Lib for Manipulation -->
+		<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+		<!-- PDF.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+		<script>
+			pdfjsLib.GlobalWorkerOptions.workerSrc =
+				"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+		</script>
+
+		<style>
+			:root {
+				--obsidian: #000000;
+				--kinetic-teal: #00ffcc;
+				--charcoal: #080808;
+				--neon-blue: #00ffff;
+				--marker-red: #f44336;
+			}
+
+			body {
+				background-color: var(--obsidian);
+				color: #ffffff;
+				font-family: "Inter", sans-serif;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+				overflow: hidden; /* Prevent body scroll, let editor handle it */
+			}
+
+			.font-display {
+				font-family: "Bebas Neue", cursive;
+			}
+			.font-tech {
+				font-family: "Jura", sans-serif;
+			}
+
+			/* Glass Panel Styles */
+			.glass-panel {
+				background: rgba(8, 8, 8, 0.85);
+				backdrop-filter: blur(20px);
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				border-radius: 24px;
+			}
+
+			/* Drop Zone Styles */
+			.drop-zone {
+				border: 2px dashed rgba(0, 255, 204, 0.2);
+				transition: all 0.3s ease;
+				cursor: pointer;
+			}
+			.drop-zone:hover,
+			.drop-zone.active {
+				border-color: var(--kinetic-teal);
+				background: rgba(0, 255, 204, 0.05);
+			}
+
+			/* Buttons */
+			.btn-primary {
+				background: var(--kinetic-teal);
+				color: black;
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				transition: all 0.3s ease;
+			}
+			.btn-primary:hover {
+				transform: scale(1.02);
+				box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+			}
+
+			.toolbar-btn {
+				background: transparent;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				color: rgba(255, 255, 255, 0.4);
+				padding: 0.5rem 1rem;
+				border-radius: 8px;
+				font-family: "Jura", sans-serif;
+				font-size: 10px;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				transition: all 0.3s ease;
+				cursor: pointer;
+			}
+			.toolbar-btn:hover,
+			.toolbar-btn.active {
+				border-color: var(--kinetic-teal);
+				color: var(--kinetic-teal);
+				background: rgba(0, 255, 204, 0.05);
+			}
+
+			/* Inputs */
+			.control-input {
+				background: #1a1a1a;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				color: #ffffff;
+				padding: 0.5rem;
+				border-radius: 8px;
+				font-family: "Inter", sans-serif;
+				font-size: 12px;
+			}
+			.control-input:focus {
+				outline: none;
+				border-color: var(--kinetic-teal);
+			}
+
+			/* Editor Layout */
+			canvas#pdfCanvas {
+				width: 100%;
+				height: auto;
+				border-radius: 12px;
+				background: #050505;
+				box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+				cursor: crosshair;
+				display: block;
+			}
+
+			.thumb {
+				cursor: pointer;
+				border: 1px solid rgba(255, 255, 255, 0.05);
+				padding: 1rem;
+				background: rgba(255, 255, 255, 0.02);
+				border-radius: 12px;
+				font-family: "Jura", sans-serif;
+				font-size: 12px;
+				text-align: center;
+				transition: all 0.3s;
+			}
+			.thumb:hover {
+				border-color: var(--neon-blue);
+				color: var(--neon-blue);
+			}
+
+			/* The Critical Fix: Text Input Styling */
+			#textEditInput {
+				position: absolute;
+				background: #1a1a1a; /* Default fallback */
+				border: 2px solid var(--kinetic-teal);
+				color: #ffffff;
+				padding: 8px 12px;
+				border-radius: 8px;
+				font-family: "Inter", sans-serif;
+				z-index: 2000; /* Ensures it sits on top of canvas */
+				outline: none;
+				box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
+				min-width: 200px;
+				overflow: visible;
+			}
+
+			/* Selection Box (The box you drag) */
+			.selection-box {
+				position: absolute;
+				border: 2px dashed var(--kinetic-teal);
+				background: rgba(0, 255, 204, 0.1);
+				pointer-events: none; /* Let clicks pass through */
+				z-index: 1500;
+				display: none;
+			}
+
+			.instruction-banner {
+				background: rgba(255, 243, 205, 0.05);
+				border-top: 1px solid rgba(255, 243, 205, 0.1);
+				color: #ffeeba;
+				font-family: "Jura", sans-serif;
+				font-size: 10px;
+				text-align: center;
+				padding: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- NAVIGATION -->
+		<nav
+			class="p-8 flex justify-between items-center max-w-7xl mx-auto border-b border-white/5 z-50 relative">
+			<a href="#" class="flex items-center gap-4 group cursor-pointer">
+				<div class="flex flex-col">
+					<div class="flex items-baseline gap-2">
+						<span
+							class="font-display text-2xl text-white group-hover:text-[#00ffcc] transition-colors"
+							>DTE</span
+						>
+						<span
+							class="font-tech text-[10px] tracking-[0.4em] text-[#00ffcc] font-bold"
+							>SOLUTIONS</span
+						>
+					</div>
+					<span
+						class="font-tech tracking-[0.6em] uppercase text-[7px] text-white/20 mt-1"
+						>Utility Division</span
+					>
+				</div>
+			</a>
+			<div class="flex gap-4">
+				<button
+					onclick="document.getElementById('fileInput').click()"
+					class="toolbar-btn border-[#4CAF50]/20 text-[#4CAF50] hover:bg-[#4CAF50]/10">
+					📂 Open PDF
+				</button>
+			</div>
+		</nav>
+
+		<!-- UPLOAD SCREEN -->
+		<div
+			id="uploadContainer"
+			class="fixed inset-0 flex flex-col items-center justify-center z-40 bg-[#000000]">
+			<div class="glass-panel p-16 text-center drop-zone w-full max-w-2xl mx-4">
+				<input
+					type="file"
+					id="fileInput"
+					accept="application/pdf"
+					class="hidden" />
+				<div class="space-y-6">
+					<div
+						class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto border border-white/10 transition-all">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="w-8 h-8 text-[#00ffcc]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="1.5"
+								d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+						</svg>
+					</div>
+					<div>
+						<h3 class="font-display text-4xl mb-2 text-white">
+							Uplink Document
+						</h3>
+						<p
+							class="text-white/30 text-sm font-tech uppercase tracking-widest">
+							Drop PDF here or click to browse
+						</p>
+					</div>
+					<button
+						onclick="document.getElementById('fileInput').click()"
+						class="btn-primary px-10 py-5 rounded-2xl text-[10px]">
+						Select PDF
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- MAIN EDITOR -->
+		<main
+			id="editorContainer"
+			class="hidden flex-1 py-12 px-8 max-w-7xl mx-auto w-full flex flex-col h-full">
+			<!-- Toolbar -->
+			<div
+				class="flex flex-col gap-4 bg-zinc-900/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl shadow-2xl mb-6">
+				<div class="flex flex-wrap justify-between items-center gap-6">
+					<div class="flex flex-wrap gap-2" id="toolbar">
+						<button data-tool="pen" class="toolbar-btn active">Pen</button>
+						<button data-tool="text" class="toolbar-btn">Add Text</button>
+						<button
+							data-tool="replace"
+							class="toolbar-btn border-[#00ffcc] text-[#00ffcc] bg-[#00ffcc]/5">
+							Replace Text
+						</button>
+						<button data-tool="eraser" class="toolbar-btn">Eraser</button>
+
+						<button data-tool="highlight" class="toolbar-btn">Highlight</button>
+						<button id="undoBtn" class="toolbar-btn hover:text-[#00ffcc]">
+							Undo
+						</button>
+						<button id="clearBtn" class="toolbar-btn hover:text-red-400">
+							Clear All
+						</button>
+					</div>
+					<div class="flex items-center gap-4">
+						<div class="flex bg-black/40 rounded-xl border border-white/5 p-1">
+							<button
+								onclick="zoomOut()"
+								class="p-2 text-white/40 hover:text-white transition-colors">
+								🔍-
+							</button>
+							<span
+								id="zoomLabel"
+								class="flex items-center px-2 font-tech text-[9px] text-white/60"
+								>150%</span
+							>
+							<button
+								onclick="zoomIn()"
+								class="p-2 text-white/40 hover:text-white transition-colors">
+								🔍+
+							</button>
+						</div>
+						<div class="flex bg-black/40 rounded-xl border border-white/5 p-1">
+							<button
+								onclick="prevPage()"
+								class="p-2 text-white/40 hover:text-white transition-colors">
+								◀
+							</button>
+							<span
+								id="pageCounter"
+								class="flex items-center px-3 font-tech text-[9px] text-white/60"
+								>PAGE 0 / 0</span
+							>
+							<button
+								onclick="nextPage()"
+								class="p-2 text-white/40 hover:text-white transition-colors">
+								▶
+							</button>
+						</div>
+						<button
+							id="saveBtn"
+							class="btn-primary px-8 py-4 rounded-xl text-[10px]">
+							💾 Save PDF
+						</button>
+					</div>
+				</div>
+
+				<!-- Secondary Controls -->
+				<div class="flex flex-wrap gap-4 pt-4 border-t border-white/5">
+					<div class="flex items-center gap-3">
+						<span class="font-tech text-[9px] uppercase text-white/30"
+							>Color</span
+						>
+						<input
+							type="color"
+							id="colorPicker"
+							value="#00ffcc"
+							class="h-8 w-16 cursor-pointer bg-transparent border-none" />
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="font-tech text-[9px] uppercase text-white/30"
+							>Background</span
+						>
+						<select id="bgType" class="control-input w-32">
+							<option value="match">Match UI (Dark)</option>
+							<option value="white">White Mask (Erase)</option>
+							<option value="transparent">Transparent</option>
+						</select>
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="font-tech text-[9px] uppercase text-white/30"
+							>Font</span
+						>
+						<input
+							type="text"
+							id="fontInput"
+							value="Inter"
+							class="control-input w-32" />
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="font-tech text-[9px] uppercase text-white/30"
+							>Size</span
+						>
+						<input
+							type="number"
+							id="sizeInput"
+							value="16"
+							min="6"
+							max="72"
+							class="control-input w-20" />
+					</div>
+				</div>
+			</div>
+
+			<!-- Workspace -->
+			<div class="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8 h-full">
+				<!-- Thumbnails -->
+				<div
+					class="lg:col-span-1 space-y-4 overflow-y-auto custom-scrollbar h-full">
+					<h4
+						class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">
+						Pages
+					</h4>
+					<div id="thumbList" class="space-y-2"></div>
+				</div>
+
+				<!-- Canvas Area -->
+				<div
+					class="lg:col-span-4 relative h-full overflow-hidden bg-[#050505] rounded-2xl border border-white/5 flex items-center justify-center">
+					<div id="canvasWrapper" class="relative shadow-2xl">
+						<canvas id="pdfCanvas"></canvas>
+						<!-- Overlay Elements -->
+						<div id="selectionBox" class="selection-box"></div>
+						<input
+							type="text"
+							id="textEditInput"
+							autocomplete="off"
+							placeholder="Type here..." />
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- STATUS BAR -->
+		<div class="instruction-banner">
+			DRAG TO EDIT: Drag a box over any area to create a text field. Toggle
+			"White Mask" to cover existing text. Press Enter to confirm.
+		</div>
+		<footer
+			class="status-bar bg-black/50 border-t border-white/5 flex justify-between px-8 py-2 text-[10px] text-white/30 font-tech">
+			<span id="statusBar">Ready for document uplink</span>
+			<span>© 2026 DTE Solutions // Document Security Protocol</span>
+		</footer>
+
+		<script>
+			const fileInput = document.getElementById("fileInput");
+			const uploadContainer = document.getElementById("uploadContainer");
+			const editorContainer = document.getElementById("editorContainer");
+			const canvas = document.getElementById("pdfCanvas");
+			const ctx = canvas.getContext("2d");
+			const toolbar = document.getElementById("toolbar");
+			const colorPicker = document.getElementById("colorPicker");
+			const fontInput = document.getElementById("fontInput");
+			const sizeInput = document.getElementById("sizeInput");
+			const bgType = document.getElementById("bgType");
+			const saveBtn = document.getElementById("saveBtn");
+			const clearBtn = document.getElementById("clearBtn");
+			const undoBtn = document.getElementById("undoBtn");
+			const thumbList = document.getElementById("thumbList");
+			const statusBar = document.getElementById("statusBar");
+			const pageCounter = document.getElementById("pageCounter");
+			const zoomLabel = document.getElementById("zoomLabel");
+			const textEditInput = document.getElementById("textEditInput");
+			const selectionBox = document.getElementById("selectionBox");
+
+			let pdfDoc = null;
+			let currentPage = 1;
+			let currentTool = "pen";
+			let annotations = [];
+			let isDrawing = false;
+			let currentPath = [];
+			let pdfFile = null;
+			let zoom = 1.5;
+			let startX, startY;
+
+			fileInput.addEventListener("change", handleFile);
+
+			async function handleFile(e) {
+				const file = e.target.files[0];
+				if (file && file.type === "application/pdf") {
+					pdfFile = file;
+					const url = URL.createObjectURL(file);
+					try {
+						const loadingTask = pdfjsLib.getDocument(url);
+						pdfDoc = await loadingTask.promise;
+						uploadContainer.classList.add("hidden");
+						editorContainer.classList.remove("hidden");
+						statusBar.innerText = `Loaded: ${file.name}`;
+						await renderPage(1);
+						buildThumbs();
+						attachCanvasListeners();
+					} catch (err) {
+						statusBar.innerText = "Uplink failed.";
+						console.error(err);
+					}
+				}
+			}
+
+			async function renderPage(pageNum = 1) {
+				if (!pdfDoc) return;
+				currentPage = pageNum;
+				const page = await pdfDoc.getPage(pageNum);
+				const viewport = page.getViewport({ scale: zoom });
+
+				// Set canvas size
+				canvas.width = viewport.width;
+				canvas.height = viewport.height;
+
+				// Render PDF
+				const renderContext = { canvasContext: ctx, viewport: viewport };
+				await page.render(renderContext).promise;
+
+				// Draw saved annotations
+				drawSavedAnnotations();
+				pageCounter.innerText = `PAGE ${currentPage} / ${pdfDoc.numPages}`;
+			}
+
+			function drawSavedAnnotations() {
+				annotations
+					.filter((a) => a.page === currentPage)
+					.sort((a, b) => (a.type === "text" ? -1 : 1)) // Text on top
+					.forEach((ann) => {
+						if (ann.type === "text") {
+							// Draw Background Mask (The "Eraser" effect)
+							if (ann.bg !== "transparent") {
+								ctx.fillStyle = ann.bg === "white" ? "white" : "#050505"; // Dark mask for "match"
+								ctx.fillRect(ann.x, ann.y, ann.w, ann.h);
+							}
+							// Draw Text
+							ctx.fillStyle = ann.color;
+							ctx.font = `${ann.size}px ${ann.font}`;
+							ctx.textBaseline = "top";
+							ctx.fillText(ann.text, ann.x + 5, ann.y + 5);
+						} else if (ann.type === "pen" || ann.type === "highlight") {
+							ctx.strokeStyle = ann.color;
+							ctx.globalAlpha = ann.type === "highlight" ? 0.3 : 1;
+							ctx.lineWidth = ann.type === "highlight" ? 20 : 2;
+							ctx.beginPath();
+							if (ann.path.length > 0) {
+								ctx.moveTo(ann.path[0].x, ann.path[0].y);
+								ann.path.forEach((p) => ctx.lineTo(p.x, p.y));
+							}
+							ctx.stroke();
+							ctx.globalAlpha = 1;
+						}
+					});
+			}
+
+			function attachCanvasListeners() {
+				canvas.addEventListener("mousedown", startAction);
+				canvas.addEventListener("mousemove", performAction);
+				window.addEventListener("mouseup", endAction);
+			}
+
+			function startAction(e) {
+				const rect = canvas.getBoundingClientRect();
+				startX = e.clientX - rect.left;
+				startY = e.clientY - rect.top;
+				isDrawing = true;
+
+				if (currentTool === "text" || currentTool === "replace") {
+					selectionBox.classList.remove("hidden");
+					selectionBox.style.left = startX + "px";
+					selectionBox.style.top = startY + "px";
+					selectionBox.style.width = "2px";
+					selectionBox.style.height = "2px";
+				} else {
+					// Normalize coordinates to canvas resolution
+					const scaleX = canvas.width / rect.width;
+					const scaleY = canvas.height / rect.height;
+					currentPath = [{ x: startX * scaleX, y: startY * scaleY }];
+					ctx.beginPath();
+					ctx.moveTo(startX * scaleX, startY * scaleY);
+				}
+			}
+
+			function performAction(e) {
+				if (!isDrawing) return;
+				const rect = canvas.getBoundingClientRect();
+				const curX = e.clientX - rect.left;
+				const curY = e.clientY - rect.top;
+
+				if (currentTool === "text" || currentTool === "replace") {
+					const w = curX - startX;
+					const h = curY - startY;
+					selectionBox.style.width = Math.abs(w) + "px";
+					selectionBox.style.height = Math.abs(h) + "px";
+					selectionBox.style.left = (w > 0 ? startX : curX) + "px";
+					selectionBox.style.top = (h > 0 ? startY : curY) + "px";
+				} else {
+					const scaleX = canvas.width / rect.width;
+					const scaleY = canvas.height / rect.height;
+					const canvasX = curX * scaleX;
+					const canvasY = curY * scaleY;
+					currentPath.push({ x: canvasX, y: canvasY });
+
+					ctx.strokeStyle = colorPicker.value;
+					ctx.lineWidth = currentTool === "highlight" ? 20 : 2;
+					ctx.globalAlpha = currentTool === "highlight" ? 0.3 : 1;
+					ctx.lineTo(canvasX, canvasY);
+					ctx.stroke();
+				}
+			}
+
+			async function endAction(e) {
+				if (!isDrawing) return;
+				isDrawing = false;
+				const rect = canvas.getBoundingClientRect();
+				const endX = e.clientX - rect.left;
+				const endY = e.clientY - rect.top;
+
+				if (currentTool === "text" || currentTool === "replace") {
+					selectionBox.classList.add("hidden");
+					const w = Math.abs(endX - startX);
+					const h = Math.abs(endY - startY);
+					if (w > 10 && h > 10) {
+						const finalX = endX > startX ? startX : endX;
+						const finalY = endY > startY ? startY : endY;
+						openTextInput(
+							finalX * (canvas.width / rect.width),
+							finalY * (canvas.height / rect.height),
+							w * (canvas.width / rect.width),
+							h * (canvas.height / rect.height),
+							finalX,
+							finalY,
+						);
+					}
+				} else {
+					annotations.push({
+						type: currentTool,
+						page: currentPage,
+						path: [...currentPath],
+						color: colorPicker.value,
+					});
+					// Redraw to clear temporary drawing and save state
+					renderPage(currentPage);
+				}
+			}
+
+			function openTextInput(cx, cy, cw, ch, screenX, screenY) {
+    const fontSize = parseInt(sizeInput.value);
+    const padding = Math.max(8, fontSize * 0.5);
+    const inputHeight = fontSize + padding * 2;
+
+    // Show input
+    textEditInput.classList.remove("hidden");
+    textEditInput.style.left = screenX + "px";
+    textEditInput.style.top = screenY + "px";
+    textEditInput.style.width = Math.max(200, cw) + "px";
+    // Dynamically adjust height based on font size
+    textEditInput.style.height = inputHeight + "px";
+    textEditInput.style.fontSize = fontSize + "px";
+    textEditInput.style.fontFamily = fontInput.value;
+    textEditInput.style.color = colorPicker.value;
+    textEditInput.style.padding = padding + "px";
+
+    // ... rest of your code
+}
+
+
+				// Handle Background Logic
+				const bgVal = bgType.value;
+				if (bgVal === "match") {
+					textEditInput.style.background = "rgba(8, 8, 8, 0.8)"; // Dark overlay
+				} else if (bgVal === "white") {
+					textEditInput.style.background = "white"; // White overlay
+				} else {
+					textEditInput.style.background = "transparent";
+				}
+
+				textEditInput.value = "";
+				textEditInput.focus();
+
+				// Key Handler
+				const handleEnter = (e) => {
+					if (e.key === "Enter") {
+						if (textEditInput.value.trim()) {
+							annotations.push({
+								type: "text",
+								page: currentPage,
+								text: textEditInput.value,
+								x: cx,
+								y: cy,
+								w: cw,
+								h: ch,
+								color: colorPicker.value,
+								bg: bgType.value,
+								size: parseInt(sizeInput.value),
+								font: fontInput.value,
+							});
+							renderPage(currentPage);
+							statusBar.innerText = `Text added: "${textEditInput.value}"`;
+						}
+						textEditInput.value = "";
+						textEditInput.classList.add("hidden");
+						document.removeEventListener("keydown", handleEnter);
+					} else if (e.key === "Escape") {
+						textEditInput.value = "";
+						textEditInput.classList.add("hidden");
+						document.removeEventListener("keydown", handleEnter);
+					}
+				};
+				document.addEventListener("keydown", handleEnter);
+
+				// Auto-resize height
+				textEditInput.addEventListener("input", function () {
+					this.style.height = "auto";
+					this.style.height = this.scrollHeight + "px";
+				});
+			
+
+			function zoomIn() {
+				zoom = Math.min(3, zoom + 0.25);
+				zoomLabel.innerText = `${Math.round(zoom * 100)}%`;
+				renderPage(currentPage);
+			}
+			function zoomOut() {
+				zoom = Math.max(0.5, zoom - 0.25);
+				zoomLabel.innerText = `${Math.round(zoom * 100)}%`;
+				renderPage(currentPage);
+			}
+			function nextPage() {
+				if (currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
+			}
+			function prevPage() {
+				if (currentPage > 1) renderPage(currentPage - 1);
+			}
+
+			undoBtn.onclick = () => {
+				if (annotations.length > 0) {
+					annotations.pop();
+					renderPage(currentPage);
+					statusBar.innerText = "Last edit removed.";
+				}
+			};
+
+			clearBtn.onclick = () => {
+				if (confirm("Clear all edits from this document?")) {
+					annotations = [];
+					renderPage(currentPage);
+					statusBar.innerText = "All edits cleared.";
+				}
+			};
+
+			function buildThumbs() {
+				thumbList.innerHTML = "";
+				for (let i = 1; i <= Math.min(pdfDoc.numPages, 10); i++) {
+					const thumb = document.createElement("div");
+					thumb.className = "thumb";
+					thumb.innerText = i;
+					thumb.onclick = () => renderPage(i);
+					thumbList.appendChild(thumb);
+				}
+			}
+
+			toolbar.addEventListener("click", (e) => {
+				if (e.target.dataset.tool) {
+					document
+						.querySelectorAll("[data-tool]")
+						.forEach((b) => b.classList.remove("active"));
+					e.target.classList.add("active");
+					currentTool = e.target.dataset.tool;
+				}
+			});
+
+			saveBtn.onclick = async () => {
+				if (!pdfFile) return;
+				saveBtn.innerText = "SAVING...";
+				const existingPdfBytes = await pdfFile.arrayBuffer();
+				const pdfDocLib = await PDFLib.PDFDocument.load(existingPdfBytes);
+				const pages = pdfDocLib.getPages();
+
+				for (const ann of annotations) {
+					const page = pages[ann.page - 1];
+					const { width, height } = page.getSize();
+					const sX = width / canvas.width;
+					const sY = height / canvas.height;
+
+					if (ann.type === "text") {
+						if (ann.bg !== "transparent") {
+							page.drawRectangle({
+								x: ann.x * sX,
+								y: height - ann.y * sY - ann.h * sY,
+								width: ann.w * sX,
+								height: ann.h * sY,
+								color:
+									ann.bg === "white"
+										? PDFLib.rgb(1, 1, 1)
+										: PDFLib.rgb(0.02, 0.02, 0.02),
+							});
+						}
+						page.drawText(ann.text, {
+							x: (ann.x + 5) * sX,
+							y: height - (ann.y + 5 + ann.size) * sY,
+							size: ann.size * sY,
+							color: hexToRgb(ann.color),
+						});
+					} else {
+						for (let i = 0; i < ann.path.length - 1; i++) {
+							page.drawLine({
+								start: {
+									x: ann.path[i].x * sX,
+									y: height - ann.path[i].y * sY,
+								},
+								end: {
+									x: ann.path[i + 1].x * sX,
+									y: height - ann.path[i + 1].y * sY,
+								},
+								thickness: (ann.type === "highlight" ? 15 : 2) * sY,
+								color: hexToRgb(ann.color),
+								opacity: ann.type === "highlight" ? 0.3 : 1,
+							});
+						}
+					}
+				}
+
+				const pdfBytes = await pdfDocLib.save();
+				const link = document.createElement("a");
+				link.href = URL.createObjectURL(
+					new Blob([pdfBytes], { type: "application/pdf" }),
+				);
+				link.download = `DTE_EDITED_${Date.now()}.pdf`;
+				link.click();
+				saveBtn.innerText = "💾 Save PDF";
+				statusBar.innerText = "PDF saved successfully!";
+			};
+
+			function hexToRgb(hex) {
+				const r = parseInt(hex.slice(1, 3), 16) / 255;
+				const g = parseInt(hex.slice(3, 5), 16) / 255;
+				const b = parseInt(hex.slice(5, 7), 16) / 255;
+				return PDFLib.rgb(r, g, b);
+			}
+		</script>
+	</body>
+</html>
