@@ -309,6 +309,7 @@
 								class="flex items-center px-3 font-tech text-[9px] text-white/60"
 								>PAGE 0 / 0</span
 							>
+							
 							<button
 								onclick="nextPage()"
 								class="p-2 text-white/40 hover:text-white transition-colors">
@@ -349,6 +350,8 @@
 						<span class="font-tech text-[9px] uppercase text-white/30"
 							>Font</span
 						>
+						<button id="deleteTextBtn" class="toolbar-btn">Delete Text</button>
+
 						<input
 							type="text"
 							id="fontInput"
@@ -463,6 +466,28 @@
 					}
 				}
 			}
+
+			function deleteText(x, y, w, h) {
+    const startX = Math.min(x, x + w);
+    const startY = Math.min(y, y + h);
+    const endX = Math.max(x, x + w);
+    const endY = Math.max(y, y + h);
+
+    // Filter out text annotations that fall within the deletion area
+    annotations = annotations.filter(ann => {
+        const textRect = {
+            x: ann.x,
+            y: ann.y,
+            w: ann.w,
+            h: ann.h,
+        };
+        return !(textRect.x <= endX && textRect.x + textRect.w >= startX &&
+                 textRect.y <= endY && textRect.y + textRect.h >= startY);
+    });
+
+    // Redraw the canvas to reflect the changes
+    renderPage(currentPage);
+}
 
 			async function renderPage(pageNum = 1) {
 				if (!pdfDoc) return;
@@ -615,15 +640,18 @@
     textEditInput.style.left = screenX + "px";
     textEditInput.style.top = screenY + "px";
     textEditInput.style.width = Math.max(200, cw) + "px";
-    // Dynamically adjust height based on font size
     textEditInput.style.height = inputHeight + "px";
     textEditInput.style.fontSize = fontSize + "px";
     textEditInput.style.fontFamily = fontInput.value;
     textEditInput.style.color = colorPicker.value;
     textEditInput.style.padding = padding + "px";
 
-    // ... rest of your code
-}
+    
+
+
+
+    
+
 
 
 				// Handle Background Logic
