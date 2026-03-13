@@ -573,6 +573,9 @@
             }
         }
 
+        // Store current text input handler
+        let currentTextHandler = null;
+
         function openTextInput(cx, cy, cw, ch, screenX, screenY) {
             const fontSize = parseInt(sizeInput.value);
             const padding = Math.max(8, fontSize * 0.5);
@@ -608,14 +611,25 @@
             textEditInput.value = "";
             textEditInput.focus();
 
-            const handleKeydown = (e) => {
+            // Remove previous handler if exists
+            if (currentTextHandler) {
+                textEditInput.removeEventListener("keydown", currentTextHandler);
+            }
+
+            // Create new handler
+            currentTextHandler = (e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    if (textEditInput.value.trim()) {
-                        annotations.push({
+                    e.stopPropagation();
+                    
+                    const text = textEditInput.value.trim();
+                    console.log("Enter pressed, text:", text); // Debug
+                    
+                    if (text) {
+                        const newAnnotation = {
                             type: "text",
                             page: currentPage,
-                            text: textEditInput.value,
+                            text: text,
                             x: cx,
                             y: cy,
                             w: cw,
@@ -624,12 +638,18 @@
                             bg: bgType.value,
                             size: parseInt(sizeInput.value),
                             font: fontInput.value,
-                        });
+                        };
+                        
+                        console.log("Adding annotation:", newAnnotation); // Debug
+                        annotations.push(newAnnotation);
+                        
+                        statusBar.innerText = `Text added: "${text}"`;
                         renderPage(currentPage);
-                        statusBar.innerText = `Text added: "${textEditInput.value}"`;
                     }
+                    
                     closeTextInput();
                 } else if (e.key === "Escape") {
+                    e.preventDefault();
                     closeTextInput();
                 }
             };
@@ -637,10 +657,14 @@
             function closeTextInput() {
                 textEditInput.style.display = "none";
                 textEditInput.value = "";
-                document.removeEventListener("keydown", handleKeydown);
+                if (currentTextHandler) {
+                    textEditInput.removeEventListener("keydown", currentTextHandler);
+                    currentTextHandler = null;
+                }
             }
 
-            document.addEventListener("keydown", handleKeydown);
+            // Add handler to textEditInput directly
+            textEditInput.addEventListener("keydown", currentTextHandler);
         }
 
         function zoomIn() {
