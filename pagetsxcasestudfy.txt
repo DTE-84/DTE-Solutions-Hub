@@ -1,0 +1,100 @@
+const FeaturedCaseStudy = () => {
+	return (
+		<section id='featured' className='py-32 px-6 max-w-7xl mx-auto'>
+			<div className='flex items-center gap-4 mb-16'>
+				<span className='w-12 h-[1px] bg-accent'></span>
+				<span className='text-[14px] font-bold text-whitesmoke uppercase tracking-[0.4em]'>
+					MCSDD<span className='text-accent'>{"//"}</span>Case Study
+				</span>
+			</div>
+
+			<div className='grid lg:grid-cols-2 gap-16 items-center'>
+				<div className='relative group'>
+					<div className='absolute -inset-4 bg-accent/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700'></div>
+					<div className='relative aspect-video bg-zinc-900 border border-white/10 overflow-hidden'>
+						<video
+							src='/DTE-E-Portfolio/assets/MCSDD-PCSP.mp4'
+							poster='/DTE-E-Portfolio/assets/pcsp1.png'
+							autoPlay
+							muted
+							loop
+							playsInline
+							className='w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700'
+						/>
+						<div className='absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent'></div>
+					</div>
+				</div>
+
+				<div>
+					<span className='text-[10px] font-mono text-whitesmoke-500 mb-4 block uppercase tracking-widest'>
+						Case Study // 2026
+					</span>
+					<h2 className='text-5xl md:text-6xl font-black text-white tracking-tighter mb-8 uppercase leading-none'>
+						PCSP <br />
+						Assistant <span className='text-accent'>Pro.</span>
+					</h2>
+					<p className='text-zinc-400 text-lg leading-relaxed mb-10 font-medium'>
+						An audit-ready clinical drafting engine engineered for MCSDD. This
+						high-fidelity solution features comprehensive{" "}
+						<span className='text-white'>HCBS compliance logic</span>, automated
+						Due Process documentation, and zero-knowledge PHI security
+						protocols.
+					</p>
+
+					<div className='flex flex-wrap gap-3 mb-12'>
+						{["UI/UX", "Vanilla JS", "HIPAA-Safe", "Healthcare"].map((tag) => (
+							<span
+								key={tag}
+								className='text-[10px] font-bold text-whitesmoke-500 border border-white/10 px-3 py-1 uppercase tracking-widest'>
+								{tag}
+							</span>
+						))}
+					</div>
+
+					<div className='flex flex-col sm:flex-row gap-6'>
+						<a
+							href='https://dte-84.github.io/case-study-pcsp/'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='px-8 py-4 bg-accent text-black font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-white transition-all hover:scale-105'>
+							Launch Application
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								className='h-4 w-4 ml-2'
+								fill='none'
+								viewBox='0 0 24 24'
+								stroke='currentColor'>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+									d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+								/>
+							</svg>
+						</a>
+						<a
+							href='/case-study-pcsp'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='px-8 py-4 border border-white/20 text-white font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-accent hover:text-black hover:border-accent transition-all'>
+							Read Research
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								className='h-4 w-4 ml-2'
+								fill='none'
+								viewBox='0 0 24 24'
+								stroke='currentColor'>
+								<path
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth={2}
+									d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+								/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
+};

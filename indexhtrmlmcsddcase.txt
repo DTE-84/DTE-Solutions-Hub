@@ -1,0 +1,35 @@
+<!-- Featured Projects -->
+			<section id="projects">
+				<h2 class="section-title">
+					Data Engineering Initiatives and Case Studies
+				</h2>
+
+				<div class="project-entry">
+					<div class="entry-header">
+						<h3>MCSDD | PCSP Assistant Pro (Clinical Case Study)</h3>
+						<span class="entry-location">Missouri State Agency Compliance</span>
+					</div>
+					<p class="project-link">
+						<a href="https://dte-solutions.icu/case-study-pcsp/" target="_blank"
+							>Case Study: https://dte-solutions.icu/case-study-pcsp/</a
+						>
+					</p>
+					<ul class="bullet-list">
+						<li>
+							<strong>Architected a Zero-Footprint Logic Engine</strong>
+							ensuring 100% <strong>Data Integrity</strong> for HIPAA-compliant
+							clinical narratives, eliminating plan rejections for state
+							agencies.
+						</li>
+						<li>
+							Developed client-side validation logic that reduced documentation
+							revision cycles by 40%, satisfying strict Missouri DMH audit
+							standards through precise clinical narrative validation.
+						</li>
+						<li>
+							Applied <strong>Correlation vs. Causation</strong> analysis to
+							service reporting, ensuring accurate clinical outcomes were
+							reflected in government-mandated documentation.
+						</li>
+					</ul>
+				</div>
