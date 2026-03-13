@@ -73,13 +73,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-		.toolbar-btn.active {
-  border-color: var(--kinetic-teal) !important;
-  color: var(--kinetic-teal) !important;
-  background: rgba(0, 255, 204, 0.05) !important;
-}
-
-        .toolbar-btn:hover,  {
+        .toolbar-btn:hover, .toolbar-btn.active {
             border-color: var(--kinetic-teal);
             color: var(--kinetic-teal);
             background: rgba(0, 255, 204, 0.05);
@@ -134,7 +128,7 @@
             box-shadow: 0 10px 30px rgba(0, 255, 204, 0.3);
             min-width: 200px;
             overflow: visible;
-            display: none; /* Hidden by default */
+            display: none;
         }
         .selection-box {
             position: absolute;
@@ -155,17 +149,9 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
-        /* Custom Scrollbar */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 204, 0.3);
-            border-radius: 3px;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 255, 204, 0.3); border-radius: 3px; }
     </style>
 </head>
 <body>
@@ -210,7 +196,7 @@
         <div class="flex flex-col gap-4 bg-zinc-900/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl shadow-2xl mb-6">
             <div class="flex flex-wrap justify-between items-center gap-6">
                 <div class="flex flex-wrap gap-2" id="toolbar">
-                    <button data-tool="pen" class="toolbar-btn active">Pen</button>
+                    <button data-tool="pen" class="toolbar-btn">Pen</button>
                     <button data-tool="text" class="toolbar-btn">Add Text</button>
                     <button data-tool="replace" class="toolbar-btn">Replace Text</button>
                     <button data-tool="eraser" class="toolbar-btn">Eraser</button>
@@ -267,12 +253,10 @@
                 <h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">Pages</h4>
                 <div id="thumbList" class="space-y-2"></div>
             </div>
-
             <!-- Canvas Area -->
             <div class="lg:col-span-4 relative h-full overflow-hidden bg-[#050505] rounded-2xl border border-white/5 flex items-center justify-center p-4">
                 <div id="canvasWrapper" class="relative shadow-2xl">
                     <canvas id="pdfCanvas"></canvas>
-                    <!-- Overlay Elements -->
                     <div id="selectionBox" class="selection-box"></div>
                     <input type="text" id="textEditInput" autocomplete="off" placeholder="Type here..." />
                 </div>
@@ -282,7 +266,7 @@
 
     <!-- STATUS BAR -->
     <div class="instruction-banner">
-        DRAG TO EDIT: Drag a box over any area to create a text field. Toggle "White Mask" to cover existing text. Press Enter to confirm. Use "Delete Text" to remove annotations.
+        DRAG TO EDIT: Drag a box over any area to create a text field. Toggle "White Mask" to cover existing text. Press Enter to confirm.
     </div>
     <footer class="status-bar bg-black/50 border-t border-white/5 flex justify-between px-8 py-2 text-[10px] text-white/30 font-tech">
         <span id="statusBar">Ready for document uplink</span>
@@ -314,7 +298,7 @@
         // State Variables
         let pdfDoc = null;
         let currentPage = 1;
-        let currentTool = "pen";
+        let currentTool = "pen"; // Default tool
         let annotations = [];
         let isDrawing = false;
         let currentPath = [];
@@ -322,6 +306,9 @@
         let zoom = 1.5;
         let startX = 0;
         let startY = 0;
+
+        // Initialize - Set first button as active
+        document.querySelector('[data-tool="pen"]').classList.add('active');
 
         // File Upload Handler
         fileInput.addEventListener("change", handleFile);
@@ -357,10 +344,8 @@
             annotations = annotations.filter(ann => {
                 if (ann.type !== "text") return true;
                 const textRect = { x: ann.x, y: ann.y, w: ann.w, h: ann.h };
-                return !(textRect.x <= endX && textRect.x + textRect.w >= startX &&
-                         textRect.y <= endY && textRect.y + textRect.h >= startY);
+                return !(textRect.x <= endX && textRect.x + textRect.w >= startX && textRect.y <= endY && textRect.y + textRect.h >= startY);
             });
-
             renderPage(currentPage);
             statusBar.innerText = "Text deleted.";
         }
@@ -371,14 +356,9 @@
             currentPage = pageNum;
             const page = await pdfDoc.getPage(pageNum);
             const viewport = page.getViewport({ scale: zoom });
-
             canvas.width = viewport.width;
             canvas.height = viewport.height;
-
-            const renderContext = {
-                canvasContext: ctx,
-                viewport: viewport
-            };
+            const renderContext = { canvasContext: ctx, viewport: viewport };
             await page.render(renderContext).promise;
             drawSavedAnnotations();
             pageCounter.innerText = `PAGE ${currentPage} / ${pdfDoc.numPages}`;
@@ -427,7 +407,8 @@
             startY = e.clientY - rect.top;
             isDrawing = true;
 
-            if (currentTool === "text" || currentTool === "replace") {
+            // Check current tool to determine action
+            if (currentTool === "text" || currentTool === "replace" || currentTool === "eraser") {
                 selectionBox.classList.remove("hidden");
                 selectionBox.style.left = startX + "px";
                 selectionBox.style.top = startY + "px";
@@ -448,7 +429,7 @@
             const curX = e.clientX - rect.left;
             const curY = e.clientY - rect.top;
 
-            if (currentTool === "text" || currentTool === "replace") {
+            if (currentTool === "text" || currentTool === "replace" || currentTool === "eraser") {
                 const w = curX - startX;
                 const h = curY - startY;
                 selectionBox.style.width = Math.abs(w) + "px";
@@ -476,7 +457,7 @@
             const endX = e.clientX - rect.left;
             const endY = e.clientY - rect.top;
 
-            if (currentTool === "text" || currentTool === "replace") {
+            if (currentTool === "text" || currentTool === "replace" || currentTool === "eraser") {
                 selectionBox.classList.add("hidden");
                 const w = Math.abs(endX - startX);
                 const h = Math.abs(endY - startY);
@@ -558,15 +539,14 @@
                     document.removeEventListener("keydown", handleEnter);
                 }
             };
-
             document.addEventListener("keydown", handleEnter);
+
             textEditInput.addEventListener("input", function () {
                 this.style.height = "auto";
                 this.style.height = this.scrollHeight + "px";
             });
         }
 
-        // Zoom Functions
         function zoomIn() {
             zoom = Math.min(3, zoom + 0.25);
             zoomLabel.innerText = `${Math.round(zoom * 100)}%`;
@@ -579,7 +559,6 @@
             renderPage(currentPage);
         }
 
-        // Page Navigation
         function nextPage() {
             if (currentPage < pdfDoc.numPages) renderPage(currentPage + 1);
         }
@@ -588,7 +567,6 @@
             if (currentPage > 1) renderPage(currentPage - 1);
         }
 
-        // Undo & Clear
         undoBtn.onclick = () => {
             if (annotations.length > 0) {
                 annotations.pop();
@@ -605,7 +583,6 @@
             }
         };
 
-        // Build Thumbnails
         function buildThumbs() {
             thumbList.innerHTML = "";
             for (let i = 1; i <= Math.min(pdfDoc.numPages, 10); i++) {
@@ -617,19 +594,18 @@
             }
         }
 
-        // Toolbar Selection
-		toolbar.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-tool]");
-  if (btn && btn.dataset.tool) {
-    document.querySelectorAll("[data-tool]").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    currentTool = btn.dataset.tool;
-    statusBar.innerText = `Tool: ${btn.dataset.tool.toUpperCase()}`;
-  }
-});
+        // FIXED TOOLBAR CLICK HANDLER
+        toolbar.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-tool]");
+            if (btn && btn.dataset.tool) {
+                document.querySelectorAll("[data-tool]").forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentTool = btn.dataset.tool;
+                statusBar.innerText = `Tool: ${currentTool.toUpperCase()}`;
+                console.log("Tool changed to:", currentTool); // Debug log
+            }
+        });
 
-
-        // Save PDF
         saveBtn.onclick = async () => {
             if (!pdfFile) return;
             saveBtn.innerText = "SAVING...";
@@ -662,14 +638,8 @@
                 } else {
                     for (let i = 0; i < ann.path.length - 1; i++) {
                         page.drawLine({
-                            start: {
-                                x: ann.path[i].x * sX,
-                                y: height - ann.path[i].y * sY,
-                            },
-                            end: {
-                                x: ann.path[i + 1].x * sX,
-                                y: height - ann.path[i + 1].y * sY,
-                            },
+                            start: { x: ann.path[i].x * sX, y: height - ann.path[i].y * sY },
+                            end: { x: ann.path[i + 1].x * sX, y: height - ann.path[i + 1].y * sY },
                             thickness: (ann.type === "highlight" ? 15 : 2) * sY,
                             color: hexToRgb(ann.color),
                             opacity: ann.type === "highlight" ? 0.3 : 1,
@@ -694,20 +664,15 @@
             return PDFLib.rgb(r, g, b);
         }
 
-        // Delete Text Button (FIXED - Proper Coordinate Conversion)
         document.getElementById("deleteTextBtn").addEventListener("click", () => {
             const rect = selectionBox.getBoundingClientRect();
             const canvasRect = canvas.getBoundingClientRect();
-
-            // Convert screen coordinates to canvas internal coordinates
             const scaleX = canvas.width / canvasRect.width;
             const scaleY = canvas.height / canvasRect.height;
-
             const x = (rect.left - canvasRect.left) * scaleX;
             const y = (rect.top - canvasRect.top) * scaleY;
             const w = rect.width * scaleX;
             const h = rect.height * scaleY;
-
             deleteText(x, y, w, h);
         });
     </script>
