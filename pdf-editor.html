@@ -73,7 +73,13 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-        .toolbar-btn:hover, .toolbar-btn.active {
+		.toolbar-btn.active {
+  border-color: var(--kinetic-teal) !important;
+  color: var(--kinetic-teal) !important;
+  background: rgba(0, 255, 204, 0.05) !important;
+}
+
+        .toolbar-btn:hover,  {
             border-color: var(--kinetic-teal);
             color: var(--kinetic-teal);
             background: rgba(0, 255, 204, 0.05);
