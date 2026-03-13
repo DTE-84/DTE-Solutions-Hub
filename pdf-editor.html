@@ -456,9 +456,14 @@
 
             if (currentTool === "text" || currentTool === "replace" || currentTool === "eraser") {
                 // Show selection box for text-based tools
+                const wrapperRect = canvasWrapper.getBoundingClientRect();
+                const canvasRect = canvas.getBoundingClientRect();
+                const offsetX = canvasRect.left - wrapperRect.left;
+                const offsetY = canvasRect.top - wrapperRect.top;
+                
                 selectionBox.style.display = "block";
-                selectionBox.style.left = startX + "px";
-                selectionBox.style.top = startY + "px";
+                selectionBox.style.left = (offsetX + coords.screen.x) + "px";
+                selectionBox.style.top = (offsetY + coords.screen.y) + "px";
                 selectionBox.style.width = "2px";
                 selectionBox.style.height = "2px";
             } else {
@@ -475,12 +480,17 @@
 
             if (currentTool === "text" || currentTool === "replace" || currentTool === "eraser") {
                 // Update selection box
+                const wrapperRect = canvasWrapper.getBoundingClientRect();
+                const canvasRect = canvas.getBoundingClientRect();
+                const offsetX = canvasRect.left - wrapperRect.left;
+                const offsetY = canvasRect.top - wrapperRect.top;
+                
                 const w = coords.screen.x - startX;
                 const h = coords.screen.y - startY;
                 selectionBox.style.width = Math.abs(w) + "px";
                 selectionBox.style.height = Math.abs(h) + "px";
-                selectionBox.style.left = (w > 0 ? startX : coords.screen.x) + "px";
-                selectionBox.style.top = (h > 0 ? startY : coords.screen.y) + "px";
+                selectionBox.style.left = (offsetX + (w > 0 ? startX : coords.screen.x)) + "px";
+                selectionBox.style.top = (offsetY + (h > 0 ? startY : coords.screen.y)) + "px";
             } else {
                 // Draw path
                 currentPath.push(coords.canvas);
@@ -567,9 +577,14 @@
             const fontSize = parseInt(sizeInput.value);
             const padding = Math.max(8, fontSize * 0.5);
 
+            const wrapperRect = canvasWrapper.getBoundingClientRect();
+            const canvasRect = canvas.getBoundingClientRect();
+            const offsetX = canvasRect.left - wrapperRect.left;
+            const offsetY = canvasRect.top - wrapperRect.top;
+
             textEditInput.style.display = "block";
-            textEditInput.style.left = screenX + "px";
-            textEditInput.style.top = screenY + "px";
+            textEditInput.style.left = (offsetX + screenX) + "px";
+            textEditInput.style.top = (offsetY + screenY) + "px";
             textEditInput.style.width = Math.max(200, cw / (canvas.width / canvas.getBoundingClientRect().width)) + "px";
             textEditInput.style.height = "auto";
             textEditInput.style.fontSize = fontSize + "px";
