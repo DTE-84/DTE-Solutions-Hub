@@ -270,6 +270,8 @@
 							class="toolbar-btn border-[#00ffcc] text-[#00ffcc] bg-[#00ffcc]/5">
 							Replace Text
 						</button>
+						<button data-tool="eraser" class="toolbar-btn">Eraser</button>
+
 						<button data-tool="highlight" class="toolbar-btn">Highlight</button>
 						<button id="undoBtn" class="toolbar-btn hover:text-[#00ffcc]">
 							Undo
@@ -604,20 +606,25 @@
 			}
 
 			function openTextInput(cx, cy, cw, ch, screenX, screenY) {
-				const fontSize = parseInt(sizeInput.value);
-				const padding = Math.max(8, fontSize * 0.5);
-				const inputHeight = fontSize + padding * 2;
+    const fontSize = parseInt(sizeInput.value);
+    const padding = Math.max(8, fontSize * 0.5);
+    const inputHeight = fontSize + padding * 2;
 
-				// Show input
-				textEditInput.classList.remove("hidden");
-				textEditInput.style.left = screenX + "px";
-				textEditInput.style.top = screenY + "px";
-				textEditInput.style.width = Math.max(200, cw) + "px";
-				textEditInput.style.height = inputHeight + "px";
-				textEditInput.style.fontSize = fontSize + "px";
-				textEditInput.style.fontFamily = fontInput.value;
-				textEditInput.style.color = colorPicker.value;
-				textEditInput.style.padding = padding + "px";
+    // Show input
+    textEditInput.classList.remove("hidden");
+    textEditInput.style.left = screenX + "px";
+    textEditInput.style.top = screenY + "px";
+    textEditInput.style.width = Math.max(200, cw) + "px";
+    // Dynamically adjust height based on font size
+    textEditInput.style.height = inputHeight + "px";
+    textEditInput.style.fontSize = fontSize + "px";
+    textEditInput.style.fontFamily = fontInput.value;
+    textEditInput.style.color = colorPicker.value;
+    textEditInput.style.padding = padding + "px";
+
+    // ... rest of your code
+}
+
 
 				// Handle Background Logic
 				const bgVal = bgType.value;
@@ -668,7 +675,7 @@
 					this.style.height = "auto";
 					this.style.height = this.scrollHeight + "px";
 				});
-			}
+			
 
 			function zoomIn() {
 				zoom = Math.min(3, zoom + 0.25);
