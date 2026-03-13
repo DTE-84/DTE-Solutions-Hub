@@ -703,7 +703,7 @@
 					this.style.height = "auto";
 					this.style.height = this.scrollHeight + "px";
 				});
-			
+			}
 
 			function zoomIn() {
 				zoom = Math.min(3, zoom + 0.25);
@@ -827,6 +827,13 @@
 				const b = parseInt(hex.slice(5, 7), 16) / 255;
 				return PDFLib.rgb(r, g, b);
 			}
-		</script>
-	</body>
-</html>
+			document.getElementById("deleteTextBtn").addEventListener("click", () => {
+    const rect = selectionBox.getBoundingClientRect();
+    deleteText(rect.left, rect.top, rect.width, rect.height);
+});
+
+			renderPage(1);
+			buildThumbs();
+		})();
+	</script>
+</body>
