@@ -535,7 +535,7 @@
                     }
                 }
             } else {
-                // Save drawing annotation
+                
                 if (currentPath.length > 1) {
                     annotations.push({
                         type: currentTool,
@@ -554,7 +554,7 @@
             annotations = annotations.filter(ann => {
                 if (ann.type !== "text" || ann.page !== currentPage) return true;
                 
-                // Check if text annotation overlaps with eraser box
+                
                 const overlap = !(
                     ann.x + ann.w < cx ||
                     ann.x > cx + cw ||
@@ -611,19 +611,19 @@
             textEditInput.value = "";
             textEditInput.focus();
 
-            // Remove previous handler if exists
+            
             if (currentTextHandler) {
                 textEditInput.removeEventListener("keydown", currentTextHandler);
             }
 
-            // Create new handler
+            
             currentTextHandler = (e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     e.stopPropagation();
                     
                     const text = textEditInput.value.trim();
-                    console.log("Enter pressed, text:", text); // Debug
+                    console.log("Enter pressed, text:", text); 
                     
                     if (text) {
                         const newAnnotation = {
@@ -640,7 +640,7 @@
                             font: fontInput.value,
                         };
                         
-                        console.log("Adding annotation:", newAnnotation); // Debug
+                        console.log("Adding annotation:", newAnnotation); 
                         annotations.push(newAnnotation);
                         
                         statusBar.innerText = `Text added: "${text}"`;
@@ -663,7 +663,7 @@
                 }
             }
 
-            // Add handler to textEditInput directly
+            
             textEditInput.addEventListener("keydown", currentTextHandler);
         }
 
@@ -680,7 +680,7 @@
         }
 
         function nextPage() {
-            // Close text input if open
+            
             if (textEditInput.style.display === "block") {
                 textEditInput.style.display = "none";
                 textEditInput.value = "";
@@ -696,7 +696,7 @@
         }
 
         function prevPage() {
-            // Close text input if open
+           
             if (textEditInput.style.display === "block") {
                 textEditInput.style.display = "none";
                 textEditInput.value = "";
@@ -712,7 +712,7 @@
         }
 
         undoBtn.onclick = () => {
-            // Close text input if open
+            
             if (textEditInput.style.display === "block") {
                 textEditInput.style.display = "none";
                 textEditInput.value = "";
@@ -732,7 +732,7 @@
         };
 
         clearBtn.onclick = () => {
-            // Close text input if open
+            
             if (textEditInput.style.display === "block") {
                 textEditInput.style.display = "none";
                 textEditInput.value = "";
