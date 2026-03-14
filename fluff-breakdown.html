@@ -19,7 +19,7 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
-        .font-display { font-family: 'Bebas Neue', cursive; }
+        .font-display { font-family: 'Bebas Neue'; }
         .font-tech { font-family: 'Jura', sans-serif; }
         
         .glass-card {
@@ -91,18 +91,74 @@
         </div>
     </section>
 
-    <!-- Vision -->
+    <!-- Core Value & Market Need -->
     <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col lg:flex-row gap-20 items-center mb-20">
+        <div class="flex flex-col lg:flex-row gap-20 items-center mb-40">
             <div class="flex-1">
-                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">The Advantage</span>
-                <h2 class="font-display text-6xl md:text-8xl text-white leading-none">ELITE <br/><span class="text-white/10">ANALYSIS.</span></h2>
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">Market Disruption</span>
+                <h2 class="font-display text-6xl md:text-8xl text-white leading-none italic">THE <br/><span class="text-white/10">NEED.</span></h2>
                 <p class="text-lg text-white/40 mt-6 max-w-xl leading-relaxed">
-                    Fluff uses computer vision to track kinetic chain movement in real-time. Whether you're on the range or in a tournament, get high-fidelity feedback on your swing mechanics.
+                    Golf is a <span class="text-white">$100B+ global industry</span> where performance is traditionally gated by expensive coaching. <span class="text-[#30C476]">Fluff democratizes elite biomechanics</span>, bridging the gap between "feel" and "real" with a PGA-certified AI engine accessible to every amateur.
                 </p>
             </div>
-            <div class="flex-1 glass-card p-4">
-                <img src="assets/flufflogo.png" alt="Fluff Analysis" class="rounded-2xl border border-white/5 opacity-80">
+            <div class="flex-1 grid grid-cols-1 gap-6">
+                <div class="glass-card p-8 border-l-4 border-l-[#30C476]">
+                    <h4 class="font-display text-3xl mb-2">High-Fidelity Telemetry</h4>
+                    <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">Transforming raw kinematics into actionable swing DNA.</p>
+                </div>
+                <div class="glass-card p-8 border-l-4 border-l-white/10">
+                    <h4 class="font-display text-3xl mb-2">Zero-Latency Feedback</h4>
+                    <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">Real-time audible and visual orchestration for the green.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Ecosystem -->
+        <div id="tech" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-40">
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="brain-circuit" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Nova AI Engine</h3>
+                <p class="text-xs text-white/40 leading-relaxed">PGA-certified biomechanical analysis delivering tour-grade insights.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="map-pin" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Precision GPS</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Sub-meter accuracy for distance-to-pin and club performance tracking.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="users" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Social Ecosystem</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Gamified skins, tournament modes, and live group synchronization.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="activity" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Swing DNA</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Evolutionary tracking and historical kinematic benchmarking.</p>
+            </div>
+        </div>
+
+        <!-- Monetization Strategy -->
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">Capital Strategy</span>
+            <h2 class="font-display text-5xl md:text-7xl text-white mb-12 italic">SCALABLE <span class="text-white/10">REVENUE.</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 01</span>
+                    <h4 class="font-display text-2xl text-[#30C476] mb-2">Performance Core</h4>
+                    <p class="text-[10px] text-white/60">High-velocity acquisition via complimentary GPS and base analytics.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-gradient-to-b from-[#30C476]/20 to-transparent border border-[#30C476]/40 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-2 bg-[#30C476] text-black text-[8px] font-black uppercase tracking-tighter">Premier</div>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 02</span>
+                    <h4 class="font-display text-2xl text-white mb-2">Elite Licensing</h4>
+                    <p class="text-[10px] text-white/60">Unlimited Nova Engine access and advanced B2B tournament integration.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 03</span>
+                    <h4 class="font-display text-2xl text-[#30C476] mb-2">B2B Enterprise</h4>
+                    <p class="text-[10px] text-white/60">White-label orchestration for driving ranges and country clubs.</p>
+                </div>
             </div>
         </div>
     </section>
