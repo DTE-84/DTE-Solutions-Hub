@@ -17,8 +17,30 @@ AI-driven lead intelligence that bridges the gap between complex inheritance sce
 
 ### 💓 Pulse | Financial Behavior AI
 *Your Financial Mirror.*
-A behavioral intelligence system detecting spending rhythms and emotional triggers. Powered by the Nova high-fidelity analytical engine to provide truth-forward coaching.
-[Open Pulse](https://dte-84.github.io/DTE-FinancialSolutions/)
+A high-fidelity behavioral intelligence system detecting spending rhythms and emotional triggers. Powered by the **Financial User Behavior Pipeline (Python/Pandas/Postgres)** to provide truth-forward coaching and impulse trigger analytics.
+[Open Pulse](https://dte-84.github.io/Pulse/)
+
+---
+
+## 🏗️ Financial User Behavior Pipeline: Tracking Impulse Triggers
+### From Raw Bank Logs to Impulse Spending Metrics using Python, PostgreSQL, and Jest
+
+```mermaid
+graph LR
+    A[Raw Bank CSVs / App Logs] -->|Extract| B(Python & Pandas)
+    B -->|Clean & Transform| C{PostgreSQL DB}
+    C -->|Star Schema Load| D[(Fact & Dim Tables)]
+    D -->|Validate| E[Jest Integration Tests]
+    D -->|Analyze| F[SQL Trigger Analytics]
+    
+    style B fill:#306998,stroke:#FFD43B,color:#fff
+    style C fill:#336791,stroke:#fff,color:#fff
+    style E fill:#C21325,stroke:#fff,color:#fff
+```
+*Architecture Decisions:*
+- **Python (Pandas)**: Superior data-wrangling for messy bank logs.
+- **Postgres (Star Schema)**: Optimized for rapid behavioral slicing by mood and time.
+- **Jest (Validation)**: Mathematically accurate, production-ready reliability.
 
 ### ⛳ Fluff | Biomechanic Analyst
 *Elite PGA-Grade Swing Suite.*

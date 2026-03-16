@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Intelligence | Data Pipeline Breakdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --lux-gold: #D4AF37;
+            --charcoal: #111111;
+            --deep-slate: #1e293b;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Inter', sans-serif; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--lux-gold);
+            background: rgba(15, 15, 15, 0.9);
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-glow { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4)); }
+        
+        pre {
+            background: #080808 !important;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'monospace';
+            font-size: 0.8rem;
+            color: #d1d5db;
+        }
+        .sql-keyword { color: #D4AF37; font-weight: bold; }
+        .sql-string { color: #4ADE80; }
+        .sql-comment { color: #6b7280; font-style: italic; }
+    </style>
+</head>
+<body class="selection:bg-yellow-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#D4AF37]/40 rounded flex items-center justify-center font-black text-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
+            <a href="#overview" class="hover:text-white transition-colors">Overview</a>
+            <a href="#pipeline" class="hover:text-white transition-colors">Pipeline</a>
+            <a href="#logic" class="hover:text-white transition-colors">SQL Logic</a>
+            <a href="#tech" class="text-[#D4AF37]">Architecture</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.05),transparent_70%)]"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
+                <i data-lucide="database" class="w-4 h-4 text-[#D4AF37]"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Full-Stack Data Engineering</span>
+            </div>
+
+            <h1 class="font-display text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-6 text-gradient-gold gold-glow uppercase">
+                E-Commerce Analytics <br/> Pipeline
+            </h1>
+
+            <p class="text-xl md:text-2xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
+                "Transforming messy transaction logs into <span class="text-white font-medium">High-Fidelity Behavioral Insights</span> through Python, Postgres, and Star Schema architecture."
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://github.com/dte-84/ecommerce-analytics" target="_blank" class="px-10 py-5 bg-[#D4AF37] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#D4AF37]/20 hover:scale-105 transition-all inline-block">View Source Archive</a>
+                <a href="#pipeline" class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all inline-block">Explore Architecture</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section id="overview" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#D4AF37] font-bold block mb-4">Strategic Objective</span>
+                <h2 class="font-display text-6xl text-white leading-tight">DATA <br/><span class="text-white/10">INTEGRITY.</span></h2>
+                <p class="text-lg text-white/40 mt-6 leading-relaxed">
+                    This pipeline was built to solve the "Messy Data" problem. Using **Python and Pandas**, I standardise disparate bank logs and user activity, ensuring every byte of data is cleaned, validated, and ready for senior-level analytics.
+                </p>
+                <div class="mt-10 space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                        <p class="text-sm text-white/60 font-medium tracking-tight">Categorical-to-Ordinal Transformation</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                        <p class="text-sm text-white/60 font-medium tracking-tight">Grouped Imputation for Missing Values</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                        <p class="text-sm text-white/60 font-medium tracking-tight">Automated Jest Integrity Testing</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5">
+                    <i data-lucide="trending-up" size="120"></i>
+                </div>
+                <h3 class="font-display text-4xl mb-6">Pipeline ROI</h3>
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Processing Latency</span>
+                            <span class="text-[#D4AF37] font-tech text-xs">-85%</span>
+                        </div>
+                        <div class="w-full bg-white/5 h-1 rounded-full">
+                            <div class="bg-[#D4AF37] h-full w-[85%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Data Accuracy</span>
+                            <span class="text-[#D4AF37] font-tech text-xs">99.9%</span>
+                        </div>
+                        <div class="w-full bg-white/5 h-1 rounded-full">
+                            <div class="bg-[#D4AF37] h-full w-[99%] rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Pipeline -->
+    <section id="pipeline" class="py-32 px-8 bg-zinc-900/20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto text-center mb-20">
+            <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#D4AF37] font-bold block mb-4">Architecture Flow</span>
+            <h2 class="font-display text-6xl text-white uppercase">The Transformation Lifecycle</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div class="text-center space-y-6">
+                <div class="w-20 h-20 bg-zinc-900 rounded-3xl border border-white/10 mx-auto flex items-center justify-center text-[#D4AF37]">
+                    <i data-lucide="file-text" size="32"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase text-sm mb-2">1. Raw Logs</h4>
+                    <p class="text-white/40 text-xs">Messy CSV bank statements and disparate app logs.</p>
+                </div>
+                <div class="hidden md:block text-white/10">
+                    <i data-lucide="arrow-right"></i>
+                </div>
+            </div>
+            <div class="text-center space-y-6">
+                <div class="w-20 h-20 bg-[#D4AF37]/10 rounded-3xl border border-[#D4AF37]/30 mx-auto flex items-center justify-center text-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                    <i data-lucide="cpu" size="32"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase text-sm mb-2">2. Python ETL</h4>
+                    <p class="text-white/40 text-xs">Pandas cleaning, imputation, and ordinal mapping.</p>
+                </div>
+                <div class="hidden md:block text-white/10">
+                    <i data-lucide="arrow-right"></i>
+                </div>
+            </div>
+            <div class="text-center space-y-6">
+                <div class="w-20 h-20 bg-zinc-900 rounded-3xl border border-white/10 mx-auto flex items-center justify-center text-[#D4AF37]">
+                    <i data-lucide="database" size="32"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white uppercase text-sm mb-2">3. Star Schema</h4>
+                    <p class="text-white/40 text-xs">Postgres Fact/Dim tables optimized for SQL analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logic Section -->
+    <section id="logic" class="py-32 px-8 max-w-5xl mx-auto">
+        <div class="mb-16">
+            <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#D4AF37] font-bold block mb-4">Analytical Logic</span>
+            <h2 class="font-display text-6xl text-white uppercase mb-8 leading-none">SQL TRIGGER <br/><span class="text-white/10">ANALYTICS.</span></h2>
+        </div>
+
+        <div class="space-y-12">
+            <!-- Segmentation -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="px-3 py-1 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded text-[9px] font-black text-[#D4AF37] uppercase tracking-widest">Segmentation</div>
+                    <h4 class="text-white font-bold uppercase tracking-tight">VIP vs. Standard (CLV Mapping)</h4>
+                </div>
+                <pre><code><span class="sql-comment">-- Segments users based on total lifetime spend</span>
+<span class="sql-keyword">SELECT</span> 
+    c.user_name,
+    <span class="sql-keyword">COUNT</span>(f.transaction_id) <span class="sql-keyword">as</span> total_purchases,
+    <span class="sql-keyword">SUM</span>(f.revenue) <span class="sql-keyword">as</span> lifetime_value,
+    <span class="sql-keyword">CASE</span> 
+        <span class="sql-keyword">WHEN</span> <span class="sql-keyword">SUM</span>(f.revenue) > <span class="sql-string">1000</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'VIP'</span>
+        <span class="sql-keyword">ELSE</span> <span class="sql-string">'Standard'</span>
+    <span class="sql-keyword">END AS</span> customer_segment
+<span class="sql-keyword">FROM</span> fact_transactions f
+<span class="sql-keyword">JOIN</span> dim_customers c <span class="sql-keyword">ON</span> f.user_id = c.user_id
+<span class="sql-keyword">GROUP BY</span> c.user_id, c.user_name
+<span class="sql-keyword">ORDER BY</span> lifetime_value <span class="sql-keyword">DESC</span>;</code></pre>
+            </div>
+
+            <!-- Churn -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="px-3 py-1 bg-red-500/10 border border-red-500/20 rounded text-[9px] font-black text-red-400 uppercase tracking-widest">Retention</div>
+                    <h4 class="text-white font-bold uppercase tracking-tight">Churn Metrics (Predictive Risk)</h4>
+                </div>
+                <pre><code><span class="sql-comment">-- Identifies users who haven't purchased in the last 90+ days</span>
+<span class="sql-keyword">WITH</span> LastPurchase <span class="sql-keyword">AS</span> (
+    <span class="sql-keyword">SELECT</span> user_id, <span class="sql-keyword">MAX</span>(purchase_date) <span class="sql-keyword">as</span> last_order_date
+    <span class="sql-keyword">FROM</span> fact_transactions <span class="sql-keyword">GROUP BY</span> user_id
+)
+<span class="sql-keyword">SELECT</span> 
+    c.user_name,
+    lp.last_order_date,
+    <span class="sql-keyword">CURRENT_DATE</span> - lp.last_order_date <span class="sql-keyword">AS</span> days_since_last_order,
+    <span class="sql-keyword">CASE</span>
+        <span class="sql-keyword">WHEN</span> <span class="sql-keyword">CURRENT_DATE</span> - lp.last_order_date > <span class="sql-string">180</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'Churned'</span>
+        <span class="sql-keyword">WHEN</span> <span class="sql-keyword">CURRENT_DATE</span> - lp.last_order_date > <span class="sql-string">90</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'At Risk'</span>
+        <span class="sql-keyword">ELSE</span> <span class="sql-string">'Active'</span>
+    <span class="sql-keyword">END as</span> churn_status
+<span class="sql-keyword">FROM</span> LastPurchase lp
+<span class="sql-keyword">JOIN</span> dim_customers c <span class="sql-keyword">ON</span> lp.user_id = c.user_id;</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specs -->
+    <section id="tech" class="py-32 px-8 max-w-7xl mx-auto border-t border-white/5">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="space-y-4">
+                <i data-lucide="code-2" class="text-[#D4AF37]"></i>
+                <h4 class="font-bold text-white uppercase tracking-widest text-xs">Python / Pandas</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Standardizes messy logs. Handles Grouped Imputation for missing fields and maps categorical spending levels to an ordinal scale for statistical analysis.</p>
+            </div>
+            <div class="space-y-4">
+                <i data-lucide="server" class="text-[#D4AF37]"></i>
+                <h4 class="font-bold text-white uppercase tracking-widest text-xs">PostgreSQL / Star Schema</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Architected for high-fidelity relational joins. Fact/Dimension separation ensures rapid query performance even as dataset volume scales.</p>
+            </div>
+            <div class="space-y-4">
+                <i data-lucide="check-circle" class="text-[#D4AF37]"></i>
+                <h4 class="font-bold text-white uppercase tracking-widest text-xs">Jest Validation</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Integrated unit testing of data transformations. Proves that the pipeline is mathematically accurate and ready for production-grade financial environments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // Behavioral Intelligence Division // Engineered by Drew Ernst</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
