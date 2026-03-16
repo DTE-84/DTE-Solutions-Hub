@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCSDD | PCSP Assistant Pro Breakdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --kinetic-teal: #00ffcc;
+            --charcoal: #111111;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Inter', sans-serif; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--kinetic-teal);
+            background: rgba(15, 15, 15, 0.9);
+        }
+        .text-gradient-teal {
+            background: linear-gradient(135deg, #00ffcc, #00AAFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .teal-glow { filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4)); }
+    </style>
+</head>
+<body class="selection:bg-cyan-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#00ffcc]/40 rounded flex items-center justify-center font-black text-[#00ffcc] group-hover:bg-[#00ffcc] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
+            <a href="#vision" class="hover:text-white transition-colors">Vision</a>
+            <a href="#integrity" class="hover:text-white transition-colors">Data Integrity</a>
+            <a href="#tech" class="hover:text-white transition-colors">Architecture</a>
+            <a href="#compliance" class="text-[#00ffcc]">Compliance</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,204,0.05),transparent_70%)]"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
+                <i data-lucide="shield-check" class="w-4 h-4 text-[#00ffcc]"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">HIPAA-Compliant Systems Engineering</span>
+            </div>
+
+            <h1 class="font-display text-5xl md:text-[9rem] tracking-tighter leading-[0.9] mb-6 text-gradient-teal teal-glow uppercase">
+                PCSP PRO
+            </h1>
+
+            <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
+                "Eliminating plan rejections through <span class="text-white font-medium">Zero-Knowledge PHI Protocols</span> and client-side validation logic."
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://dte-84.github.io/case-study-pcsp/" target="_blank" class="px-10 py-5 bg-[#00ffcc] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#00ffcc]/20 hover:scale-105 transition-all inline-block">Launch Application</a>
+                <a href="#integrity" class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all inline-block">Technical Brief</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold block mb-4">Case Study Brief</span>
+                <h2 class="font-display text-6xl text-white leading-tight">REGULATORY <br/><span class="text-white/10">FRICTION.</span></h2>
+                <p class="text-lg text-white/40 mt-6 leading-relaxed">
+                    Missouri state agencies faced high plan rejection rates due to non-compliant clinical narratives. I architected a **Zero-Footprint Logic Engine** to ensure 100% data integrity for HIPAA-compliant documentation.
+                </p>
+            </div>
+            <div class="glass-card p-10 space-y-8">
+                <div class="flex gap-6 items-start">
+                    <div class="w-12 h-12 bg-[#00ffcc]/10 rounded-xl flex items-center justify-center shrink-0 text-[#00ffcc]">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold uppercase text-sm mb-1 tracking-tight">40% Efficiency Gain</h4>
+                        <p class="text-white/40 text-xs leading-relaxed">Reduced documentation revision cycles by 40%, satisfying strict Missouri DMH audit standards.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="w-12 h-12 bg-[#00ffcc]/10 rounded-xl flex items-center justify-center shrink-0 text-[#00ffcc]">
+                        <i data-lucide="lock"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold uppercase text-sm mb-1 tracking-tight">Zero-Knowledge Architecture</h4>
+                        <p class="text-white/40 text-xs leading-relaxed">Engineered a solution where PHI never touches a server, ensuring total privacy compliance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Logic -->
+    <section id="integrity" class="py-32 px-8 bg-zinc-900/20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold block mb-4">Engineering Principles</span>
+                <h2 class="font-display text-6xl text-white">THE INTEGRITY ENGINE.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 group">
+                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">Clinical Validation</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Developed complex client-side validation logic that parses narratives against government HCBS compliance mandates in real-time.</p>
+                </div>
+                <div class="glass-card p-10 group">
+                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">Data Integrity</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Applied **Correlation vs. Causation** analysis to service reporting, ensuring accurate clinical outcomes were reflected in mandated documentation.</p>
+                </div>
+                <div class="glass-card p-10 group">
+                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">HIPAA-Safe Flow</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">Designed a high-fidelity drafting environment where clinical data is processed entirely in the browser buffer, eliminating server-side risk.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specs -->
+    <section id="tech" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="glass-card p-8 border-white/5">
+                <i data-lucide="code" class="mb-6 text-[#00ffcc]"></i>
+                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Vanilla JS</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Zero-dependency core logic for maximum security and longevity.</p>
+            </div>
+            <div class="glass-card p-8 border-white/5">
+                <i data-lucide="layout" class="mb-6 text-[#00ffcc]"></i>
+                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Adaptive UI</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Responsive clinical interfaces designed for high-pressure state agency use.</p>
+            </div>
+            <div class="glass-card p-8 border-white/5">
+                <i data-lucide="file-check" class="mb-6 text-[#00ffcc]"></i>
+                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Audit-Ready</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Standardized output formats matching Missouri DMH reporting templates.</p>
+            </div>
+            <div class="glass-card p-8 border-white/5">
+                <i data-lucide="cpu" class="mb-6 text-[#00ffcc]"></i>
+                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Logic Engine</h4>
+                <p class="text-white/40 text-xs leading-relaxed">Client-side narrative assembly ensuring HIPAA-compliant "Zero Knowledge" flows.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // Missouri Healthcare Division // Engineered with Intention by Drew Ernst</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
