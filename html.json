@@ -50,7 +50,7 @@
   "            <span class=\"font-tech tracking-[0.3em] uppercase text-[10px] text-white/40\">Solutions Hub</span>",
   "        </div>",
   "        <div class=\"hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest text-white/60\">",
-  "            <a href=\"#ecosystem\" class=\"hover:text-white transition-colors\">Ecosystem</a>",
+  "            <a href=\"#ecosystem\" class=\"hover:text-white transition-colors\">System</a>",
   "            <a href=\"#pulse\" class=\"hover:text-white transition-colors\">Pulse</a>",
   "            <a href=\"#fluff\" class=\"hover:text-white transition-colors\">Fluff</a>",
   "            <a href=\"#invest\" class=\"text-[#22C55E]\">Investment Pitch</a>",
