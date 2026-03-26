@@ -306,6 +306,30 @@
 				background: white;
 				color: black;
 			}
+
+			/* Rolling Text Animation */
+			.rolling-text {
+				display: inline-block;
+				overflow: hidden;
+				vertical-align: top;
+				height: 1em;
+				line-height: 1;
+				position: relative;
+			}
+			.rolling-text-item {
+				display: block;
+				transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.nav-link-wrapper:hover .rolling-text-item {
+				transform: translateY(-100%);
+			}
+			.rolling-text-char {
+				display: inline-block;
+				transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.nav-link-wrapper:hover .rolling-text-char {
+				transform: translateY(-100%);
+			}
 		</style>
 	</head>
 	<body class="selection:bg-cyan-500/30">
@@ -338,21 +362,34 @@
 				</div>
 				<div
 					class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest text-white/60 items-center">
-					<a href="#focus" class="hover:text-white transition-colors"
-						>Solutions</a
-					>
-					<a href="#pedigree" class="hover:text-white transition-colors"
-						>Case Studies</a
-					>
-					<button id="contactBtn" class="hover:text-white transition-colors">
-						Contact
+					<a href="#focus" class="nav-link-wrapper hover:text-white transition-colors py-1" data-text="Solutions">
+						<span class="rolling-text">
+							<span class="rolling-text-item">Solutions</span>
+							<span class="rolling-text-item absolute top-full left-0 text-[#00ffcc]">Solutions</span>
+						</span>
+					</a>
+					<a href="#pedigree" class="nav-link-wrapper hover:text-white transition-colors py-1" data-text="Case Studies">
+						<span class="rolling-text">
+							<span class="rolling-text-item">Case Studies</span>
+							<span class="rolling-text-item absolute top-full left-0 text-[#00ffcc]">Case Studies</span>
+						</span>
+					</a>
+					<button id="contactBtn" class="nav-link-wrapper hover:text-white transition-colors py-1" data-text="Contact">
+						<span class="rolling-text">
+							<span class="rolling-text-item">Contact</span>
+							<span class="rolling-text-item absolute top-full left-0 text-[#00ffcc]">Contact</span>
+						</span>
 					</button>
 					<a
 						href="https://dte-84.github.io/DTE-Portfolio/"
 						target="_blank"
-						class="annex-link px-4 py-2 rounded-lg"
-						>Founder Annex</a
-					>
+						class="annex-link px-4 py-2 rounded-lg nav-link-wrapper"
+						data-text="Founder Annex">
+						<span class="rolling-text">
+							<span class="rolling-text-item">Founder Annex</span>
+							<span class="rolling-text-item absolute top-full left-0">Founder Annex</span>
+						</span>
+					</a>
 				</div>
 
 				<!-- Mobile Menu Toggle -->
