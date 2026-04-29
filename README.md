@@ -61,7 +61,7 @@ Real-time kinetic chain tracking using computer vision biometrics. Synchronized 
 ---
 
 ## 🏛️ Founder Annex
-For a deep dive into the technical foundation, mentorship history, and full-stack philosophy of our Principal Engineer, visit the [Founder Annex](https://dte-84.github.io/DTE-E-Portfolio/).
+For a deep dive into the technical foundation, mentorship history, and full-stack philosophy of our Principal Engineer, visit the [Founder Annex](https://dte-84.github.io/DTE-Portfolio/).
 
 ---
 
