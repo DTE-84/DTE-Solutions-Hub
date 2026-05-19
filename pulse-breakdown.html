@@ -7,6 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="pulse-manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pulse">
+    <link rel="apple-touch-icon" href="assets/pulse/icons/icon-180.png">
     <style>
         :root {
             --obsidian: #050505;
@@ -94,7 +99,7 @@
 
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="https://pulse-blond-three.vercel.app/" class="px-10 py-5 bg-[#22C55E] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#22C55E]/20 hover:scale-105 transition-all inline-block">Launch Application</a>
-                <a href="assets/fluff/Fluff_Golf_Investor_Pitch.pdf" download class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all inline-block">Download Pitch Deck</a>
+                <a href="assets/pulse/PulsePitch.pdf" download class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all inline-block">Download Pitch Deck</a>
             </div>
         </div>
 
@@ -367,13 +372,75 @@
         </div>
     </section>
 
+    <!-- Mobile App Section -->
+    <section id="mobile" class="py-24 px-8 border-t border-white/5 bg-zinc-950/50">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#22C55E]/10 border border-[#22C55E]/20 mb-8">
+                <i data-lucide="smartphone" class="w-3 h-3 text-[#22C55E]"></i>
+                <span class="text-[9px] font-bold uppercase tracking-widest text-[#22C55E]">Mobile Optimized</span>
+            </div>
+            <h2 class="font-display text-5xl md:text-7xl text-white mb-6">PULSE ON THE GO.</h2>
+            <p class="text-white/50 mb-12 max-w-2xl mx-auto text-lg">Pulse is engineered as a high-fidelity Progressive Web App. Install it directly to your mobile device for the full behavioral experience.</p>
+
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div class="glass-card p-8">
+                    <h3 class="text-[#22C55E] font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="apple" class="w-4 h-4"></i> iOS Installation
+                    </h3>
+                    <ul class="text-white/40 text-sm space-y-3 list-none">
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">01.</span>
+                            <span>Open this page in <span class="text-white">Safari</span></span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">02.</span>
+                            <span>Tap the <span class="text-white">Share</span> button</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">03.</span>
+                            <span>Select <span class="text-white">"Add to Home Screen"</span></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="glass-card p-8">
+                    <h3 class="text-[#22C55E] font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="play" class="w-4 h-4"></i> Android Installation
+                    </h3>
+                    <ul class="text-white/40 text-sm space-y-3 list-none">
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">01.</span>
+                            <span>Open this page in <span class="text-white">Chrome</span></span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">02.</span>
+                            <span>Tap the <span class="text-white">Menu</span> (three dots)</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-[#22C55E] font-bold">03.</span>
+                            <span>Select <span class="text-white">"Install App"</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="py-20 px-8 text-center border-t border-white/5">
-        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">� 2026 DTE Solutions // STL STL Division // Engineered with Intention by Drew Ernst</p>
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // STL STL Division // Engineered with Intention by Drew Ernst</p>
     </footer>
 
     <script>
         lucide.createIcons();
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('pulse-sw.js')
+                    .then(reg => console.log('Pulse SW registered'))
+                    .catch(err => console.log('Pulse SW failed', err));
+            });
+        }
     </script>
 </body>
 </html>

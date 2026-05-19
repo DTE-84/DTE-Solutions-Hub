@@ -88,6 +88,66 @@
 				filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4));
 			}
 
+			/* Racecar Hamburger Menu */
+			.nav-ham {
+				width: 44px;
+				height: 44px;
+				background: #000;
+				border-radius: 12px;
+				position: relative;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				cursor: pointer;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				gap: 4px;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+				z-index: 100;
+			}
+
+			.nav-ham span {
+				width: 20px;
+				height: 2px;
+				background: #fff;
+				border-radius: 2px;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			/* Off-centered horizontal lines */
+			.nav-ham span:nth-child(1) {
+				transform: translateX(-2px);
+			}
+
+			.nav-ham span:nth-child(2) {
+				transform: translateX(2px);
+			}
+
+			/* Hover State */
+			.nav-ham:hover {
+				border-color: #00ffcc;
+				box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+			}
+
+			/* Active/Open State */
+			.nav-ham.active {
+				background: #00ffcc;
+				border-color: #00ffcc;
+			}
+
+			.nav-ham.active span {
+				background: #000;
+				transform: translateX(0);
+			}
+
+			.nav-ham.active span:nth-child(1) {
+				transform: translateY(3px) rotate(45deg);
+			}
+
+			.nav-ham.active span:nth-child(2) {
+				transform: translateY(-3px) rotate(-45deg);
+			}
+
 			
 
 			/* Rings & Orbs */
@@ -392,14 +452,13 @@
 					</a>
 				</div>
 
-				<!-- Mobile Menu Toggle -->
+				<!-- Mobile Menu Toggle (Racecar Edition) -->
 				<button 
 					id="mobileMenuToggle" 
-					class="md:hidden text-white/60 hover:text-[#00ffcc] transition-colors p-2 z-[100]"
+					class="md:hidden nav-ham"
 					aria-label="Toggle Menu">
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-					</svg>
+					<span></span>
+					<span></span>
 				</button>
 
 				<!-- Mobile Dropdown Menu -->
@@ -539,9 +598,15 @@
 									class="w-full h-full object-cover" />
 							</div>
 						</div>
-						<p class="text-sm text-white/50 leading-relaxed mb-8 flex-grow">
+						<p class="text-sm text-white/50 leading-relaxed mb-4 flex-grow">
 							AI-assisted finance dashboard that helps users understand spending behavior, financial patterns, and decision-making through data-driven insights.
 						</p>
+						<div class="flex items-center gap-2 mb-8">
+							<div class="px-3 py-1 rounded-md bg-[#00ffcc]/10 border border-[#00ffcc]/20 text-[#00ffcc] text-[8px] font-black uppercase tracking-widest flex items-center gap-1.5">
+								<i data-lucide="smartphone" class="w-3 h-3"></i>
+								Mobile App Ready
+							</div>
+						</div>
 						<a
 							href="pulse-breakdown.html"
 							target="_blank"
@@ -1177,7 +1242,6 @@
 
 				const mobileMenuToggle = document.getElementById("mobileMenuToggle");
 				const mobileMenu = document.getElementById("mobileMenu");
-				const menuIcon = document.getElementById("menuIcon");
 				const mobileLinks = document.querySelectorAll(".mobile-link");
 
 				function toggleMobileMenu() {
@@ -1185,11 +1249,11 @@
 					if (isOpen) {
 						mobileMenu.classList.remove("translate-x-0");
 						mobileMenu.classList.add("translate-x-full");
-						menuIcon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+						mobileMenuToggle.classList.remove("active");
 					} else {
 						mobileMenu.classList.add("translate-x-0");
 						mobileMenu.classList.remove("translate-x-full");
-						menuIcon.setAttribute("d", "M6 18L18 6M6 6l12 12");
+						mobileMenuToggle.classList.add("active");
 					}
 				}
 

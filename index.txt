@@ -67,7 +67,7 @@
         </p>
         <div class="flex flex-wrap justify-center gap-6">
             <a href=\"https://dte-solutions.icu\" class=\"px-10 py-5 bg-[#22C55E] text-black font-black uppercase text-xs rounded-2xl shadow-xl shadow-[#22C55E]/20 hover:scale-105 transition-all inline-block">Explore Portfolio</a>
-            <a href="assets/fluff/Fluff_Golf_Investor_Pitch.pdf" download class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-2xl hover:bg-white/5 transition-all inline-block">Download Pitch Deck</a>
+            <a href="assets/pulse/PulsePitch.pdf" download class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-2xl hover:bg-white/5 transition-all inline-block">Download Pitch Deck</a>
         </div>
     </header>
 
@@ -164,7 +164,7 @@
 
     <!-- Footer -->
     <footer class=\"py-16 px-8 text-center mt-12\"><div class=\"flex justify-center gap-8 mb-4\"><a href=\"legal/privacy.html\" class=\"text-[9px] font-mono uppercase tracking-[0.3em] text-white/20 hover:text-[#22C55E] transition-colors\">Privacy</a><a href=\"legal/terms.html\" class=\"text-[9px] font-mono uppercase tracking-[0.3em] text-white/20 hover:text-[#22C55E] transition-colors\">Terms</a></div>
-        <p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">© 2026 DTE Solutions // Behavioral Intelligence Division</p>
+        <p class="text-[9px] font-mono uppercase tracking-[0.6em] text-white/10">ï¿½ 2026 DTE Solutions // Behavioral Intelligence Division</p>
     </footer>
 
 </body>
