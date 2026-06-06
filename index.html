@@ -519,7 +519,7 @@
 				</p>
 				<div class="flex flex-wrap justify-center gap-6">
 					<a
-						href="#focus"
+						href="#pulse-headliner"
 						class="px-10 py-5 bg-gradient-to-r from-[#00ffcc] to-[#1F51FF] text-black font-black uppercase text-xs rounded-2xl shadow-xl shadow-[#00ffcc]/20 hover:scale-105 transition-all inline-block"
 						>Explore Solutions</a
 					>
@@ -532,15 +532,80 @@
 				</div>
 			</header>
 
+			<!-- Pulse Headliner (Front and Center) -->
+			<section id="pulse-headliner" class="py-24 px-8 max-w-7xl mx-auto scroll-mt-24">
+				<div class="glass-card focus-card overflow-hidden border-[#00ffcc] shadow-[0_0_50px_rgba(0,255,204,0.15)]">
+					<div class="flex flex-col lg:flex-row items-stretch">
+						<!-- Visual Side -->
+						<div class="w-full lg:w-1/2 aspect-video lg:aspect-auto bg-black relative overflow-hidden">
+							<video 
+								autoplay 
+								loop 
+								muted 
+								playsinline 
+								class="w-full h-full object-cover opacity-80">
+								<source src="assets/pulse.mp4" type="video/mp4" />
+							</video>
+							<div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+							<div class="absolute bottom-10 left-10">
+								<img src="assets/PulseNovaLogo.png" class="h-16 mb-4 teal-glow" alt="Pulse Logo">
+								<h3 class="font-display text-4xl text-white">LEAD PRODUCT: PULSE</h3>
+							</div>
+						</div>
+						
+						<!-- Content Side -->
+						<div class="w-full lg:w-1/2 p-12 flex flex-col justify-center">
+							<span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold mb-6 block">Behavioral Intelligence SaaS</span>
+							<h2 class="font-display text-6xl text-white leading-none mb-6">PULSE-AI</h2>
+							<p class="text-xl text-white/50 leading-relaxed mb-8">
+								High-performance financial telemetry platform utilizing predictive modeling to decode spending behavior. Engineered for the next generation of data-driven wealth management.
+							</p>
+							
+							<div class="space-y-6 mb-12">
+								<div class="flex items-center gap-4 group">
+									<div class="w-10 h-10 rounded-full bg-[#00ffcc]/10 flex items-center justify-center text-[#00ffcc] group-hover:bg-[#00ffcc] group-hover:text-black transition-all">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+										</svg>
+									</div>
+									<p class="text-sm font-tech uppercase tracking-widest text-white/70">Real-time Bank Telemetry</p>
+								</div>
+								<div class="flex items-center gap-4 group">
+									<div class="w-10 h-10 rounded-full bg-[#00ffcc]/10 flex items-center justify-center text-[#00ffcc] group-hover:bg-[#00ffcc] group-hover:text-black transition-all">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+										</svg>
+									</div>
+									<p class="text-sm font-tech uppercase tracking-widest text-white/70">Deterministic Architecture</p>
+								</div>
+							</div>
+
+							<div class="flex flex-col sm:flex-row gap-4">
+								<button 
+									id="launchPulseBtn"
+									class="flex-1 py-6 bg-[#00ffcc] text-black font-black uppercase text-xs rounded-2xl shadow-xl shadow-[#00ffcc]/30 hover:scale-105 transition-all text-center">
+									Launch Pulse (Install to Mobile)
+								</button>
+								<a 
+									href="pulse-breakdown.html" 
+									class="flex-1 py-6 border border-white/10 text-white font-black uppercase text-xs rounded-2xl hover:bg-white/5 transition-all text-center">
+									Architecture Brief
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<!-- Focus Products (The Big Three) -->
-			<section id="focus" class="py-24 px-8 max-w-7xl mx-auto">
+			<section id="focus" class="py-24 px-8 max-w-7xl mx-auto border-t border-white/5">
 				<div class="mb-16 text-center lg:text-left">
 					<span
 						class="font-tech text-[10px] uppercase tracking-[0.4em] text-[#00ffcc] font-bold block mb-4"
-						>Featured Products</span
+						>Ecosystem Ecosystem</span
 					>
 					<h2 class="font-display text-6xl text-white">
-						AI Products & Business Tools
+						Additional AI Solutions
 					</h2>
 				</div>
 
@@ -574,44 +639,6 @@
 							target="_blank"
 							class="w-full py-5  bg-gradient-to-r from-[#00ffcc] to-[#1F51FF] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
 							>Explore SetLogic</a
-						>
-					</div>
-
-					<!-- Pulse -->
-					<div class="glass-card focus-card p-10 group">
-						<div class="flex justify-between items-start mb-8">
-							<div class="space-y-2">
-								<h2
-									class="font-display text-5xl text-white group-hover:text-gradient-teal transition-all">
-									PULSE-AI
-								</h2>
-								<p
-									class="font-tech text-[8px] uppercase tracking-[0.4em] text-white/30">
-									Financial Behavior AI
-								</p>
-							</div>
-							<div
-								class="w-16 h-16 rounded-2xl overflow-hidden border border-[#00ffcc]/20">
-								<img
-									src="assets/PulseNovaLogo.png"
-									alt="Pulse Logo"
-									class="w-full h-full object-cover" />
-							</div>
-						</div>
-						<p class="text-sm text-white/50 leading-relaxed mb-4 flex-grow">
-							Full-stack behavioral finance SaaS utilizing Python, FastAPI, and Pydantic for high-performance REST architecture and predictive spending telemetry.
-						</p>
-						<div class="flex items-center gap-2 mb-8">
-							<div class="px-3 py-1 rounded-md bg-[#00ffcc]/10 border border-[#00ffcc]/20 text-[#00ffcc] text-[8px] font-black uppercase tracking-widest flex items-center gap-1.5">
-								<i data-lucide="smartphone" class="w-3 h-3"></i>
-								Mobile App Ready
-							</div>
-						</div>
-						<a
-							href="pulse-breakdown.html"
-							target="_blank"
-							class="w-full py-5 bg-gradient-to-r from-[#00ffcc] to-[#1F51FF] text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all block text-center"
-							>Open Pulse-AI</a
 						>
 					</div>
 
@@ -1306,6 +1333,38 @@
 							);
 						},
 					);
+				});
+
+				// PWA Installation Logic
+				let deferredPrompt;
+				const launchPulseBtn = document.getElementById('launchPulseBtn');
+
+				window.addEventListener('beforeinstallprompt', (e) => {
+					// Prevent Chrome 67 and earlier from automatically showing the prompt
+					e.preventDefault();
+					// Stash the event so it can be triggered later.
+					deferredPrompt = e;
+					// Update UI notify the user they can install the PWA
+					console.log('Pulse PWA install prompt is ready.');
+				});
+
+				launchPulseBtn.addEventListener('click', async () => {
+					if (deferredPrompt) {
+						// Show the install prompt
+						deferredPrompt.prompt();
+						// Wait for the user to respond to the prompt
+						const { outcome } = await deferredPrompt.userChoice;
+						console.log(`Pulse PWA install prompt outcome: ${outcome}`);
+						// We've used the prompt, and can't use it again, throw it away
+						deferredPrompt = null;
+					} else {
+						// Fallback: Just open the app if install isn't available or already installed
+						window.open('https://dte-solutions-llc.github.io/Pulse/', '_blank');
+					}
+				});
+
+				window.addEventListener('appinstalled', (event) => {
+					console.log('Pulse PWA was installed successfully.');
 				});
 			</script>
 		</div>
