@@ -1314,19 +1314,9 @@
 					console.log('Pulse PWA install prompt is ready.');
 				});
 
-				launchPulseBtn.addEventListener('click', async () => {
-					if (deferredPrompt) {
-						// Show the install prompt
-						deferredPrompt.prompt();
-						// Wait for the user to respond to the prompt
-						const { outcome } = await deferredPrompt.userChoice;
-						console.log(`Pulse PWA install prompt outcome: ${outcome}`);
-						// We've used the prompt, and can't use it again, throw it away
-						deferredPrompt = null;
-					} else {
-						// Fallback: Just open the app if install isn't available or already installed
-						window.open('https://dte-solutions-llc.github.io/Pulse/', '_blank');
-					}
+				launchPulseBtn.addEventListener('click', () => {
+					// Redirect to Vercel app where automatic PWA installation is handled
+					window.open('https://pulse-blond-three.vercel.app/', '_blank');
 				});
 
 				window.addEventListener('appinstalled', (event) => {
