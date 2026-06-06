@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse-AI | Subscription Management & Billing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --kinetic-green: #22C55E;
+            --charcoal: #111111;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Inter', sans-serif; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--kinetic-green);
+            background: rgba(15, 15, 15, 0.9);
+        }
+        .text-gradient-green {
+            background: linear-gradient(135deg, #22C55E, #4ADE80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .green-glow { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.4)); }
+        
+        .premium-border {
+            border: 1px solid transparent;
+            background: linear-gradient(var(--obsidian), var(--obsidian)) padding-box,
+                        linear-gradient(135deg, var(--kinetic-green), transparent) border-box;
+        }
+    </style>
+</head>
+<body class="selection:bg-green-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#22C55E]/40 rounded flex items-center justify-center font-black text-[#22C55E] group-hover:bg-[#22C55E] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60 items-center">
+            <a href="pulse-breakdown.html" class="hover:text-white transition-colors">Return to Breakdown</a>
+            <a href="https://pulse-blond-three.vercel.app/" target="_blank" class="px-6 py-2 border border-[#22C55E]/30 text-[#22C55E] rounded-full hover:bg-[#22C55E] hover:text-black transition-all">Launch App</a>
+        </div>
+    </nav>
+
+    <!-- Hero / Header -->
+    <header class="pt-48 pb-20 px-8 text-center max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#22C55E]/10 border border-[#22C55E]/20 mb-6">
+            <i data-lucide="shield-check" class="w-3 h-3 text-[#22C55E]"></i>
+            <span class="text-[9px] font-bold uppercase tracking-widest text-[#22C55E]">Secure Billing Nexus</span>
+        </div>
+        <h1 class="font-display text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter">Choose Your <span class="text-gradient-green">Velocity.</span></h1>
+        <p class="text-lg text-white/40 leading-relaxed max-w-2xl mx-auto font-light">
+            Pulse-AI utilizes Plaid-integrated telemetry to power your behavioral financial engine. Select a tier to unlock Nova's full potential.
+        </p>
+    </header>
+
+    <!-- Pricing Tiers -->
+    <section class="pb-32 px-8 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Free Tier -->
+            <div class="glass-card p-10 flex flex-col h-full opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                <div class="mb-8">
+                    <h3 class="font-tech text-xs uppercase tracking-[0.4em] text-white/30 mb-2">Sandbox</h3>
+                    <h2 class="text-4xl font-display font-black text-white">FREE</h2>
+                    <p class="text-[10px] text-white/20 mt-1 uppercase tracking-widest">Always Free Beta</p>
+                </div>
+                <ul class="space-y-4 mb-12 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Basic Bank Link (Plaid Sandbox)</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Nova Basic Coaching</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Manual Transaction Input</span>
+                    </li>
+                </ul>
+                <a href="https://pulse-blond-three.vercel.app/" class="w-full py-4 text-center border border-white/10 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-white/5 transition-all">Start Free Trial</a>
+            </div>
+
+            <!-- Standard Tier -->
+            <div class="glass-card p-10 flex flex-col h-full premium-border relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#22C55E] text-black px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.2em]">Most Popular</div>
+                <div class="mb-8">
+                    <h3 class="font-tech text-xs uppercase tracking-[0.4em] text-[#22C55E] mb-2 font-bold">Standard</h3>
+                    <h2 class="text-4xl font-display font-black text-white">$9.99<span class="text-xs text-white/30 font-normal tracking-normal">/mo</span></h2>
+                    <p class="text-[10px] text-[#22C55E]/40 mt-1 uppercase tracking-widest">Real-time Telemetry</p>
+                </div>
+                <ul class="space-y-4 mb-12 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-white/70">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Unlimited Real-time Plaid Links</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/70">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Nova Behavioral Mirroring</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/70">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Advanced Stress Index Analysis</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/70">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>S3 Encrypted Receipt Vault</span>
+                    </li>
+                </ul>
+                <a href="https://pulse-blond-three.vercel.app/signup" class="w-full py-5 text-center bg-[#22C55E] text-black rounded-xl font-black uppercase text-[10px] tracking-widest hover:scale-[1.02] transition-all shadow-xl shadow-[#22C55E]/20">Activate Standard</a>
+            </div>
+
+            <!-- Premium Tier -->
+            <div class="glass-card p-10 flex flex-col h-full border-white/10">
+                <div class="mb-8">
+                    <h3 class="font-tech text-xs uppercase tracking-[0.4em] text-white/30 mb-2">Elite</h3>
+                    <h2 class="text-4xl font-display font-black text-white">$14.99<span class="text-xs text-white/30 font-normal tracking-normal">/mo</span></h2>
+                    <p class="text-[10px] text-white/20 mt-1 uppercase tracking-widest">Full Mastery</p>
+                </div>
+                <ul class="space-y-4 mb-12 flex-grow">
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>All Standard Features</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Predictive Capital Forecasting</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Multi-Currency Intelligence</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-white/50">
+                        <i data-lucide="check" class="w-4 h-4 text-[#22C55E]"></i>
+                        <span>Direct 1:1 Mentorship Access</span>
+                    </li>
+                </ul>
+                <a href="https://pulse-blond-three.vercel.app/signup" class="w-full py-4 text-center border border-white/10 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-white/10 transition-all">Upgrade to Elite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Management Portal -->
+    <section class="py-24 px-8 border-t border-white/5 bg-zinc-950/30">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-12 text-center md:text-left">
+                <div class="w-32 h-32 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                    <i data-lucide="user-cog" class="w-12 h-12 text-[#22C55E] opacity-50"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-display font-black mb-4 uppercase tracking-tight">Existing Subscriber?</h2>
+                    <p class="text-white/40 text-sm leading-relaxed mb-8">
+                        Already have an active behavioral engine? Access your billing portal to manage your subscription, update payment methods, or cancel anytime. All billing logic is synced across web and mobile platforms.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="https://pulse-blond-three.vercel.app/billing" target="_blank" class="px-8 py-4 bg-white border border-white text-black font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-transparent hover:text-white transition-all">Access Billing Portal</a>
+                        <button onclick="alert('Please contact dte.solutions.llc@gmail.com for direct billing support.')" class="px-8 py-4 border border-white/10 text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-white/5 transition-all">Support Inquiry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plaid Security Section -->
+    <section class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="glass-card p-12 bg-gradient-to-br from-zinc-900 to-transparent flex flex-col md:flex-row items-center gap-16 border-white/10">
+            <div class="w-full md:w-1/2">
+                <img src="assets/pulse/Pulse-Intro.png" alt="Plaid Security" class="rounded-2xl shadow-2xl opacity-80 border border-white/5">
+            </div>
+            <div class="w-full md:w-1/2 space-y-6">
+                <h3 class="text-3xl font-display font-black uppercase tracking-tight text-[#22C55E]">Bank-Level Security</h3>
+                <p class="text-white/50 leading-relaxed italic">
+                    "We never see your credentials. We never touch your money."
+                </p>
+                <p class="text-sm text-white/30 leading-relaxed">
+                    Pulse-AI utilizes Plaid's read-only interface to process telemetry data. Your sensitive authentication data is handled exclusively by Plaid's world-class infrastructure. We utilize high-fidelity encryption for all processed signals.
+                </p>
+                <div class="flex items-center gap-6 pt-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Plaid_logo.svg" alt="Plaid Logo" class="h-6 opacity-30 grayscale brightness-200">
+                    <div class="h-4 w-px bg-white/10"></div>
+                    <p class="text-[9px] font-tech uppercase tracking-widest text-white/20">End-to-End Encryption Protocol</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // Behavioral Intelligence Division</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
