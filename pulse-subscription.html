@@ -668,58 +668,57 @@
         </div>
 
         <div class="price-grid">
-            <!-- Free -->
-            <div class="card price-card" style="opacity:.75;">
+            <!-- Standard -->
+            <div class="card price-card">
                 <div style="margin-bottom:28px;text-align:left;">
-                    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Sandbox</div>
-                    <div class="price-amount">Free</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:4px;">Always free · Beta access</div>
+                    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Standard</div>
+                    <div class="price-amount"><span id="stdPrice">$9.99</span><span class="price-per">/mo</span></div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px;">Behavioral Tracking</div>
                 </div>
                 <ul class="feat-list" style="flex:1;margin-bottom:28px;">
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Plaid Sandbox Bank Link</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Real-time Plaid Bank Link (1)</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Nova Basic Coaching</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Manual Transaction Input</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Manual Trigger Logging</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Basic Spending Dashboard</li>
                 </ul>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;">Start Free</a>
-                    <a href="https://pulse-blond-three.vercel.app/auth?guest=true" target="_blank" class="btn-outline" style="text-align:center;font-size:12px;padding:9px 16px;display:flex;align-items:center;justify-content:center;gap:6px;"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>Try Sandbox</a>
-                </div>
+                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;width:100%;display:block;padding:14px;">Get Started</a>
             </div>
 
-            <!-- Standard -->
+            <!-- Pro -->
             <div class="card card-active price-card">
                 <div class="price-badge">Most Popular</div>
                 <div style="margin-bottom:28px;text-align:left;">
-                    <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Standard</div>
-                    <div class="price-amount"><span id="stdPrice">$9.99</span><span class="price-per">/mo</span></div>
-                    <div style="font-size:12px;color:rgba(34,197,94,0.4);margin-top:4px;">Real-time telemetry</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Pro</div>
+                    <div class="price-amount"><span id="proPrice">$14.99</span><span class="price-per">/mo</span></div>
+                    <div style="font-size:12px;color:rgba(34,197,94,0.4);margin-top:4px;">Advanced Intelligence</div>
                 </div>
                 <ul class="feat-list" style="flex:1;margin-bottom:28px;">
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Unlimited Real-time Plaid Links</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Nova Behavioral Mirroring</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Nova Full Behavioral Mirroring</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Advanced Stress Index</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>S3 Encrypted Receipt Vault</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Multi-Account Dashboard</li>
                 </ul>
-                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-green" style="text-align:center;width:100%;display:block;padding:14px;">Activate Standard</a>
+                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-green" style="text-align:center;width:100%;display:block;padding:14px;">Activate Pro</a>
             </div>
 
             <!-- Elite -->
             <div class="card price-card">
                 <div style="margin-bottom:28px;text-align:left;">
                     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Elite</div>
-                    <div class="price-amount"><span id="elitePrice">$14.99</span><span class="price-per">/mo</span></div>
-                    <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px;">Full mastery</div>
+                    <div class="price-amount"><span id="elitePrice">$19.99</span><span class="price-per">/mo</span></div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px;">Pre-Order Exclusive</div>
+                </div>
+                <div style="margin-bottom:16px;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;font-size:11px;color:var(--green);font-weight:700;">
+                    <i data-lucide="clock" style="width:12px;height:12px;display:inline-block;margin-right:4px;"></i>
+                    Early Bird: $14.99 for Life
                 </div>
                 <ul class="feat-list" style="flex:1;margin-bottom:28px;">
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>All Standard Features</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>All Pro Features</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Predictive Capital Forecasting</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Multi-Currency Intelligence</li>
                     <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Direct 1:1 Mentorship Access</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Priority Support</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Priority Support Channel</li>
                 </ul>
-                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;width:100%;display:block;padding:14px;">Upgrade to Elite</a>
+                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;width:100%;display:block;padding:14px;">Pre-Order Elite</a>
             </div>
         </div>
 
@@ -997,7 +996,8 @@
         yearly = !yearly;
         el.classList.toggle('on', yearly);
         document.getElementById('stdPrice').textContent = yearly ? '$7.99' : '$9.99';
-        document.getElementById('elitePrice').textContent = yearly ? '$11.99' : '$14.99';
+        document.getElementById('proPrice').textContent = yearly ? '$11.99' : '$14.99';
+        document.getElementById('elitePrice').textContent = yearly ? '$15.99' : '$19.99';
     }
 
     // FAQ accordion
