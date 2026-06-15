@@ -92,7 +92,7 @@
 
         /* ── HERO ── */
         .hero { padding: 160px 48px 80px; text-align: center; }
-        .hero h1 { font-size: clamp(40px,7vw,80px); font-weight: 900; letter-spacing: -3px; line-height: 1; margin-bottom: 24px; }
+        .hero h1 { font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -.5px; line-height: 1.3; margin-bottom: 16px; color: rgba(255,255,255,0.7); }
         .hero p { font-size: 17px; color: var(--text-muted); max-width: 560px; margin: 0 auto 36px; line-height: 1.7; }
         .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
         .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 8px 18px; font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
@@ -236,18 +236,15 @@
 
 <!-- ── HERO ───────────────────────────────────────── -->
 <header class="hero">
-    <div class="hero-badge">
-        <span></span>
-        Custom AI Development Studio · Active
-    </div>
-
-    <!-- DTE Logo -->
-    <div style="margin-bottom:32px;position:relative;display:inline-block;">
+    <!-- DTE Logo + Badge stacked center -->
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:40px;">
+        <div class="hero-badge" style="margin-bottom:20px;">
+            <span></span>
+            Custom AI Development Studio · Active
+        </div>
         <img src="assets/dtesolutionslogoblk.png" alt="DTE Solutions"
-             style="height:180px;max-width:100%;mix-blend-mode:screen;"
+             style="height:280px;max-width:90vw;mix-blend-mode:screen;"
              onerror="this.style.display='none'" />
-        <!-- subtle glow halo -->
-        <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center,rgba(0,170,250,0.08) 0%,transparent 70%);pointer-events:none;z-index:-1;border-radius:50%;"></div>
     </div>
 
     <h1>Automate Smarter.<br>Build Faster.<br><em style="font-style:normal;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">With AI.</em></h1>
