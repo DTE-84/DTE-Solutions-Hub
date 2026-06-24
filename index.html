@@ -116,9 +116,7 @@
         .why-card { padding: 36px; display: flex; gap: 20px; align-items: flex-start; text-align: left; }
         .why-side-media { flex-shrink: 0; }
         .why-side-text { flex: 1; min-width: 0; max-width: 400px; }
-        .why-chart { height: 60px; display: flex; align-items: flex-end; gap: 4px; margin-bottom: 24px; }
-        .why-bar { width: 8px; border-radius: 3px; background: rgba(0,255,204,0.15); }
-        .why-bar.active { background: var(--grad); }
+
 
         /* ── PRODUCT SHOWCASE ── */
         .showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -192,7 +190,6 @@
 
         @media (max-width: 768px) {
             html, body { overflow-x: hidden; width: 100%; position: relative; }
-            .why-chart { display: none !important; }
             .why-card { padding: 24px; }
             .nav { padding: 16px 20px; max-width: 100vw; }
             .section { padding: 60px 20px; max-width: 100vw; overflow: hidden; }
@@ -299,9 +296,7 @@
         <div class="why-grid">
             <div class="card why-card">
                 <div class="why-side-media">
-                    <div class="why-chart">
-                        <div class="why-bar" style="height:20%"></div><div class="why-bar" style="height:35%"></div><div class="why-bar active" style="height:55%"></div><div class="why-bar active" style="height:70%"></div><div class="why-bar active" style="height:90%"></div><div class="why-bar active" style="height:100%"></div>
-                    </div>
+
                     <div class="icon-box" style="margin-bottom:0;"><i data-lucide="brain"></i></div>
                 </div>
                 <div class="why-side-text">
@@ -311,9 +306,7 @@
             </div>
             <div class="card why-card">
                 <div class="why-side-media">
-                    <div class="why-chart">
-                        <div class="why-bar active" style="height:60%"></div><div class="why-bar" style="height:40%"></div><div class="why-bar active" style="height:80%"></div><div class="why-bar" style="height:50%"></div><div class="why-bar active" style="height:95%"></div><div class="why-bar active" style="height:70%"></div>
-                    </div>
+
                     <div class="icon-box" style="margin-bottom:0;"><i data-lucide="layers"></i></div>
                 </div>
                 <div class="why-side-text">
@@ -323,9 +316,7 @@
             </div>
             <div class="card why-card">
                 <div class="why-side-media">
-                    <div class="why-chart">
-                        <div class="why-bar" style="height:30%"></div><div class="why-bar active" style="height:50%"></div><div class="why-bar active" style="height:65%"></div><div class="why-bar active" style="height:85%"></div><div class="why-bar" style="height:75%"></div><div class="why-bar active" style="height:100%"></div>
-                    </div>
+
                     <div class="icon-box" style="margin-bottom:0;"><i data-lucide="trending-up"></i></div>
                 </div>
                 <div class="why-side-text">
