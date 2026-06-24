@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_blank">
     <title>Pulse-AI | Grow Your Financial Intelligence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -23,7 +24,6 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            max-width: 100vw;
             width: 100%;
             position: relative;
         }
@@ -42,7 +42,7 @@
         .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; }
         .nav-links a:hover { color: #fff; }
         .btn-green {
-            background: var(--green); color: #000; font-size: 13px; font-weight: 700;
+            background: var(--green); color: #000 !important; font-size: 13px; font-weight: 700;
             padding: 10px 22px; border-radius: 10px; border: none; cursor: pointer;
             text-decoration: none; transition: opacity .2s;
         }
@@ -178,7 +178,7 @@
 
         /* ── MOBILE SCALING & OVERFLOW HARDENING ── */
         @media (max-width: 768px) {
-            html, body { overflow-x: hidden; width: 100vw; max-width: 100vw; position: relative; }
+            html, body { overflow-x: hidden; width: 100%; position: relative; }
             .nav-wrap { padding: 18px 20px; max-width: 100vw; }
             .hero { padding: 120px 20px 60px; max-width: 100vw; }
             header { padding: 0 20px !important; }
@@ -265,18 +265,18 @@
         </div>
 
         <!-- Feature content panels -->
-        <div id="tab-convert" class="tab-panel" style="display:grid;grid-template-columns:1fr;gap:20px;text-align:left;">
-            <div class="card" style="padding:36px;">
+        <div id="tab-convert" class="tab-panel" style="display:grid;grid-template-columns:1fr;gap:20px;text-align:center;">
+            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
                 <div class="why-icon"><i data-lucide="brain" style="width:20px;height:20px;color:var(--green);"></i></div>
                 <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Spending Triggers</h3>
                 <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Pulse identifies the emotional and contextual patterns that drive your spending — not just the transactions, but the WHY behind them.</p>
             </div>
-            <div class="card" style="padding:36px;">
+            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
                 <div class="why-icon"><i data-lucide="activity" style="width:20px;height:20px;color:var(--green);"></i></div>
                 <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Stress Index</h3>
                 <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">A proprietary financial stress score that correlates your behavioral data with market conditions and personal cash flow patterns.</p>
             </div>
-            <div class="card" style="padding:36px;">
+            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
                 <div class="why-icon"><i data-lucide="trending-up" style="width:20px;height:20px;color:var(--green);"></i></div>
                 <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Predictive Capital Forecasting</h3>
                 <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Our ML engine models your future financial trajectory using 90-day rolling behavioral data — so you always know where you're headed before you get there.</p>
@@ -384,18 +384,18 @@
             </div>
         </div>
         <!-- 3 problem cards -->
-        <div style="display:grid;grid-template-columns:1fr;gap:20px;">
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);">
+        <div style="display:grid;grid-template-columns:1fr;gap:20px;text-align:center;">
+            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
                 <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">🧠</div>
                 <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Psychological Blindness</h4>
                 <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Users lack awareness of the emotional triggers that drive their spending, leading to a cycle of reactive financial decisions.</p>
             </div>
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);">
+            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
                 <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">⚡</div>
                 <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Data Without Context</h4>
                 <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Raw transaction lists don't account for life stress, sleep, or mood — the true drivers of capital velocity.</p>
             </div>
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);">
+            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
                 <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">🎯</div>
                 <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">The 'Survival' Loop</h4>
                 <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Most tools focus on budgeting for survival rather than engineering for intentional growth and behavioral mastery.</p>
@@ -471,23 +471,23 @@
         <div class="section-label" style="letter-spacing:.2em;">Engineering Specs</div>
         <h2 style="font-size:clamp(52px,8vw,110px);font-weight:900;line-height:.9;letter-spacing:-4px;margin:16px 0 0;text-transform:uppercase;">THE TECHNICAL</h2>
         <h2 style="font-size:clamp(52px,8vw,110px);font-weight:900;line-height:.9;letter-spacing:-4px;margin:0 0 64px;text-transform:uppercase;color:rgba(255,255,255,0.12);">HEARTBEAT.</h2>
-        <div style="display:grid;grid-template-columns:1fr;gap:16px;text-align:left;">
-            <div class="card" style="padding:28px;">
+        <div style="display:grid;grid-template-columns:1fr;gap:16px;text-align:center;">
+            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
                 <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="layers" style="width:17px;height:17px;color:var(--green);"></i></div>
                 <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Categorization Engine</h4>
                 <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">Rule-based logic layer parsing transactions in real-time with high-confidence auto-assignment.</p>
             </div>
-            <div class="card" style="padding:28px;">
+            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
                 <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="cloud" style="width:17px;height:17px;color:var(--green);"></i></div>
                 <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">S3 Receipt System</h4>
                 <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">Encrypted digital receipt management with pre-signed URLs for sub-millisecond audit-ready paper trails.</p>
             </div>
-            <div class="card" style="padding:28px;">
+            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
                 <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="zap" style="width:17px;height:17px;color:var(--green);"></i></div>
                 <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Async Performance</h4>
                 <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">FastAPI & Motor (Async MongoDB) for sub-millisecond response times under heavy loads.</p>
             </div>
-            <div class="card" style="padding:28px;">
+            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
                 <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="shield-check" style="width:17px;height:17px;color:var(--green);"></i></div>
                 <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Security First</h4>
                 <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">JWT Auth, Bcrypt hashing, and read-only Plaid integration for bank-level encryption.</p>
