@@ -36,7 +36,7 @@
             --grad-dim: linear-gradient(135deg, rgba(0,255,204,0.15), rgba(0,170,250,0.15));
             --text-muted: rgba(255,255,255,0.42);
         }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        html, body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; max-width: 100vw; width: 100%; position: relative; }
         a { text-decoration: none; color: inherit; }
 
         /* ── NAV ── */
@@ -188,9 +188,11 @@
         #instructionsContainer { width: 90%; max-width: 640px; background: #080808; border: 1px solid rgba(0,255,204,0.2); border-radius: 24px; padding: 48px; transition: transform .5s; transform: scale(.95); position: relative; overflow: hidden; }
         #instructionsModal.open #instructionsContainer { transform: scale(1); }
 
-        /* ── MOBILE SCALING & OVERFLOW HARDENING ── */
         @media (max-width: 768px) {
-            body { overflow-x: hidden; width: 100%; position: relative; }
+            html, body { overflow-x: hidden; width: 100vw; max-width: 100vw; position: relative; }
+            .why-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+            .why-card .why-chart { margin: 0 auto 16px auto; }
+            .why-card .icon-box { margin: 0 auto 16px auto !important; }
             .nav { padding: 16px 20px; max-width: 100vw; }
             .section { padding: 60px 20px; max-width: 100vw; overflow: hidden; }
             .hero { padding: 120px 20px 60px; max-width: 100vw; }
@@ -330,11 +332,11 @@
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
             <div>
                 <div class="section-label">Flagship Product</div>
-                <h2 class="section-title">Smarter finance,<br><em style="font-style:normal;color:var(--teal);">built with AI.</em></h2>
+                <h2 class="section-title">Pulse<br><span style="font-size: 0.65em; font-weight: normal;">Smarter finance, <em style="font-style:normal;color:var(--teal);">built with AI.</em></span></h2>
                 <p class="section-sub">Pulse-AI is the behavioral finance engine at the heart of the DTE ecosystem — real-time, intelligent, and adaptive.</p>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;padding-top:8px;">
-                <a href="pulse-subscription.html" class="btn-teal">View Pricing</a>
+                <a href="pulse-subscription.html" class="btn-teal">Pulse-CS-Breakdown</a>
                 <button id="launchPulseBtn" class="btn-ghost">Launch App</button>
             </div>
         </div>
@@ -415,6 +417,12 @@
                 <p>Full-stack analytics workflow to process e-commerce data, validate outputs, and surface cleaner reporting for business decisions.</p>
                 <a href="https://ecomm-505qtlvsc-dte-solutions.vercel.app/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--teal);margin-top:16px;">View Archive <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
+            <div class="card feat-card" style="text-align:left;">
+                <div class="icon-box"><i data-lucide="home"></i></div>
+                <h4>MW Properties</h4>
+                <p>Real estate portfolio and investor portal featuring interactive Before/After sliders, underwriting ledgers, and validated stateful lead funnels.</p>
+                <a href="mwproperties-breakdown.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--teal);margin-top:16px;">Case Study <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
+            </div>
         </div>
     </div>
 </section>
@@ -457,7 +465,7 @@
                 </div>
             </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:20px;">
             <div class="card" style="padding:32px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
@@ -484,6 +492,17 @@
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Luxury boutique intelligence suite for elite resellers. Powered by Anthropic's Claude 3.5 for high-conversion SEO listings and neural market analytics.</p>
                 <a href="https://dte-84.github.io/ResaleIQ/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">Launch Terminal <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+            </div>
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(192,154,60,0.05), transparent);border-color:rgba(192,154,60,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">MW Properties</h4>
+                        <p style="font-size:11px;color:rgba(192,154,60,0.5);text-transform:uppercase;letter-spacing:.08em;">React · Vite · GitHub Pages</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(192,154,60,0.1);border-color:rgba(192,154,60,0.2);"><i data-lucide="home" style="color:#C09A3C;"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Real estate restoration and investor relations portal. Showcases interactive Before/After sliders, underwriting ledgers, and a validated stateful lead capture pipeline.</p>
+                <a href="mwproperties-breakdown.html" style="font-size:12px;font-weight:700;color:#C09A3C;display:flex;align-items:center;gap:6px;">Case Study <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
         </div>
     </div>
