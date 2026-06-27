@@ -28,7 +28,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .font-display { font-family: "Bebas Neue", cursive; }
         .font-tech { font-family: "Jura", sans-serif; }
@@ -191,7 +191,7 @@
     </div>
 
     <!-- MAIN EDITOR -->
-    <main id="editorContainer" class="hidden flex-1 py-12 px-8 max-w-7xl mx-auto w-full flex flex-col h-full">
+    <main id="editorContainer" class="hidden flex-1 py-12 px-8 max-w-7xl mx-auto w-full flex flex-col" style="min-height: 0;">
         <!-- Toolbar -->
         <div class="flex flex-col gap-4 bg-zinc-900/40 p-6 rounded-3xl border border-white/5 backdrop-blur-xl shadow-2xl mb-6">
             <div class="flex flex-wrap justify-between items-center gap-6">
@@ -244,14 +244,14 @@
         </div>
 
         <!-- Workspace -->
-        <div class="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8 h-full">
+        <div class="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8" style="min-height: 0; height: calc(100vh - 320px);">
             <!-- Thumbnails -->
-            <div class="lg:col-span-1 space-y-4 overflow-y-auto custom-scrollbar h-full">
+            <div class="lg:col-span-1 space-y-4 overflow-y-auto custom-scrollbar" style="max-height: 100%;">
                 <h4 class="font-tech text-[10px] uppercase tracking-[0.4em] text-white/20">Pages</h4>
                 <div id="thumbList" class="space-y-2"></div>
             </div>
             <!-- Canvas Area -->
-            <div class="lg:col-span-4 relative h-full overflow-auto custom-scrollbar bg-[#050505] rounded-2xl border border-white/5 flex items-start justify-center p-4">
+            <div class="lg:col-span-4 relative overflow-auto custom-scrollbar bg-[#050505] rounded-2xl border border-white/5 flex items-start justify-center p-4" style="max-height: 100%;">
                 <div id="canvasWrapper" class="relative shadow-2xl">
                     <canvas id="pdfCanvas"></canvas>
                     <div id="selectionBox" class="selection-box"></div>
