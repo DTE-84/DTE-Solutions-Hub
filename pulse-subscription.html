@@ -324,16 +324,19 @@
             z-index: -1;
         }
 
-        .hero-image-inner img {
+        .hero-image-inner img,
+        .hero-image-inner video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: top;
             opacity: 0.85;
             transition: opacity 0.5s;
+            display: block;
         }
 
-        .hero-image-inner:hover img { opacity: 1; }
+        .hero-image-inner:hover img,
+        .hero-image-inner:hover video { opacity: 1; }
 
         .hero-image-inner .image-overlay {
             position: absolute;
@@ -1102,7 +1105,8 @@
 <!-- ─── HERO IMAGE ────────────────────────────────────────────── -->
 <div class="hero-image-wrap">
     <div class="hero-image-inner">
-        <img src="assets/pulse/Pulse-Intro.png" alt="Pulse-AI behavioral dashboard interface">
+        <video src="assets/pulse.mp4" autoplay loop muted playsinline preload="auto"
+               poster="assets/pulse/Pulse-Intro.png" aria-label="Pulse-AI behavioral dashboard interface"></video>
         <div class="image-overlay"></div>
         <div class="image-status">
             <span class="dot"></span>
