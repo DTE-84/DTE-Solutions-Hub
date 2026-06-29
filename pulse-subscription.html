@@ -118,6 +118,11 @@
 
         .nav-links a:hover { color: #fff; }
 
+        /* Buttons must beat the faint .nav-links a color (higher specificity) */
+        .nav-links a.btn-launch { color: #000; }
+        .nav-links a.btn-ghost { color: rgba(255,255,255,0.7); }
+        .nav-links a.btn-ghost:hover { color: #fff; }
+
         .btn-launch {
             background: var(--green);
             color: #000;
@@ -557,10 +562,7 @@
 
         /* ── NOVA PANEL ── */
         .nova-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            align-items: center;
+            display: block;
         }
 
         .nova-panel {
@@ -568,6 +570,8 @@
             border: 1px solid var(--border-mid);
             border-radius: 20px;
             overflow: hidden;
+            max-width: 760px;
+            margin: 0 auto;
         }
 
         .nova-panel img {
@@ -581,9 +585,10 @@
         .nova-panel:hover img { opacity: 1; }
 
         .nova-traits {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 40px;
         }
 
         .nova-trait {
@@ -990,6 +995,7 @@
             .editorial { grid-template-columns: 1fr; gap: 40px; }
             .editorial-label { position: static; }
             .nova-grid { grid-template-columns: 1fr; }
+            .nova-traits { grid-template-columns: 1fr; }
             .feature-grid.three { grid-template-columns: 1fr 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
