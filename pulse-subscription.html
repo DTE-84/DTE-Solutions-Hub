@@ -3,995 +3,1543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base target="_blank">
-    <title>Pulse-AI | Grow Your Financial Intelligence</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Pulse-AI | Behavioral Finance Platform — Full Breakdown</title>
+    <meta name="description" content="Before you install — understand what Pulse-AI is, how it works, and why it exists. A full breakdown of the behavioral finance engine powering the DTE Ecosystem.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg: #0b0d0f;
-            --card: #14171a;
-            --border: rgba(0,255,204,0.1);
+            --bg: #080a0c;
+            --surface: #0f1214;
+            --card: #13171b;
+            --border: rgba(0,255,204,0.08);
+            --border-mid: rgba(0,255,204,0.18);
+            --border-hot: rgba(0,255,204,0.35);
             --green: #00ffcc;
-            --green-dim: rgba(0,255,204,0.12);
-            --green-glow: rgba(0,255,204,0.25);
+            --green-dim: rgba(0,255,204,0.1);
+            --green-glow: rgba(0,255,204,0.22);
+            --amber: rgba(255,165,0,0.8);
+            --amber-dim: rgba(255,165,0,0.08);
         }
-        * { box-sizing: border-box; }
-        html, body {
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
             background: var(--bg);
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-            width: 100%;
-            position: relative;
+            line-height: 1.6;
         }
-        /* NAV */
-        .nav-wrap {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 18px 40px;
-            background: rgba(6,7,10,0.85);
-            backdrop-filter: blur(16px);
+
+        /* ── AMBIENT FIELD ── */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,255,204,0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 30% at 80% 80%, rgba(0,255,204,0.025) 0%, transparent 60%);
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 48px;
+            background: rgba(8,10,12,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-        .nav-logo { font-weight: 800; font-size: 17px; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
-        .nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; }
-        .nav-links { display: flex; align-items: center; gap: 32px; }
-        .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-mid);
+            flex-shrink: 0;
+        }
+
+        .nav-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
+
         .nav-links a:hover { color: #fff; }
-        .btn-green {
-            background: var(--green); color: #000 !important; font-size: 13px; font-weight: 700;
-            padding: 10px 22px; border-radius: 10px; border: none; cursor: pointer;
-            text-decoration: none; transition: opacity .2s;
-        }
-        .btn-green:hover { opacity: 0.85; }
-        .btn-outline {
-            background: transparent; color: #fff; font-size: 13px; font-weight: 600;
-            padding: 10px 22px; border-radius: 10px; border: 1px solid var(--border);
-            cursor: pointer; text-decoration: none; transition: background .2s;
-        }
-        .btn-outline:hover { background: rgba(255,255,255,0.06); }
 
-        /* SECTION LABEL */
-        .section-label {
-            display: inline-flex; align-items: center; gap: 7px;
-            background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2);
-            border-radius: 100px; padding: 5px 14px;
-            font-size: 11px; font-weight: 700; letter-spacing: .08em;
-            color: var(--green); text-transform: uppercase; margin-bottom: 20px;
+        .btn-launch {
+            background: var(--green);
+            color: #000;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 9px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: opacity 0.2s, box-shadow 0.2s;
         }
 
-        /* CARDS */
-        .card {
+        .btn-launch:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px var(--green-glow);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 9px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-mid);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border-hot);
+        }
+
+        /* ── MOBILE NAV ── */
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border-mid);
+            border-radius: 6px;
+            padding: 6px 8px;
+            cursor: pointer;
+            color: var(--green);
+        }
+
+        /* ── HERO ── */
+        header {
+            padding: 140px 48px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .archive-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(0,255,204,0.2);
+            border-radius: 4px;
+            padding: 4px 14px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--green);
+            margin-bottom: 48px;
+        }
+
+        .archive-tag .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 1.8s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: end;
+        }
+
+        .hero-eyebrow {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: rgba(0,255,204,0.5);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(52px, 7vw, 88px);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--green);
+        }
+
+        .hero-meta-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px 40px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(0,255,204,0.15);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: rgba(0,255,204,0.45);
+        }
+
+        .meta-value {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .meta-value.green { color: var(--green); }
+        .meta-value.amber { color: var(--amber); }
+
+        /* stat cards on right side of hero */
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            transition: border-color .3s, box-shadow .3s;
-        }
-        .card:hover {
-            border-color: rgba(34,197,94,0.3);
-            box-shadow: 0 0 30px rgba(34,197,94,0.06);
-        }
-        .card-active {
-            border-color: rgba(34,197,94,0.4);
-            box-shadow: 0 0 40px rgba(34,197,94,0.1);
+            border-radius: 14px;
+            padding: 20px;
+            transition: border-color 0.3s;
         }
 
-        /* HERO */
-        .hero { padding: 160px 40px 80px; text-align: center; max-width: 860px; margin: 0 auto; }
-        .hero h1 { font-size: clamp(38px, 6vw, 68px); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 22px; }
-        .hero p { font-size: 16px; color: rgba(255,255,255,0.45); max-width: 540px; margin: 0 auto 36px; line-height: 1.7; }
-        .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .green-text { color: var(--green); }
-
-        /* HERO PREVIEW CARDS */
-        .hero-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 900px; margin: 60px auto 0; }
-        @media(max-width:700px) { .hero-cards { grid-template-columns: 1fr 1fr; } }
-        .hero-card { padding: 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--border); text-align: left; }
-        .hero-card .label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
-        .hero-card .val { font-size: 26px; font-weight: 800; color: var(--green); }
-        .hero-card .sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
-
-        /* FEATURES TAB */
-        .tab-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-        .tab-pill {
-            padding: 9px 20px; border-radius: 100px; font-size: 12px; font-weight: 600;
-            border: 1px solid var(--border); background: var(--card); cursor: pointer;
-            color: rgba(255,255,255,0.5); transition: all .2s;
+        .stat-card:hover {
+            border-color: var(--border-mid);
         }
-        .tab-pill.active, .tab-pill:hover { background: var(--green-dim); border-color: rgba(34,197,94,0.3); color: var(--green); }
 
-        /* WHY GRID */
-        .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        @media(max-width:700px) { .why-grid { grid-template-columns: 1fr; } }
-        .why-card { padding: 28px; }
-        .why-icon { width: 42px; height: 42px; border-radius: 12px; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .stat-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(255,255,255,0.28);
+            margin-bottom: 8px;
+        }
 
-        /* TESTIMONIALS */
-        .testi-grid { columns: 3; gap: 16px; }
-        @media(max-width:900px) { .testi-grid { columns: 2; } }
-        @media(max-width:600px) { .testi-grid { columns: 1; } }
-        .testi-card { break-inside: avoid; margin-bottom: 16px; padding: 22px; }
-        .stars { color: var(--green); font-size: 13px; margin-bottom: 12px; }
-        .testi-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.3); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--green); }
+        .stat-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--green);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
 
-        /* PRICING */
-        .price-toggle { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 40px; }
-        .toggle-track { width: 48px; height: 26px; border-radius: 100px; background: var(--green-dim); border: 1px solid rgba(34,197,94,0.3); position: relative; cursor: pointer; transition: background .2s; }
-        .toggle-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--green); position: absolute; top: 3px; left: 4px; transition: left .2s; }
-        .toggle-track.on .toggle-thumb { left: 26px; }
-        .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        @media(max-width:700px) { .price-grid { grid-template-columns: 1fr; } }
-        .price-card { padding: 32px; position: relative; display: flex; flex-direction: column; }
-        .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--green); color: #000; font-size: 10px; font-weight: 800; padding: 5px 14px; border-radius: 100px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
-        .price-amount { font-size: 42px; font-weight: 900; letter-spacing: -1px; }
-        .price-per { font-size: 13px; color: rgba(255,255,255,0.3); font-weight: 400; }
-        .feat-list { list-style: none; padding: 0; margin: 0; space-y: 14px; }
-        .feat-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.6); padding: 7px 0; border-bottom: 1px solid var(--border); }
-        .feat-list li:last-child { border: none; }
+        .stat-sub {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            margin-top: 5px;
+        }
 
-        /* QUOTE */
-        .quote-section { padding: 80px 40px; text-align: center; max-width: 700px; margin: 0 auto; }
-        .quote-mark { font-size: 100px; line-height: .6; color: var(--green); opacity: .3; font-family: Georgia, serif; }
-        .quote-text { font-size: clamp(20px,3vw,32px); font-weight: 700; line-height: 1.4; letter-spacing: -.5px; margin: 16px 0; }
-        .quote-sub { font-size: 13px; color: rgba(255,255,255,0.35); }
+        /* ── HERO IMAGE ── */
+        .hero-image-wrap {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            padding: 0 48px;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* INTEGRATIONS */
-        .int-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media(max-width:700px) { .int-grid { grid-template-columns: 1fr; } }
-        .int-card { padding: 40px; border-radius: 20px; background: var(--card); border: 1px solid var(--border); }
-        .int-logo { font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; }
+        .hero-image-inner {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-hot);
+            background: #000;
+            aspect-ratio: 21 / 9;
+        }
 
-        /* COMPARE TABLE */
-        .compare-table { width: 100%; border-collapse: collapse; }
-        .compare-table th { padding: 16px 20px; text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,0.3); border-bottom: 1px solid var(--border); }
-        .compare-table th.pulse-col { color: var(--green); }
-        .compare-table td { padding: 16px 20px; font-size: 14px; border-bottom: 1px solid var(--border); color: rgba(255,255,255,0.7); }
-        .compare-table tr:last-child td { border: none; }
-        .compare-table td.pulse-col { color: var(--green); font-weight: 600; }
+        .hero-image-inner::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(0,255,204,0.15), transparent 60%);
+            z-index: -1;
+        }
+
+        .hero-image-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            opacity: 0.85;
+            transition: opacity 0.5s;
+        }
+
+        .hero-image-inner:hover img { opacity: 1; }
+
+        .hero-image-inner .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(8,10,12,0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .image-status {
+            position: absolute;
+            bottom: 20px;
+            left: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .image-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 1.8s infinite;
+        }
+
+        .image-status span {
+            font-size: 11px;
+            font-family: 'Space Grotesk', monospace;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── SECTION BASE ── */
+        .section {
+            padding: 100px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── SECTION NUMBER + TITLE ── */
+        .section-num {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(0,255,204,0.4);
+            margin-bottom: 6px;
+        }
+
+        h2.section-headline {
+            font-size: clamp(32px, 5vw, 60px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+
+        h2.section-headline span { color: var(--green); }
+
+        /* ── 2-COL EDITORIAL LAYOUT ── */
+        .editorial {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .editorial-label {
+            position: sticky;
+            top: 100px;
+        }
+
+        .editorial-body {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* ── PULL QUOTE ── */
+        .pull-quote {
+            position: relative;
+            padding: 28px 32px;
+            border-radius: 16px;
+            background: rgba(0,255,204,0.04);
+            border-left: 3px solid var(--green);
+        }
+
+        .pull-quote p {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.92);
+            letter-spacing: -0.3px;
+        }
+
+        .pull-quote em { color: var(--green); font-style: normal; }
+
+        /* ── BODY TEXT ── */
+        .body-text {
+            font-size: 15px;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        .body-text strong { color: rgba(255,255,255,0.9); }
+
+        /* ── FEATURE GRID ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .feature-grid.three { grid-template-columns: repeat(3, 1fr); }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-mid);
+            box-shadow: 0 0 24px rgba(0,255,204,0.05);
+        }
+
+        .fc-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0,255,204,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: var(--green);
+        }
+
+        .fc-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .fc-body {
+            font-size: 12px;
+            color: rgba(255,255,255,0.42);
+            line-height: 1.7;
+        }
+
+        /* ── PROBLEM CARDS ── */
+        .problem-card {
+            background: var(--card);
+            border: 1px solid rgba(255,165,0,0.1);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .problem-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,165,0,0.08);
+            border: 1px solid rgba(255,165,0,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .problem-title {
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,165,0,0.9);
+            margin-bottom: 6px;
+        }
+
+        .problem-body {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.65;
+        }
+
+        /* ── NOVA PANEL ── */
+        .nova-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .nova-panel {
+            background: var(--card);
+            border: 1px solid var(--border-mid);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .nova-panel img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.88;
+            transition: opacity 0.4s;
+        }
+
+        .nova-panel:hover img { opacity: 1; }
+
+        .nova-traits {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .nova-trait {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(0,255,204,0.03);
+            border: 1px solid var(--border);
+            transition: border-color 0.2s;
+        }
+
+        .nova-trait:hover { border-color: var(--border-mid); }
+
+        .trait-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0,255,204,0.12);
+            border: 1px solid rgba(0,255,204,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--green);
+        }
+
+        .trait-label {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 3px;
+            color: var(--green);
+        }
+
+        .trait-body {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+        }
+
+        /* ── EXECUTION STEPS ── */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-left: 1px solid var(--border);
+            padding-left: 28px;
+        }
+
+        .step {
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        .step:last-child { padding-bottom: 0; }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--green);
+        }
+
+        .step-num {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(0,255,204,0.4);
+            margin-bottom: 6px;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+
+        .step-body {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.75;
+            max-width: 640px;
+        }
+
+        /* ── IMPACT TABLE ── */
+        .impact-table-wrap {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .impact-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .impact-table thead tr {
+            background: rgba(0,255,204,0.04);
+            border-bottom: 1px solid var(--border-mid);
+        }
+
+        .impact-table th {
+            padding: 14px 20px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.25);
+            text-align: left;
+        }
+
+        .impact-table th.green-col { color: var(--green); }
+
+        .impact-table td {
+            padding: 14px 20px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+            color: rgba(255,255,255,0.65);
+        }
+
+        .impact-table tr:last-child td { border: none; }
+
+        .impact-table td.green-col {
+            color: var(--green);
+            font-weight: 700;
+        }
+
         .check { color: var(--green); }
-        .cross { color: rgba(255,255,255,0.2); }
+        .cross { color: rgba(255,255,255,0.18); }
 
-        /* FAQ */
+        /* ── TECH STACK PILLS ── */
+        .stack-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stack-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .stack-pill:hover {
+            border-color: var(--border-mid);
+            color: #fff;
+        }
+
+        .stack-pill .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        /* ── LARGE DISPLAY NUMBERS ── */
+        .display-num {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.06);
+        }
+
+        /* ── CTA BLOCK ── */
+        .cta-block {
+            background: linear-gradient(135deg, rgba(0,255,204,0.06) 0%, transparent 60%);
+            border: 1px solid var(--border-hot);
+            border-radius: 24px;
+            padding: 72px 64px;
+            text-align: center;
+        }
+
+        .cta-eyebrow {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: rgba(0,255,204,0.5);
+            margin-bottom: 20px;
+        }
+
+        .cta-block h2 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .cta-block h2 em {
+            font-style: italic;
+            color: var(--green);
+        }
+
+        .cta-block p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.4);
+            max-width: 440px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .cta-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary {
+            background: var(--green);
+            color: #000;
+            font-size: 13px;
+            font-weight: 900;
+            padding: 14px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: opacity 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-cta-primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 30px var(--green-glow);
+        }
+
+        .btn-cta-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 10px;
+            border: 1px solid var(--border-mid);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn-cta-ghost:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border-hot);
+        }
+
+        /* ── FAQ ── */
         .faq-item { border-bottom: 1px solid var(--border); }
-        .faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; color: #fff; }
-        .faq-a { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; }
-        .faq-a.open { max-height: 300px; padding-bottom: 20px; }
-        .faq-icon { font-size: 20px; color: var(--green); transition: transform .25s; }
+
+        .faq-q {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 22px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .faq-icon {
+            font-size: 22px;
+            color: var(--green);
+            transition: transform 0.25s;
+            line-height: 1;
+        }
+
         .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-        /* FOOTER */
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
-        @media(max-width:700px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        .faq-a {
+            font-size: 14px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.8;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.25s;
+        }
 
-        /* UTILS */
-        section { padding: 100px 40px; }
-        .section-inner { max-width: 1100px; margin: 0 auto; }
-        .section-center { text-align: center; }
-        h2.section-title { font-size: clamp(28px,4vw,48px); font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 14px; }
-        .section-sub { font-size: 15px; color: rgba(255,255,255,0.4); max-width: 480px; margin: 0 auto 50px; line-height: 1.6; }
-        .divider { height: 1px; background: var(--border); }
-        .never-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        @media(max-width:700px) { .never-grid { grid-template-columns: 1fr; } }
+        .faq-a.open { max-height: 300px; padding-bottom: 22px; }
 
-        /* ── MOBILE SCALING & OVERFLOW HARDENING ── */
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 48px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            text-decoration: none;
+        }
+
+        .footer-logo-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border-mid);
+        }
+
+        .footer-logo-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+        .footer-logo span {
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+
+        .footer-logo span em { color: var(--green); font-style: normal; }
+
+        .footer-desc {
+            font-size: 12px;
+            color: rgba(255,255,255,0.28);
+            line-height: 1.7;
+            max-width: 220px;
+        }
+
+        .footer-col-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.22);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: rgba(255,255,255,0.85); }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-bottom p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+            .editorial { grid-template-columns: 1fr; gap: 40px; }
+            .editorial-label { position: static; }
+            .nova-grid { grid-template-columns: 1fr; }
+            .feature-grid.three { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
         @media (max-width: 768px) {
-            html, body { overflow-x: hidden; width: 100%; position: relative; }
-            .nav-wrap { padding: 18px 20px; max-width: 100vw; }
-            .hero { padding: 120px 20px 60px; max-width: 100vw; }
-            header { padding: 0 20px !important; }
-            section { padding: 60px 20px !important; max-width: 100vw; overflow: hidden; }
-            .price-card { padding: 24px 20px; }
-            .int-card { padding: 24px 20px; }
-            .testi-card { padding: 20px; }
-            .quote-section { padding: 60px 20px; }
-            .compare-table th, .compare-table td { padding: 12px 10px; font-size: 12px; }
-            .section-sub { margin-bottom: 30px; }
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 60px; left: 0; right: 0;
+                background: rgba(8,10,12,0.97);
+                padding: 24px 20px;
+                border-bottom: 1px solid var(--border);
+                gap: 20px;
+                z-index: 199;
+            }
+            .nav-mobile-toggle { display: block; }
+            header { padding: 120px 20px 60px; }
+            .hero-image-wrap { padding: 0 20px; }
+            .divider { margin: 0 20px; }
+            .section { padding: 72px 20px; }
+            h1 { letter-spacing: -2px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .feature-grid.three { grid-template-columns: 1fr; }
+            .cta-block { padding: 48px 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            footer { padding: 48px 20px 32px; }
+            .impact-table th, .impact-table td { padding: 12px 12px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
+<div class="ambient"></div>
+
 <!-- ─── NAV ─────────────────────────────────────────────────── -->
-<nav class="nav-wrap">
+<nav id="main-nav">
     <a href="index.html" class="nav-logo" style="text-decoration:none;color:#fff;">
-        <span class="dot"></span>Pulse<span style="color:var(--green)">AI</span>
+        <div class="nav-logo-icon">
+            <img src="assets/pulse/icons/icon-60@2x.png" alt="Pulse icon">
+        </div>
+        Pulse<em style="color:var(--green);font-style:normal;">AI</em>
     </a>
-    <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#why">Why Us</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a href="https://pulse-blond-three.vercel.app/" target="_blank" class="btn-green">Get Started</a>
+
+    <div class="nav-links" id="nav-links">
+        <a href="#challenge">The Problem</a>
+        <a href="#solution">The Solution</a>
+        <a href="#nova">Meet Nova</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#impact">Impact</a>
+        <a href="https://pulse-blond-three.vercel.app/" target="_blank" class="btn-launch">Launch App</a>
+        <a href="https://pulse-blond-three.vercel.app/auth?guest=true" target="_blank" class="btn-ghost">Live Demo</a>
     </div>
+
+    <button class="nav-mobile-toggle" id="mob-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+        <i data-lucide="menu" style="width:18px;height:18px;"></i>
+    </button>
 </nav>
 
-<!-- ─── HERO ──────────────────────────────────────────────────── -->
-<header style="padding:0 40px;">
-    <div class="hero">
-        <div class="section-label">
-            <i data-lucide="zap" style="width:11px;height:11px;"></i>
-            The Behavioral Finance Experience
-        </div>
-        <h1>The best platform to<br><span class="green-text">grow your financial IQ</span></h1>
-        <p>Your financial rhythm isn't random — Pulse-AI detects it, and Nova helps you master it. Real-time telemetry. Behavioral intelligence. Predictive capital.</p>
-        <div class="hero-actions">
-            <a href="https://pulse-blond-three.vercel.app/signup" target="_blank" class="btn-green">Get Started Free</a>
-            <a href="#features" class="btn-outline">See How It Works</a>
-        </div>
+<!-- ─── HERO HEADER ─────────────────────────────────────────── -->
+<header>
+    <div class="archive-tag">
+        <span class="pulse-dot"></span>
+        Product Brief — Pulse-AI v3.0
     </div>
 
-    <!-- Mini stat cards -->
-    <div class="hero-cards">
-        <div class="hero-card">
-            <div class="label">Accuracy</div>
-            <div class="val">99%</div>
-            <div class="sub">Pattern detection rate</div>
+    <div class="hero-grid">
+        <!-- Left: Title + meta -->
+        <div>
+            <div class="hero-eyebrow">Behavioral Finance Engine</div>
+            <h1>Pulse<br><em>AI</em></h1>
+            <div class="hero-meta-strip">
+                <div class="meta-item">
+                    <span class="meta-label">Category</span>
+                    <span class="meta-value">FinTech / Behavioral AI</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Platform</span>
+                    <span class="meta-value">Web + React Native</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Data Layer</span>
+                    <span class="meta-value">Plaid · PostgreSQL</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value green">Live — Beta Access</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Security</span>
+                    <span class="meta-value amber">256-bit AES</span>
+                </div>
+            </div>
         </div>
-        <div class="hero-card">
-            <div class="label">Speed</div>
-            <div class="val">2.4×</div>
-            <div class="sub">Faster insight vs manual</div>
-        </div>
-        <div class="hero-card">
-            <div class="label">Security</div>
-            <div class="val">256-bit</div>
-            <div class="sub">AES-grade encryption</div>
-        </div>
-        <div class="hero-card">
-            <div class="label">Backed by</div>
-            <div class="val" style="font-size:18px;padding-top:4px;">Plaid</div>
-            <div class="sub">Bank-level data layer</div>
+
+        <!-- Right: Stat cards -->
+        <div class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-label">Pattern Accuracy</div>
+                <div class="stat-val">99%</div>
+                <div class="stat-sub">Behavioral detection rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Speed vs Manual</div>
+                <div class="stat-val">2.4×</div>
+                <div class="stat-sub">Faster financial insight</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Encryption Grade</div>
+                <div class="stat-val" style="font-size:20px;padding-top:4px;">AES-256</div>
+                <div class="stat-sub">Bank-level at rest + transit</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Banking Partner</div>
+                <div class="stat-val" style="font-size:22px;padding-top:4px;">Plaid</div>
+                <div class="stat-sub">Read-only data layer</div>
+            </div>
         </div>
     </div>
 </header>
 
-<div class="divider" style="margin:80px 40px 0;"></div>
-
-<!-- ─── FEATURES TABS ─────────────────────────────────────────── -->
-<section id="features">
-    <div class="section-inner section-center">
-        <div class="section-label">Features</div>
-        <h2 class="section-title">Built for high-performance<br>financial decisions</h2>
-        <p class="section-sub">Full-stack behavioral finance — built with Plaid, Supabase, ReactNative, and AI that actually understands your spending personality.</p>
-
-        <div class="tab-row">
-            <div class="tab-pill active" onclick="setTab(this,'convert')">Behavioral AI</div>
-            <div class="tab-pill" onclick="setTab(this,'realtime')">Real-time Data</div>
-            <div class="tab-pill" onclick="setTab(this,'nova')">Meet Nova</div>
-            <div class="tab-pill" onclick="setTab(this,'security')">Security</div>
-        </div>
-
-        <!-- Feature content panels -->
-        <div id="tab-convert" class="tab-panel" style="display:grid;grid-template-columns:1fr;gap:20px;text-align:center;">
-            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
-                <div class="why-icon"><i data-lucide="brain" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Spending Triggers</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Pulse identifies the emotional and contextual patterns that drive your spending — not just the transactions, but the WHY behind them.</p>
-            </div>
-            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
-                <div class="why-icon"><i data-lucide="activity" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Stress Index</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">A proprietary financial stress score that correlates your behavioral data with market conditions and personal cash flow patterns.</p>
-            </div>
-            <div class="card" style="padding:36px;display:flex;flex-direction:column;align-items:center;">
-                <div class="why-icon"><i data-lucide="trending-up" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Predictive Capital Forecasting</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Our ML engine models your future financial trajectory using 90-day rolling behavioral data — so you always know where you're headed before you get there.</p>
-            </div>
-        </div>
-        <div id="tab-realtime" class="tab-panel" style="display:none;grid-template-columns:1fr 1fr;gap:20px;text-align:left;">
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="plug" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Live Plaid Telemetry</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Connect unlimited bank accounts via Plaid's real-time API. Every transaction flows through Pulse's signal processor within seconds of posting.</p>
-            </div>
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="layers" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Multi-Account Aggregation</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Checking, savings, credit, investment — unified into a single behavioral dashboard with cross-account pattern detection.</p>
-            </div>
-            <div class="card" style="padding:36px;grid-column:span 2;">
-                <div class="why-icon"><i data-lucide="receipt" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">S3 Receipt Vault</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Every transaction receipt is encrypted and stored in your personal S3 vault — accessible anytime, exportable for taxes, and searchable by Nova.</p>
-            </div>
-        </div>
-        <div id="tab-nova" class="tab-panel" style="display:none;grid-template-columns:1fr 1fr;gap:20px;text-align:left;">
-            <div class="card" style="padding:36px;grid-column:span 2;">
-                <div class="why-icon"><i data-lucide="sparkles" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Nova — Your Financial Microconsciousness</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Nova is not a chatbot. She is a quantifiable microconsciousness that learns your financial heartbeat. She bridges the gap between cold data and human psychology — offering real-time behavioral coaching, not generic advice.</p>
-            </div>
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="message-circle" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Behavioral Mirroring</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Nova mirrors your spending personality back to you in language that actually resonates — no jargon, all signal.</p>
-            </div>
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="target" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Cognitive Pull Theory</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Nova applies cognitive behavioral principles to nudge you away from the survival loop and toward intentional financial decisions.</p>
-            </div>
-        </div>
-        <div id="tab-security" class="tab-panel" style="display:none;grid-template-columns:1fr 1fr;gap:20px;text-align:left;">
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="shield-check" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Read-Only Bank Access</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">We never see your credentials. We never touch your money. Plaid's read-only interface means Pulse can see your data — never control it.</p>
-            </div>
-            <div class="card" style="padding:36px;">
-                <div class="why-icon"><i data-lucide="lock" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">End-to-End Encryption</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">256-bit AES encryption on all data in transit and at rest. Your behavioral signals are yours — processed, not stored in plain text.</p>
-            </div>
-            <div class="card" style="padding:36px;grid-column:span 2;">
-                <div class="why-icon"><i data-lucide="server" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h3 style="font-size:20px;font-weight:800;margin-bottom:10px;">Supabase + AWS Infrastructure</h3>
-                <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;">Built on enterprise-grade infrastructure with row-level security, auto-scaling, and 99.9% uptime SLA. Your data lives where it's safest.</p>
-            </div>
+<!-- ─── HERO IMAGE ────────────────────────────────────────────── -->
+<div class="hero-image-wrap">
+    <div class="hero-image-inner">
+        <img src="assets/pulse/Pulse-Intro.png" alt="Pulse-AI behavioral dashboard interface">
+        <div class="image-overlay"></div>
+        <div class="image-status">
+            <span class="dot"></span>
+            <span>System Active // Behavioral Engine v3.0 — Plaid Telemetry Live</span>
         </div>
     </div>
-</section>
+</div>
 
-<div class="divider" style="margin:0 40px;"></div>
+<div class="divider" style="margin-top:80px;"></div>
 
-<!-- ─── THE COGNITIVE GAP ────────────────────────────────────────── -->
-<section id="problem" style="padding:120px 40px;">
-    <div style="max-width:1100px;margin:0 auto;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:80px;">
-            <div>
-                <div class="section-label" style="letter-spacing:.2em;">Market Problem</div>
-                <h2 style="font-size:clamp(52px,7vw,96px);font-weight:900;line-height:.95;letter-spacing:-3px;margin:16px 0 32px;">THE<br>COGNITIVE<br><span style="color:rgba(255,255,255,0.15);font-size:clamp(48px,6.5vw,88px);">GAP.</span></h2>
-                <p style="font-size:17px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:400px;">Traditional finance apps are spreadsheets in disguise. They report history but fail to influence behavior. Pulse bridges the gap between cold data and human psychology.</p>
+<!-- ─── 01 // THE CHALLENGE ─────────────────────────────────── -->
+<section class="section" id="challenge">
+    <div class="editorial">
+        <div class="editorial-label">
+            <div class="section-num">01 // The Challenge</div>
+            <h2 class="section-headline">The<br><span>Cognitive</span><br>Gap.</h2>
+        </div>
+
+        <div class="editorial-body">
+            <div class="pull-quote">
+                <p>Traditional finance apps are <em>spreadsheets in disguise</em>. They report history. They never interrupt the pattern driving it — and that is the gap Pulse was built to close.</p>
             </div>
-            <!-- App mockup panel -->
-            <div class="card" style="padding:28px;background:rgba(13,15,20,0.9);border-color:rgba(34,197,94,0.15);">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                    <span style="font-size:13px;font-weight:800;color:var(--green);">PULSE</span>
-                    <div style="display:flex;gap:16px;">
-                        <span style="font-size:10px;color:rgba(255,255,255,0.3);">Vision</span>
-                        <span style="font-size:10px;color:rgba(255,255,255,0.3);">Nova AI</span>
-                        <span style="font-size:10px;color:rgba(255,255,255,0.3);">Technology</span>
-                        <span style="font-size:10px;color:rgba(255,255,255,0.3);">Business Model</span>
-                    </div>
-                    <span style="font-size:10px;color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:3px 10px;border-radius:4px;">LOGIN</span>
-                </div>
-                <h3 style="font-size:20px;font-weight:800;color:var(--green);margin-bottom:8px;">The Cognitive Gap</h3>
-                <p style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:16px;">Traditional finance apps are spreadsheets in disguise. They report history but fail to influence behavior.</p>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;">
-                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;">
-                        <div style="font-size:9px;color:rgba(255,165,0,0.7);font-weight:700;margin-bottom:6px;">⚠ Psychological Blindness</div>
-                        <p style="font-size:9px;color:rgba(255,255,255,0.35);line-height:1.5;">Users lack awareness of the emotional triggers that drive their spending.</p>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;">
-                        <div style="font-size:9px;color:rgba(255,165,0,0.7);font-weight:700;margin-bottom:6px;">⚡ Data Without Context</div>
-                        <p style="font-size:9px;color:rgba(255,255,255,0.35);line-height:1.5;">Raw transaction lists don't account for life stress, sleep, or mood.</p>
-                    </div>
-                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;">
-                        <div style="font-size:9px;color:rgba(255,165,0,0.7);font-weight:700;margin-bottom:6px;">🎯 The 'Survival' Loop</div>
-                        <p style="font-size:9px;color:rgba(255,255,255,0.35);line-height:1.5;">Most tools focus on budgeting for survival, not behavioral mastery.</p>
+
+            <p class="body-text">
+                Most people already know they overspend. The problem is not the <strong>data</strong> — it is the <strong>context</strong>. Transaction lists cannot detect that you spend $340 more in the week following a stressful Monday. Raw numbers cannot identify that impulse purchases spike every Friday evening. No budget app in existence maps your emotional state to your financial behavior in real time. That is the Cognitive Gap — and it costs the average consumer 18% of their annual income in preventable capital loss.
+            </p>
+
+            <div class="feature-grid" style="grid-template-columns:1fr;">
+                <div class="problem-card">
+                    <div class="problem-icon">🧠</div>
+                    <div>
+                        <div class="problem-title">Psychological Blindness</div>
+                        <div class="problem-body">Users lack awareness of the emotional triggers that drive spending — leading to a cycle of reactive financial decisions that no spreadsheet or budget category can solve.</div>
                     </div>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;">
-                    <div style="text-align:center;"><div style="font-size:14px;font-weight:800;color:var(--green);">98.2%</div><div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-top:2px;">Capital Velocity</div></div>
-                    <div style="text-align:center;"><div style="font-size:14px;font-weight:800;color:var(--green);">0.84</div><div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-top:2px;">Stress Correlation</div></div>
-                    <div style="text-align:center;"><div style="font-size:14px;font-weight:800;color:var(--green);">M1.2</div><div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-top:2px;">Active Insights</div></div>
-                    <div style="text-align:center;"><div style="font-size:14px;font-weight:800;color:var(--green);">A+</div><div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-top:2px;">Security Rating</div></div>
-                </div>
-            </div>
-        </div>
-        <!-- 3 problem cards -->
-        <div style="display:grid;grid-template-columns:1fr;gap:20px;text-align:center;">
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
-                <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">🧠</div>
-                <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Psychological Blindness</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Users lack awareness of the emotional triggers that drive their spending, leading to a cycle of reactive financial decisions.</p>
-            </div>
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
-                <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">⚡</div>
-                <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Data Without Context</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Raw transaction lists don't account for life stress, sleep, or mood — the true drivers of capital velocity.</p>
-            </div>
-            <div class="card" style="padding:36px;border-color:rgba(255,165,0,0.1);display:flex;flex-direction:column;align-items:center;">
-                <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;">🎯</div>
-                <h4 style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">The 'Survival' Loop</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;">Most tools focus on budgeting for survival rather than engineering for intentional growth and behavioral mastery.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── MEET NOVA ─────────────────────────────────────────────────── -->
-<section id="nova" style="padding:120px 40px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
-        <!-- Left: App mockup -->
-        <div class="card" style="padding:28px;background:rgba(13,15,20,0.9);border-color:rgba(34,197,94,0.2);">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                <span style="font-size:13px;font-weight:800;color:var(--green);">PULSE</span>
-                <div style="display:flex;gap:16px;">
-                    <span style="font-size:10px;color:rgba(255,255,255,0.3);">Vision</span>
-                    <span style="font-size:10px;color:rgba(255,255,255,0.3);">Nova AI</span>
-                    <span style="font-size:10px;color:rgba(255,255,255,0.3);">Technology</span>
-                    <span style="font-size:10px;color:rgba(255,255,255,0.3);">Business Model</span>
-                </div>
-                <span style="font-size:10px;color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:3px 10px;border-radius:4px;">LOGIN</span>
-            </div>
-            <div class="section-label" style="margin-bottom:12px;font-size:9px;">The Consciousness</div>
-            <h3 style="font-size:22px;font-weight:900;margin-bottom:10px;">Meet <span style="color:var(--green);">Nova</span></h3>
-            <p style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6;margin-bottom:20px;">Nova is not a chatbot. She is a symbiotic consciousness that learns your financial heartbeat. She bridges the gap between cold data and human psychology.</p>
-            <!-- Nova brain orb visual -->
-            <div style="width:100%;aspect-ratio:16/9;background:radial-gradient(circle at 60% 50%, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.04) 40%, transparent 70%);border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(34,197,94,0.1);margin-bottom:20px;position:relative;">
-                <div style="width:80px;height:80px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;font-size:32px;">🧠</div>
-                <div style="position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:10px;">⚡</div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-                <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.1);">
-                    <div style="width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><i data-lucide="chevron-right" style="width:10px;height:10px;color:var(--green);"></i></div>
-                    <div><div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Behavioral Mirroring</div><div style="font-size:10px;color:rgba(255,255,255,0.35);">Recognizes triggers like 'Stress spending on Thursday evenings' before they happen.</div></div>
-                </div>
-                <div style="display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);">
-                    <div style="width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><i data-lucide="chevron-right" style="width:10px;height:10px;color:var(--green);"></i></div>
-                    <div><div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">Evolving Intelligence</div><div style="font-size:10px;color:rgba(255,255,255,0.35);">Builds a long-term profile, remembering breakthroughs and adapting her coaching style.</div></div>
-                </div>
-            </div>
-        </div>
-        <!-- Right: Text content -->
-        <div>
-            <div class="section-label" style="letter-spacing:.2em;">The Consciousness</div>
-            <h2 style="font-size:clamp(52px,7vw,96px);font-weight:900;line-height:.9;letter-spacing:-3px;margin:16px 0 28px;">MEET<br><span style="color:var(--green);font-style:italic;">NOVA.</span></h2>
-            <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:36px;">Nova is not a chatbot. She is a symbiotic consciousness that learns your financial heartbeat. She bridges the gap between cold data and human psychology.</p>
-            <div style="display:flex;flex-direction:column;gap:16px;">
-                <div style="display:flex;align-items:flex-start;gap:16px;">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--green);"></i></div>
-                    <div><div style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;color:var(--green);">Behavioral Mirroring</div><p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;">Recognizes triggers like <em style="color:var(--green);">'Stress spending on Thursday evenings'</em> before they happen.</p></div>
-                </div>
-                <div style="display:flex;align-items:flex-start;gap:16px;">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--green);"></i></div>
-                    <div><div style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;color:var(--green);">Evolving Intelligence</div><p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;">Builds a long-term profile, remembering breakthroughs and adapting her coaching style.</p></div>
-                </div>
-                <div style="display:flex;align-items:flex-start;gap:16px;">
-                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--green);"></i></div>
-                    <div><div style="font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;color:var(--green);">Cognitive Partnership</div><p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;">Correlates sleep, work stress, and mood with financial activity via the Stress Index.</p></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── THE TECHNICAL HEARTBEAT ───────────────────────────────────── -->
-<section id="tech" style="padding:120px 40px;text-align:center;">
-    <div style="max-width:1100px;margin:0 auto;">
-        <div class="section-label" style="letter-spacing:.2em;">Engineering Specs</div>
-        <h2 style="font-size:clamp(52px,8vw,110px);font-weight:900;line-height:.9;letter-spacing:-4px;margin:16px 0 0;text-transform:uppercase;">THE TECHNICAL</h2>
-        <h2 style="font-size:clamp(52px,8vw,110px);font-weight:900;line-height:.9;letter-spacing:-4px;margin:0 0 64px;text-transform:uppercase;color:rgba(255,255,255,0.12);">HEARTBEAT.</h2>
-        <div style="display:grid;grid-template-columns:1fr;gap:16px;text-align:center;">
-            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="layers" style="width:17px;height:17px;color:var(--green);"></i></div>
-                <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Categorization Engine</h4>
-                <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">Rule-based logic layer parsing transactions in real-time with high-confidence auto-assignment.</p>
-            </div>
-            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="cloud" style="width:17px;height:17px;color:var(--green);"></i></div>
-                <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">S3 Receipt System</h4>
-                <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">Encrypted digital receipt management with pre-signed URLs for sub-millisecond audit-ready paper trails.</p>
-            </div>
-            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="zap" style="width:17px;height:17px;color:var(--green);"></i></div>
-                <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Async Performance</h4>
-                <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">FastAPI & Motor (Async MongoDB) for sub-millisecond response times under heavy loads.</p>
-            </div>
-            <div class="card" style="padding:28px;display:flex;flex-direction:column;align-items:center;">
-                <div style="width:36px;height:36px;border-radius:10px;background:var(--green-dim);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i data-lucide="shield-check" style="width:17px;height:17px;color:var(--green);"></i></div>
-                <h4 style="font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Security First</h4>
-                <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">JWT Auth, Bcrypt hashing, and read-only Plaid integration for bank-level encryption.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── THE INVESTMENT CASE ───────────────────────────────────────── -->
-<section id="investment" style="padding:120px 40px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
-        <!-- Left -->
-        <div>
-            <div class="section-label" style="letter-spacing:.2em;">Strategic Model</div>
-            <h2 style="font-size:clamp(52px,6vw,88px);font-weight:900;line-height:.9;letter-spacing:-3px;margin:16px 0 40px;text-transform:uppercase;">THE<br>INVESTMENT<br><span style="color:rgba(255,255,255,0.15);">CASE.</span></h2>
-            <!-- Revenue Streams card -->
-            <div class="card card-active" style="padding:28px;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
-                    <i data-lucide="trending-up" style="width:16px;height:16px;color:var(--green);"></i>
-                    <span style="font-size:14px;font-weight:800;">Revenue Streams</span>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);"><span style="font-size:13px;color:rgba(255,255,255,0.6);">Pulse SaaS (Standard)</span><span style="font-size:13px;font-weight:700;color:var(--green);">$9.99/mo</span></div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);"><span style="font-size:13px;color:rgba(255,255,255,0.6);">Pulse Upgraded (Premium)</span><span style="font-size:13px;font-weight:700;color:var(--green);">$14.99/mo</span></div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);"><span style="font-size:13px;color:rgba(255,255,255,0.6);">B2B Wellness Portals</span><span style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.4);">Custom</span></div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;"><span style="font-size:13px;color:rgba(255,255,255,0.6);">Anonymized Insights</span><span style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.4);">Enterprise</span></div>
-                </div>
-            </div>
-        </div>
-        <!-- Right -->
-        <div style="display:flex;flex-direction:column;gap:20px;">
-            <!-- User ROI -->
-            <div class="card" style="padding:28px;">
-                <h4 style="font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">User ROI</h4>
-                <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:20px;">Average Pulse user recovers <strong style="color:var(--green);">18% of wasted capital</strong> within the first 90 days through behavioral interventions.</p>
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <div style="display:flex;">
-                        <div style="width:32px;height:32px;border-radius:50%;background:rgba(34,197,94,0.2);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);margin-right:-8px;">DT</div>
-                        <div style="width:32px;height:32px;border-radius:50%;background:rgba(34,197,94,0.15);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);margin-right:-8px;">JS</div>
-                        <div style="width:32px;height:32px;border-radius:50%;background:rgba(34,197,94,0.1);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--green);">AW</div>
+                <div class="problem-card">
+                    <div class="problem-icon">⚡</div>
+                    <div>
+                        <div class="problem-title">Data Without Context</div>
+                        <div class="problem-body">Raw transaction lists don't account for life stress, sleep patterns, or mood — the true drivers of capital velocity. Without context, data is just noise.</div>
                     </div>
-                    <span style="font-size:12px;color:rgba(255,255,255,0.3);">+2.4K Active Beta Users</span>
                 </div>
-            </div>
-            <!-- Market Opp -->
-            <div class="card" style="padding:28px;">
-                <h4 style="font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;">Market Opp</h4>
-                <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:16px;">The global AI in Fintech market is projected to reach <strong style="color:var(--green);">$45.2B by 2028</strong>. Pulse sits at the intersection of Finance and Mental Health.</p>
-                <div style="height:6px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;">
-                    <div style="height:100%;width:72%;background:linear-gradient(90deg,var(--green),rgba(34,197,94,0.4));border-radius:100px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── WHY CHOOSE PULSE ───────────────────────────────────────── -->
-<section id="why">
-    <div class="section-inner section-center">
-        <div class="section-label">Why Choose Us?</div>
-        <h2 class="section-title">Everything traditional finance<br>apps forgot to build</h2>
-        <p class="section-sub">Pulse was designed for the gap between raw data and real decisions. Here's what makes us different.</p>
-
-        <div class="why-grid">
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="brain" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Behavioral Intelligence</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Trigger mapping, pattern recognition, and emotional spending analysis — not just category tracking.</p>
-            </div>
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="zap" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Real-Time Insights</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Plaid-powered live telemetry means your financial picture updates the moment a transaction hits your account.</p>
-            </div>
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="layers" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Flexible Plans</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Start free. Scale as you grow. From sandbox sandbox to elite — no hidden fees, cancel anytime, immediate access.</p>
-            </div>
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="shield" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Secure Transactions</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Plaid's read-only architecture means zero write-access to your accounts. Your money stays yours.</p>
-            </div>
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="trending-up" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Adaptive Systems</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Nova learns over time. The longer you use Pulse, the sharper its predictions and the more tailored its coaching becomes.</p>
-            </div>
-            <div class="card why-card" style="text-align:left;">
-                <div class="why-icon"><i data-lucide="headphones" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Dedicated Support</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Elite subscribers get direct 1:1 mentorship access. Every tier gets responsive human support from DTE Solutions.</p>
-            </div>
-        </div>
-
-        <!-- Logo trust strip -->
-        <div style="margin-top:60px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;">
-            <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:.1em;">Trusted Technology</span>
-            <span style="font-size:15px;font-weight:800;color:rgba(255,255,255,0.2);">Plaid</span>
-            <div style="height:16px;width:1px;background:var(--border);"></div>
-            <span style="font-size:15px;font-weight:800;color:rgba(255,255,255,0.2);">Supabase</span>
-            <div style="height:16px;width:1px;background:var(--border);"></div>
-            <span style="font-size:15px;font-weight:800;color:rgba(255,255,255,0.2);">AWS S3</span>
-            <div style="height:16px;width:1px;background:var(--border);"></div>
-            <span style="font-size:15px;font-weight:800;color:rgba(255,255,255,0.2);">React Native</span>
-            <div style="height:16px;width:1px;background:var(--border);"></div>
-            <span style="font-size:15px;font-weight:800;color:rgba(255,255,255,0.2);">OpenAI</span>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
-<section>
-    <div class="section-inner section-center">
-        <div class="section-label">User Stories</div>
-        <h2 class="section-title">Loved by early adopters</h2>
-        <p class="section-sub">Real feedback from users who discovered their financial blind spots with Pulse.</p>
-
-        <div class="testi-grid" style="margin-top:10px;">
-            <div class="card testi-card">
-                <div class="stars">★★★★★</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"Nova literally told me I spend more on food delivery every time I have a late meeting. I had no idea that pattern existed. Changed my whole week structure."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">JK</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">Jordan K.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Product Designer</div></div>
-                </div>
-            </div>
-            <div class="card testi-card">
-                <div class="stars">★★★★★</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"I've tried every budgeting app. Pulse is the first one that felt like it actually understood me instead of just showing me charts I already ignore."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">MR</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">Marcus R.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Freelance Dev</div></div>
-                </div>
-            </div>
-            <div class="card testi-card">
-                <div class="stars">★★★★★</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"The stress index is eerily accurate. It flagged a high-risk spending week for me before I even noticed I was stressed. That alone is worth the subscription."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">AT</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">Aisha T.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Healthcare Admin</div></div>
-                </div>
-            </div>
-            <div class="card testi-card">
-                <div class="stars">★★★★☆</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"Setup was 5 minutes. Plaid linked instantly. Nova started giving me insights before I even finished onboarding. Impressive for a beta product."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">DL</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">David L.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Startup Founder</div></div>
-                </div>
-            </div>
-            <div class="card testi-card">
-                <div class="stars">★★★★★</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"Predictive forecasting helped me realize I was going to fall short before payday — three weeks in advance. I adjusted. Crisis avoided."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">SN</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">Sofia N.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Graduate Student</div></div>
-                </div>
-            </div>
-            <div class="card testi-card">
-                <div class="stars">★★★★★</div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:16px;">"Incredible design and incredibly useful. Best part? It works the same way on my phone as on desktop. The mobile app is seamless."</p>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <div class="testi-avatar">CB</div>
-                    <div style="text-align:left;"><div style="font-size:13px;font-weight:700;">Chris B.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">UX Researcher</div></div>
-                </div>
-            </div>
-        </div>
-
-        <p style="margin-top:40px;font-size:12px;color:rgba(255,255,255,0.2);">★ 4.9/5 average · 200+ beta users</p>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── PRICING ────────────────────────────────────────────────── -->
-<section id="pricing">
-    <div class="section-inner section-center">
-        <div class="section-label">Pricing</div>
-        <h2 class="section-title">Flexible Pricing Plans</h2>
-        <p class="section-sub">Choose your velocity. Every tier comes with Nova and full Plaid connectivity.</p>
-
-        <div class="price-toggle">
-            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);">Monthly</span>
-            <div class="toggle-track" id="pricingToggle" onclick="togglePricing(this)">
-                <div class="toggle-thumb"></div>
-            </div>
-            <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.5);">Yearly <span style="color:var(--green);font-size:11px;">(Save 20%)</span></span>
-        </div>
-
-        <div class="price-grid">
-            <!-- Standard -->
-            <div class="card price-card">
-                <div style="margin-bottom:28px;text-align:left;">
-                    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Standard</div>
-                    <div class="price-amount"><span id="stdPrice">$9.99</span><span class="price-per">/mo</span></div>
-                    <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px;">Behavioral Tracking</div>
-                </div>
-                <ul class="feat-list" style="flex:1;margin-bottom:28px;">
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Real-time Plaid Bank Link (1)</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Nova Basic Coaching</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Manual Trigger Logging</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Basic Spending Dashboard</li>
-                </ul>
-                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;width:100%;display:block;padding:14px;">Get Started</a>
-            </div>
-
-            <!-- Pro -->
-            <div class="card card-active price-card">
-                <div class="price-badge">Most Popular</div>
-                <div style="margin-bottom:28px;text-align:left;">
-                    <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Pro</div>
-                    <div class="price-amount"><span id="proPrice">$14.99</span><span class="price-per">/mo</span></div>
-                    <div style="font-size:12px;color:rgba(34,197,94,0.4);margin-top:4px;">Advanced Intelligence</div>
-                </div>
-                <ul class="feat-list" style="flex:1;margin-bottom:28px;">
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Unlimited Real-time Plaid Links</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Nova Full Behavioral Mirroring</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Advanced Stress Index</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>S3 Encrypted Receipt Vault</li>
-                </ul>
-                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-green" style="text-align:center;width:100%;display:block;padding:14px;">Activate Pro</a>
-            </div>
-
-            <!-- Elite -->
-            <div class="card price-card">
-                <div style="margin-bottom:28px;text-align:left;">
-                    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Elite</div>
-                    <div class="price-amount"><span id="elitePrice">$19.99</span><span class="price-per">/mo</span></div>
-                    <div style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:4px;">Pre-Order Exclusive</div>
-                </div>
-                <div style="margin-bottom:16px;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;font-size:11px;color:var(--green);font-weight:700;">
-                    <i data-lucide="clock" style="width:12px;height:12px;display:inline-block;margin-right:4px;"></i>
-                    Early Bird: $14.99 for Life
-                </div>
-                <ul class="feat-list" style="flex:1;margin-bottom:28px;">
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>All Pro Features</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Predictive Capital Forecasting</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Direct 1:1 Mentorship Access</li>
-                    <li><i data-lucide="check" style="width:14px;height:14px;color:var(--green);flex-shrink:0;"></i>Priority Support Channel</li>
-                </ul>
-                <a href="https://pulse-blond-three.vercel.app/signup" class="btn-outline" style="text-align:center;width:100%;display:block;padding:14px;">Pre-Order Elite</a>
-            </div>
-        </div>
-
-        <p style="margin-top:24px;font-size:12px;color:rgba(255,255,255,0.2);">All plans include a 7-day free trial · Cancel anytime · Billing synced across web and mobile</p>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── QUOTE / CALLOUT ────────────────────────────────────────── -->
-<section>
-    <div class="section-inner">
-        <div class="quote-section">
-            <div class="quote-mark">"</div>
-            <p class="quote-text">We gather your site data. We know your target audience &amp; how your brain can work in your best interest. Best part is we also help you with <span class="green-text">financial intelligence</span>.</p>
-            <div style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;">
-                <div style="width:28px;height:28px;border-radius:50%;background:var(--green-dim);border:1px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;"><i data-lucide="sparkles" style="width:13px;height:13px;color:var(--green);"></i></div>
-                <span class="quote-sub">Nova · Pulse-AI Behavioral Engine</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── INTEGRATIONS ───────────────────────────────────────────── -->
-<section>
-    <div class="section-inner section-center">
-        <div class="section-label">Integrations</div>
-        <h2 class="section-title">Seamless Integrations</h2>
-        <p class="section-sub">Pulse connects to the infrastructure you already trust — zero friction, maximum signal.</p>
-
-        <div class="int-grid">
-            <div class="int-card" style="text-align:left;">
-                <div class="int-logo" style="color:var(--green);">Plaid</div>
-                <h4 style="font-size:18px;font-weight:800;margin-bottom:12px;">Bank-Level Data Layer</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:20px;">Connect 10,000+ financial institutions. Read-only access. Real-time transaction streaming. Zero credential exposure.</p>
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>10,000+ bank connections</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>Real-time transaction sync</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>OAuth-secured authentication</div>
-                </div>
-            </div>
-            <div class="int-card" style="text-align:left;">
-                <div class="int-logo" style="color:rgba(255,255,255,0.6);">Stack</div>
-                <h4 style="font-size:18px;font-weight:800;margin-bottom:12px;">Full-Stack Infrastructure</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:20px;">Supabase for real-time auth and row-level security. AWS S3 for encrypted receipt storage. React Native for cross-platform delivery.</p>
-                <div style="display:flex;flex-direction:column;gap:8px;">
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>Supabase row-level security</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>AWS S3 encrypted vault</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="check-circle" style="width:14px;height:14px;color:var(--green);"></i>iOS + Android native apps</div>
+                <div class="problem-card">
+                    <div class="problem-icon">🎯</div>
+                    <div>
+                        <div class="problem-title">The Survival Loop</div>
+                        <div class="problem-body">Most finance tools focus on survival-mode budgeting — not behavioral mastery. They optimize for staying afloat, not for engineering intentional financial growth.</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="divider" style="margin:0 40px;"></div>
+<div class="divider"></div>
 
-<!-- ─── COMPARISON TABLE ───────────────────────────────────────── -->
-<section>
-    <div class="section-inner section-center">
-        <div class="section-label">Comparison</div>
-        <h2 class="section-title">Why Pulse Stands Out</h2>
-        <p class="section-sub">See how Pulse compares to the apps you've already abandoned.</p>
-
-        <div class="card" style="padding:0;overflow:hidden;margin-top:20px;text-align:left;">
-            <table class="compare-table">
-                <thead>
-                    <tr>
-                        <th style="width:40%;">Feature</th>
-                        <th class="pulse-col"><span style="background:var(--green-dim);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:4px 12px;">Pulse-AI</span></th>
-                        <th>Others</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Behavioral pattern detection</td><td class="pulse-col check">✓ AI-powered</td><td class="cross">✗ Not available</td></tr>
-                    <tr><td>Real-time bank telemetry</td><td class="pulse-col check">✓ Live via Plaid</td><td style="color:rgba(255,255,255,0.4);">~ Daily sync only</td></tr>
-                    <tr><td>AI financial coaching</td><td class="pulse-col check">✓ Nova (always on)</td><td class="cross">✗ Not available</td></tr>
-                    <tr><td>Financial stress scoring</td><td class="pulse-col check">✓ Proprietary index</td><td class="cross">✗ Not available</td></tr>
-                    <tr><td>Predictive cash flow</td><td class="pulse-col check">✓ 90-day forecast</td><td class="cross">✗ Not available</td></tr>
-                    <tr><td>Encrypted receipt vault</td><td class="pulse-col check">✓ AWS S3 secured</td><td class="cross">✗ Not available</td></tr>
-                    <tr><td>Mobile + web parity</td><td class="pulse-col check">✓ React Native</td><td style="color:rgba(255,255,255,0.4);">~ Web only or limited</td></tr>
-                    <tr><td>Free tier with AI</td><td class="pulse-col check">✓ Always free sandbox</td><td class="cross">✗ Paywall on AI</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── NEVER MISS ─────────────────────────────────────────────── -->
-<section>
-    <div class="section-inner section-center">
-        <div class="section-label">Always On</div>
-        <h2 class="section-title">Never Miss a Heartbeat</h2>
-        <p class="section-sub">Pulse works 24/7 so your financial intelligence never goes dark.</p>
-
-        <div class="never-grid">
-            <div class="card" style="padding:32px;text-align:left;">
-                <div class="why-icon"><i data-lucide="wifi" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Effortless Integration</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Link your banks once. Pulse handles everything else — continuous sync, automatic categorization, live behavioral scoring.</p>
-            </div>
-            <div class="card" style="padding:32px;text-align:left;">
-                <div class="why-icon"><i data-lucide="shield-check" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Secure &amp; Scalable</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Enterprise-grade infrastructure with 99.9% uptime. Your data is encrypted, row-isolated, and never sold to third parties.</p>
-            </div>
-            <div class="card" style="padding:32px;text-align:left;">
-                <div class="why-icon"><i data-lucide="lightbulb" style="width:20px;height:20px;color:var(--green);"></i></div>
-                <h4 style="font-size:16px;font-weight:800;margin-bottom:8px;">Actionable Insights</h4>
-                <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;">Nova doesn't just tell you what happened — she tells you what it means and what to do next, in plain language you can act on today.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── FAQ ───────────────────────────────────────────────────── -->
-<section id="faq">
-    <div class="section-inner" style="max-width:740px;">
-        <div style="text-align:center;">
-            <div class="section-label">FAQ</div>
-            <h2 class="section-title">Some Common FAQ's</h2>
+<!-- ─── 02 // THE SOLUTION ──────────────────────────────────── -->
+<section class="section" id="solution">
+    <div class="editorial">
+        <div class="editorial-label">
+            <div class="section-num">02 // The Solution</div>
+            <h2 class="section-headline">What<br><span>Pulse</span><br>Is.</h2>
         </div>
 
-        <div style="margin-top:40px;">
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFaq(this)">
-                    What makes Pulse different from Mint or YNAB?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-a">Mint and YNAB categorize transactions. Pulse detects <em>behavioral patterns</em> — the emotional and contextual triggers driving those transactions. Nova then coaches you in real-time to interrupt those patterns. No other consumer finance tool does this.</div>
+        <div class="editorial-body">
+            <div class="pull-quote">
+                <p>Pulse-AI is a <em>behavioral finance engine</em> — not a budgeting app. It detects your financial rhythm, maps it to your behavioral patterns, and deploys Nova to interrupt the cycle before capital loss occurs.</p>
             </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFaq(this)">
-                    Is my banking data safe with Pulse?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-a">Absolutely. Pulse uses Plaid's read-only API — we can see your transaction data but have zero ability to move money or access credentials. All processed data is encrypted with 256-bit AES. We never sell your data. Ever.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFaq(this)">
-                    What is Nova and how does she work?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-a">Nova is Pulse's AI financial coach — built on OpenAI's foundation but trained specifically on behavioral finance patterns. She analyzes your transaction history, stress index, and spending triggers to deliver real-time, context-aware coaching. The longer you use Pulse, the sharper Nova gets.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFaq(this)">
-                    Can I cancel my subscription anytime?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-a">Yes. All paid plans can be cancelled at any time from your billing portal with no penalties. You'll retain access through the end of your billing period. Downgrade to Free at any time — your data is always preserved.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFaq(this)">
-                    Is there a mobile app available?
-                    <span class="faq-icon">+</span>
-                </button>
-                <div class="faq-a">Yes. Pulse is built on React Native, delivering a native experience on both iOS and Android. The mobile app has full feature parity with the web — same behavioral dashboard, same Nova AI, same encrypted vault access.</div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<div class="divider" style="margin:0 40px;"></div>
+            <p class="body-text">
+                Pulse operates at the intersection of real-time transaction telemetry, machine learning, and behavioral psychology. Every transaction that flows through Plaid's read-only API is processed by Pulse's signal layer — categorized, weighted by context, and fed into a proprietary Stress Index that correlates your spending velocity with identifiable behavioral triggers. The output is not a pie chart. It is a <strong>live behavioral profile</strong> — and it improves every day you use it.
+            </p>
 
-<!-- ─── CTA BANNER ────────────────────────────────────────────── -->
-<section>
-    <div class="section-inner">
-        <div class="card card-active" style="padding:60px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;background:linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.01));">
-            <div>
-                <div class="section-label" style="margin-bottom:16px;">Get Started</div>
-                <h2 style="font-size:clamp(24px,3.5vw,40px);font-weight:900;letter-spacing:-1px;margin-bottom:10px;">Ready to ignite<br>the heartbeat?</h2>
-                <p style="font-size:14px;color:rgba(255,255,255,0.4);max-width:380px;">Join the behavioral finance movement. Free plan available. No credit card required.</p>
-            </div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                <a href="https://pulse-blond-three.vercel.app/signup" target="_blank" class="btn-green" style="font-size:14px;padding:14px 28px;">Get Started Free</a>
-                <a href="https://pulse-blond-three.vercel.app/auth?guest=true" target="_blank" class="btn-outline" style="font-size:14px;padding:14px 28px;">Live Demo</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="divider" style="margin:0 40px;"></div>
-
-<!-- ─── MOBILE CALLOUT ─────────────────────────────────────────── -->
-<section>
-    <div class="section-inner section-center">
-        <div class="section-label">Mobile</div>
-        <h2 class="section-title">PULSE ON THE GO.</h2>
-        <p class="section-sub">Pulse is engineered on React Native, delivering an iOS- and Android-native experience with full feature parity — behavioral insights, Nova coaching, and encrypted vault access from your pocket.</p>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;max-width:640px;margin-left:auto;margin-right:auto;text-align:left;">
-            <div>
-                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">iOS + Android</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="smartphone" style="width:14px;height:14px;color:var(--green);"></i>React Native cross-platform</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="bell" style="width:14px;height:14px;color:var(--green);"></i>Push alert behavioral triggers</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="wifi-off" style="width:14px;height:14px;color:var(--green);"></i>Offline mode with sync queue</div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="brain" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">Spending Trigger Detection</div>
+                    <div class="fc-body">Pulse identifies emotional and contextual patterns behind your transactions — not just the amounts, but the WHY driving them. Stress-spend Thursdays. Impulse Fridays. Identified.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="activity" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">Financial Stress Index</div>
+                    <div class="fc-body">A proprietary score that correlates your behavioral data with cash flow patterns, transaction velocity, and category drift — updated in real time.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="trending-up" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">Predictive Capital Forecasting</div>
+                    <div class="fc-body">ML-driven 90-day rolling trajectory modeling. You always know where your finances are headed before you get there — not after the damage is done.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="plug" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">Live Plaid Telemetry</div>
+                    <div class="fc-body">Every transaction flows through Pulse's signal processor within seconds of posting. Connect unlimited accounts — checking, savings, credit, investment — into a single unified behavioral view.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="receipt" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">S3 Receipt Vault</div>
+                    <div class="fc-body">Every transaction receipt is encrypted and stored in your personal AWS S3 vault — accessible anytime, exportable for taxes, and fully searchable by Nova.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="fc-icon"><i data-lucide="smartphone" style="width:18px;height:18px;"></i></div>
+                    <div class="fc-title">Native Mobile Parity</div>
+                    <div class="fc-body">Built on React Native — full feature parity across iOS and Android. Behavioral dashboard, Nova coaching, biometric login, push trigger alerts, and offline sync queue.</div>
                 </div>
             </div>
-            <div>
-                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Feature Parity</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="sparkles" style="width:14px;height:14px;color:var(--green);"></i>Full Nova AI access</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="bar-chart-2" style="width:14px;height:14px;color:var(--green);"></i>Live behavioral dashboard</div>
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);"><i data-lucide="lock" style="width:14px;height:14px;color:var(--green);"></i>Biometric secure login</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── 03 // MEET NOVA ──────────────────────────────────────── -->
+<section class="section" id="nova">
+    <div class="editorial">
+        <div class="editorial-label">
+            <div class="section-num">03 // The Consciousness</div>
+            <h2 class="section-headline">Meet<br><span>Nova.</span></h2>
+        </div>
+
+        <div class="editorial-body">
+            <div class="pull-quote">
+                <p>Nova is not a chatbot. She is a <em>symbiotic microconsciousness</em> — a quantifiable behavioral AI that learns your financial heartbeat and bridges the gap between cold data and human psychology.</p>
+            </div>
+
+            <div class="nova-grid">
+                <div class="nova-panel">
+                    <img src="assets/pulse/Pulse-MeetNova.png" alt="Nova AI interface">
+                </div>
+
+                <div class="nova-traits">
+                    <div class="nova-trait">
+                        <div class="trait-icon"><i data-lucide="sparkles" style="width:14px;height:14px;"></i></div>
+                        <div>
+                            <div class="trait-label">Behavioral Mirroring</div>
+                            <div class="trait-body">Recognizes patterns like <em style="color:var(--green);">"Stress spending on Thursday evenings"</em> before they become capital loss. Nova speaks in language that resonates — no jargon, all signal.</div>
+                        </div>
+                    </div>
+                    <div class="nova-trait">
+                        <div class="trait-icon"><i data-lucide="message-circle" style="width:14px;height:14px;"></i></div>
+                        <div>
+                            <div class="trait-label">Evolving Intelligence</div>
+                            <div class="trait-body">Builds a long-term behavioral profile over time — remembering breakthroughs, adapting her coaching approach, and updating recommendations as your financial personality evolves.</div>
+                        </div>
+                    </div>
+                    <div class="nova-trait">
+                        <div class="trait-icon"><i data-lucide="target" style="width:14px;height:14px;"></i></div>
+                        <div>
+                            <div class="trait-label">Cognitive Pull Theory</div>
+                            <div class="trait-body">Applies behavioral science to nudge you away from the survival loop and toward intentional financial decisions — rooted in Cognitive Behavioral Finance principles.</div>
+                        </div>
+                    </div>
+                    <div class="nova-trait">
+                        <div class="trait-icon"><i data-lucide="zap" style="width:14px;height:14px;"></i></div>
+                        <div>
+                            <div class="trait-label">Cognitive Partnership</div>
+                            <div class="trait-body">Correlates external stress signals — work patterns, sleep cadence, schedule disruptions — with your financial activity via the Stress Index. Insight before impact.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <img src="assets/pulse/Pulse-Nova-Heartbeat.png" alt="Nova behavioral heartbeat visualization" style="width:100%;border-radius:16px;border:1px solid var(--border-mid);opacity:0.85;">
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── 04 // THE ARCHITECTURE ────────────────────────────────── -->
+<section class="section" id="architecture">
+    <div class="editorial">
+        <div class="editorial-label">
+            <div class="section-num">04 // The Architecture</div>
+            <h2 class="section-headline">Technical<br><span>Heart</span><br>beat.</h2>
+        </div>
+
+        <div class="editorial-body">
+            <p class="body-text">
+                Pulse is engineered for <strong>deterministic data integrity</strong> at every layer of the stack. From the Plaid handshake to the PostgreSQL behavioral pipeline, every component was selected to maximize signal fidelity and minimize latency. No third-party aggregators. No intermediary data brokers. Your financial data flows directly into a row-isolated, JWT-secured Supabase/PostgreSQL instance and never leaves it unencrypted.
+            </p>
+
+            <div class="stack-pills">
+                <div class="stack-pill"><span class="dot"></span>React Native</div>
+                <div class="stack-pill"><span class="dot"></span>TypeScript</div>
+                <div class="stack-pill"><span class="dot"></span>Plaid API</div>
+                <div class="stack-pill"><span class="dot"></span>PostgreSQL</div>
+                <div class="stack-pill"><span class="dot"></span>Supabase</div>
+                <div class="stack-pill"><span class="dot"></span>FastAPI</div>
+                <div class="stack-pill"><span class="dot"></span>Python / Pandas</div>
+                <div class="stack-pill"><span class="dot"></span>AWS S3</div>
+                <div class="stack-pill"><span class="dot"></span>JWT Auth</div>
+                <div class="stack-pill"><span class="dot"></span>OpenAI</div>
+            </div>
+
+            <div class="step-list">
+                <div class="step">
+                    <div class="step-num">Layer 01</div>
+                    <div class="step-title">Zero-Knowledge Bank Access</div>
+                    <div class="step-body">Plaid's read-only API forms the data ingestion layer. Pulse never sees credentials, never initiates transactions, and has no write access to any financial account. The bank handshake is a one-time token exchange — Pulse receives transaction signals, not bank access.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">Layer 02</div>
+                    <div class="step-title">Real-Time Signal Processor</div>
+                    <div class="step-body">Every transaction is passed through a rule-based categorization engine with high-confidence auto-assignment. The engine runs on FastAPI with Motor (Async MongoDB) fallback for sub-millisecond categorization under heavy load. Star Schema normalization ensures the behavioral pipeline never degrades under scale.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">Layer 03</div>
+                    <div class="step-title">Behavioral Pipeline (Python / Pandas)</div>
+                    <div class="step-body">Categorized transactions flow into a Python/Pandas behavioral analysis layer. This is where the Stress Index, spending trigger detection, and 90-day predictive modeling operate. All computations are deterministic — no black boxes, no unexplained scores.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">Layer 04</div>
+                    <div class="step-title">PostgreSQL Star Schema (Supabase)</div>
+                    <div class="step-body">The behavioral output is persisted in a high-fidelity Star Schema: dim_users, fact_transactions, dim_categories, and behavioral event tables. Row-Level Security (RLS) policies enforce owner-only data access at the database layer — not just the API layer.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">Layer 05</div>
+                    <div class="step-title">Nova AI Layer (OpenAI + Behavioral Context)</div>
+                    <div class="step-body">Nova's intelligence is powered by OpenAI's foundation model, fine-tuned with Pulse's behavioral context window — your stress index, spending triggers, historical patterns, and active goals. Each session is context-aware. Each response is grounded in your actual data, not generic advice.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">Layer 06</div>
+                    <div class="step-title">Encrypted Receipt Vault (AWS S3)</div>
+                    <div class="step-body">Receipt uploads are encrypted in transit via TLS and stored at rest with AES-256 in a personal S3 bucket isolated to your account. Pre-signed URLs provide sub-millisecond access without exposing the underlying storage path. Full audit trail for tax export.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── 05 // THE IMPACT ─────────────────────────────────────── -->
+<section class="section" id="impact">
+    <div class="editorial">
+        <div class="editorial-label">
+            <div class="section-num">05 // The Impact</div>
+            <h2 class="section-headline">Before<br>&amp;<br><span>After.</span></h2>
+        </div>
+
+        <div class="editorial-body">
+            <div class="pull-quote">
+                <p>The Cognitive Gap closes the moment Pulse connects. Here is what that means in <em>measurable terms</em>.</p>
+            </div>
+
+            <div class="impact-table-wrap">
+                <table class="impact-table">
+                    <thead>
+                        <tr>
+                            <th style="width:35%;">Metric</th>
+                            <th>Without Pulse</th>
+                            <th class="green-col">With Pulse-AI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Behavioral Pattern Visibility</td>
+                            <td>None — raw transactions only</td>
+                            <td class="green-col">✓ Real-time trigger mapping</td>
+                        </tr>
+                        <tr>
+                            <td>Spending Trigger Detection</td>
+                            <td style="color:rgba(255,255,255,0.25);">✗ Not available</td>
+                            <td class="green-col">✓ AI-powered, contextual</td>
+                        </tr>
+                        <tr>
+                            <td>AI Financial Coaching</td>
+                            <td style="color:rgba(255,255,255,0.25);">✗ Not available</td>
+                            <td class="green-col">✓ Nova — always on</td>
+                        </tr>
+                        <tr>
+                            <td>Capital Forecast Accuracy</td>
+                            <td>Gut feeling / spreadsheet guess</td>
+                            <td class="green-col">✓ 90-day ML model</td>
+                        </tr>
+                        <tr>
+                            <td>Financial Stress Scoring</td>
+                            <td style="color:rgba(255,255,255,0.25);">✗ Not available</td>
+                            <td class="green-col">✓ Proprietary index</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Data Sync Speed</td>
+                            <td style="color:rgba(255,255,255,0.45);">~ Daily batch only</td>
+                            <td class="green-col">✓ Live via Plaid telemetry</td>
+                        </tr>
+                        <tr>
+                            <td>Receipt Documentation</td>
+                            <td>Lost / manual filing</td>
+                            <td class="green-col">✓ Encrypted S3 vault</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile + Web Parity</td>
+                            <td style="color:rgba(255,255,255,0.45);">~ Web only or limited</td>
+                            <td class="green-col">✓ Full React Native parity</td>
+                        </tr>
+                        <tr>
+                            <td>Capital Recovery (90 days)</td>
+                            <td>0% — behavior unchanged</td>
+                            <td class="green-col">✓ avg. 18% recovered</td>
+                        </tr>
+                        <tr>
+                            <td>AI Access — Free Tier</td>
+                            <td style="color:rgba(255,255,255,0.25);">✗ Paywalled in all competitors</td>
+                            <td class="green-col">✓ Always-free sandbox</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <img src="assets/pulse/Pulse-CognitiveGap.png" alt="Pulse Cognitive Gap visualization" style="width:100%;border-radius:16px;border:1px solid var(--border-mid);opacity:0.85;">
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── FAQ ──────────────────────────────────────────────────── -->
+<section class="section" id="faq" style="max-width:840px;">
+    <div class="section-num" style="text-align:center;">Questions</div>
+    <h2 class="section-headline" style="text-align:center;margin-bottom:48px;">Frequently<br><span>Asked.</span></h2>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            What makes Pulse different from Mint or YNAB?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Mint and YNAB categorize transactions. Pulse detects <em>behavioral patterns</em> — the emotional and contextual triggers driving those transactions. Nova then coaches you in real time to interrupt those patterns before capital loss occurs. No other consumer finance tool does this.</div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            Is my banking data safe with Pulse?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Absolutely. Pulse uses Plaid's read-only API — we can see your transaction data but have zero ability to move money or access credentials. All processed data is encrypted with 256-bit AES. Row-Level Security isolates your data at the database layer. We never sell your data. Ever.</div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            What is Nova and how does she work?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Nova is Pulse's AI financial coach — built on OpenAI's foundation model but contextualized with your personal behavioral data: stress index, spending triggers, transaction history, and active financial goals. The longer you use Pulse, the sharper Nova gets. She is not giving generic advice — she is responding to your actual financial heartbeat.</div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            Is there a free plan available?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes. Pulse has a free sandbox tier that includes Nova AI access, behavioral dashboard, and transaction categorization — no credit card required. Paid plans unlock the full Stress Index, predictive capital forecasting, S3 receipt vault, and advanced behavioral analytics. All plans are month-to-month with no penalties for cancellation.</div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            Is there a mobile app available?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes. Pulse is built on React Native, delivering a native experience on both iOS and Android. The mobile app has full feature parity with the web — same behavioral dashboard, same Nova AI, same encrypted vault access, biometric login, push trigger alerts, and an offline sync queue for when you lose connection.</div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+            Who built Pulse and what is the DTE Ecosystem?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Pulse is a flagship product of DTE Solutions — a behavioral intelligence engineering operation. The DTE Ecosystem includes Pulse (behavioral finance), NestLegacy (wealth transfer engine), and Fluff (biomechanical analytics). All products are built to enterprise standards and live at dte-solutions.icu. Pulse is the entry point into the ecosystem for personal financial intelligence.</div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── CTA BLOCK ─────────────────────────────────────────────── -->
+<section class="section">
+    <div class="cta-block">
+        <div class="cta-eyebrow">
+            <i data-lucide="zap" style="width:10px;height:10px;display:inline;vertical-align:middle;margin-right:6px;"></i>
+            Ready to Install
+        </div>
+        <h2>Ignite the<br><em>Heartbeat.</em></h2>
+        <p>Free plan available. No credit card required. Connect your bank in under 60 seconds and let Nova begin mapping your financial rhythm.</p>
+        <div class="cta-actions">
+            <a href="https://pulse-blond-three.vercel.app/signup" target="_blank" class="btn-cta-primary">Get Started Free</a>
+            <a href="https://pulse-blond-three.vercel.app/auth?guest=true" target="_blank" class="btn-cta-ghost">Try Live Demo</a>
         </div>
     </div>
 </section>
 
 <!-- ─── FOOTER ─────────────────────────────────────────────────── -->
-<footer style="padding:60px 40px 40px;border-top:1px solid var(--border);">
-    <div style="max-width:1100px;margin:0 auto;">
-        <div class="footer-grid" style="margin-bottom:48px;">
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
             <div>
-                <div class="nav-logo" style="margin-bottom:16px;font-size:18px;">
-                    <span class="dot"></span>Pulse<span style="color:var(--green)">AI</span>
-                </div>
-                <p style="font-size:13px;color:rgba(255,255,255,0.35);line-height:1.7;max-width:240px;">Your financial rhythm isn't random. Pulse-AI detects it, and Nova helps you master it.</p>
+                <a href="index.html" class="footer-logo" style="text-decoration:none;">
+                    <div class="footer-logo-icon">
+                        <img src="assets/pulse/icons/icon-60@2x.png" alt="Pulse icon">
+                    </div>
+                    <span>Pulse<em>AI</em></span>
+                </a>
+                <p class="footer-desc">Your financial rhythm isn't random. Pulse-AI detects it, and Nova helps you master it.</p>
             </div>
+
             <div>
-                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Product</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <a href="#features" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Features</a>
-                    <a href="#pricing" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Pricing</a>
-                    <a href="pulse-breakdown.html" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Breakdown</a>
-                </div>
-            </div>
-            <div>
-                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Resources</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <a href="#faq" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">FAQ</a>
-                    <a href="https://pulse-blond-three.vercel.app/billing" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Billing Portal</a>
-                    <a href="index.html" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">DTE Hub</a>
+                <div class="footer-col-title">Product</div>
+                <div class="footer-links">
+                    <a href="#challenge">The Challenge</a>
+                    <a href="#solution">The Solution</a>
+                    <a href="#nova">Meet Nova</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#impact">Impact Table</a>
                 </div>
             </div>
+
             <div>
-                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Contact</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
-                    <a href="mailto:dte.solutions.llc@gmail.com" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Support</a>
-                    <a href="https://pulse-blond-three.vercel.app/" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;">Launch App</a>
+                <div class="footer-col-title">Resources</div>
+                <div class="footer-links">
+                    <a href="#faq">FAQ</a>
+                    <a href="https://pulse-blond-three.vercel.app/billing" target="_blank">Billing Portal</a>
+                    <a href="index.html">DTE Hub</a>
+                    <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-col-title">Launch</div>
+                <div class="footer-links">
+                    <a href="https://pulse-blond-three.vercel.app/" target="_blank">Launch App</a>
+                    <a href="https://pulse-blond-three.vercel.app/auth?guest=true" target="_blank">Live Demo</a>
+                    <a href="https://pulse-blond-three.vercel.app/signup" target="_blank">Sign Up Free</a>
+                    <a href="mailto:dte.solutions.llc@gmail.com">Support</a>
                 </div>
             </div>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;border-top:1px solid var(--border);">
-            <p style="font-size:12px;color:rgba(255,255,255,0.15);">© 2026 DTE Solutions · Behavioral Intelligence Division</p>
-            <p style="font-size:12px;color:rgba(255,255,255,0.15);">Built with Plaid · Supabase · AWS · React Native</p>
+
+        <div class="footer-bottom">
+            <p>© 2026 DTE Solutions · Behavioral Intelligence Division</p>
+            <p>Built with Plaid · PostgreSQL · AWS · React Native · OpenAI</p>
         </div>
     </div>
 </footer>
@@ -999,23 +1547,10 @@
 <script>
     lucide.createIcons();
 
-    // Feature tabs
-    function setTab(el, id) {
-        document.querySelectorAll('.tab-pill').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => { p.style.display = 'none'; });
-        el.classList.add('active');
-        const panel = document.getElementById('tab-' + id);
-        if (panel) { panel.style.display = 'grid'; }
-    }
-
-    // Pricing toggle
-    let yearly = false;
-    function togglePricing(el) {
-        yearly = !yearly;
-        el.classList.toggle('on', yearly);
-        document.getElementById('stdPrice').textContent = yearly ? '$7.99' : '$9.99';
-        document.getElementById('proPrice').textContent = yearly ? '$11.99' : '$14.99';
-        document.getElementById('elitePrice').textContent = yearly ? '$15.99' : '$19.99';
+    // Mobile nav toggle
+    function toggleMobileNav() {
+        const links = document.getElementById('nav-links');
+        links.classList.toggle('open');
     }
 
     // FAQ accordion
@@ -1030,6 +1565,23 @@
             item.classList.add('open');
         }
     }
+
+    // Scroll-based nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.style.color = link.getAttribute('href') === '#' + entry.target.id
+                        ? '#fff'
+                        : 'rgba(255,255,255,0.45)';
+                });
+            }
+        });
+    }, { threshold: 0.35, rootMargin: '-20% 0px -20% 0px' });
+
+    sections.forEach(s => observer.observe(s));
 </script>
 </body>
 </html>

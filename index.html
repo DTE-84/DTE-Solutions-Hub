@@ -122,8 +122,8 @@
         /* ── PRODUCT SHOWCASE ── */
         .showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media(max-width:900px) { .showcase { grid-template-columns: 1fr; } }
-        .showcase-main { border-radius: 20px; background: var(--card); border: 1px solid rgba(0,200,220,0.25); overflow: hidden; display: flex; flex-direction: column; }
-        .showcase-video { width: 100%; aspect-ratio: 16/9; object-fit: cover; opacity: .85; display: block; }
+        .showcase-main { border-radius: 20px; background: var(--card); border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; }
+        .showcase-video { width: 100%; aspect-ratio: 16/9; object-fit: contain; background: #000; opacity: 1; display: block; }
         .showcase-list { display: flex; flex-direction: column; gap: 16px; }
         .showcase-item { padding: 24px; display: flex; align-items: flex-start; gap: 16px; cursor: pointer; transition: border-color .2s; }
         .showcase-item.active { border-color: rgba(0,255,204,0.3); box-shadow: 0 0 30px rgba(0,255,204,0.05); }
@@ -404,6 +404,32 @@
                 <a href="pulse-subscription.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Plans <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
+            <!-- PCSP Pro -->
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">PCSP Pro</h4>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Compliance · HIPAA</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="shield-check" style="color:var(--green);"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">HIPAA-compliant documentation engine for state-mandated healthcare reporting with 87% DMH threshold accuracy.</p>
+                <a href="https://dte-84.github.io/DTE-Portfolio/case-study-pcsp/" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+            </div>
+
+            <!-- MCSDD-Quarterly -->
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">MCSDD-Quarterly</h4>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Government · Reporting</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="clipboard-list" style="color:var(--green);"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Automated quarterly reporting and compliance tracking for MCSDD, ensuring data integrity and precision for government organizations.</p>
+                <a href="javascript:void(0)" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+            </div>
+
             <!-- SetLogic -->
             <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
@@ -415,6 +441,19 @@
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">AI fitness coaching platform with guided training flows, performance tracking, and data-driven feedback for athletes and coaches.</p>
                 <a href="setlogic-breakdown.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Explore <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
+            </div>
+
+            <!-- ResaleIQ Neural -->
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">ResaleIQ Neural</h4>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Anthropic · Claude 3.5 · React</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="zap" style="color:var(--green);"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Luxury boutique intelligence suite for elite resellers. Powered by Anthropic's Claude 3.5 for high-conversion SEO listings and neural market analytics.</p>
+                <a href="https://resale-iq-xi.vercel.app/" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Launch Terminal <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
             </div>
 
             <!-- Fluff -->
@@ -430,18 +469,17 @@
                 <a href="fluff-breakdown.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Explore <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
-            <!-- ResaleIQ Neural -->
+            <!-- Spark Analyzer -->
             <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
-                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">ResaleIQ Neural</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Anthropic · Claude 3.5 · React</p>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Spark Analyzer</h4>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Analytics · Dashboard</p>
                     </div>
-                    <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="zap" style="color:var(--green);"></i></div>
+                    <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="bar-chart" style="color:var(--green);"></i></div>
                 </div>
-
-                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Luxury boutique intelligence suite for elite resellers. Powered by Anthropic's Claude 3.5 for high-conversion SEO listings and neural market analytics.</p>
-                <a href="https://resale-iq-xi.vercel.app/" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Launch Terminal <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">High-fidelity analytics dashboard and data visualization engine for business intelligence.</p>
+                <a href="https://spark-theta-livid.vercel.app/" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Launch Dashboard <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
             </div>
 
             <!-- PDF Integrity Editor -->
@@ -462,20 +500,6 @@
         <h3 style="font-size:20px;font-weight:900;letter-spacing:-0.5px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:12px;">Business Logic & Portals</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:20px;">
             
-            <!-- PCSP Pro -->
-            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(212,175,55,0.05), transparent);border-color:rgba(212,175,55,0.1);">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-                    <div>
-                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">PCSP Pro</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Compliance · HIPAA</p>
-                    </div>
-                    <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="shield-check" style="color:#D4AF37;"></i></div>
-                </div>
-
-                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">HIPAA-compliant documentation engine for state-mandated healthcare reporting with 87% DMH threshold accuracy.</p>
-                <a href="https://dte-84.github.io/DTE-Portfolio/case-study-pcsp/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
-            </div>
-
             <!-- MW Properties -->
             <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(212,175,55,0.05), transparent);border-color:rgba(212,175,55,0.1);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
@@ -526,6 +550,32 @@
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Digital storefront for a local custom car wrap and tinting business, engineered for localized SEO and streamlined quote generation.</p>
                 <a href="https://dte-84.github.io/ProDip/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">View Site <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+            </div>
+
+            <!-- TonysLandscaping -->
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(212,175,55,0.05), transparent);border-color:rgba(212,175,55,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Tony's Landscaping</h4>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Local Business · React · Lead Gen</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="leaf" style="color:#D4AF37;"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Digital storefront and lead generation portal for a premier local landscaping and outdoor design business.</p>
+                <a href="https://www.tonyslandscapingllc.com/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">View Site <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+            </div>
+
+            <!-- SiKnight GameHub -->
+            <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(212,175,55,0.05), transparent);border-color:rgba(212,175,55,0.1);">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                    <div>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">SiKnight GameHub</h4>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Gaming Portal · Interactive</p>
+                    </div>
+                    <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="gamepad-2" style="color:#D4AF37;"></i></div>
+                </div>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Interactive gaming hub featuring custom game modes, community leaderboards, and real-time multiplayer logic.</p>
+                <a href="https://dte-84.github.io/SiKnight/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">Launch Hub <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
             </div>
 
         </div>
