@@ -1,9 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DTE Solutions | AI-Powered Web Apps & Business Tools</title>
+    <meta name="description" content="DTE Solutions engineers custom AI chat interfaces, behavioral finance tools, compliance engines, and full-stack web apps for startups, agencies, and growing businesses." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.emailjs.com" />
+
+    <link rel="preload" as="image" href="assets/dtesolutionslogoblk.png" fetchpriority="high" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dte-solutions.icu/" />
@@ -19,7 +27,7 @@
     <meta property="twitter:image" content="https://dte-84.github.io/DTE-Solutions-Hub/assets/blackbglogo.png?v=2" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,7 +42,7 @@
             --blue-dim: rgba(0,170,250,0.08);
             --grad: linear-gradient(135deg, #00ffcc, #00aafa);
             --grad-dim: linear-gradient(135deg, rgba(0,255,204,0.15), rgba(0,170,250,0.15));
-            --text-muted: rgba(255,255,255,0.42);
+            --text-muted: rgba(255,255,255,0.62);
         }
         html, body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; width: 100%; position: relative; }
         a { text-decoration: none; color: inherit; }
@@ -108,7 +116,7 @@
         .strip { padding: 32px 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
         .strip-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: .12em; text-align: center; margin-bottom: 24px; }
         .strip-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
-        .strip-logo { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.18); letter-spacing: -.3px; transition: color .2s; }
+        .strip-logo { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.38); letter-spacing: -.3px; transition: color .2s; }
         .strip-logo:hover { color: rgba(255,255,255,0.5); }
 
         /* â”€â”€ WHY CHOOSE â”€â”€ */
@@ -247,10 +255,12 @@
     <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:40px;">
         <div class="hero-badge" style="margin-bottom:20px;">
             <span></span>
-            Custom AI Development Studio Â· Active
+            Custom AI Development Studio &middot; Active
         </div>
         <img src="assets/dtesolutionslogoblk.png" alt="DTE Solutions"
+             width="740" height="350"
              style="height:350px;max-width:90vw;mix-blend-mode:screen;"
+             fetchpriority="high"
              onerror="this.style.display='none'" />
     </div>
 
@@ -302,7 +312,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Real-Time Intelligence</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">Behavioral AI, predictive analytics, and live data telemetry â€” not just dashboards, but engines that adapt to your users in real time.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">Behavioral AI, predictive analytics, and live data telemetry &rdquo; not just dashboards, but engines that adapt to your users in real time.</p>
                 </div>
             </div>
             <div class="card why-card">
@@ -312,7 +322,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Measurable Impact</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">HIPAA-compliant compliance engines, 87%+ threshold accuracy, 18% capital recovery â€” every build ships with proof of performance.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">HIPAA-compliant compliance engines, 87%+ threshold accuracy, 18% capital recovery &rdquo; every build ships with proof of performance.</p>
                 </div>
             </div>
             <div class="card why-card">
@@ -322,7 +332,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Business Adaptation</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">From SaaS to B2B portals to community tools â€” DTE builds ecosystems that scale with your growth trajectory, not against it.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">From SaaS to B2B portals to community tools &rdquo; DTE builds ecosystems that scale with your growth trajectory, not against it.</p>
                 </div>
             </div>
         </div>
@@ -338,7 +348,7 @@
             <div>
                 <div class="section-label">Flagship Product</div>
                 <h2 class="section-title">Pulse<br><span style="font-size: 0.65em; font-weight: normal;">Smarter finance, <em style="font-style:normal;color:var(--teal);">built with AI.</em></span></h2>
-                <p class="section-sub">Pulse-AI is the behavioral finance engine at the heart of the DTE ecosystem â€” real-time, intelligent, and adaptive.</p>
+                <p class="section-sub">Pulse-AI is the behavioral finance engine at the heart of the DTE ecosystem &rdquo; real-time, intelligent, and adaptive.</p>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;padding-top:8px;">
                 <a href="https://pulse.dte-solutions.icu" target="_blank" class="btn-teal">Pulse-CS-Breakdown</a>
@@ -348,29 +358,29 @@
         <div class="showcase">
             <div class="showcase-main">
                 <div style="padding:20px 20px 0;display:flex;align-items:center;gap:10px;">
-                    <img src="assets/PulseNovaLogoTrans.png" style="height:32px;" alt="Pulse" onerror="this.style.display='none'">
+                    <img src="assets/PulseNovaLogo.png" width="31" height="32" style="height:32px;width:auto;" alt="Pulse" loading="lazy" onerror="this.style.display='none'">
                     <span style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;">Behavioral Intelligence SaaS</span>
                 </div>
-                <video autoplay loop muted playsinline class="showcase-video" style="flex:1;">
+                <video autoplay loop muted playsinline preload="none" class="showcase-video" style="flex:1;">
                     <source src="assets/pulse.mp4" type="video/mp4" />
                 </video>
             </div>
             <div class="showcase-list">
                 <div class="card showcase-item active">
                     <div class="showcase-item-num">01</div>
-                    <div><h4>Behavioral Pattern Detection</h4><p>Nova maps emotional spending triggers and identifies the WHY behind every transaction â€” not just the category.</p></div>
+                    <div><h3>Behavioral Pattern Detection</h3><p>Nova maps emotional spending triggers and identifies the WHY behind every transaction &mdash; not just the category.</p></div>
                 </div>
                 <div class="card showcase-item">
                     <div class="showcase-item-num">02</div>
-                    <div><h4>Real-Time Plaid Telemetry</h4><p>Live bank transaction streaming via Plaid's read-only API â€” 10,000+ institutions, zero credential exposure.</p></div>
+                    <div><h3>Real-Time Plaid Telemetry</h3><p>Live bank transaction streaming via Plaid's read-only API &mdash; 10,000+ institutions, zero credential exposure.</p></div>
                 </div>
                 <div class="card showcase-item">
                     <div class="showcase-item-num">03</div>
-                    <div><h4>Predictive Capital Forecasting</h4><p>90-day ML-powered financial trajectory modeling so users know where they're headed before they get there.</p></div>
+                    <div><h3>Predictive Capital Forecasting</h3><p>90-day ML-powered financial trajectory modeling so users know where they're headed before they get there.</p></div>
                 </div>
                 <div class="card showcase-item">
                     <div class="showcase-item-num">04</div>
-                    <div><h4>Nova AI Coach</h4><p>A symbiotic financial consciousness that learns your heartbeat and delivers context-aware behavioral coaching in real time.</p></div>
+                    <div><h3>Nova AI Coach</h3><p>A symbiotic financial consciousness that learns your heartbeat and delivers context-aware behavioral coaching in real time.</p></div>
                 </div>
             </div>
         </div>
@@ -396,7 +406,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Pulse-AI</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Behavioral Finance Â· Plaid Â· ML</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Behavioral Finance &middot; Plaid &middot; ML</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="activity" style="color:var(--green);"></i></div>
                 </div>
@@ -409,7 +419,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">PCSP Pro</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Compliance Â· HIPAA</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Compliance &middot; HIPAA</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="shield-check" style="color:var(--green);"></i></div>
                 </div>
@@ -422,12 +432,12 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">MCSDD-Quarterly</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Government Â· Reporting</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Government &middot; Reporting</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="clipboard-list" style="color:var(--green);"></i></div>
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Automated quarterly reporting and compliance tracking for MCSDD, ensuring data integrity and precision for government organizations.</p>
-                <a href="javascript:void(0)" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                <span style="font-size:12px;font-weight:700;color:rgba(0,255,204,0.3);display:flex;align-items:center;gap:6px;cursor:default;">Case Study Coming Soon <i data-lucide="clock" style="width:12px;height:12px;"></i></span>
             </div>
 
             <!-- SetLogic -->
@@ -435,7 +445,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">SetLogic</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">AI Fitness Â· Telemetry Â· React</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">AI Fitness &middot; Telemetry &middot; React</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="dumbbell" style="color:var(--green);"></i></div>
                 </div>
@@ -448,7 +458,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">ResaleIQ Neural</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Anthropic Â· Claude 3.5 Â· React</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Anthropic &middot; Claude 3.5 &middot; React</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="zap" style="color:var(--green);"></i></div>
                 </div>
@@ -461,7 +471,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Fluff</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Computer Vision Â· Biomechanics</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Computer Vision &middot; Biomechanics</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="eye" style="color:var(--green);"></i></div>
                 </div>
@@ -474,7 +484,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Spark Analyzer</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Analytics Â· Dashboard</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Analytics &middot; Dashboard</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="bar-chart" style="color:var(--green);"></i></div>
                 </div>
@@ -487,11 +497,11 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">PDF Integrity Editor</h4>
-                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Zero-Server Â· Local Storage</p>
+                        <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Zero-Server &middot; Local Storage</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="file-text" style="color:var(--green);"></i></div>
                 </div>
-                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Zero-server document editor â€” free to the community. Annotate, markup, and finalize PDFs with all processing handled locally.</p>
+                <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Zero-server document editor &rdquo; free to the community. Annotate, markup, and finalize PDFs with all processing handled locally.</p>
                 <a href="pdf-editor.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">Access Tool <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
@@ -505,7 +515,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">MW Properties</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">React Â· Vite Â· GitHub Pages</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">React &middot; Vite &middot; GitHub Pages</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="home" style="color:#D4AF37;"></i></div>
                 </div>
@@ -518,7 +528,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">E-Commerce Intelligence</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Pandas Â· Jest Â· Data Integrity</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Pandas &middot; Jest &middot; Data Integrity</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="shopping-bag" style="color:#D4AF37;"></i></div>
                 </div>
@@ -531,7 +541,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Keys Beats</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">React Â· Audio Engine Â· Portfolio</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">React &middot; Audio Engine &middot; Portfolio</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="music" style="color:#D4AF37;"></i></div>
                 </div>
@@ -544,7 +554,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">PRO DIP</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Local Business Â· Next.js Â· Lead Gen</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Local Business &middot; Next.js &middot; Lead Gen</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="car" style="color:#D4AF37;"></i></div>
                 </div>
@@ -557,7 +567,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Tony's Landscaping</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Local Business Â· React Â· Lead Gen</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Local Business &middot; React &middot; Lead Gen</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="leaf" style="color:#D4AF37;"></i></div>
                 </div>
@@ -570,7 +580,7 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
                         <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">SiKnight GameHub</h4>
-                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Gaming Portal Â· Interactive</p>
+                        <p style="font-size:11px;color:rgba(212,175,55,0.5);text-transform:uppercase;letter-spacing:.08em;">Gaming Portal &middot; Interactive</p>
                     </div>
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="gamepad-2" style="color:#D4AF37;"></i></div>
                 </div>
@@ -589,10 +599,10 @@
     <div class="inner" style="text-align:center;">
         <div class="section-label" style="justify-content:center;margin:0 auto 16px;">Integrations</div>
         <h2 class="section-title">Seamless Connectivity</h2>
-        <p class="section-sub" style="margin:12px auto 48px;">Every DTE product connects to the infrastructure you already trust â€” built on battle-tested, enterprise-grade tooling.</p>
+        <p class="section-sub" style="margin:12px auto 48px;">Every DTE product connects to the infrastructure you already trust &rdquo; built on battle-tested, enterprise-grade tooling.</p>
         <div class="int-grid">
             <div class="card int-card"><div class="icon-box"><i data-lucide="link"></i></div><div class="name">Plaid</div><div class="desc">10,000+ bank connections. Real-time streaming. Read-only, zero credential exposure.</div></div>
-            <div class="card int-card"><div class="icon-box"><i data-lucide="database"></i></div><div class="name">Supabase</div><div class="desc">Real-time auth, row-level security, and managed Postgres â€” production-ready from day one.</div></div>
+            <div class="card int-card"><div class="icon-box"><i data-lucide="database"></i></div><div class="name">Supabase</div><div class="desc">Real-time auth, row-level security, and managed Postgres &rdquo; production-ready from day one.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="cloud"></i></div><div class="name">AWS S3</div><div class="desc">Encrypted digital receipt vault with pre-signed URLs and audit-ready paper trails.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="sparkles"></i></div><div class="name">OpenAI</div><div class="desc">GPT-powered behavioral coaching and natural language financial intelligence via Nova.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="smartphone"></i></div><div class="name">React Native</div><div class="desc">True cross-platform iOS and Android delivery with full web feature parity.</div></div>
@@ -619,7 +629,7 @@
             </div>
             <div class="card testi-card" style="text-align:left;">
                 <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>"PCSP Pro saved our compliance team 20+ hours a month. The DMH threshold logic is the most accurate I've seen in any tool â€” commercial or custom."</p>
+                <p>"PCSP Pro saved our compliance team 20+ hours a month. The DMH threshold logic is the most accurate I've seen in any tool &rdquo; commercial or custom."</p>
                 <div style="display:flex;align-items:center;gap:10px;"><div class="testi-avatar">MR</div><div><div style="font-size:13px;font-weight:700;">Marcus R.</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Healthcare Admin</div></div></div>
             </div>
             <div class="card testi-card" style="text-align:left;">
@@ -643,11 +653,11 @@
             <p class="section-sub" style="margin:12px auto 0;text-align:center;">Everything you need to know about DTE Solutions and our product ecosystem.</p>
         </div>
         <div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What types of businesses does DTE Solutions build for? <span class="faq-icon">+</span></button><div class="faq-a">DTE builds for startups, agencies, healthcare organizations, fitness businesses, and growing companies that need production-grade AI tools â€” not templates. Every build is custom-engineered from first principles.</div></div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is Pulse-AI and how does it differ from other finance apps? <span class="faq-icon">+</span></button><div class="faq-a">Pulse-AI detects behavioral patterns â€” the emotional and contextual triggers driving spending decisions. Nova then coaches users in real time to interrupt those patterns. No other consumer finance tool does this.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What types of businesses does DTE Solutions build for? <span class="faq-icon">+</span></button><div class="faq-a">DTE builds for startups, agencies, healthcare organizations, fitness businesses, and growing companies that need production-grade AI tools &rdquo; not templates. Every build is custom-engineered from first principles.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is Pulse-AI and how does it differ from other finance apps? <span class="faq-icon">+</span></button><div class="faq-a">Pulse-AI detects behavioral patterns &rdquo; the emotional and contextual triggers driving spending decisions. Nova then coaches users in real time to interrupt those patterns. No other consumer finance tool does this.</div></div>
             <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is my data safe with DTE products? <span class="faq-icon">+</span></button><div class="faq-a">All DTE products are built with security as a baseline requirement. Pulse uses Plaid's read-only API, AES-256 encryption, Supabase row-level security, and AWS S3 for encrypted storage. PCSP Pro is HIPAA-compliant by design.</div></div>
             <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I get a custom AI tool built for my business? <span class="faq-icon">+</span></button><div class="faq-a">Yes. DTE Solutions takes on select custom engagements for businesses that need purpose-built AI workflows, compliance engines, data pipelines, or full-stack web apps. Contact us to start a conversation.</div></div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are there free tools available? <span class="faq-icon">+</span></button><div class="faq-a">Yes â€” the PDF Integrity Editor is completely free to the community. Pulse-AI also offers a permanent free Sandbox tier with Nova Basic coaching. No credit card required to start.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are there free tools available? <span class="faq-icon">+</span></button><div class="faq-a">Yes &rdquo; the PDF Integrity Editor is completely free to the community. Pulse-AI also offers a permanent free Sandbox tier with Nova Basic coaching. No credit card required to start.</div></div>
         </div>
     </div>
 </section>
@@ -658,7 +668,7 @@
 <section class="section" style="text-align:center;">
     <div class="inner" style="max-width:680px;">
         <div class="section-label" style="justify-content:center;margin:0 auto 20px;">The Human Layer</div>
-        <h2 style="font-size:clamp(40px,6vw,80px);font-weight:900;letter-spacing:-3px;line-height:.95;margin-bottom:24px;">Get to know<br><em style="font-style:normal;color:rgba(255,255,255,0.15);">the founder.</em></h2>
+        <h2 style="font-size:clamp(40px,6vw,80px);font-weight:900;letter-spacing:-3px;line-height:.95;margin-bottom:24px;">Get to know<br><em style="font-style:normal;color:rgba(255,255,255,0.45);">the founder.</em></h2>
         <p style="font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;">Explore the technical foundation, full-stack archive, and mentorship history of the Principal Engineer behind every DTE product.</p>
         <a href="https://dte-84.github.io/DTE-Portfolio/" target="_blank" class="btn-teal" style="font-size:15px;padding:16px 36px;">Enter Annex</a>
     </div>
@@ -673,7 +683,7 @@
             <div>
                 <div class="section-label" style="margin-bottom:18px;">Let's Build Together</div>
                 <h2 style="font-size:clamp(26px,4vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:12px;">Ready to build<br>something real?</h2>
-                <p style="font-size:15px;color:var(--text-muted);max-width:380px;line-height:1.6;">One message. Let's figure out what you need and engineer exactly that â€” no boilerplate, no templates.</p>
+                <p style="font-size:15px;color:var(--text-muted);max-width:380px;line-height:1.6;">One message. Let's figure out what you need and engineer exactly that &rdquo; no boilerplate, no templates.</p>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;min-width:200px;">
                 <button id="contactBtnCta" class="btn-teal" style="font-size:15px;padding:16px 32px;text-align:center;">Start a Conversation</button>
@@ -721,8 +731,8 @@
             </div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;">
-            <p style="font-size:12px;color:rgba(255,255,255,0.15);">Â© 2026 DTE Solutions LLC Â· All Rights Reserved</p>
-            <p style="font-size:12px;color:rgba(255,255,255,0.15);">Built with React Native Â· FastAPI Â· Plaid Â· Supabase Â· AWS</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.32);">&copy; 2026 DTE Solutions LLC &middot; All Rights Reserved</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.32);">Built with React Native &middot; FastAPI &middot; Plaid &middot; Supabase &middot; AWS</p>
         </div>
     </div>
 </footer>
@@ -744,7 +754,7 @@
             <p style="font-size:14px;line-height:1.7;opacity:.8;">Engineering AI-driven analytical systems for the $84 Trillion Great Wealth Transfer. Pure data integrity meets behavioral intelligence.</p>
         </div>
         <div class="modal-contact">
-            <button id="closeModal" style="position:absolute;top:20px;right:24px;font-size:28px;cursor:pointer;color:var(--teal);background:none;border:none;line-height:1;">Ã—</button>
+            <button id="closeModal" style="position:absolute;top:20px;right:24px;font-size:28px;cursor:pointer;color:var(--teal);background:none;border:none;line-height:1;">&times;</button>
             <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;color:var(--teal);margin-bottom:24px;">Contact</h3>
             <form id="contactForm" style="display:flex;flex-direction:column;gap:16px;">
                 <div><label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);margin-bottom:6px;">Name</label><input name="user_name" type="text" required placeholder="NAME..." style="width:100%;padding:12px;background:#fff;border:1px solid rgba(0,255,204,0.2);border-radius:6px;color:#000;font-size:12px;font-weight:700;text-transform:uppercase;outline:none;" /></div>
@@ -760,7 +770,7 @@
 <div id="instructionsModal">
     <div id="instructionsContainer">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:.5;"></div>
-        <button onclick="closeInstructionsModal()" style="position:absolute;top:24px;right:28px;font-size:24px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;">Ã—</button>
+        <button onclick="closeInstructionsModal()" style="position:absolute;top:24px;right:28px;font-size:24px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;">&times;</button>
         <div style="margin-bottom:32px;">
             <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);display:block;margin-bottom:8px;">Protocol Briefing</span>
             <h3 style="font-size:36px;font-weight:900;letter-spacing:-1px;">OPERATIONAL GUIDE</h3>
