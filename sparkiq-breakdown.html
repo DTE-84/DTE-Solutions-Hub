@@ -1,177 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTE Solutions | SparkIQ Breakdown</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --obsidian: #050505;
-            --kinetic-teal: #00ffcc;
-            --charcoal: #111111;
-        }
-        body {
-            background-color: var(--obsidian);
-            color: #FFFFFF;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .font-display { font-family: 'Inter', sans-serif; }
-        .font-tech { font-family: 'Jura', sans-serif; }
-        
-        .glass-card {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            transition: all 0.4s ease;
-        }
-        .glass-card:hover {
-            border-color: var(--kinetic-teal);
-            background: rgba(15, 15, 15, 0.9);
-        }
-        .text-gradient-teal {
-            background: linear-gradient(135deg, #00ffcc, #00AAFA);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .teal-glow { filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.4)); }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SparkIQ — Know Your Worth Before You Drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:     #00ffcc;
+    --green-lt:  #00aafa;
+    --green-dim: rgba(0,255,204,0.12);
+    --green-border: rgba(0,255,204,0.25);
+    --bg:        #020305;
+    --card:      #080b10;
+    --card2:     #121822;
+    --border:    rgba(0,255,204,0.18);
+    --border2:   rgba(0,255,204,0.25);
+    --white:     #FFFFFF;
+    --gray:      rgba(255,255,255,0.62);
+    --gray2:     rgba(255,255,255,0.4);
+    --red:       #F87171;
+    --r:         8px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(2,3,5,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: grid; place-items: center;
+  }
+  .logo-mark svg { width: 16px; height: 16px; }
+  .logo span { color: var(--white); }
+  .logo em { color: var(--green); font-style: normal; }
+  .nav-tag {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray2);
+  }
+  .nav-cta {
+    background: var(--green); color: #000;
+    padding: 9px 20px; border-radius: var(--r);
+    font-size: 0.85rem; font-weight: 700; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-lt); }
+
+  /* ── LAYOUT ── */
+  section { padding: 100px 5%; }
+  .container { max-width: 1080px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+  }
+  h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  h3 { font-size: 1rem; font-weight: 600; }
+  p { color: var(--gray); line-height: 1.75; }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 110px 5% 90px;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; top: -300px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(0,255,204,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    max-width: 1080px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--green-border); background: var(--green-dim);
+    border-radius: 100px; padding: 6px 14px; margin-bottom: 24px;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green); font-weight: 600;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-headline { margin-bottom: 20px; }
+  .hero-headline .accent { color: var(--green); }
+  .hero-sub { font-size: 1.05rem; margin-bottom: 36px; max-width: 440px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-green {
+    background: var(--green); color: #000;
+    padding: 13px 26px; border-radius: var(--r);
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-green:hover { background: var(--green-lt); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--gray);
+    padding: 13px 26px; border-radius: var(--r);
+    border: 1px solid var(--border2); font-weight: 500; font-size: 0.9rem;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gray); color: var(--white); }
+
+  /* Hero mock UI */
+  .hero-mock {
+    background: var(--card); border: 1px solid var(--border2);
+    border-radius: 14px; overflow: hidden;
+  }
+  .mock-header {
+    background: var(--green); padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mock-header .icon { font-size: 1.1rem; }
+  .mock-header-text h4 { font-size: 0.95rem; font-weight: 700; color: #000; line-height: 1.2; }
+  .mock-header-text p { font-size: 0.7rem; color: rgba(0,0,0,0.6); }
+  .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .mock-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .mock-field {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 10px 14px;
+  }
+  .mock-field label {
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray2); display: block; margin-bottom: 3px;
+  }
+  .mock-field .val {
+    font-family: 'Space Mono', monospace; font-size: 1.15rem;
+    font-weight: 700; color: var(--white);
+  }
+  .mock-field .val.green { color: var(--green); }
+  .mock-field .val.red { color: var(--red); }
+  .mock-field-full {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .mock-field-full label {
+    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray2);
+  }
+  .mock-field-full .val {
+    font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--white);
+  }
+  .mock-btn {
+    background: var(--green); color: #000; border-radius: var(--r);
+    padding: 13px; text-align: center; font-weight: 700; font-size: 0.85rem;
+  }
+  .mock-result {
+    background: rgba(0,255,204,0.08); border: 1px solid var(--green-border);
+    border-radius: var(--r); padding: 14px 16px;
+  }
+  .mock-result-label {
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 6px;
+  }
+  .mock-result-verdict {
+    font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 2px;
+  }
+  .mock-result-note { font-size: 0.75rem; color: var(--gray); }
+  .mock-dashboard {
+    border-top: 1px solid var(--border); padding: 14px 20px;
+    display: flex; gap: 0;
+  }
+  .dash-stat { flex: 1; text-align: center; }
+  .dash-stat + .dash-stat { border-left: 1px solid var(--border); }
+  .dash-stat .d-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray2); }
+  .dash-stat .d-val { font-family: 'Space Mono', monospace; font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
+  .d-val.green { color: var(--green); }
+  .d-val.red { color: var(--red); }
+  .d-val.white { color: var(--white); }
+
+  /* ── PROBLEM ── */
+  #problem { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .problem-inner { max-width: 1080px; margin: 0 auto; }
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px;
+    background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    margin-top: 48px;
+  }
+  .prob-card { background: var(--card); padding: 28px 24px; }
+  .prob-icon { font-size: 1.4rem; margin-bottom: 12px; }
+  .prob-card h3 { margin-bottom: 8px; font-size: 0.95rem; }
+  .prob-card p { font-size: 0.85rem; line-height: 1.65; }
+
+  /* ── FEATURES ── */
+  #features { background: var(--card); }
+  .features-header { max-width: 520px; margin-bottom: 60px; }
+  .features-header p { margin-top: 14px; }
+  .feat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+  }
+  .feat-card {
+    background: var(--bg); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 28px 24px;
+    transition: border-color 0.2s;
+  }
+  .feat-card:hover { border-color: var(--green-border); }
+  .feat-icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: grid; place-items: center; margin-bottom: 16px; font-size: 1rem;
+  }
+  .feat-card h3 { margin-bottom: 8px; }
+  .feat-card p { font-size: 0.85rem; line-height: 1.65; }
+
+  /* ── HOW ── */
+  #how { }
+  .how-header { max-width: 520px; margin-bottom: 60px; }
+  .how-header p { margin-top: 14px; }
+  .how-steps { display: flex; flex-direction: column; gap: 2px; max-width: 700px; }
+  .how-step {
+    display: flex; gap: 28px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px;
+  }
+  .step-num-circle {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: grid; place-items: center;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; color: var(--green);
+  }
+  .step-content h3 { margin-bottom: 6px; }
+  .step-content p { font-size: 0.88rem; }
+
+  /* ── MATH ── */
+  #math { background: var(--card); }
+  .math-header { max-width: 540px; margin-bottom: 56px; }
+  .math-header p { margin-top: 14px; }
+  .math-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .math-card {
+    background: var(--bg); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 32px 28px;
+  }
+  .math-card.accent { border-color: var(--green-border); background: var(--green-dim); }
+  .math-label {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gray2); margin-bottom: 16px;
+  }
+  .math-card.accent .math-label { color: var(--green); }
+  .math-example { display: flex; flex-direction: column; gap: 10px; }
+  .math-line {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.88rem; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  .math-line:last-child { border-bottom: none; padding-bottom: 0; }
+  .math-line .k { color: var(--gray); }
+  .math-line .v { font-family: 'Space Mono', monospace; font-weight: 700; }
+  .math-line .v.green { color: var(--green); }
+  .math-line .v.red { color: var(--red); }
+  .math-line .v.white { color: var(--white); }
+  .math-verdict {
+    margin-top: 20px; padding: 12px 16px; border-radius: 6px;
+    font-size: 0.82rem; font-weight: 600;
+  }
+  .verdict-good { background: rgba(0,255,204,0.12); color: var(--green); border: 1px solid var(--green-border); }
+  .verdict-bad { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+
+  /* ── PRICING ── */
+  #pricing { text-align: center; }
+  #pricing h2 { margin-bottom: 12px; }
+  #pricing > .container > p { max-width: 420px; margin: 0 auto 48px; }
+  .price-block {
+    background: var(--card); border: 1px solid var(--border2);
+    border-radius: 14px; padding: 48px 40px; max-width: 440px; margin: 0 auto;
+    position: relative;
+  }
+  .price-block::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; border-radius: 14px 14px 0 0;
+    background: linear-gradient(90deg, var(--green), var(--green-lt));
+  }
+  .price-badge {
+    display: inline-block;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    border-radius: 100px; padding: 4px 14px;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 20px;
+  }
+  .price-big {
+    font-family: 'Space Mono', monospace;
+    font-size: 3.8rem; font-weight: 700; line-height: 1;
+    color: var(--white); margin-bottom: 6px;
+  }
+  .price-big sup { font-size: 1.4rem; vertical-align: top; margin-top: 12px; color: var(--green); }
+  .price-type { font-size: 0.82rem; color: var(--gray); margin-bottom: 32px; }
+  .price-features { list-style: none; text-align: left; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .price-features li { font-size: 0.88rem; display: flex; gap: 10px; color: var(--gray); }
+  .price-features li .ck { color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .price-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .price-fine { font-size: 0.78rem; color: var(--gray2); margin-top: 14px; text-align: center; }
+  .vs-stack { margin-top: 16px; padding: 14px 16px; background: var(--card2); border-radius: var(--r); }
+  .vs-stack p { font-size: 0.78rem; color: var(--gray2); }
+  .vs-stack strong { color: var(--gray); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-left .logo { font-size: 1rem; }
+  .footer-sub { font-size: 0.68rem; color: var(--gray2); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 0.78rem; color: var(--gray2); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-mock { display: none; }
+    .math-grid { grid-template-columns: 1fr; }
+    section { padding: 72px 6%; }
+    #hero { padding: 80px 6% 64px; }
+  }
+  @media (max-width: 500px) {
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
 </head>
-<body class="selection:bg-cyan-500/30 overflow-x-hidden">
+<body>
 
-    <!-- Nav -->
-    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
-        <a href="index.html" class="flex items-center gap-4 group">
-            <div class="w-8 h-8 bg-zinc-900 border border-[#00ffcc]/40 rounded flex items-center justify-center font-black text-[#00ffcc] group-hover:bg-[#00ffcc] group-hover:text-black transition-all">DTE</div>
-            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
-        </a>
-        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
-            <a href="#vision" class="hover:text-white transition-colors">Vision</a>
-            <a href="#integrity" class="hover:text-white transition-colors">Data Integrity</a>
-            <a href="#tech" class="hover:text-white transition-colors">Architecture</a>
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 3L13.5 9H17L12 13L13.5 17L10 14L6.5 17L8 13L3 9H6.5L10 3Z" fill="#00ffcc"/>
+      </svg>
+    </div>
+    <div>
+      <div>SPARK<em>IQ</em></div>
+      <div class="nav-tag">Offer Intelligence for Spark Drivers</div>
+    </div>
+  </div>
+  <a href="#pricing" class="nav-cta">Get SparkIQ — $4.99</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="dot"></span> Built by a Spark driver, for Spark drivers
+      </div>
+      <h1 class="hero-headline">
+        Know your worth<br>
+        <span class="accent">before you drive.</span>
+      </h1>
+      <p class="hero-sub">
+        SparkIQ evaluates every Walmart Spark offer in seconds — calculating your real earnings after gas, deadhead miles, and time cost. Stop guessing. Start knowing when to accept and when to pass.
+      </p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-green">Get SparkIQ — $4.99 →</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+
+    <!-- MOCK UI -->
+    <div class="hero-mock">
+      <div class="mock-header">
+        <div class="icon">⚡</div>
+        <div class="mock-header-text">
+          <h4>SparkIQ</h4>
+          <p>Know your worth before you drive</p>
         </div>
-    </nav>
-
-    <!-- Hero -->
-    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,204,0.05),transparent_70%)]"></div>
-        
-        <div class="relative z-10 text-center max-w-5xl">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
-                <i data-lucide="bar-chart-2" class="w-4 h-4 text-[#00ffcc]"></i>
-                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Business Intelligence Engine</span>
-            </div>
-
-            <h1 class="font-display text-5xl md:text-[9rem] tracking-tighter leading-[0.9] mb-6 text-gradient-teal teal-glow uppercase">
-                SPARKIQ
-            </h1>
-
-            <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
-                "High-fidelity analytics dashboard powering <span class="text-white font-medium">data visualization</span> and core business insights."
-            </p>
-
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="https://spark-theta-livid.vercel.app/" target="_blank" class="px-10 py-5 bg-[#00ffcc] text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#00ffcc]/20 hover:scale-105 transition-all inline-block">Launch Dashboard</a>
-                <a href="#integrity" class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all inline-block">Technical Brief</a>
-            </div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-row">
+          <div class="mock-field">
+            <label>Base + Tips Pay</label>
+            <div class="val">$12.50</div>
+          </div>
+          <div class="mock-field">
+            <label>Est. Tips</label>
+            <div class="val green">$5.00</div>
+          </div>
         </div>
-    </section>
-
-    <!-- The Problem -->
-    <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-            <div>
-                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold block mb-4">Case Study Brief</span>
-                <h2 class="font-display text-6xl text-white leading-tight">DATA<br/><span class="text-white/10">FRAGMENTATION.</span></h2>
-                <p class="text-lg text-white/40 mt-6 leading-relaxed">
-                    Organizations often struggle to synthesize dispersed data streams. SparkIQ was architected to act as a **unified telemetry dashboard**, ingesting complex datasets and surfacing actionable intelligence with zero latency.
-                </p>
-            </div>
-            <div class="glass-card p-10 space-y-8">
-                <div class="flex gap-6 items-start">
-                    <div class="w-12 h-12 bg-[#00ffcc]/10 rounded-xl flex items-center justify-center shrink-0 text-[#00ffcc]">
-                        <i data-lucide="eye"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold uppercase text-sm mb-1 tracking-tight">Signal Clarity</h4>
-                        <p class="text-white/40 text-xs leading-relaxed">Transformed noisy data into high-contrast visual metrics for immediate executive parsing.</p>
-                    </div>
-                </div>
-                <div class="flex gap-6 items-start">
-                    <div class="w-12 h-12 bg-[#00ffcc]/10 rounded-xl flex items-center justify-center shrink-0 text-[#00ffcc]">
-                        <i data-lucide="zap"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold uppercase text-sm mb-1 tracking-tight">Real-Time Telemetry</h4>
-                        <p class="text-white/40 text-xs leading-relaxed">Engineered live data pipelines that ensure dashboard statistics reflect real-world business velocity.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="mock-row">
+          <div class="mock-field">
+            <label>Total Miles</label>
+            <div class="val">5.2 mi</div>
+          </div>
+          <div class="mock-field">
+            <label>Est. Time</label>
+            <div class="val">30 min</div>
+          </div>
         </div>
-    </section>
-
-    <!-- Core Logic -->
-    <section id="integrity" class="py-32 px-8 bg-zinc-900/20 border-y border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#00ffcc] font-bold block mb-4">Engineering Principles</span>
-                <h2 class="font-display text-6xl text-white">THE INTEGRITY ENGINE.</h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-10 group">
-                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">Data Integrity</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Rigorous ETL pipelines ensure that only validated, structured data reaches the presentation layer.</p>
-                </div>
-                <div class="glass-card p-10 group">
-                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">Visual Logic</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Implemented adaptive charting libraries that maintain clarity across dense temporal datasets.</p>
-                </div>
-                <div class="glass-card p-10 group">
-                    <h3 class="text-xl font-bold mb-4 group-hover:text-[#00ffcc] transition-colors uppercase tracking-tight">High-Fidelity UI</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Designed with the Lux Forest aesthetic to provide a cinematic, low-fatigue environment for extended analysis.</p>
-                </div>
-            </div>
+        <div class="mock-field-full">
+          <label>Miles Back (Deadhead)</label>
+          <div class="val">3.5 mi</div>
         </div>
-    </section>
-
-    <!-- Technical Specs -->
-    <section id="tech" class="py-32 px-8 max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-4 gap-6">
-            <div class="glass-card p-8 border-white/5">
-                <i data-lucide="bar-chart" class="mb-6 text-[#00ffcc]"></i>
-                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Analytics</h4>
-                <p class="text-white/40 text-xs leading-relaxed">Dynamic charting and aggregation logic.</p>
-            </div>
-            <div class="glass-card p-8 border-white/5">
-                <i data-lucide="layout" class="mb-6 text-[#00ffcc]"></i>
-                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">React / Vite</h4>
-                <p class="text-white/40 text-xs leading-relaxed">Lightning-fast HMR and optimized production builds.</p>
-            </div>
-            <div class="glass-card p-8 border-white/5">
-                <i data-lucide="database" class="mb-6 text-[#00ffcc]"></i>
-                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Data Pipeline</h4>
-                <p class="text-white/40 text-xs leading-relaxed">Seamless ingestion from multiple operational silos.</p>
-            </div>
-            <div class="glass-card p-8 border-white/5">
-                <i data-lucide="cpu" class="mb-6 text-[#00ffcc]"></i>
-                <h4 class="font-bold text-white mb-2 uppercase text-sm tracking-tight">Optimization</h4>
-                <p class="text-white/40 text-xs leading-relaxed">Memoized rendering to handle thousands of data points smoothly.</p>
-            </div>
+        <div class="mock-btn">⚡ Evaluate Offer</div>
+        <div class="mock-result">
+          <div class="mock-result-label">✓ Offer Analysis</div>
+          <div class="mock-result-verdict">Accept — $1.98 net/mile</div>
+          <div class="mock-result-note">After gas cost. Above your $1.50 threshold.</div>
         </div>
-    </section>
+      </div>
+      <div class="mock-dashboard">
+        <div class="dash-stat">
+          <div class="d-label">Total Pay</div>
+          <div class="d-val white">$16.00</div>
+        </div>
+        <div class="dash-stat">
+          <div class="d-label">Tips</div>
+          <div class="d-val green">$4.00</div>
+        </div>
+        <div class="dash-stat">
+          <div class="d-label">Gas</div>
+          <div class="d-val red">-$0.15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="py-20 px-8 text-center border-t border-white/5">
-        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">© 2026 DTE Solutions // Analytics Division // Engineered with Intention by Drew Ernst</p>
-    </footer>
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="problem-inner container">
+    <div class="eyebrow">The problem</div>
+    <h2>Every bad offer costs you<br>real time and real money.</h2>
+    <div class="problem-grid">
+      <div class="prob-card">
+        <div class="prob-icon">🤯</div>
+        <h3>The math is instant and invisible</h3>
+        <p>An offer shows up. You have seconds to decide. Doing the gas-versus-miles-versus-time math in your head while in a parking lot is how you take bad offers.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">📍</div>
+        <h3>Deadhead miles kill your rate</h3>
+        <p>The miles to pick up and the miles back to your zone aren't in the offer. But they eat your gas and your time — and they're the difference between a good run and a break-even one.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">⛽</div>
+        <h3>Gas cost is invisible until it isn't</h3>
+        <p>At $3.60/gal and 24.5 MPG, every mile costs you money. Offers don't show you that. SparkIQ does — before you tap accept.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">📊</div>
+        <h3>No visibility on your actual day</h3>
+        <p>Without tracking, you don't know what you've really made, what you've spent on gas, or whether your shift was actually worth it.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        lucide.createIcons();
-    </script>
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="features-header">
+      <div class="eyebrow">What SparkIQ does</div>
+      <h2>Everything you need to make smarter decisions, faster.</h2>
+      <p>Enter the offer details, hit evaluate, and SparkIQ tells you exactly what this run is worth — net of gas, net of your time, net of the miles you're not getting paid for.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">⚡</div>
+        <h3>Instant Offer Evaluation</h3>
+        <p>Enter base pay, estimated tips, total miles, and estimated time. SparkIQ calculates your real rate per mile and per hour in under two seconds.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⛽</div>
+        <h3>Real Gas Cost Calculation</h3>
+        <p>Set your vehicle's MPG and your local gas price once. SparkIQ deducts the actual fuel cost from every offer automatically — including deadhead miles back to your zone.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">↩️</div>
+        <h3>Deadhead Miles Accounting</h3>
+        <p>The miles back to your zone after the drop aren't paid miles — but they cost you gas and time. SparkIQ factors them into every evaluation, not just the delivery distance.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📅</div>
+        <h3>Daily Dashboard</h3>
+        <p>Track every offer you evaluate throughout the day. See your total pay, tips earned, and gas cost at a glance — so you know exactly what your shift actually netted.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚗</div>
+        <h3>Vehicle Settings</h3>
+        <p>Set your MPG and current gas price once in Vehicle Settings. Every evaluation after that is automatically calibrated to your specific car and local fuel cost.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📲</div>
+        <h3>Works on Any Device</h3>
+        <p>SparkIQ is a PWA — no app store download, no storage used on your phone. Add it to your home screen and open it right from your car in the Walmart lot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="how-header">
+      <div class="eyebrow">How it works</div>
+      <h2>Three inputs.<br>One clear answer.</h2>
+      <p>No learning curve. Built for the parking lot, not the office.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num-circle">01</div>
+        <div class="step-content">
+          <h3>Enter the offer</h3>
+          <p>When an offer comes in, tap in the base pay, estimated tip, total miles, estimated time, and deadhead miles back. Takes about 15 seconds.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num-circle">02</div>
+        <div class="step-content">
+          <h3>Hit Evaluate Offer</h3>
+          <p>SparkIQ runs the math instantly — calculating your net earnings per mile and per hour after gas cost, including the miles Spark isn't paying you for.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num-circle">03</div>
+        <div class="step-content">
+          <h3>Accept or pass with confidence</h3>
+          <p>You see the real number. If it clears your threshold, take it. If it doesn't, pass — and know you made the right call. Your daily dashboard updates either way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MATH -->
+<section id="math">
+  <div class="container">
+    <div class="math-header">
+      <div class="eyebrow">The math</div>
+      <h2>Two offers. Very different realities.</h2>
+      <p>Spark shows you base pay and miles. SparkIQ shows you what you actually keep after the cost of getting there and back.</p>
+    </div>
+    <div class="math-grid">
+      <div class="math-card">
+        <div class="math-label">Offer A — Looks decent</div>
+        <div class="math-example">
+          <div class="math-line"><span class="k">Base + tip pay</span><span class="v white">$12.50</span></div>
+          <div class="math-line"><span class="k">Total miles (delivery)</span><span class="v white">5.2 mi</span></div>
+          <div class="math-line"><span class="k">Deadhead miles back</span><span class="v white">3.5 mi</span></div>
+          <div class="math-line"><span class="k">Total miles driven</span><span class="v white">8.7 mi</span></div>
+          <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$1.28</span></div>
+          <div class="math-line"><span class="k">Estimated time</span><span class="v white">30 min</span></div>
+          <div class="math-line"><span class="k">Net earnings</span><span class="v green">$11.22</span></div>
+          <div class="math-line"><span class="k">Net per mile</span><span class="v green">$1.29/mi</span></div>
+        </div>
+        <div class="math-verdict verdict-good">✓ Above threshold — worth taking</div>
+      </div>
+
+      <div class="math-card accent">
+        <div class="math-label">Offer B — Looks similar</div>
+        <div class="math-example">
+          <div class="math-line"><span class="k">Base + tip pay</span><span class="v white">$10.00</span></div>
+          <div class="math-line"><span class="k">Total miles (delivery)</span><span class="v white">9.1 mi</span></div>
+          <div class="math-line"><span class="k">Deadhead miles back</span><span class="v white">7.0 mi</span></div>
+          <div class="math-line"><span class="k">Total miles driven</span><span class="v white">16.1 mi</span></div>
+          <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$2.37</span></div>
+          <div class="math-line"><span class="k">Estimated time</span><span class="v white">45 min</span></div>
+          <div class="math-line"><span class="k">Net earnings</span><span class="v red">$7.63</span></div>
+          <div class="math-line"><span class="k">Net per mile</span><span class="v red">$0.47/mi</span></div>
+        </div>
+        <div class="math-verdict verdict-bad">✗ Below threshold — pass on this one</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="eyebrow">Pricing</div>
+    <h2>One price. Yours forever.</h2>
+    <p>No subscription. No monthly fee. Pay once, use it on every run — today, next month, next year.</p>
+    <div class="price-block">
+      <div class="price-badge">One-time purchase</div>
+      <div class="price-big"><sup>$</sup>4.99</div>
+      <p class="price-type">Pay once · Keep forever · No subscription</p>
+      <ul class="price-features">
+        <li><span class="ck">✓</span> Instant offer evaluation with net rate calculation</li>
+        <li><span class="ck">✓</span> Real gas cost deduction per your vehicle</li>
+        <li><span class="ck">✓</span> Deadhead miles accounting built in</li>
+        <li><span class="ck">✓</span> Daily dashboard — total pay, tips, and gas</li>
+        <li><span class="ck">✓</span> Vehicle settings (MPG + gas price)</li>
+        <li><span class="ck">✓</span> Works on any device — bookmark it, use it anywhere</li>
+        <li><span class="ck">✓</span> All future updates included</li>
+      </ul>
+      <hr class="price-divider"/>
+      <a href="#" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
+        Get SparkIQ for $4.99 →
+      </a>
+      <p class="price-fine">Delivered instantly. No app store. Add to your home screen in one tap.</p>
+      <div class="vs-stack">
+        <p>Decline one bad offer using SparkIQ and it pays for itself. <strong>One run.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 3L13.5 9H17L12 13L13.5 17L10 14L6.5 17L8 13L3 9H6.5L10 3Z" fill="#00ffcc"/>
+        </svg>
+      </div>
+      <div>SPARK<em>IQ</em></div>
+    </div>
+    <div class="footer-sub">DTE Solutions LLC · Quincy, IL</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://dte-solutions.icu">DTE Nexus</a>
+    <a href="https://dte-solutions.icu/information-security-policy.html">Security</a>
+    <a href="https://dte-solutions.icu/privacy-policy.html">Privacy</a>
+  </div>
+</footer>
+
 </body>
 </html>

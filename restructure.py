@@ -43,17 +43,17 @@ new_products_html = """<section class="section" id="products">
                 <a href="https://pulse.dte-solutions.icu" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Plans <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
-            <!-- LockboxIQ -->
+            <!-- Orbit -->
             <div class="card" style="padding:32px;background:linear-gradient(135deg, rgba(0,255,204,0.05), transparent);border-color:rgba(0,255,204,0.1);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
                     <div>
-                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">LockboxIQ</h4>
+                        <h4 style="font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;color:#fff;">Orbit</h4>
                         <p style="font-size:11px;color:rgba(0,255,204,0.5);text-transform:uppercase;letter-spacing:.08em;">Pulse Add-On &middot; Subscriptions</p>
                     </div>
                     <div class="icon-box" style="background:rgba(0,255,204,0.1);border-color:rgba(0,255,204,0.2);"><i data-lucide="lock" style="color:var(--green);"></i></div>
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Seamless subscription tracking and behavioral logic bundled directly into the Pulse ecosystem to stop subscription bleed.</p>
-                <a href="lockboxiq-breakdown.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
+                <a href="orbit-breakdown.html" target="_blank" style="font-size:12px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
             <!-- PCSP Pro -->
