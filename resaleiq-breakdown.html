@@ -225,7 +225,7 @@
   .who-intro { max-width: 520px; margin-bottom: 56px; }
   .who-intro p { margin-top: 16px; }
   .who-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
   }
   .who-card {
     background: var(--white); border: 1px solid var(--border);
@@ -322,6 +322,7 @@
     .hero-stats { flex-direction: column; }
     .stat { border-right: none; border-bottom: 1px solid var(--border); }
     .stat:last-child { border-bottom: none; }
+    .who-grid { grid-template-columns: 1fr; gap: 16px; }
     footer { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
     .compare-table { display: block; overflow-x: auto; }
