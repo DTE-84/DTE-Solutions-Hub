@@ -7,23 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #FFFFFF;
-  --ink-muted: rgba(255,255,255,0.62);
-  --ink-subtle: rgba(255,255,255,0.3);
-  --bg: #020305;
-  --bg-alt: #05070a;
-  --card: #080b10;
-  --border: rgba(0,255,204,0.18);
-  --accent: #00ffcc;
-  --accent-light: rgba(0,255,204,0.05);
-  --accent-mid: rgba(0,255,204,0.4);
-  --teal: #00aafa;
-  --teal-light: rgba(0,170,250,0.1);
-  --amber: #f59e0b;
-  --amber-light: rgba(245,158,11,0.1);
-  --green: #00ffcc;
-  --green-light: rgba(0,255,204,0.1);
-  --red-light: rgba(239,68,68,0.1);
+  --ink: #0F172A;
+  --ink-muted: #475569;
+  --ink-subtle: #94A3B8;
+  --bg: #F9FAFB;
+  --bg-alt: #F0F4FF;
+  --card: #FFFFFF;
+  --border: #E2E8F0;
+  --accent: #4F46E5;
+  --accent-light: #EEF2FF;
+  --accent-mid: #818CF8;
+  --teal: #0891B2;
+  --teal-light: #E0F9FF;
+  --amber: #D97706;
+  --amber-light: #FEF3C7;
+  --green: #16A34A;
+  --green-light: #DCFCE7;
+  --red-light: #FEE2E2;
   --radius: 12px;
   --radius-lg: 18px;
 }
@@ -51,7 +51,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(2,3,5,0.9);
+  background: rgba(249,250,251,0.9);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   padding: 0 32px;
@@ -90,13 +90,13 @@ nav {
 .nav-links a:hover { color: var(--accent); }
 .nav-cta {
   background: var(--accent);
-  color: #000;
+  color: #fff;
   border: none;
   padding: 9px 22px;
   border-radius: 8px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
   transition: opacity .15s;
@@ -105,8 +105,8 @@ nav {
 
 /* ─── HERO ─── */
 .hero {
-  background: radial-gradient(circle at top center, rgba(0,255,204,0.08) 0%, transparent 70%);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(145deg, #F8F9FF 0%, #EEF0FF 55%, #E3F0FF 100%);
+  border-bottom: 1px solid #D6DCFF;
   overflow: hidden;
 }
 .hero-inner {
@@ -122,8 +122,8 @@ nav {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(0,255,204,0.1);
-  border: 1px solid rgba(0,255,204,0.25);
+  background: rgba(79,70,229,.1);
+  border: 1px solid rgba(79,70,229,.25);
   color: var(--accent);
   font-size: 12px;
   font-weight: 500;
@@ -165,13 +165,13 @@ h1.hero-title em {
 }
 .btn-primary {
   background: var(--accent);
-  color: #000;
+  color: #fff;
   border: none;
   padding: 13px 26px;
   border-radius: 9px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: opacity .15s;
 }
@@ -186,10 +186,10 @@ h1.hero-title em {
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color .15s, color .15s, background .15s;
-  background: transparent;
+  transition: border-color .15s, color .15s;
+  background: #fff;
 }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,255,204,0.06); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ─── ORBITAL DIAGRAM ─── */
 .orbit-wrap {
@@ -240,7 +240,7 @@ h1.hero-title em {
   gap: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--card);
+  background: #fff;
   overflow: hidden;
   margin-top: 48px;
 }
@@ -274,7 +274,7 @@ h1.hero-title em {
   margin-top: 48px;
 }
 .pain-card {
-  background: var(--card);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
@@ -314,8 +314,8 @@ h1.hero-title em {
 /* ─── FEATURES ─── */
 .features-bg {
   background: var(--bg-alt);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: 1px solid #D6DCFF;
+  border-bottom: 1px solid #D6DCFF;
 }
 .features-grid {
   display: grid;
@@ -324,7 +324,7 @@ h1.hero-title em {
   margin-top: 48px;
 }
 .feature-card {
-  background: var(--card);
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 32px;
@@ -420,7 +420,7 @@ h1.hero-title em {
 
 /* ─── WHO IT'S FOR ─── */
 .who-bg {
-  background: var(--card);
+  background: #fff;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -503,7 +503,7 @@ h1.hero-title em {
 .price-card.featured {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(0,255,204,0.3);
+  box-shadow: 0 0 0 4px rgba(79,70,229,.3);
   transform: scale(1.03);
 }
 .price-label {
@@ -609,13 +609,13 @@ h1.hero-title em {
 }
 .price-cta:hover { opacity: .88; }
 .price-cta-ghost {
-  background: rgba(0,255,204,0.1);
-  color: var(--accent);
-  border: 1px solid rgba(0,255,204,0.18);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.18);
 }
 .price-cta-solid {
-  background: var(--accent);
-  color: #000;
+  background: #fff;
+  color: var(--accent);
 }
 
 /* ─── FINAL CTA ─── */
@@ -680,9 +680,9 @@ footer a:hover { color: var(--accent); }
   <div class="nav-inner">
     <div class="nav-logo">
       <svg class="nav-logo-ring" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="11" cy="11" r="3" fill=\"#00ffcc\"/>
-        <ellipse cx="11" cy="11" rx="9" ry="4.2" stroke=\"#00ffcc\" stroke-width="1.5" fill="none" transform="rotate(-30 11 11)"/>
-        <ellipse cx="11" cy="11" rx="9" ry="4.2" stroke=\"#00ffcc\" stroke-width="1" fill="none" stroke-dasharray="2 2" transform="rotate(30 11 11)"/>
+        <circle cx="11" cy="11" r="3" fill="#4F46E5"/>
+        <ellipse cx="11" cy="11" rx="9" ry="4.2" stroke="#4F46E5" stroke-width="1.5" fill="none" transform="rotate(-30 11 11)"/>
+        <ellipse cx="11" cy="11" rx="9" ry="4.2" stroke="#818CF8" stroke-width="1" fill="none" stroke-dasharray="2 2" transform="rotate(30 11 11)"/>
       </svg>
       Orbit
     </div>
@@ -724,53 +724,53 @@ footer a:hover { color: var(--accent); }
         </defs>
 
         <!-- Orbit rings (static paths) -->
-        <ellipse cx="230" cy="230" rx="94" ry="40" fill="none" stroke=\"rgba(0,255,204,0.25)\" stroke-width="1.5" stroke-dasharray="5 5" transform="rotate(-25 230 230)"/>
-        <ellipse cx="230" cy="230" rx="154" ry="66" fill="none" stroke=\"rgba(0,255,204,0.15)\" stroke-width="1" stroke-dasharray="3 7" transform="rotate(12 230 230)"/>
-        <ellipse cx="230" cy="230" rx="204" ry="88" fill="none" stroke=\"rgba(0,255,204,0.08)\" stroke-width="1" stroke-dasharray="2 9" transform="rotate(-8 230 230)"/>
+        <ellipse cx="230" cy="230" rx="94" ry="40" fill="none" stroke="#C7D2FE" stroke-width="1.5" stroke-dasharray="5 5" transform="rotate(-25 230 230)"/>
+        <ellipse cx="230" cy="230" rx="154" ry="66" fill="none" stroke="#DDE3FF" stroke-width="1" stroke-dasharray="3 7" transform="rotate(12 230 230)"/>
+        <ellipse cx="230" cy="230" rx="204" ry="88" fill="none" stroke="#E8ECFF" stroke-width="1" stroke-dasharray="2 9" transform="rotate(-8 230 230)"/>
 
         <!-- Core -->
-        <circle cx="230" cy="230" r="54" fill=\"rgba(0,255,204,0.05)\" stroke=\"rgba(0,255,204,0.25)\" stroke-width="2"/>
-        <text x="230" y="222" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" fill=\"#00ffcc\" letter-spacing=".04em">◎ ORBIT</text>
-        <text x="230" y="238" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill=\"#00ffcc\">financial core</text>
+        <circle cx="230" cy="230" r="54" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="2"/>
+        <text x="230" y="222" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" fill="#4F46E5" letter-spacing=".04em">◎ ORBIT</text>
+        <text x="230" y="238" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#818CF8">financial core</text>
 
         <!-- Ring A — innermost (payment methods) -->
         <g class="ring-a">
-          <circle cx="316" cy="198" r="26" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
-          <text x="316" y="194" text-anchor="middle" font-size="15" fill=\"#00ffcc\">💳</text>
+          <circle cx="316" cy="198" r="26" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
+          <text x="316" y="194" text-anchor="middle" font-size="15" fill="#4F46E5">💳</text>
           <text x="316" y="209" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">Visa •4291</text>
-          <circle cx="148" cy="268" r="26" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
-          <text x="148" y="264" text-anchor="middle" font-size="15" fill=\"#00ffcc\">🏦</text>
+          <circle cx="148" cy="268" r="26" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
+          <text x="148" y="264" text-anchor="middle" font-size="15" fill="#4F46E5">🏦</text>
           <text x="148" y="279" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">Chase CK</text>
         </g>
 
         <!-- Ring B — mid (subscriptions) -->
         <g class="ring-b">
-          <circle cx="376" cy="190" r="28" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="376" cy="190" r="28" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="376" y="185" text-anchor="middle" font-size="16">📺</text>
           <text x="376" y="201" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">Netflix</text>
-          <circle cx="268" cy="68" r="28" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="268" cy="68" r="28" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="268" y="63" text-anchor="middle" font-size="16">🎵</text>
           <text x="268" y="79" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">Spotify</text>
-          <circle cx="98" cy="285" r="28" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="98" cy="285" r="28" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="98" y="280" text-anchor="middle" font-size="16">☁️</text>
           <text x="98" y="296" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">iCloud</text>
-          <circle cx="212" cy="390" r="28" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="212" cy="390" r="28" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="212" y="385" text-anchor="middle" font-size="16">🏋️</text>
           <text x="212" y="401" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#64748B">Gym</text>
         </g>
 
         <!-- Ring C — outer (password vault nodes) -->
         <g class="ring-c">
-          <circle cx="428" cy="170" r="24" fill=\"rgba(0,255,204,0.1)\" stroke=\"rgba(0,255,204,0.2)\" stroke-width="1.5"/>
+          <circle cx="428" cy="170" r="24" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.5"/>
           <text x="428" y="165" text-anchor="middle" font-size="14">🔒</text>
           <text x="428" y="180" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748B">secured</text>
-          <circle cx="56" cy="304" r="24" fill=\"rgba(0,255,204,0.1)\" stroke=\"rgba(0,255,204,0.2)\" stroke-width="1.5"/>
+          <circle cx="56" cy="304" r="24" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1.5"/>
           <text x="56" y="299" text-anchor="middle" font-size="14">🔒</text>
           <text x="56" y="314" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748B">secured</text>
-          <circle cx="348" cy="36" r="24" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="348" cy="36" r="24" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="348" y="31" text-anchor="middle" font-size="14">📧</text>
           <text x="348" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748B">Substack</text>
-          <circle cx="138" cy="422" r="24" fill=\"#080b10\" stroke=\"rgba(0,255,204,0.18)\" stroke-width="1.5"/>
+          <circle cx="138" cy="422" r="24" fill="#fff" stroke="#E0E7FF" stroke-width="1.5"/>
           <text x="138" y="417" text-anchor="middle" font-size="14">🎮</text>
           <text x="138" y="432" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#64748B">Xbox</text>
         </g>

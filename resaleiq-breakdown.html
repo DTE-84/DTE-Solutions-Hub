@@ -10,17 +10,17 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gold:    #00ffcc;
-    --gold-lt: #00aafa;
-    --ink:     #FFFFFF;
-    --charcoal:rgba(0,255,204,0.1);
-    --cream:   #020305;
-    --warm:    #080b10;
-    --muted:   rgba(255,255,255,0.62);
-    --border:  rgba(0,255,204,0.18);
-    --dark-bg: #020305;
-    --dark-card:#080b10;
-    --dark-border:rgba(0,255,204,0.18);
+    --gold:    #D4A217;
+    --gold-lt: #F0C84A;
+    --ink:     #141414;
+    --charcoal:#2C2C2C;
+    --cream:   #F4F0E6;
+    --warm:    #EDE8DA;
+    --muted:   #7A7468;
+    --border:  #DDD8CC;
+    --dark-bg: #111111;
+    --dark-card:#1C1C1C;
+    --dark-border:#2E2E2E;
     --white:   #FFFFFF;
     --r:       6px;
   }
@@ -60,12 +60,12 @@
     color: var(--muted); display: none;
   }
   .nav-cta {
-    background: var(--gold); color: #000;
+    background: var(--ink); color: var(--white);
     padding: 9px 22px; border-radius: var(--r);
     font-size: 0.85rem; font-weight: 600; text-decoration: none;
     transition: background 0.2s;
   }
-  .nav-cta:hover { opacity: 0.8; }
+  .nav-cta:hover { background: var(--charcoal); }
 
   /* ── SECTIONS ── */
   section { padding: 100px 5%; }
@@ -90,13 +90,13 @@
     content: '';
     position: absolute; top: -200px; right: -200px;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,255,204,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212,162,23,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero-inner { max-width: 1100px; margin: 0 auto; }
   .hero-label {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0,255,204,0.1); border: 1px solid rgba(0,255,204,0.25);
+    background: rgba(212,162,23,0.1); border: 1px solid rgba(212,162,23,0.25);
     border-radius: 100px; padding: 6px 14px;
     font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--gold); font-weight: 600; margin-bottom: 28px;
@@ -110,25 +110,25 @@
   }
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 64px; }
   .btn-primary {
-    background: var(--gold); color: #000;
+    background: var(--ink); color: var(--white);
     padding: 14px 28px; border-radius: var(--r);
     font-weight: 600; font-size: 0.95rem; text-decoration: none;
     display: inline-flex; align-items: center; gap: 8px;
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,255,204,0.15); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
   .btn-secondary {
     background: transparent; color: var(--ink);
     padding: 14px 28px; border-radius: var(--r);
     border: 1.5px solid var(--border); font-weight: 600; font-size: 0.95rem;
     text-decoration: none; transition: border-color 0.2s;
   }
-  .btn-secondary:hover { border-color: var(--gold); }
+  .btn-secondary:hover { border-color: var(--ink); }
 
   /* Hero stats bar */
   .hero-stats {
     display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--r);
-    background: var(--dark-card); overflow: hidden; max-width: 640px;
+    background: var(--white); overflow: hidden; max-width: 640px;
   }
   .stat {
     flex: 1; padding: 18px 24px; border-right: 1px solid var(--border);
@@ -151,7 +151,7 @@
   }
   #problem .eyebrow { color: var(--gold); }
   #problem h2 { color: var(--white); }
-  #problem .lead { color: rgba(255,255,255,0.6); max-width: 560px; margin: 16px 0 56px; font-size: 1.05rem; }
+  #problem .lead { color: #888; max-width: 560px; margin: 16px 0 56px; font-size: 1.05rem; }
   .pain-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px;
     background: var(--dark-border); border: 1px solid var(--dark-border); border-radius: var(--r);
@@ -163,7 +163,7 @@
   }
   .pain-icon { font-size: 1.5rem; }
   .pain-card h3 { color: var(--white); font-size: 1rem; }
-  .pain-card p { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.65; }
+  .pain-card p { color: #777; font-size: 0.9rem; line-height: 1.65; }
 
   /* ── WHAT ── */
   #what { background: var(--cream); }
@@ -175,7 +175,7 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
   }
   .tool-card {
-    background: var(--dark-card); border: 1px solid var(--border);
+    background: var(--white); border: 1px solid var(--border);
     border-radius: 10px; padding: 32px 28px;
     position: relative; overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -209,7 +209,7 @@
     gap: 0; position: relative;
   }
   .step {
-    padding: 40px 32px; background: var(--dark-card);
+    padding: 40px 32px; background: var(--white);
     border: 1px solid var(--border); margin: -0.5px;
     position: relative;
   }
@@ -228,7 +228,7 @@
     display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;
   }
   .who-card {
-    background: var(--dark-card); border: 1px solid var(--border);
+    background: var(--white); border: 1px solid var(--border);
     border-radius: 10px; padding: 28px 24px;
   }
   .who-emoji { font-size: 1.8rem; margin-bottom: 14px; }
@@ -239,7 +239,7 @@
   #why { background: var(--dark-bg); padding: 100px 5%; }
   #why .eyebrow { color: var(--gold); }
   #why h2 { color: var(--white); margin-bottom: 16px; }
-  #why .lead { color: rgba(255,255,255,0.6); max-width: 560px; margin-bottom: 56px; font-size: 1.05rem; }
+  #why .lead { color: #888; max-width: 560px; margin-bottom: 56px; font-size: 1.05rem; }
 
   .compare-table {
     width: 100%; border-collapse: collapse;
@@ -249,18 +249,18 @@
   .compare-table th {
     padding: 16px 20px; text-align: left; font-size: 0.72rem;
     letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
-    background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.4); border-bottom: 1px solid var(--dark-border);
+    background: #1A1A1A; color: #666; border-bottom: 1px solid var(--dark-border);
   }
   .compare-table th.highlight { color: var(--gold); }
   .compare-table td {
-    padding: 18px 20px; font-size: 0.88rem; color: rgba(255,255,255,0.6);
+    padding: 18px 20px; font-size: 0.88rem; color: #888;
     border-bottom: 1px solid var(--dark-border);
   }
   .compare-table tr:last-child td { border-bottom: none; }
   .compare-table td.feature { color: var(--white); font-weight: 500; }
   .compare-table td.yes { color: #4ADE80; text-align: center; }
-  .compare-table td.no { color: rgba(255,255,255,0.4); text-align: center; }
-  .compare-table td.highlight-col { background: rgba(0,255,204,0.05); color: var(--gold); text-align: center; font-weight: 600; }
+  .compare-table td.no { color: #666; text-align: center; }
+  .compare-table td.highlight-col { background: rgba(212,162,23,0.05); color: var(--gold); text-align: center; font-weight: 600; }
 
   /* ── PRICING ── */
   #pricing {
@@ -271,7 +271,7 @@
   #pricing .lead { color: var(--muted); max-width: 480px; margin: 0 auto 48px; }
 
   .pricing-card {
-    background: var(--dark-card); border: 1px solid var(--border);
+    background: var(--white); border: 1px solid var(--border);
     border-radius: 14px; padding: 48px 40px; max-width: 480px; margin: 0 auto;
     position: relative; overflow: hidden;
   }
@@ -294,7 +294,7 @@
   .price-features li { font-size: 0.9rem; display: flex; gap: 10px; align-items: flex-start; }
   .price-features li .check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
   .btn-gold {
-    display: block; background: var(--gold); color: #000;
+    display: block; background: var(--gold); color: var(--ink);
     padding: 16px 28px; border-radius: var(--r); font-weight: 700;
     font-size: 0.95rem; text-decoration: none; text-align: center;
     transition: background 0.2s, transform 0.15s;
@@ -310,9 +310,9 @@
   }
   .footer-logo { color: var(--white); font-weight: 700; font-size: 1rem; }
   .footer-logo em { color: var(--gold); font-style: normal; }
-  .footer-sub { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+  .footer-sub { font-size: 0.72rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
   .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a { font-size: 0.8rem; color: #555; text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--gold); }
 
   /* ── RESPONSIVE ── */
@@ -337,8 +337,8 @@
   <div class="logo">
     <div class="logo-icon">
       <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 15L10 5L16 15" stroke=\"#00ffcc\" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="10" cy="5" r="1.5" fill=\"#00ffcc\"/>
+        <path d="M4 15L10 5L16 15" stroke="#D4A217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="10" cy="5" r="1.5" fill="#D4A217"/>
       </svg>
     </div>
     <div>
@@ -564,9 +564,9 @@
         <tr>
           <th>Feature</th>
           <th class="highlight">ResaleIQ</th>
-          <th>Crosslisting tools<br><small style="font-size:0.65rem;color: rgba(255,255,255,0.3)">Vendoo, List Perfectly</small></th>
-          <th>AI listing tools<br><small style="font-size:0.65rem;color: rgba(255,255,255,0.3)">Nifty, Voolist</small></th>
-          <th>Price scanners<br><small style="font-size:0.65rem;color: rgba(255,255,255,0.3)">Underpriced, Resylr</small></th>
+          <th>Crosslisting tools<br><small style="font-size:0.65rem;color:#444">Vendoo, List Perfectly</small></th>
+          <th>AI listing tools<br><small style="font-size:0.65rem;color:#444">Nifty, Voolist</small></th>
+          <th>Price scanners<br><small style="font-size:0.65rem;color:#444">Underpriced, Resylr</small></th>
         </tr>
       </thead>
       <tbody>
