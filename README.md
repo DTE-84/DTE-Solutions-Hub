@@ -26,4 +26,4 @@ The Hub is the central orchestration portal for the DTE Ecosystem, located at [d
 
 ---
 
-**DTE Solutions LLC // Senior Systems Engineering**
+**Drew Ernst, sole proprietor, doing business as DTE Solutions. // Senior Systems Engineering**

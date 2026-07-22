@@ -188,7 +188,7 @@ const DashboardLayout = ({ children }) => {
 					className='shrink-0 px-10 py-6 border-t border-white/[0.02]
                            flex flex-col sm:flex-row items-center justify-between gap-4'>
 					<p className='text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-[#FCF6EB]/10'>
-						© 2026 DTE Solutions LLC // Pulse V3.0.1
+						© 2026 Drew Ernst, sole proprietor, doing business as DTE Solutions. // Pulse V3.0.1
 					</p>
 					<div className='flex gap-8'>
 						<Link

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information Security Policy | DTE Solutions LLC</title>
+    <title>Information Security Policy | Drew Ernst, sole proprietor, doing business as DTE Solutions.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
@@ -127,16 +127,16 @@
             </div>
 
             <h2>1. Purpose and Scope</h2>
-            <p>This Information Security Policy establishes the principles, requirements, and responsibilities that DTE Solutions LLC ("DTE" or "the Organization") follows to protect the confidentiality, integrity, and availability of all information assets — including consumer financial data accessed via the Plaid API and processed within the Pulse AI platform.</p>
+            <p>This Information Security Policy establishes the principles, requirements, and responsibilities that Drew Ernst, sole proprietor, doing business as DTE Solutions. ("DTE" or "the Organization") follows to protect the confidentiality, integrity, and availability of all information assets — including consumer financial data accessed via the Plaid API and processed within the Pulse AI platform.</p>
             <p>This policy applies to:</p>
             <ul>
-                <li>All internal systems, applications, and infrastructure operated by DTE Solutions LLC</li>
+                <li>All internal systems, applications, and infrastructure operated by Drew Ernst, sole proprietor, doing business as DTE Solutions.</li>
                 <li>All data collected from or on behalf of consumers, including financial data retrieved via the Plaid API</li>
                 <li>All third-party integrations, service providers, and API partners handling DTE data</li>
             </ul>
 
             <h2>2. Governing Principles</h2>
-            <p>DTE Solutions LLC operates under the following foundational security principles:</p>
+            <p>Drew Ernst, sole proprietor, doing business as DTE Solutions. operates under the following foundational security principles:</p>
             <div class="overflow-x-auto my-6 border border-white/10 rounded-2xl bg-white/[0.02]">
                 <table>
                     <thead>
@@ -183,8 +183,9 @@
             <ul>
                 <li><strong>Non-Human Authentication:</strong> All service-to-service and API integrations use OAuth 2.0 tokens or TLS certificates. No static passwords are used for machine-to-machine communication.</li>
                 <li><strong>Zero Trust Model:</strong> The Pulse AI platform is deployed on Vercel's serverless infrastructure with network-level isolation. All API routes are authenticated via JWT tokens validated server-side before any data access.</li>
-                <li><strong>Consumer Authentication:</strong> Consumers authenticate via Supabase Auth using email/password with session-based JWT tokens. Access to financial data is scoped strictly to the authenticated user's identity.</li>
+                <li><strong>Consumer Authentication:</strong> Consumers authenticate via Supabase Auth using Multi-Factor Authentication (MFA) capabilities alongside session-based JWT tokens, ensuring an extra layer of protection against unauthorized access and safeguarding sensitive financial data. Access to financial data is scoped strictly to the authenticated user's identity.</li>
                 <li><strong>Secrets Management:</strong> All API keys, database credentials, and third-party integration secrets are stored as encrypted environment variables in Vercel and are never committed to version control.</li>
+                <li><strong>Access Reviews and Audits:</strong> We conduct periodic reviews and audits of all access rights across our systems to identify and remediate excessive or outdated permissions, ensuring all access remains appropriate, compliant, and strictly governed by our least-privilege principles.</li>
             </ul>
 
             <h3>3.3 Encryption</h3>
@@ -215,7 +216,7 @@
             </ul>
 
             <h3>3.6 Third-Party and Vendor Management</h3>
-            <p>DTE Solutions LLC utilizes best-in-class, SOC 2 compliant platforms to deliver secure services:</p>
+            <p>Drew Ernst, sole proprietor, doing business as DTE Solutions. utilizes best-in-class, SOC 2 compliant platforms to deliver secure services:</p>
             <ul>
                 <li><strong>Plaid:</strong> Financial data link provider. Plaid API tokens are handled server-side only and are never exposed to the client.</li>
                 <li><strong>Supabase:</strong> Database and authentication provider. Supabase is SOC 2 Type II compliant.</li>
@@ -235,7 +236,7 @@
 
             <h2>4. Privacy and Data Handling</h2>
             <ul>
-                <li>DTE Solutions LLC maintains a published Privacy Policy accessible at <a href="privacy-policy.html">dte-solutions.icu/privacy-policy</a>.</li>
+                <li>Drew Ernst, sole proprietor, doing business as DTE Solutions. maintains a published Privacy Policy accessible at <a href="privacy-policy.html">dte-solutions.icu/privacy-policy</a>.</li>
                 <li>Consumer consent is obtained prior to data collection, processing, and storage via explicit consent flows within the Pulse AI onboarding experience and Plaid Link.</li>
                 <li>Consumer financial data received from the Plaid API is used solely for the purpose of providing the Pulse AI behavioral finance features to the authenticated consumer.</li>
                 <li>Data is not sold, shared, or used for advertising purposes.</li>
@@ -247,13 +248,13 @@
             <div class="signature-block">
                 <div class="text-[9px] uppercase tracking-widest text-white/30 mb-2">Authorized Signature</div>
                 <div class="font-bold text-white text-lg">Drew Thomas Ernst</div>
-                <div class="text-xs text-[#00ffcc]">Owner, DTE Solutions LLC</div>
+                <div class="text-xs text-[#00ffcc]">Owner, Drew Ernst, sole proprietor, doing business as DTE Solutions.</div>
                 <div class="text-[10px] text-white/40 mt-1">June 28, 2026</div>
             </div>
         </div>
 
         <footer class="mt-20 text-center font-tech text-[10px] tracking-[0.5em] text-white/20 uppercase">
-            © 2026 DTE Solutions LLC // Engineered with Intention
+            © 2026 Drew Ernst, sole proprietor, doing business as DTE Solutions. // Engineered with Intention
         </footer>
     </div>
 </body>

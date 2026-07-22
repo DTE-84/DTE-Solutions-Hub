@@ -319,7 +319,7 @@ h1.hero-title em {
 }
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 48px;
 }
@@ -834,29 +834,36 @@ footer a:hover { color: var(--accent); }
 <section class="features-bg" id="features">
   <div class="section">
     <div class="eyebrow">What Orbit does</div>
-    <h2 class="section-title">Three layers of control in one app.</h2>
+    <h2 class="section-title">Four layers of control in one app.</h2>
     <p class="section-sub">Orbit isn't just a subscription list. It's the complete picture of what you're paying, how you're paying for it, and how to get into it when you need to.</p>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-layer">Layer 01</div>
         <div class="feature-icon" style="background: var(--accent-light);">📋</div>
-        <h3>Subscription & bill tracker</h3>
-        <p>Every recurring charge in one view. Name, cost, billing cycle, next renewal date, and category. Orbit auto-detects subscriptions from your connected bank and card accounts — so you see what's actually billing you, not just what you remember signing up for.</p>
-        <span class="feature-pill" style="background: var(--accent-light); color: var(--accent);">Auto-detection via Plaid</span>
+        <h3>High-Fidelity Subscription Library</h3>
+        <p>A robust built-in library featuring 16 pre-defined, category-segmented services (Lifestyle, Clothing, Food, Self-Care, Utilities). Each provider comes with accurate default pricing and representative emojis, accelerating your onboarding. Custom expense creation is always available for untracked bills.</p>
+        <span class="feature-pill" style="background: var(--accent-light); color: var(--accent);">Accelerated Onboarding</span>
       </div>
       <div class="feature-card">
         <div class="feature-layer">Layer 02</div>
-        <div class="feature-icon" style="background: var(--amber-light);">💳</div>
-        <h3>Payment method mapping</h3>
-        <p>See exactly which card or account is tied to each subscription and bill. Filter your entire list by payment method in one tap. When a card gets compromised or expires, you know in seconds what needs updating — no bank statement archaeology required.</p>
-        <span class="feature-pill" style="background: var(--amber-light); color: var(--amber);">Compromised card? Fixed in seconds.</span>
+        <div class="feature-icon" style="background: var(--amber-light);">✂️</div>
+        <h3>One-Click Cancellation Routing</h3>
+        <p>Orbit doesn't just track your subscriptions; it helps you kill them. Pre-defined subscriptions automatically populate precise cancellation URLs. Just hit the "External Link: Cancel Service" action on any active subscription to be deep-linked exactly where you need to go to stop the bleed.</p>
+        <span class="feature-pill" style="background: var(--amber-light); color: var(--amber);">Stop the Bleed Instantly</span>
       </div>
       <div class="feature-card">
         <div class="feature-layer">Layer 03</div>
+        <div class="feature-icon" style="background: #E3F2FD;">💳</div>
+        <h3>Payment method mapping</h3>
+        <p>See exactly which card or account is tied to each subscription and bill. Filter your entire list by payment method in one tap. When a card gets compromised or expires, you know in seconds what needs updating — no bank statement archaeology required.</p>
+        <span class="feature-pill" style="background: #E3F2FD; color: #1E88E5;">Compromised card? Fixed in seconds.</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-layer">Layer 04</div>
         <div class="feature-icon" style="background: var(--green-light);">🔒</div>
-        <h3>Built-in password vault</h3>
-        <p>Attach the login credentials for each service directly to its entry in Orbit. AES-256 encrypted with zero-knowledge architecture — you're the only one who can see your passwords. No browser dependency, no password sticky notes, no reset email chase.</p>
-        <span class="feature-pill" style="background: var(--green-light); color: var(--green);">Zero-knowledge encryption</span>
+        <h3>True Zero-Knowledge Encryption</h3>
+        <p>Built with crypto-js, your passwords are AES-256 encrypted client-side using a Master PIN before transmitting to Supabase. Hit Reveal, enter your PIN, and decode the ciphertext locally. Features "Share Vault" capabilities and dynamic compromised password risk detection.</p>
+        <span class="feature-pill" style="background: var(--green-light); color: var(--green);">Client-Side AES-256 Encryption</span>
       </div>
     </div>
   </div>
@@ -941,12 +948,12 @@ footer a:hover { color: var(--accent); }
         <div class="price-amount"><sup>$</sup>5<span>.99/mo</span></div>
         <p class="price-desc">Everything you need to track, map, and secure your subscriptions. No Pulse account required.</p>
         <ul class="price-list">
-          <li>Subscription & bill tracker</li>
-          <li>Payment method mapping</li>
-          <li>Built-in password vault (AES-256)</li>
+          <li>16+ pre-defined subscription library</li>
+          <li>One-click cancellation routing</li>
+          <li>Client-side zero-knowledge vault (AES-256)</li>
+          <li>Payment method mapping & alerts</li>
+          <li>Compromised password risk detection</li>
           <li>Plaid auto-detection</li>
-          <li>Renewal alerts</li>
-          <li>Filter by card / account</li>
         </ul>
         <a href="https://dte-84.github.io/Orbit/" class="price-cta price-cta-ghost" target="_blank" style="text-decoration:none; display:inline-block; line-height:initial;">Start free — Orbit only</a>
       </div>
@@ -990,7 +997,7 @@ footer a:hover { color: var(--accent); }
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
-  <p>© 2025 DTE Solutions LLC &nbsp;·&nbsp; <a href="#">Orbit</a> &nbsp;·&nbsp; <a href="#">Pulse AI</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a></p>
+  <p>© 2025 Drew Ernst, sole proprietor, doing business as DTE Solutions. &nbsp;·&nbsp; <a href="#">Orbit</a> &nbsp;·&nbsp; <a href="#">Pulse AI</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a></p>
 </footer>
 
 </body>
