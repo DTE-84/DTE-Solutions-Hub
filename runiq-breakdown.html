@@ -6,6 +6,7 @@
 <title>RunIQ — Know Your Worth Before You Drive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -224,7 +225,9 @@
     width: 38px; height: 38px; border-radius: 8px;
     background: var(--green-dim); border: 1px solid var(--green-border);
     display: grid; place-items: center; margin-bottom: 16px; font-size: 1rem;
+    color: var(--green);
   }
+  .feat-icon svg { width: 20px; height: 20px; stroke-width: 2.2px; }
   .feat-card h3 { margin-bottom: 8px; }
   .feat-card p { font-size: 0.85rem; line-height: 1.65; }
 
@@ -483,32 +486,32 @@
     </div>
     <div class="feat-grid">
       <div class="feat-card">
-        <div class="feat-icon">⚡</div>
+        <div class="feat-icon"><i data-lucide="zap"></i></div>
         <h3>Instant Offer Evaluation</h3>
         <p>Enter base pay, estimated tips, total miles, and estimated time. SparkIQ calculates your real rate per mile and per hour in under two seconds.</p>
       </div>
       <div class="feat-card">
-        <div class="feat-icon">⛽</div>
+        <div class="feat-icon"><i data-lucide="fuel"></i></div>
         <h3>Real Gas Cost Calculation</h3>
         <p>Set your vehicle's MPG and your local gas price once. SparkIQ deducts the actual fuel cost from every offer automatically — including deadhead miles back to your zone.</p>
       </div>
       <div class="feat-card">
-        <div class="feat-icon">↩️</div>
+        <div class="feat-icon"><i data-lucide="corner-down-left"></i></div>
         <h3>Deadhead Miles Accounting</h3>
         <p>The miles back to your zone after the drop aren't paid miles — but they cost you gas and time. SparkIQ factors them into every evaluation, not just the delivery distance.</p>
       </div>
       <div class="feat-card">
-        <div class="feat-icon">📅</div>
+        <div class="feat-icon"><i data-lucide="calendar"></i></div>
         <h3>Daily Dashboard</h3>
         <p>Track every offer you evaluate throughout the day. See your total pay, tips earned, and gas cost at a glance — so you know exactly what your shift actually netted.</p>
       </div>
       <div class="feat-card">
-        <div class="feat-icon">🚗</div>
+        <div class="feat-icon"><i data-lucide="car"></i></div>
         <h3>Vehicle Settings</h3>
         <p>Set your MPG and current gas price once in Vehicle Settings. Every evaluation after that is automatically calibrated to your specific car and local fuel cost.</p>
       </div>
       <div class="feat-card">
-        <div class="feat-icon">📲</div>
+        <div class="feat-icon"><i data-lucide="smartphone"></i></div>
         <h3>Works on Any Device</h3>
         <p>SparkIQ is a PWA — no app store download, no storage used on your phone. Add it to your home screen and open it right from your car in the Walmart lot.</p>
       </div>
@@ -612,7 +615,7 @@
         <li><span class="ck">✓</span> All future updates included</li>
       </ul>
       <hr class="price-divider"/>
-      <a href="https://dte-solutions-llc.github.io/runiq" target="_blank" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
+      <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
         Launch RunIQ →
       </a>
       <p class="price-fine">Delivered instantly. No app store. Add to your home screen in one tap.</p>
@@ -642,6 +645,10 @@
     <a href="https://dte-solutions.icu/privacy-policy.html">Privacy</a>
   </div>
 </footer>
+
+<script>
+  lucide.createIcons();
+</script>
 
 </body>
 </html>
