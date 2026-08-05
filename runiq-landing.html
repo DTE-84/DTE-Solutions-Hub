@@ -344,6 +344,47 @@
     footer { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
   }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-content {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px; width: 100%; max-width: 400px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; color: var(--gray); font-size: 24px;
+    cursor: pointer;
+  }
+  .modal-header { text-align: center; margin-bottom: 24px; }
+  .modal-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    color: var(--green); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+  }
+  .modal-header h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  .modal-header p { font-size: 0.9rem; }
+  .modal-options { display: flex; flex-direction: column; gap: 12px; }
+  .modal-option {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px; border-radius: 12px;
+    background: var(--bg); border: 1px solid var(--border2);
+    text-decoration: none; color: var(--white);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .modal-option:hover {
+    border-color: var(--green-border); background: var(--card2);
+  }
+  .modal-option h4 { font-size: 1rem; margin-bottom: 4px; }
+  .modal-option span { font-size: 0.8rem; color: var(--gray); }
 </style>
 </head>
 <body>
@@ -361,7 +402,7 @@
       <div class="nav-tag">Offer Intelligence for Spark Drivers</div>
     </div>
   </div>
-  <a href="#pricing" class="nav-cta">Get RunIQ — $4.99</a>
+  <a href="#" onclick="openDownloadModal(event)" class="nav-cta">Get RunIQ — $4.99</a>
 </nav>
 
 <!-- HERO -->
@@ -379,7 +420,7 @@
         RunIQ evaluates every Walmart Spark offer in seconds — calculating your real earnings after gas, deadhead miles, and time cost. Stop guessing. Start knowing when to accept and when to pass.
       </p>
       <div class="hero-actions">
-        <a href="#pricing" class="btn-green">Get RunIQ — $4.99 →</a>
+        <a href="#" onclick="openDownloadModal(event)" class="btn-green">Get RunIQ — $4.99 →</a>
         <a href="#how" class="btn-ghost">See how it works</a>
       </div>
     </div>
@@ -462,7 +503,7 @@
       <div class="prob-card">
         <div class="prob-icon">⛽</div>
         <h3>Gas cost is invisible until it isn't</h3>
-        <p>At $3.60/gal and 24.5 MPG, every mile costs you money. Offers don't show you that. SparkIQ does — before you tap accept.</p>
+        <p>At $3.60/gal and 24.5 MPG, every mile costs you money. Offers don't show you that. RunIQ does — before you tap accept.</p>
       </div>
       <div class="prob-card">
         <div class="prob-icon">📊</div>
@@ -485,17 +526,17 @@
       <div class="feat-card">
         <div class="feat-icon">⚡</div>
         <h3>Instant Offer Evaluation</h3>
-        <p>Enter base pay, estimated tips, total miles, and estimated time. SparkIQ calculates your real rate per mile and per hour in under two seconds.</p>
+        <p>Enter base pay, estimated tips, total miles, and estimated time. RunIQ calculates your real rate per mile and per hour in under two seconds.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon">⛽</div>
         <h3>Real Gas Cost Calculation</h3>
-        <p>Set your vehicle's MPG and your local gas price once. SparkIQ deducts the actual fuel cost from every offer automatically — including deadhead miles back to your zone.</p>
+        <p>Set your vehicle's MPG and your local gas price once. RunIQ deducts the actual fuel cost from every offer automatically — including deadhead miles back to your zone.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon">↩️</div>
         <h3>Deadhead Miles Accounting</h3>
-        <p>The miles back to your zone after the drop aren't paid miles — but they cost you gas and time. SparkIQ factors them into every evaluation, not just the delivery distance.</p>
+        <p>The miles back to your zone after the drop aren't paid miles — but they cost you gas and time. RunIQ factors them into every evaluation, not just the delivery distance.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon">📅</div>
@@ -510,7 +551,7 @@
       <div class="feat-card">
         <div class="feat-icon">📲</div>
         <h3>Works on Any Device</h3>
-        <p>SparkIQ is a PWA — no app store download, no storage used on your phone. Add it to your home screen and open it right from your car in the Walmart lot.</p>
+        <p>RunIQ is a lightweight SaaS application — no app store download required. Install it directly to your device and open it right from your car in the Walmart lot.</p>
       </div>
     </div>
   </div>
@@ -536,7 +577,7 @@
         <div class="step-num-circle">02</div>
         <div class="step-content">
           <h3>Hit Evaluate Offer</h3>
-          <p>SparkIQ runs the math instantly — calculating your net earnings per mile and per hour after gas cost, including the miles Spark isn't paying you for.</p>
+          <p>RunIQ runs the math instantly — calculating your net earnings per mile and per hour after gas cost, including the miles Spark isn't paying you for.</p>
         </div>
       </div>
       <div class="how-step">
@@ -556,7 +597,7 @@
     <div class="math-header">
       <div class="eyebrow">The math</div>
       <h2>Two offers. Very different realities.</h2>
-      <p>Spark shows you base pay and miles. SparkIQ shows you what you actually keep after the cost of getting there and back.</p>
+      <p>Spark shows you base pay and miles. RunIQ shows you what you actually keep after the cost of getting there and back.</p>
     </div>
     <div class="math-grid">
       <div class="math-card">
@@ -612,12 +653,12 @@
         <li><span class="ck">✓</span> All future updates included</li>
       </ul>
       <hr class="price-divider"/>
-      <a href="https://runiq-ashen.vercel.app" target="_blank" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
+      <a href="#" onclick="openDownloadModal(event)" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
         Get RunIQ for $4.99 →
       </a>
       <p class="price-fine">Delivered instantly. No app store. Add to your home screen in one tap.</p>
       <div class="vs-stack">
-        <p>Decline one bad offer using SparkIQ and it pays for itself. <strong>One run.</strong></p>
+        <p>Decline one bad offer using RunIQ and it pays for itself. <strong>One run.</strong></p>
       </div>
     </div>
   </div>
@@ -642,6 +683,44 @@
     <a href="https://dte-solutions.icu/privacy-policy.html">Privacy</a>
   </div>
 </footer>
+
+<!-- DOWNLOAD MODAL -->
+<div id="downloadModal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
+    <div class="modal-header">
+      <div class="modal-icon">⚡</div>
+      <h3>Download RunIQ</h3>
+      <p>Select your device to install the app.</p>
+    </div>
+    <div class="modal-options">
+      <a href="https://runiq-ashen.vercel.app/auth?install=android" class="modal-option">
+        <div>📱</div>
+        <div>
+          <h4>Android</h4>
+          <span>Install SaaS Application</span>
+        </div>
+      </a>
+      <a href="https://runiq-ashen.vercel.app/auth?install=ios" class="modal-option">
+        <div>🍎</div>
+        <div>
+          <h4>iOS / iPhone</h4>
+          <span>Install SaaS Application</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openDownloadModal(e) {
+    if(e) e.preventDefault();
+    document.getElementById('downloadModal').classList.add('active');
+  }
+  function closeDownloadModal() {
+    document.getElementById('downloadModal').classList.remove('active');
+  }
+</script>
 
 </body>
 </html>
