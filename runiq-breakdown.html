@@ -204,7 +204,13 @@
     margin-top: 48px;
   }
   .prob-card { background: var(--card); padding: 28px 24px; }
-  .prob-icon { font-size: 1.4rem; margin-bottom: 12px; }
+  .prob-icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: grid; place-items: center; margin-bottom: 12px;
+    color: var(--green);
+  }
+  .prob-icon svg { width: 20px; height: 20px; stroke-width: 2.2px; }
   .prob-card h3 { margin-bottom: 8px; font-size: 0.95rem; }
   .prob-card p { font-size: 0.85rem; line-height: 1.65; }
 
@@ -453,22 +459,22 @@
     <h2>Every bad offer costs you<br>real time and real money.</h2>
     <div class="problem-grid">
       <div class="prob-card">
-        <div class="prob-icon">🤯</div>
+        <div class="prob-icon"><i data-lucide="brain"></i></div>
         <h3>The math is instant and invisible</h3>
         <p>An offer shows up. You have seconds to decide. Doing the gas-versus-miles-versus-time math in your head while in a parking lot is how you take bad offers.</p>
       </div>
       <div class="prob-card">
-        <div class="prob-icon">📍</div>
+        <div class="prob-icon"><i data-lucide="map-pin"></i></div>
         <h3>Deadhead miles kill your rate</h3>
         <p>The miles to pick up and the miles back to your zone aren't in the offer. But they eat your gas and your time — and they're the difference between a good run and a break-even one.</p>
       </div>
       <div class="prob-card">
-        <div class="prob-icon">⛽</div>
+        <div class="prob-icon"><i data-lucide="fuel"></i></div>
         <h3>Gas cost is invisible until it isn't</h3>
         <p>At $3.60/gal and 24.5 MPG, every mile costs you money. Offers don't show you that. SparkIQ does — before you tap accept.</p>
       </div>
       <div class="prob-card">
-        <div class="prob-icon">📊</div>
+        <div class="prob-icon"><i data-lucide="bar-chart-2"></i></div>
         <h3>No visibility on your actual day</h3>
         <p>Without tracking, you don't know what you've really made, what you've spent on gas, or whether your shift was actually worth it.</p>
       </div>
