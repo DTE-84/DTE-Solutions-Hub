@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebPIQ | Image Processing Breakdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;700&family=Bebas+Neue&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --obsidian: #050505;
+            --kinetic-green: #30C476;
+            --charcoal: #111111;
+        }
+        body {
+            background-color: var(--obsidian);
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Bebas Neue'; }
+        .font-tech { font-family: 'Jura', sans-serif; }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+        }
+
+        .text-gradient-green {
+            background: linear-gradient(to right, #ffffff, #30C476);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .green-glow {
+            text-shadow: 0 0 40px rgba(48,196,118,0.3);
+        }
+    </style>
+</head>
+<body class="selection:bg-green-500/30 overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center backdrop-blur-md border-b border-white/5">
+        <a href="index.html" class="flex items-center gap-4 group">
+            <div class="w-8 h-8 bg-zinc-900 border border-[#30C476]/40 rounded flex items-center justify-center font-black text-[#30C476] group-hover:bg-[#30C476] group-hover:text-black transition-all">DTE</div>
+            <span class="font-tech tracking-[0.3em] uppercase text-[9px] text-white/40">Return to Hub</span>
+        </a>
+        <div class="hidden md:flex gap-8 text-[9px] font-black uppercase tracking-widest text-white/60">
+            <a href="#vision" class="hover:text-white transition-colors">Vision</a>
+            <a href="#tech" class="hover:text-white transition-colors">Tech</a>
+            <a href="#" class="text-[#30C476] cursor-not-allowed">Launch Beta</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative px-8 pt-32 pb-20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(48,196,118,0.1),transparent_70%)]"></div>
+        
+        <div class="relative z-10 text-center max-w-5xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 scale-90 md:scale-100">
+                <i data-lucide="image" class="w-4 h-4 text-[#30C476]"></i>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">Bulk Image Converter & Resizer</span>
+            </div>
+
+            <h1 class="font-display text-5xl sm:text-7xl md:text-[11rem] tracking-tighter leading-[0.9] mb-6 text-gradient-green green-glow">
+                WEBPIQ
+            </h1>
+
+            <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
+                "Speed up your listings. <span class="text-white font-medium">WebPIQ</span> batches, resizes, and converts photos locally. <span class="italic text-[#30C476]">Nothing ever leaves your device.</span>"
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <button class="px-10 py-5 bg-[#30C476]/50 text-black font-black uppercase text-xs rounded-full shadow-xl shadow-[#30C476]/20 cursor-not-allowed inline-block">App Coming Soon</button>
+                <a href="#vision" class="px-10 py-5 border border-white/10 text-white font-black uppercase text-xs rounded-full hover:bg-white/5 transition-all">Technical Spec</a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/10 flex flex-col items-center">
+            <div class="w-px h-16 bg-gradient-to-b from-[#30C476] to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Core Value & Market Need -->
+    <section id="vision" class="py-32 px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row gap-20 items-center mb-40">
+            <div class="flex-1">
+                <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">Market Disruption</span>
+                <h2 class="font-display text-4xl sm:text-6xl md:text-8xl text-white leading-none italic">THE <br/><span class="text-white/10">NEED.</span></h2>
+                <p class="text-lg text-white/40 mt-6 max-w-xl leading-relaxed">
+                    Resellers, small store owners, and freelancers waste hours manually processing massive phone photos. <span class="text-[#30C476]">WebPIQ automates bulk conversions</span> directly in the browser. Zero uploads, zero latency, massive time savings for Etsy, Shopify, and eBay.
+                </p>
+            </div>
+            <div class="flex-1 grid grid-cols-1 gap-6">
+                <div class="glass-card p-8 border-l-4 border-l-[#30C476]">
+                    <h4 class="font-display text-3xl mb-2">Local Execution</h4>
+                    <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">Process 500+ images privately using Web Workers. No server uploads.</p>
+                </div>
+                <div class="glass-card p-8 border-l-4 border-l-white/10">
+                    <h4 class="font-display text-3xl mb-2">Marketplace Ready</h4>
+                    <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">One-click presets for Etsy, Shopify, Poshmark, and Vinted standards.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Ecosystem -->
+        <div id="tech" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-40">
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="zap" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Bulk WebP</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Convert JPG, PNG, and HEIC instantly with live quality previews.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="maximize" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">Auto Resize</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Square-pad or crop to ratio with blurred background fills.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="shield" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">EXIF Stripping</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Remove GPS and metadata automatically for seller privacy and safety.</p>
+            </div>
+            <div class="glass-card p-10 flex flex-col items-center text-center">
+                <i data-lucide="file-archive" class="w-10 h-10 text-[#30C476] mb-6"></i>
+                <h3 class="font-display text-3xl mb-4">ZIP Folders</h3>
+                <p class="text-xs text-white/40 leading-relaxed">Bulk rename with SEO patterns and download everything securely zipped.</p>
+            </div>
+        </div>
+
+        <!-- Monetization Strategy -->
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="font-tech text-[10px] uppercase tracking-[0.5em] text-[#30C476] font-bold block mb-4">Capital Strategy</span>
+            <h2 class="font-display text-4xl sm:text-5xl md:text-7xl text-white mb-12 italic">SCALABLE <span class="text-white/10">REVENUE.</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 01</span>
+                    <h4 class="font-display text-2xl text-[#30C476] mb-2">Free MVP</h4>
+                    <p class="text-[10px] text-white/60">Drag and drop up to 20 images. Core conversion, resizing, and ZIP downloads.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-gradient-to-b from-[#30C476]/20 to-transparent border border-[#30C476]/40 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-2 bg-[#30C476] text-black text-[8px] font-black uppercase tracking-tighter">Pro</div>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 02</span>
+                    <h4 class="font-display text-2xl text-white mb-2">Unlimited Batch</h4>
+                    <p class="text-[10px] text-white/60">Unlimited images via web workers. Presets, EXIF stripping, and bulk rename patterns.</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40 mb-4 block">Tier 03</span>
+                    <h4 class="font-display text-2xl text-[#30C476] mb-2">Agency Suite</h4>
+                    <p class="text-[10px] text-white/60">Saved presets and tools for local freelancers speeding up client site assets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 text-center border-t border-white/5">
+        <p class="text-[10px] font-tech uppercase tracking-[0.5em] text-white/10">c 2026 DTE Solutions // WebPIQ Division // Engineered with Intention</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
