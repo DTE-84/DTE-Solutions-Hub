@@ -125,8 +125,12 @@
         .strip { padding: 32px 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
         .strip-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: .12em; text-align: center; margin-bottom: 24px; }
         .strip-logos { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
-        .strip-logo { font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.38); letter-spacing: -.3px; transition: color .2s; }
-        .strip-logo:hover { color: rgba(255,255,255,0.5); }
+        .strip-logo { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.38); letter-spacing: -.3px; transition: color .25s; cursor: default; }
+        .strip-logo .si { width: 20px; height: 20px; flex-shrink: 0; background: var(--c); -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; opacity: .5; filter: drop-shadow(0 0 4px var(--c)); transition: opacity .25s, filter .25s, transform .25s; animation: siPulse 8s ease-in-out infinite; animation-delay: calc(var(--n) * 1s); }
+        .strip-logo:hover { color: rgba(255,255,255,0.85); }
+        .strip-logo:hover .si { opacity: 1; filter: drop-shadow(0 0 8px var(--c)) drop-shadow(0 0 16px var(--c)); transform: scale(1.12); animation: none; }
+        @keyframes siPulse { 0%, 20%, 100% { opacity: .5; filter: drop-shadow(0 0 4px var(--c)); } 10% { opacity: .95; filter: drop-shadow(0 0 10px var(--c)); } }
+        @media (prefers-reduced-motion: reduce) { .strip-logo .si { animation: none; } }
 
         /* â”€â”€ WHY CHOOSE â”€â”€ */
         .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
@@ -295,14 +299,14 @@
 <!-- â”€â”€ TECH STACK STRIP â”€â”€ -->
 <div class="strip">
     <div class="strip-logos">
-        <span class="strip-logo">React Native</span>
-        <span class="strip-logo">Node.js / Express</span>
-        <span class="strip-logo">Plaid</span>
-        <span class="strip-logo">Supabase</span>
-        <span class="strip-logo">AWS S3</span>
-        <span class="strip-logo">Anthropic / Claude</span>
-        <span class="strip-logo">MongoDB</span>
-        <span class="strip-logo">Pandas</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/react.svg);--c:#61DAFB;--n:0"></span>React Native</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/nodedotjs.svg);--c:#5FA04E;--n:1"></span>Node.js / Express</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/plaid.svg);--c:#E8EEF5;--n:2"></span>Plaid</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/supabase.svg);--c:#3FCF8E;--n:3"></span>Supabase</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/amazons3.svg);--c:#FF9900;--n:4"></span>AWS S3</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/claude.svg);--c:#D97757;--n:5"></span>Anthropic / Claude</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/mongodb.svg);--c:#47A248;--n:6"></span>MongoDB</span>
+        <span class="strip-logo"><span class="si" aria-hidden="true" style="--i:url(assets/stack/pandas.svg);--c:#E70488;--n:7"></span>Pandas</span>
     </div>
 </div>
 

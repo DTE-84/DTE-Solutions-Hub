@@ -38,6 +38,35 @@
         .green-glow {
             text-shadow: 0 0 40px rgba(48,196,118,0.3);
         }
+
+        .webp-shine {
+            background: linear-gradient(120deg, #eafff4 0%, var(--kinetic-green) 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 45px rgba(48,196,118,0.5);
+        }
+
+        .webp-lower {
+            font-family: 'Jura', sans-serif;
+            font-weight: 700;
+            text-transform: lowercase;
+            letter-spacing: -0.02em;
+        }
+
+        .iq-mark {
+            display: inline-block;
+            font-size: 0.4em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            vertical-align: text-top;
+            margin-left: 0.06em;
+            background: linear-gradient(120deg, #ffffff 0%, #f7fffb 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.45);
+        }
     </style>
 </head>
 <body class="selection:bg-green-500/30 overflow-x-hidden">
@@ -66,7 +95,7 @@
             </div>
 
             <h1 class="font-display text-5xl sm:text-7xl md:text-[11rem] tracking-tighter leading-[0.9] mb-6">
-                <span class="text-gradient-green green-glow">WEBP</span><span class="text-white ml-2 md:ml-4">IQ</span>
+                <span class="webp-shine">W</span><span class="webp-lower webp-shine">eb</span><span class="webp-shine">P</span><span class="iq-mark">IQ</span>
             </h1>
 
             <p class="text-xl md:text-3xl text-white/60 leading-relaxed mb-12 font-light max-w-3xl mx-auto">
