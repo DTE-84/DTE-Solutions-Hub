@@ -13,6 +13,12 @@
 
     <link rel="preload" as="image" href="assets/dtesolutionslogoblk.png" fetchpriority="high" />
 
+    <link rel="canonical" href="https://dte-solutions.icu/" />
+    <script>
+        if (window.location.hostname === "www.dte-solutions.icu") {
+            window.location.replace("https://dte-solutions.icu" + window.location.pathname + window.location.search + window.location.hash);
+        }
+    </script>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dte-solutions.icu/" />
     <meta property="og:title" content="DTE Solutions | AI-Powered Web Apps & Business Tools" />
@@ -779,12 +785,13 @@
                     <a href="terms.html" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.45);">Terms of Service</a>
                     <a href="data-retention-policy.html" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.45);">Data Retention Policy</a>
                     <a href="information-security-policy.html" target="_blank" style="font-size:13px;color:rgba(255,255,255,0.45);">Information Security Policy</a>
-                    <button id="contactBtnFooter" style="font-size:13px;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;text-align:left;padding:0;">Contact</button>
+                    <a href="mailto:dte.solutions.llc@outlook.com" style="font-size:13px;color:rgba(255,255,255,0.45);">dte.solutions.llc@outlook.com</a>
+                    <button id="contactBtnFooter" style="font-size:13px;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;text-align:left;padding:0;">Contact Portal</button>
                 </div>
             </div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px;">
-            <p style="font-size:12px;color:rgba(255,255,255,0.32);">&copy; 2026 Drew Ernst, sole proprietor, doing business as DTE Solutions. &middot; All Rights Reserved</p>
+            <p style="font-size:12px;color:rgba(255,255,255,0.32);">&copy; 2026 DTE Solutions LLC &middot; All Rights Reserved</p>
             <p style="font-size:12px;color:rgba(255,255,255,0.32);">Built with React Native &middot; Express &middot; Plaid &middot; Supabase &middot; AWS</p>
         </div>
     </div>
@@ -867,7 +874,7 @@
             setTimeout(() => { success.style.display = 'none'; closeModalFunc(); this.reset(); }, 3000);
         }, () => {
             loading.style.display = 'none';
-            alert('Direct uplink failed. Please email dte.solutions.llc@gmail.com');
+            alert('Direct uplink failed. Please email dte.solutions.llc@outlook.com');
         });
     });
 
@@ -882,7 +889,7 @@
 
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
-    document.getElementById('launchPulseBtn').addEventListener('click', () => window.open('https://pulse-blond-three.vercel.app/', '_blank'));
+    document.getElementById('launchPulseBtn').addEventListener('click', () => window.open('https://app.pulse.dte-solutions.icu/', '_blank'));
 
     function toggleFaq(btn) {
         const item = btn.closest('.faq-item');
