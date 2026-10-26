@@ -15,9 +15,14 @@
 
     <link rel="canonical" href="https://dte-solutions.icu/" />
     <script>
-        if (window.location.hostname === "www.dte-solutions.icu") {
-            window.location.replace("https://dte-solutions.icu" + window.location.pathname + window.location.search + window.location.hash);
-        }
+        (function() {
+            var host = window.location.hostname;
+            var path = window.location.pathname;
+            if (host === "www.dte-solutions.icu" || path.endsWith("/index.html")) {
+                var cleanPath = path.replace(/\/index\.html$/, "/");
+                window.location.replace("https://dte-solutions.icu" + cleanPath + window.location.search + window.location.hash);
+            }
+        })();
     </script>
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dte-solutions.icu/" />
@@ -273,7 +278,8 @@
     <div style="position:absolute;bottom:40px;font-size:10px;letter-spacing:.4em;color:rgba(255,255,255,0.15);text-transform:uppercase;">DTE Solutions // Nexus</div>
 </div>
 
-<!-- â”€â”€ HERO â”€â”€ -->
+<main id="main-content">
+<!-- ── HERO ── -->
 <header class="hero">
     <!-- DTE Logo + Badge stacked center -->
     <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:40px;">
@@ -335,7 +341,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Real-Time Intelligence</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">Behavioral AI, predictive analytics, and live data telemetry &rdquo; not just dashboards, but engines that adapt to your users in real time.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">Behavioral AI, predictive analytics, and live data telemetry &mdash; not just dashboards, but engines that adapt to your users in real time.</p>
                 </div>
             </div>
             <div class="card why-card">
@@ -345,7 +351,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Measurable Impact</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">HIPAA-compliant compliance engines, 87%+ threshold accuracy, 18% capital recovery &rdquo; every build ships with proof of performance.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">HIPAA-compliant compliance engines, 87%+ threshold accuracy, 18% capital recovery &mdash; every build ships with proof of performance.</p>
                 </div>
             </div>
             <div class="card why-card">
@@ -355,7 +361,7 @@
                 </div>
                 <div class="why-side-text">
                     <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;">Business Adaptation</h3>
-                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">From SaaS to B2B portals to community tools &rdquo; DTE builds ecosystems that scale with your growth trajectory, not against it.</p>
+                    <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">From SaaS to B2B portals to community tools &mdash; DTE builds ecosystems that scale with your growth trajectory, not against it.</p>
                 </div>
             </div>
         </div>
@@ -371,7 +377,7 @@
             <div>
                 <div class="section-label">Flagship Product</div>
                 <h2 class="section-title">Pulse<br><span style="font-size: 0.65em; font-weight: normal;">Smarter finance, <em style="font-style:normal;color:var(--teal);">built with AI.</em></span></h2>
-                <p class="section-sub">Pulse-AI is the behavioral finance engine at the heart of the DTE ecosystem &rdquo; real-time, intelligent, and adaptive.</p>
+                <p class="section-sub">Pulse-AI is the behavioral finance engine at the heart of the DTE ecosystem &mdash; real-time, intelligent, and adaptive.</p>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;padding-top:8px;">
                 <a href="https://pulse.dte-solutions.icu" target="_blank" class="btn-teal">Pulse-CS-Breakdown</a>
@@ -556,7 +562,7 @@
                     <div class="icon-box" style="background:rgba(212,175,55,0.1);border-color:rgba(212,175,55,0.2);"><i data-lucide="shopping-bag" style="color:#D4AF37;"></i></div>
                 </div>
                 <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">Full-stack analytics workflow to process e-commerce data, validate outputs, and surface cleaner reporting for business decisions.</p>
-                <a href="https://ecomm-505qtlvsc-dte-solutions.vercel.app/" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">View Archive <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
+                <a href="ecommerce-breakdown.html" target="_blank" style="font-size:12px;font-weight:700;color:#D4AF37;display:flex;align-items:center;gap:6px;">View Case Study <i data-lucide="arrow-right" style="width:12px;height:12px;"></i></a>
             </div>
 
         </div>
@@ -656,10 +662,10 @@
     <div class="inner" style="text-align:center;">
         <div class="section-label" style="justify-content:center;margin:0 auto 16px;">Integrations</div>
         <h2 class="section-title">Seamless Connectivity</h2>
-        <p class="section-sub" style="margin:12px auto 48px;">Every DTE product connects to the infrastructure you already trust &rdquo; built on battle-tested, enterprise-grade tooling.</p>
+        <p class="section-sub" style="margin:12px auto 48px;">Every DTE product connects to the infrastructure you already trust &mdash; built on battle-tested, enterprise-grade tooling.</p>
         <div class="int-grid">
             <div class="card int-card"><div class="icon-box"><i data-lucide="link"></i></div><div class="name">Plaid</div><div class="desc">10,000+ bank connections. Real-time streaming. Read-only, zero credential exposure.</div></div>
-            <div class="card int-card"><div class="icon-box"><i data-lucide="database"></i></div><div class="name">Supabase</div><div class="desc">Real-time auth, row-level security, and managed Postgres &rdquo; production-ready from day one.</div></div>
+            <div class="card int-card"><div class="icon-box"><i data-lucide="database"></i></div><div class="name">Supabase</div><div class="desc">Real-time auth, row-level security, and managed Postgres &mdash; production-ready from day one.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="cloud"></i></div><div class="name">AWS S3</div><div class="desc">Encrypted digital receipt vault with pre-signed URLs and audit-ready paper trails.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="sparkles"></i></div><div class="name">Anthropic Claude</div><div class="desc">Claude-powered neural analytics and natural language financial intelligence via Nova.</div></div>
             <div class="card int-card"><div class="icon-box"><i data-lucide="smartphone"></i></div><div class="name">React Native</div><div class="desc">True cross-platform iOS and Android delivery with full web feature parity.</div></div>
@@ -686,7 +692,7 @@
             </div>
             <div class="card testi-card" style="text-align:left;">
                 <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>"PCSP Pro saved our compliance team 20+ hours a month. The DMH threshold logic is the most accurate I've seen in any tool &rdquo; commercial or custom."</p>
+                <p>"PCSP Pro saved our compliance team 20+ hours a month. The DMH threshold logic is the most accurate I've seen in any tool &mdash; commercial or custom."</p>
                 <div style="display:flex;align-items:center;gap:10px;"><div class="testi-avatar">EP</div><div><div style="font-size:13px;font-weight:700;">Enterprise Partner</div><div style="font-size:11px;color:rgba(255,255,255,0.3);">Operations Director</div></div></div>
             </div>
             <div class="card testi-card" style="text-align:left;">
@@ -709,11 +715,11 @@
             <p class="section-sub" style="margin:12px auto 0;text-align:center;">Everything you need to know about DTE Solutions and our product ecosystem.</p>
         </div>
         <div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What types of businesses does DTE Solutions build for? <span class="faq-icon">+</span></button><div class="faq-a">DTE builds for startups, agencies, healthcare organizations, fitness businesses, and growing companies that need production-grade AI tools &rdquo; not templates. Every build is custom-engineered from first principles.</div></div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is Pulse-AI and how does it differ from other finance apps? <span class="faq-icon">+</span></button><div class="faq-a">Pulse-AI detects behavioral patterns &rdquo; the emotional and contextual triggers driving spending decisions. Nova then coaches users in real time to interrupt those patterns. No other consumer finance tool does this.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What types of businesses does DTE Solutions build for? <span class="faq-icon">+</span></button><div class="faq-a">DTE builds for startups, agencies, healthcare organizations, fitness businesses, and growing companies that need production-grade AI tools &mdash; not templates. Every build is custom-engineered from first principles.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is Pulse-AI and how does it differ from other finance apps? <span class="faq-icon">+</span></button><div class="faq-a">Pulse-AI detects behavioral patterns &mdash; the emotional and contextual triggers driving spending decisions. Nova then coaches users in real time to interrupt those patterns. No other consumer finance tool does this.</div></div>
             <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is my data safe with DTE products? <span class="faq-icon">+</span></button><div class="faq-a">All DTE products are built with security as a baseline requirement. Pulse uses Plaid's read-only API, AES-256 encryption, Supabase row-level security, and AWS S3 for encrypted storage. PCSP Pro is HIPAA-compliant by design.</div></div>
             <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I get a custom AI tool built for my business? <span class="faq-icon">+</span></button><div class="faq-a">Yes. DTE Solutions takes on select custom engagements for businesses that need purpose-built AI workflows, compliance engines, data pipelines, or full-stack web apps. Contact us to start a conversation.</div></div>
-            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are there free tools available? <span class="faq-icon">+</span></button><div class="faq-a">Yes &rdquo; the PDF Integrity Editor is completely free to the community. Pulse-AI also offers a permanent free Sandbox tier with Nova Basic coaching. No credit card required to start.</div></div>
+            <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are there free tools available? <span class="faq-icon">+</span></button><div class="faq-a">Yes &mdash; the PDF Integrity Editor is completely free to the community. Pulse-AI also offers a permanent free Sandbox tier with Nova Basic coaching. No credit card required to start.</div></div>
         </div>
     </div>
 </section>
@@ -732,22 +738,25 @@
 
 <div class="divider"></div>
 
-<!-- â”€â”€ LET'S BUILD CTA â”€â”€ -->
-<section class="section">
+<!-- ── LET'S BUILD CTA / CONTACT ── -->
+<section class="section" id="contact">
     <div class="inner">
         <div class="card card-active" style="padding:64px 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:36px;background:linear-gradient(135deg, rgba(0,255,204,0.05), rgba(0,170,250,0.05));">
             <div>
-                <div class="section-label" style="margin-bottom:18px;">Let's Build Together</div>
+                <div class="section-label" style="margin-bottom:18px;">Contact &amp; Inquiries</div>
                 <h2 style="font-size:clamp(26px,4vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:12px;">Ready to build<br>something real?</h2>
-                <p style="font-size:15px;color:var(--text-muted);max-width:380px;line-height:1.6;">One message. Let's figure out what you need and engineer exactly that &rdquo; no boilerplate, no templates.</p>
+                <p style="font-size:15px;color:var(--text-muted);max-width:420px;line-height:1.6;margin-bottom:16px;">One message. Let's figure out what you need and engineer exactly that &mdash; no boilerplate, no templates.</p>
+                <p style="font-size:13px;color:rgba(255,255,255,0.75);">Direct Email: <a href="mailto:dte.solutions.llc@outlook.com" style="color:var(--teal);font-weight:700;">dte.solutions.llc@outlook.com</a></p>
             </div>
-            <div style="display:flex;flex-direction:column;gap:12px;min-width:200px;">
-                <button id="contactBtnCta" class="btn-teal" style="font-size:15px;padding:16px 32px;text-align:center;">Start a Conversation</button>
+            <div style="display:flex;flex-direction:column;gap:12px;min-width:220px;">
+                <button id="contactBtnCta" class="btn-teal" style="font-size:15px;padding:16px 32px;text-align:center;">Open Contact Form</button>
+                <a href="mailto:dte.solutions.llc@outlook.com" class="btn-ghost" style="font-size:14px;padding:14px 28px;text-align:center;">Email dte.solutions.llc@outlook.com</a>
                 <a href="https://linkedin.com/in/dte84" target="_blank" class="btn-ghost" style="font-size:14px;padding:14px 28px;text-align:center;">Connect on LinkedIn</a>
             </div>
         </div>
     </div>
 </section>
+</main>
 
 <!-- â”€â”€ FOOTER â”€â”€ -->
 <footer class="site-footer">
@@ -797,25 +806,27 @@
     </div>
 </footer>
 
-<!-- â”€â”€ CONTACT MODAL â”€â”€ -->
-<div id="contactModal">
+<!-- ── CONTACT MODAL ── -->
+<div id="contactModal" aria-hidden="true">
     <div class="modal-container">
         <div id="loadingOverlay" style="position:absolute;inset:0;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);">
             <div style="width:64px;height:64px;border:4px solid rgba(0,255,204,0.2);border-top-color:var(--teal);border-radius:50%;animation:spin 1s linear infinite;"></div>
         </div>
         <div id="successOverlay" style="position:absolute;inset:0;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;background:var(--teal);color:#000;text-align:center;padding:40px;">
-            <div style="font-size:72px;margin-bottom:20px;">âœ“</div>
+            <div style="font-size:72px;margin-bottom:20px;">&#10003;</div>
             <h2 style="font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:10px;">Message Sent</h2>
             <p style="font-size:14px;">Response will be sent to your email.</p>
         </div>
         <div class="modal-about">
             <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;margin-bottom:8px;">DTE Solutions</h3>
             <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;opacity:.6;margin-bottom:16px;">Behavioral Intelligence Division</p>
-            <p style="font-size:14px;line-height:1.7;opacity:.8;">Engineering AI-driven analytical systems for the $84 Trillion Great Wealth Transfer. Pure data integrity meets behavioral intelligence.</p>
+            <p style="font-size:14px;line-height:1.7;opacity:.8;margin-bottom:16px;">Engineering AI-driven analytical systems for the $84 Trillion Great Wealth Transfer. Pure data integrity meets behavioral intelligence.</p>
+            <p style="font-size:12px;font-weight:700;">Direct Email: <a href="mailto:dte.solutions.llc@outlook.com" style="text-decoration:underline;">dte.solutions.llc@outlook.com</a></p>
         </div>
         <div class="modal-contact">
             <button id="closeModal" style="position:absolute;top:20px;right:24px;font-size:28px;cursor:pointer;color:var(--teal);background:none;border:none;line-height:1;">&times;</button>
-            <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;color:var(--teal);margin-bottom:24px;">Contact</h3>
+            <h3 style="font-size:22px;font-weight:900;text-transform:uppercase;color:var(--teal);margin-bottom:8px;">Contact</h3>
+            <p style="font-size:12px;color:rgba(215,227,252,0.7);margin-bottom:18px;">Send a direct message below or email <a href="mailto:dte.solutions.llc@outlook.com" style="color:var(--teal);font-weight:700;">dte.solutions.llc@outlook.com</a>.</p>
             <form id="contactForm" style="display:flex;flex-direction:column;gap:16px;">
                 <div><label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);margin-bottom:6px;">Name</label><input name="user_name" type="text" required placeholder="NAME..." style="width:100%;padding:12px;background:#fff;border:1px solid rgba(0,255,204,0.2);border-radius:6px;color:#000;font-size:12px;font-weight:700;text-transform:uppercase;outline:none;" /></div>
                 <div><label style="display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);margin-bottom:6px;">Email</label><input name="user_email" type="email" required placeholder="EMAIL..." style="width:100%;padding:12px;background:#fff;border:1px solid rgba(0,255,204,0.2);border-radius:6px;color:#000;font-size:12px;font-weight:700;text-transform:uppercase;outline:none;" /></div>
