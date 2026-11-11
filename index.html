@@ -63,19 +63,24 @@
         /* â”€â”€ NAV â”€â”€ */
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-            display: flex; align-items: center; justify-content: space-between;
+            display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px;
             padding: 16px 48px;
             background: rgba(2,3,5,0.85); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
-        .nav-logo { display: flex; align-items: center; gap: 12px; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; grid-column: 1; }
         .nav-logo-dot { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg,rgba(0,255,204,0.12),rgba(0,170,250,0.12)); border: 1px solid rgba(0,200,220,0.3); display: flex; align-items: center; justify-content: center; }
         .nav-logo-dot svg { width: 18px; height: 18px; color: var(--teal); }
         .nav-logo-text { font-size: 18px; font-weight: 800; letter-spacing: -.3px; }
         .nav-logo-sub { font-size: 11px; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: .15em; text-transform: uppercase; }
-        .nav-links { display: flex; align-items: center; gap: 28px; }
-        .nav-links a, .nav-links button { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); background: none; border: none; cursor: pointer; transition: color .2s; }
-        .nav-links a:hover, .nav-links button:hover { color: #fff; }
+        .nav-links { display: flex; align-items: center; justify-content: center; gap: 36px; grid-column: 2; }
+        .nav-links a { position: relative; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55); padding: 6px 2px; letter-spacing: .02em; transition: color .25s, text-shadow .25s; }
+        .nav-links a::after { content: ''; position: absolute; left: 50%; bottom: -4px; width: 0; height: 2px; background: var(--grad); border-radius: 2px; box-shadow: 0 0 10px var(--teal-glow); transform: translateX(-50%); transition: width .25s; }
+        .nav-links a:hover, .nav-links a:focus-visible { color: #fff; text-shadow: 0 0 14px rgba(0,255,204,0.45), 0 0 28px rgba(0,170,250,0.25); }
+        .nav-links a:hover::after, .nav-links a:focus-visible::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; justify-self: end; gap: 28px; grid-column: 3; }
+        .nav-actions button { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.55); background: none; border: none; cursor: pointer; transition: color .2s; }
+        .nav-actions button:hover { color: #fff; }
         .btn-teal { background: var(--grad); color: #000; font-size: 13px; font-weight: 700; padding: 10px 22px; border-radius: 10px; border: none; cursor: pointer; transition: opacity .2s; white-space: nowrap; }
         .btn-teal:hover { opacity: .82; }
         .btn-ghost { background: transparent; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 10px; border: 1px solid rgba(0,255,204,0.18); cursor: pointer; transition: background .2s; }
@@ -84,10 +89,11 @@
         .annex-pill:hover { background: var(--grad); color: #000; }
 
         /* mobile hamburger */
-        .nav-ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: none; }
+        .nav-ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: none; grid-column: 3; justify-self: end; }
         .nav-ham span { width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: all .3s; }
         @media(max-width:768px) {
             .nav-links { display: none; }
+            .nav-actions { display: none; }
             .nav-ham { display: flex; }
         }
         .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(2,3,5,.97); z-index: 190; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
@@ -260,9 +266,11 @@
         </div>
     </a>
     <div class="nav-links">
-        <a href="#features">Features</a>
+        <a href="#pulse-headliner">Features</a>
         <a href="#why">Why Us</a>
         <a href="#products">Products</a>
+    </div>
+    <div class="nav-actions">
         <button id="contactBtn">Contact</button>
         <a href="https://dte-84.github.io/DTE-Portfolio/" target="_blank" class="annex-pill">Founder Annex</a>
         <a href="#products" class="btn-teal">Get Started</a>
