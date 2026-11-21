@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VYBEFORMIQ — Audio-Reactive Visualizer | DTE Solutions</title>
+<meta name="description" content="VYBEFORMIQ turns whatever you're listening to into light. Five audio-reactive visual modes that run entirely in the browser, with nothing uploaded."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.dte-solutions.icu/vybeformiq-breakdown.html"/>
+<meta property="og:title" content="VYBEFORMIQ — Sound. Reimagined. | DTE Solutions"/>
+<meta property="og:description" content="Five audio-reactive visual modes for Spotify, Pandora, YouTube, your mic or your own files. Runs in the browser, nothing uploaded."/>
+<meta property="og:image" content="https://www.dte-solutions.icu/assets/vybeformiq/og.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.dte-solutions.icu/assets/vybeformiq/og.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent:        #2CF5C8;
+    --accent-lt:     #7FFFE2;
+    --accent-dim:    rgba(44, 245, 200, 0.10);
+    --accent-border: rgba(44, 245, 200, 0.30);
+    --ember:         #FF5A1F;
+    --ember-dim:     rgba(255, 90, 31, 0.12);
+    --ember-border:  rgba(255, 90, 31, 0.32);
+    --bg:           #050607;
+    --slate:        #0B0E11;
+    --card:         #11161B;
+    --card2:        #182027;
+    --border:       rgba(148, 163, 184, 0.14);
+    --border2:      rgba(148, 163, 184, 0.22);
+    --white:        #F8FAFC;
+    --gray:         #94A3B8;
+    --gray2:        #64748B;
+    --r:            10px;
+    --r-lg:         16px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 12% 6%, rgba(44, 245, 200, 0.08) 0%, transparent 42%),
+      radial-gradient(circle at 88% 18%, rgba(255, 90, 31, 0.07) 0%, transparent 45%),
+      linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+
+  /* ── BRAND WORDMARK ── */
+  .wordmark { font-weight: 700; letter-spacing: -0.03em; }
+  .wordmark .iq { color: var(--accent); }
+  .motto {
+    font-family: 'Space Mono', monospace; text-transform: uppercase;
+    letter-spacing: 0.3em; color: var(--gray);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5, 6, 7, 0.86);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    height: 68px;
+  }
+  .nav-left { display: flex; align-items: center; gap: 18px; min-width: 0; }
+  .hub-back {
+    display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+    text-decoration: none; color: var(--gray);
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--slate);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hub-back:hover { border-color: var(--accent-border); color: var(--white); }
+  .logo { font-size: 1.35rem; line-height: 1; white-space: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .nav-links a {
+    color: var(--gray); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-pill {
+    background: var(--accent-dim); border: 1px solid var(--accent-border);
+    color: var(--accent); padding: 8px 16px; border-radius: 999px; white-space: nowrap;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+  }
+
+  /* ── LAYOUT ── */
+  section { padding: 96px 5%; position: relative; }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .band {
+    background: var(--slate);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+  }
+  h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
+  h3 { font-size: 1.1rem; font-weight: 700; }
+  p { color: var(--gray); line-height: 1.7; }
+  .section-intro { max-width: 640px; margin-bottom: 52px; }
+  .section-intro p { margin-top: 14px; font-size: 1.02rem; }
+  .section-intro.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+  /* ── HERO ── */
+  #hero { padding: 88px 5% 84px; overflow: hidden; }
+  .hero-grid {
+    max-width: 1120px; margin: 0 auto;
+    display: grid; grid-template-columns: 0.95fr 1.05fr;
+    gap: 56px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--accent-border); background: var(--accent-dim);
+    border-radius: 100px; padding: 6px 14px; margin-bottom: 22px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+  }
+  .hero-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+    box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .hero-wordmark { font-size: clamp(3rem, 7.4vw, 5.6rem); line-height: 0.95; margin-bottom: 14px; }
+  .hero-motto { font-size: 0.8rem; margin-bottom: 26px; }
+  .hero-headline {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700; line-height: 1.25; margin-bottom: 16px;
+    color: var(--white); letter-spacing: -0.02em;
+  }
+  .hero-headline .accent { color: var(--accent); }
+  .hero-sub { font-size: 1.02rem; margin-bottom: 32px; max-width: 520px; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn-accent {
+    background: linear-gradient(135deg, var(--accent), var(--accent-lt));
+    color: #000; padding: 13px 26px; border-radius: var(--r);
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; border: none;
+    box-shadow: 0 6px 24px rgba(44, 245, 200, 0.22);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(44, 245, 200, 0.3); }
+  .btn-accent svg { width: 16px; height: 16px; }
+  .btn-ghost {
+    background: rgba(17, 22, 27, 0.8); color: var(--white);
+    padding: 13px 26px; border-radius: var(--r);
+    border: 1px solid var(--border2); font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent-border); background: var(--card2); }
+
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border); border-radius: var(--r);
+    background: rgba(11, 14, 17, 0.9); overflow: hidden;
+  }
+  .h-stat { padding: 16px 18px; border-right: 1px solid var(--border); }
+  .h-stat:last-child { border-right: none; }
+  .h-stat .num {
+    font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700;
+    color: var(--accent); line-height: 1.1;
+  }
+  .h-stat .lbl {
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--gray2); margin-top: 4px;
+  }
+
+  /* ── SCREEN FRAME ── */
+  .frame {
+    background: var(--card);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 28px 64px rgba(0,0,0,0.6), 0 0 50px rgba(44, 245, 200, 0.08);
+  }
+  .frame-top {
+    background: rgba(5, 6, 7, 0.8);
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .frame-dots { display: flex; gap: 6px; }
+  .frame-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border2); }
+  .frame-dots span:first-child { background: var(--ember); }
+  .frame-dots span:nth-child(2) { background: var(--accent); }
+  .frame-url {
+    font-family: 'Space Mono', monospace; font-size: 0.66rem;
+    letter-spacing: 0.06em; color: var(--gray); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .frame-live {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700;
+    color: var(--ember); background: var(--ember-dim);
+    border: 1px solid var(--ember-border); padding: 2px 8px; border-radius: 4px; flex-shrink: 0;
+  }
+  .frame img { width: 100%; aspect-ratio: 1907 / 896; object-fit: cover; background: #000; }
+
+  /* ── IDEA CARDS ── */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .idea-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .idea-card:hover { border-color: var(--accent-border); transform: translateY(-2px); }
+  .idea-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--accent-dim); border: 1px solid var(--accent-border);
+    display: grid; place-items: center; color: var(--accent); margin-bottom: 16px;
+  }
+  .idea-icon svg { width: 20px; height: 20px; }
+  .idea-card h3 { margin-bottom: 8px; }
+  .idea-card p { font-size: 0.88rem; }
+
+  /* ── MODES ── */
+  .modes { display: flex; flex-direction: column; gap: 28px; }
+  .mode {
+    display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 0;
+    background: linear-gradient(160deg, var(--card), var(--slate));
+    border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .mode:hover { border-color: var(--accent-border); }
+  .mode:nth-child(even) { grid-template-columns: 0.65fr 1.35fr; }
+  .mode:nth-child(even) .mode-shot { order: 2; }
+  .mode-shot { background: #000; position: relative; }
+  .mode-shot img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1907 / 896; }
+  .mode-info { padding: 32px 30px; display: flex; flex-direction: column; justify-content: center; }
+  .mode-num {
+    font-family: 'Space Mono', monospace; font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ember); margin-bottom: 10px;
+  }
+  .mode-info h3 { font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .mode-info p { font-size: 0.92rem; margin-bottom: 18px; }
+  .mode-reacts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-dim); border: 1px solid var(--accent-border);
+    padding: 3px 8px; border-radius: 4px;
+  }
+
+  /* ── SOURCES ── */
+  .who-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 22px;
+  }
+  .who-card {
+    background: linear-gradient(160deg, var(--card), var(--slate));
+    border: 1px solid var(--border); border-radius: var(--r-lg);
+    padding: 32px 28px; position: relative; overflow: hidden;
+  }
+  .who-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--ember), transparent);
+  }
+  .who-tag {
+    display: inline-block; font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-dim); border: 1px solid var(--accent-border);
+    padding: 4px 10px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .who-card h3 { font-size: 1.25rem; margin-bottom: 10px; }
+  .who-card p { font-size: 0.9rem; margin-bottom: 18px; }
+  .who-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .who-list li { font-size: 0.84rem; color: var(--white); display: flex; gap: 8px; }
+  .who-list li span { color: var(--accent); font-weight: 700; }
+  .note {
+    margin-top: 28px; padding: 16px 20px; border-radius: var(--r);
+    border: 1px solid var(--ember-border); background: var(--ember-dim);
+    font-size: 0.86rem; color: var(--white);
+  }
+  .note strong { color: var(--ember); }
+
+  /* ── STUDIO CONTROLS TABLE ── */
+  .table-wrap {
+    overflow-x: auto; border: 1px solid var(--border);
+    border-radius: var(--r-lg); background: var(--card);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  th, td {
+    padding: 15px 20px; text-align: left; vertical-align: top;
+    border-bottom: 1px solid var(--border); font-size: 0.9rem;
+  }
+  th {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);
+    background: rgba(5, 6, 7, 0.55);
+  }
+  td:first-child { color: var(--white); font-weight: 700; white-space: nowrap; }
+  td { color: var(--gray); }
+  tr:last-child td { border-bottom: none; }
+  kbd {
+    font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--white);
+    background: var(--card2); border: 1px solid var(--border2); border-bottom-width: 2px;
+    border-radius: 4px; padding: 1px 6px;
+  }
+
+  /* ── UNDER THE HOOD ── */
+  .hood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .hood-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 30px 28px;
+  }
+  .hood-card .mode-num { color: var(--accent); }
+  .hood-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .hood-card p { font-size: 0.9rem; }
+  .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+  .stack span {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--white);
+    background: var(--card); border: 1px solid var(--border2);
+    padding: 7px 12px; border-radius: 999px;
+  }
+  code {
+    font-family: 'Space Mono', monospace; font-size: 0.82em; color: var(--accent-lt);
+    background: rgba(44, 245, 200, 0.06); padding: 1px 5px; border-radius: 4px;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    max-width: 920px; margin: 0 auto; text-align: center;
+    background: linear-gradient(160deg, rgba(44, 245, 200, 0.09), rgba(255, 90, 31, 0.06) 70%, var(--card));
+    border: 1px solid var(--accent-border); border-radius: var(--r-lg);
+    padding: 56px 32px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+  .cta h2 { margin-bottom: 12px; }
+  .cta p { max-width: 540px; margin: 0 auto 28px; }
+  .cta .hero-actions { justify-content: center; margin-bottom: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem; color: var(--gray2);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px;
+  }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.82rem; color: var(--gray); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 1080px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero-grid, .hood-grid { grid-template-columns: 1fr; }
+    .mode, .mode:nth-child(even) { grid-template-columns: 1fr; }
+    .mode:nth-child(even) .mode-shot { order: 0; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 16px; }
+    #hero { padding: 56px 16px 64px; }
+    nav { padding: 0 16px; }
+    .nav-pill { display: none; }
+    .card-grid { grid-template-columns: 1fr; }
+    .h-stat { padding: 14px 12px; }
+    .h-stat .num { font-size: 1.15rem; }
+    .mode-info { padding: 24px 20px; }
+    .cta { padding: 40px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-badge .dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="./" class="hub-back">← DTE Hub</a>
+    <div class="logo wordmark">VYBEFORM<span class="iq">IQ</span></div>
+  </div>
+  <div class="nav-links">
+    <a href="#idea">The Idea</a>
+    <a href="#modes">Visual Modes</a>
+    <a href="#sources">Sound Sources</a>
+    <a href="#hood">Under the Hood</a>
+  </div>
+  <a class="nav-pill" href="https://vybeformiq.vercel.app/" target="_blank" rel="noopener">Free · Live Now ↗</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">
+        <span class="dot"></span> Runs in your browser · Audio never uploaded
+      </div>
+      <div class="hero-wordmark wordmark">VYBEFORM<span class="iq">IQ</span></div>
+      <div class="hero-motto motto">Sound. Reimagined.</div>
+      <h1 class="hero-headline">
+        Whatever you're playing,<br/>
+        <span class="accent">turned into light.</span>
+      </h1>
+      <p class="hero-sub">
+        VYBEFORMIQ is an audio-reactive visualizer that follows the music you already listen to. Spotify, Pandora, YouTube, a microphone or your own files drive five full-screen visual modes, from classic frequency bars to a 3D particle cloud.
+      </p>
+      <div class="hero-actions">
+        <a href="https://vybeformiq.vercel.app/" target="_blank" rel="noopener" class="btn-accent">Launch VYBEFORMIQ <i data-lucide="arrow-up-right"></i></a>
+        <a href="#modes" class="btn-ghost">See the five modes</a>
+      </div>
+      <div class="hero-stats">
+        <div class="h-stat">
+          <div class="num">5</div>
+          <div class="lbl">Visual Modes</div>
+        </div>
+        <div class="h-stat">
+          <div class="num">64</div>
+          <div class="lbl">Frequency Bands</div>
+        </div>
+        <div class="h-stat">
+          <div class="num">0 B</div>
+          <div class="lbl">Audio Uploaded</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame">
+      <div class="frame-top">
+        <div class="frame-dots"><span></span><span></span><span></span></div>
+        <div class="frame-url">vybeformiq.vercel.app · Spectrum</div>
+        <div class="frame-live">LIVE AUDIO</div>
+      </div>
+      <img src="assets/vybeformiq/spectrum.webp" width="1600" height="752" alt="VYBEFORMIQ Spectrum mode: teal and orange frequency bars with peak caps and a reflected floor, reacting to shared audio" fetchpriority="high"/>
+    </div>
+  </div>
+</section>
+
+<section id="idea" class="band">
+  <div class="container">
+    <div class="section-intro">
+      <div class="eyebrow">The Idea</div>
+      <h2>Music apps stopped giving you anything to look at.</h2>
+      <p>Streaming services keep their audio locked inside their own apps, so the visualizers people grew up with disappeared. VYBEFORMIQ brings them back by listening to your device instead of plugging into any one service.</p>
+    </div>
+    <div class="card-grid">
+      <div class="idea-card">
+        <div class="idea-icon"><i data-lucide="radio"></i></div>
+        <h3>Works With Any Service</h3>
+        <p>No Spotify or Pandora account linking. Share the tab or screen that's playing and the visuals follow along, whichever service it is.</p>
+      </div>
+      <div class="idea-card">
+        <div class="idea-icon"><i data-lucide="shield-check"></i></div>
+        <h3>Private by Design</h3>
+        <p>Sound is analysed frame by frame in the browser with the Web Audio API. Nothing is recorded, stored or sent to a server.</p>
+      </div>
+      <div class="idea-card">
+        <div class="idea-icon"><i data-lucide="monitor-play"></i></div>
+        <h3>Made for Big Screens</h3>
+        <p>Full-screen with one key. The interface fades away when the mouse goes still, so a TV or second monitor shows nothing but the visuals.</p>
+      </div>
+      <div class="idea-card">
+        <div class="idea-icon"><i data-lucide="zap"></i></div>
+        <h3>Nothing to Install</h3>
+        <p>Open the link and pick a source. No download, no sign-up, and settings are remembered in the browser for next time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="container">
+    <div class="section-intro">
+      <div class="eyebrow">Five Visual Modes</div>
+      <h2>One soundtrack, five ways to see it.</h2>
+      <p>Every mode reads the same live analysis: 64 frequency bands, the raw waveform, bass, mids, treble and a beat detector. Switch between them with the top bar or keys <kbd>1</kbd>–<kbd>5</kbd>.</p>
+    </div>
+
+    <div class="modes">
+      <article class="mode">
+        <div class="mode-shot"><img src="assets/vybeformiq/spectrum.webp" width="1600" height="752" loading="lazy" alt="Spectrum mode: rows of glowing frequency bars with falling peak caps"/></div>
+        <div class="mode-info">
+          <div class="mode-num">Mode 01</div>
+          <h3>Spectrum</h3>
+          <p>The classic. Frequency bars with falling peak caps and a mirrored floor reflection, coloured left to right across the active palette.</p>
+          <div class="mode-reacts"><span class="tag">Frequency bands</span><span class="tag">Bass glow</span></div>
+        </div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-shot"><img src="assets/vybeformiq/orbit.webp" width="1600" height="757" loading="lazy" alt="Orbit mode: a ring of radial spikes around a glowing core, with a waveform circle and drifting particles"/></div>
+        <div class="mode-info">
+          <div class="mode-num">Mode 02</div>
+          <h3>Orbit</h3>
+          <p>A circular spectrum around a glowing core, with the live waveform traced inside it. Each beat throws a burst of particles outward.</p>
+          <div class="mode-reacts"><span class="tag">Waveform</span><span class="tag">Beat bursts</span></div>
+        </div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-shot"><img src="assets/vybeformiq/nebula.webp" width="1600" height="764" loading="lazy" alt="Nebula mode: a dense 3D cloud of teal and orange particles"/></div>
+        <div class="mode-info">
+          <div class="mode-num">Mode 03 · 3D</div>
+          <h3>Nebula</h3>
+          <p>Up to 20,000 particles in a slowly turning 3D cloud. Each particle is tied to its own frequency band and pushes outward when that band gets loud.</p>
+          <div class="mode-reacts"><span class="tag">Three.js</span><span class="tag">Per-band motion</span></div>
+        </div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-shot"><img src="assets/vybeformiq/tunnel.webp" width="1600" height="760" loading="lazy" alt="Tunnel mode: nested rotating geometric rings receding into the distance with passing stars"/></div>
+        <div class="mode-info">
+          <div class="mode-num">Mode 04 · 3D</div>
+          <h3>Tunnel</h3>
+          <p>A flight through rotating triangles, hexagons and circles. Flight speed rises with the volume, and every beat kicks it forward.</p>
+          <div class="mode-reacts"><span class="tag">Level-driven speed</span><span class="tag">Beat kicks</span></div>
+        </div>
+      </article>
+
+      <article class="mode">
+        <div class="mode-shot"><img src="assets/vybeformiq/ambient.webp" width="1600" height="755" loading="lazy" alt="Ambient mode: soft drifting fields of teal and amber light with a faint waveform line"/></div>
+        <div class="mode-info">
+          <div class="mode-num">Mode 05</div>
+          <h3>Ambient</h3>
+          <p>Slow, soft colour fields with a faint waveform horizon. Heavily smoothed so nothing flashes: made to sit on a second monitor without pulling focus.</p>
+          <div class="mode-reacts"><span class="tag">Smoothed level</span><span class="tag">No flashing</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="sources" class="band">
+  <div class="container">
+    <div class="section-intro">
+      <div class="eyebrow">Sound Sources</div>
+      <h2>Feed it anything.</h2>
+      <p>Three ways in, switchable at any time from the transport bar at the bottom of the screen.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card">
+        <span class="who-tag">Source 01 · This Device</span>
+        <h3>Spotify, Pandora, YouTube</h3>
+        <p>Share the browser tab or the whole screen that's playing, and VYBEFORMIQ follows the sound.</p>
+        <ul class="who-list">
+          <li><span>→</span> Web players: share the tab with tab audio on</li>
+          <li><span>→</span> Desktop apps: share the entire screen with system audio on</li>
+          <li><span>→</span> Desktop Chrome and Edge</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <span class="who-tag">Source 02 · Microphone</span>
+        <h3>The Room Itself</h3>
+        <p>Play music through speakers and let the mic pick it up. The option that works on phones and tablets.</p>
+        <ul class="who-list">
+          <li><span>→</span> Automatic level matching for quiet inputs</li>
+          <li><span>→</span> Analysed only, never played back (no feedback)</li>
+          <li><span>→</span> Live input meter in the transport bar</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <span class="who-tag">Source 03 · Your Files</span>
+        <h3>Your Own Music</h3>
+        <p>Pick audio files or drop them anywhere on the page. They queue up and play with full transport controls.</p>
+        <ul class="who-list">
+          <li><span>→</span> MP3, WAV, OGG, M4A, FLAC and AAC</li>
+          <li><span>→</span> Play, pause, seek, skip and volume</li>
+          <li><span>→</span> Files stay on your device</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <strong>Why share a screen?</strong> Streaming services don't let other apps read their audio. Screen sharing is the browser's permission-gated way to hand the sound over: only the sound is used, and sharing stops the moment you click Stop.
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="container">
+    <div class="section-intro">
+      <div class="eyebrow">Visualizer Studio</div>
+      <h2>Tune it to the track.</h2>
+      <p>A controls panel shapes how hard the visuals react and how they look. Favourite combinations save as named setups.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Control</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sensitivity</td><td>How strongly the visuals respond to the overall signal, from subtle to explosive.</td></tr>
+          <tr><td>Bass intensity</td><td>Boosts or tames the low end that drives pulses, glow and beat bursts.</td></tr>
+          <tr><td>Density</td><td>Bar count, spike count, particle count and tunnel depth, scaled together.</td></tr>
+          <tr><td>Palettes</td><td>Ember, Aurora, Synthwave, Glacier and Mono, plus a custom three-colour palette. The interface accent follows along.</td></tr>
+          <tr><td>Saved setups</td><td>Store the current mode, palette and response settings under a name and switch back in one click.</td></tr>
+          <tr><td>Shortcuts</td><td><kbd>1</kbd>–<kbd>5</kbd> switch modes · <kbd>Space</kbd> play/pause · <kbd>F</kbd> full screen</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="hood" class="band">
+  <div class="container">
+    <div class="section-intro">
+      <div class="eyebrow">Under the Hood</div>
+      <h2>One analysis engine, five renderers.</h2>
+      <p>A single audio engine produces one shared frame of analysis per animation frame. Every visual mode reads from it.</p>
+    </div>
+    <div class="hood-grid">
+      <div class="hood-card">
+        <div class="mode-num">01 / Analysis</div>
+        <h3>Log-spaced spectrum and beat detection</h3>
+        <p>An <code>AnalyserNode</code> runs a 2048-point FFT, folded into 64 logarithmically spaced bands from 30 Hz to 16 kHz with a gentle high-frequency tilt. Beats are detected when bass energy jumps clear of its own recent average.</p>
+      </div>
+      <div class="hood-card">
+        <div class="mode-num">02 / Sources</div>
+        <h3>Files, streams and safe capture</h3>
+        <p>Files play through an <code>HTMLAudioElement</code>; mic and shared audio arrive as <code>MediaStream</code> sources that feed analysis only. Captured input is auto-levelled against its recent peak so quiet sources still move the visuals.</p>
+      </div>
+      <div class="hood-card">
+        <div class="mode-num">03 / Rendering</div>
+        <h3>Canvas 2D and WebGL, loaded on demand</h3>
+        <p>Spectrum, Orbit and Ambient draw on Canvas 2D with additive blending. Nebula runs a custom GLSL point shader in Three.js, and Tunnel animates meshes with React Three Fiber; the 3D code only downloads when one of those modes is opened.</p>
+      </div>
+      <div class="hood-card">
+        <div class="mode-num">04 / State</div>
+        <h3>Persistent studio settings</h3>
+        <p>Zustand keeps playback state apart from visual settings. Mode, palette, response controls and named setups persist to <code>localStorage</code>, and an idle animation keeps the stage alive before anything plays.</p>
+      </div>
+    </div>
+    <div class="stack">
+      <span>React 18</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS</span><span>Web Audio API</span><span>Canvas 2D</span><span>Three.js</span><span>React Three Fiber</span><span>GLSL</span><span>Zustand</span><span>Vercel</span>
+    </div>
+  </div>
+</section>
+
+<section id="launch">
+  <div class="cta">
+    <div class="eyebrow">Free · No Sign-Up</div>
+    <h2>Put on a song. Watch it move.</h2>
+    <p>Open VYBEFORMIQ, pick a sound source and choose a mode. Best in desktop Chrome or Edge, full screen.</p>
+    <div class="hero-actions">
+      <a href="https://vybeformiq.vercel.app/" target="_blank" rel="noopener" class="btn-accent">Launch VYBEFORMIQ <i data-lucide="arrow-up-right"></i></a>
+      <a href="./" class="btn-ghost">Back to DTE Hub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="logo wordmark">VYBEFORM<span class="iq">IQ</span></div>
+    <div class="footer-sub">Engineered by DTE Solutions · Sound. Reimagined.</div>
+  </div>
+  <div class="footer-links">
+    <a href="./">Return to DTE Hub</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>
