@@ -1,709 +1,1509 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>WebPIQ — Zero-Server Bulk Image Engine | DTE Solutions</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Jura:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/lucide@latest"></script>
+<meta name="description" content="Convert JPG, PNG, and iPhone HEIC batches into marketplace-sized, SEO-named WebP files directly in your browser. Zero server uploads, automatic EXIF/GPS stripping, and one-click ZIP export." />
+<link rel="icon" type="image/png" href="/assets/transparentlogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --accent:        #FF6B3D;
-    --accent-lt:     #FF8A63;
-    --accent-dim:    rgba(255, 107, 61, 0.12);
-    --accent-border: rgba(255, 107, 61, 0.32);
-    --bg:           #080C10;
-    --slate:        #0F161E;
-    --card:         #131C26;
-    --card2:        #192533;
-    --border:       rgba(148, 163, 184, 0.14);
-    --border2:      rgba(148, 163, 184, 0.22);
-    --white:        #F8FAFC;
-    --gray:         #94A3B8;
-    --gray2:        #64748B;
-    --red:          #F87171;
-    --r:            10px;
-    --r-lg:         16px;
+    --bg:           #07080A;
+    --bg-alt:       #0C0E12;
+    --surface:      #12151B;
+    --surface-2:    #181C24;
+    --border:       rgba(255, 255, 255, 0.08);
+    --border-hi:    rgba(255, 255, 255, 0.15);
+
+    --accent:       #FF6B3D;
+    --accent-lt:    #FF8E68;
+    --accent-dim:   rgba(255, 107, 61, 0.11);
+    --accent-border:rgba(255, 107, 61, 0.30);
+
+    --green:        #34D399;
+    --green-dim:    rgba(52, 211, 153, 0.10);
+    --green-border: rgba(52, 211, 153, 0.28);
+
+    --text:         #F6F7F9;
+    --text-muted:   #9BA3B0;
+    --text-subtle:  #697282;
+
+    --r-sm:         8px;
+    --r-md:         12px;
+    --r-lg:         18px;
   }
 
   html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    background-color: var(--bg);
-    background-image:
-      radial-gradient(circle at 15% 8%, rgba(255, 107, 61,0.09) 0%, transparent 45%),
-      radial-gradient(circle at 85% 25%, rgba(30,41,59,0.55) 0%, transparent 50%),
-      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
-    color: var(--white);
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── BRAND WORDMARK ── */
-  .webp-shine { color: var(--white); }
-  .iq-mark { color: var(--accent); }
-  .inline-brand { font-weight: 700; white-space: nowrap; }
-  .inline-brand .w { color: var(--white); }
-  .inline-brand .iq { color: var(--accent); }
+  h1, h2, h3, h4, .brand-font {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+  }
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(8, 12, 16, 0.88);
+  a { color: inherit; text-decoration: none; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent-lt);
+    outline-offset: 2px;
+  }
+
+  code {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.84em;
+    color: var(--accent-lt);
+    background: var(--accent-dim);
+    border: 1px solid rgba(255, 107, 61, 0.20);
+    padding: 1px 6px;
+    border-radius: 5px;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 8, 10, 0.86);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
     height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
   }
-  .nav-left { display: flex; align-items: center; gap: 18px; }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
   .hub-back {
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; color: var(--gray);
-    font-family: 'Space Mono', monospace; font-size: 0.7rem;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 6px 12px; border-radius: 6px;
-    border: 1px solid var(--border); background: var(--slate);
-    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
-  .hub-back:hover { border-color: var(--accent-border); color: var(--white); }
+  .hub-back:hover {
+    border-color: var(--accent-border);
+    color: var(--text);
+    background: var(--accent-dim);
+  }
+  .hub-back svg { width: 13px; height: 13px; }
+  .nav-sep {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
+  }
   .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 1.5rem; font-weight: 700; line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
-  .nav-links { display: flex; align-items: center; gap: 26px; }
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, rgba(255, 107, 61, 0.20), rgba(255, 107, 61, 0.06));
+    border: 1px solid var(--accent-border);
+    display: grid;
+    place-items: center;
+    color: var(--accent-lt);
+    box-shadow: 0 0 18px rgba(255, 107, 61, 0.14);
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 17px; height: 17px; }
+  .logo em { color: var(--accent); font-style: normal; }
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    line-height: 1.2;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
   .nav-links a {
-    color: var(--gray); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--white); }
-  .nav-pill {
-    background: var(--accent-dim); border: 1px solid var(--accent-border);
-    color: var(--accent); padding: 8px 16px; border-radius: 999px;
-    font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
+  .nav-links a:hover { color: var(--text); }
+  .nav-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--accent-lt);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nav-status:hover {
+    background: rgba(255, 107, 61, 0.18);
+  }
+  .nav-status .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
   }
 
-  /* ── LAYOUT ── */
-  section { padding: 96px 5%; position: relative; }
+  /* ── LAYOUT PRIMITIVES ── */
+  section { padding: 96px 24px; }
   .container { max-width: 1120px; margin: 0 auto; }
-  .eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+
+  .section-head {
+    max-width: 620px;
+    margin-bottom: 52px;
   }
-  h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.12; }
-  h3 { font-size: 1.1rem; font-weight: 700; }
-  p { color: var(--gray); line-height: 1.7; }
+  .section-head.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-lt);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 16px;
+    height: 1.5px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .section-head.center .eyebrow::before { display: none; }
+
+  h1 {
+    font-size: clamp(2.35rem, 4.6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+  h2 {
+    font-size: clamp(1.85rem, 3.3vw, 2.55rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: 1.06rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  p { color: var(--text-muted); }
+  .section-head p {
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #090605;
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--accent-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(255, 107, 61, 0.28);
+  }
+  .btn-primary svg, .btn-ghost svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-hi);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent-border);
+    background: var(--accent-dim);
+  }
 
   /* ── HERO ── */
-  #hero { padding: 96px 5% 84px; overflow: hidden; }
+  #hero {
+    padding: 84px 24px 88px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 68% 52% at 74% 16%, rgba(255, 107, 61, 0.10), transparent 70%),
+      radial-gradient(ellipse 48% 44% at 14% 86%, rgba(255, 107, 61, 0.05), transparent 70%);
+  }
   .hero-grid {
-    max-width: 1120px; margin: 0 auto;
-    display: grid; grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px; align-items: center;
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: 56px;
+    align-items: center;
   }
   .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--accent-border); background: var(--accent-dim);
-    border-radius: 100px; padding: 6px 14px; margin-bottom: 22px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--accent-border);
+    background: var(--accent-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-lt);
+    font-weight: 600;
   }
   .hero-badge .dot {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2.2s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+  .hero-headline { margin-bottom: 20px; }
+  .hero-headline .accent {
+    background: linear-gradient(120deg, var(--accent-lt), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 495px;
+    margin-bottom: 32px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    gap: 20px;
+    max-width: 495px;
+  }
+  .hero-metric strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.18rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .hero-metric strong em {
+    color: var(--accent-lt);
+    font-style: normal;
+  }
+  .hero-metric span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+    line-height: 1.35;
+  }
 
-  .hero-wordmark {
+  /* ── HERO STUDIO PREVIEW CARD ── */
+  .studio-card {
+    background: linear-gradient(180deg, #151921 0%, #0E1117 100%);
+    border: 1px solid rgba(255, 107, 61, 0.24);
+    border-radius: var(--r-lg);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.58),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    overflow: hidden;
+  }
+  .studio-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .studio-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .studio-brand strong {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.2;
+  }
+  .studio-brand small {
+    display: block;
+    font-size: 0.64rem;
     font-weight: 700;
-    font-size: clamp(3.4rem, 7vw, 5.6rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-lt);
+  }
+  .engine-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .studio-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .config-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .micro-label {
+    display: block;
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 4px;
+  }
+  .config-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .config-val.accent { color: var(--accent-lt); }
+  .config-val.green { color: var(--green); }
+
+  .batch-banner {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.12), rgba(52, 211, 153, 0.04));
+    border: 1px solid var(--green-border);
+    border-radius: 11px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .batch-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .batch-left svg { width: 16px; height: 16px; }
+  .batch-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--green);
+    background: rgba(52, 211, 153, 0.14);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .file-queue {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .file-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .file-badge {
+    width: 36px;
+    height: 32px;
+    border-radius: 7px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    display: grid;
+    place-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--accent-lt);
+    flex-shrink: 0;
+  }
+  .file-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .file-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-subtle);
+  }
+  .file-saved {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-lt);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .studio-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(255, 107, 61, 0.045);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .studio-tech {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent-lt);
+  }
+
+  /* ── PROBLEM ── */
+  #problem {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .prob-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .prob-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-2px);
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 18px;
   }
-  .hero-headline {
-    font-size: clamp(1.45rem, 2.6vw, 2rem);
-    font-weight: 700; line-height: 1.25; margin-bottom: 16px;
-    color: var(--white); letter-spacing: -0.02em;
-  }
-  .hero-headline .accent { color: var(--accent); }
-  .hero-sub { font-size: 1.02rem; margin-bottom: 32px; max-width: 520px; }
-  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
-  .btn-accent {
-    background: linear-gradient(135deg, var(--accent), var(--accent-lt));
-    color: #000000; padding: 13px 26px; border-radius: var(--r);
-    font-weight: 700; font-size: 0.9rem; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px; border: none;
-    box-shadow: 0 6px 24px rgba(255, 107, 61, 0.25);
-  }
-  .btn-ghost {
-    background: rgba(19, 28, 38, 0.8); color: var(--white);
-    padding: 13px 26px; border-radius: var(--r);
-    border: 1px solid var(--border2); font-weight: 600; font-size: 0.9rem;
-    text-decoration: none; transition: border-color 0.2s, background 0.2s;
-  }
-  .btn-ghost:hover { border-color: var(--accent-border); background: var(--card2); }
-
-  .hero-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--border); border-radius: var(--r);
-    background: rgba(15, 22, 30, 0.9); overflow: hidden;
-  }
-  .h-stat { padding: 16px 18px; border-right: 1px solid var(--border); }
-  .h-stat:last-child { border-right: none; }
-  .h-stat .num {
-    font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700;
-    color: var(--accent); line-height: 1.1;
-  }
-  .h-stat .lbl {
-    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--gray2); margin-top: 4px;
-  }
-
-  /* ── HERO INTERACTIVE MOCK WORKSPACE ── */
-  .hero-mock {
-    background: linear-gradient(165deg, var(--card) 0%, var(--slate) 100%);
+  .icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--accent-dim);
     border: 1px solid var(--accent-border);
-    border-radius: var(--r-lg);
-    overflow: hidden;
-    box-shadow: 0 28px 64px rgba(0,0,0,0.55), 0 0 45px rgba(255, 107, 61,0.1);
+    display: grid;
+    place-items: center;
+    color: var(--accent-lt);
+    flex-shrink: 0;
   }
-  .mock-top {
-    background: rgba(8, 12, 16, 0.75);
-    padding: 13px 18px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
+  .icon-badge svg { width: 20px; height: 20px; }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-subtle);
   }
-  .mock-dots { display: flex; gap: 6px; }
-  .mock-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border2); }
-  .mock-dots span:first-child { background: var(--accent); }
-  .mock-top-title {
-    font-family: 'Space Mono', monospace; font-size: 0.68rem;
-    letter-spacing: 0.1em; color: var(--gray); text-transform: uppercase;
-  }
-  .mock-top-badge {
-    font-family: 'Space Mono', monospace; font-size: 0.64rem; font-weight: 700;
-    color: var(--accent); background: var(--accent-dim);
-    border: 1px solid var(--accent-border); padding: 2px 8px; border-radius: 4px;
-  }
-  .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-  .mock-controls {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  }
-  .mock-box {
-    background: rgba(8, 12, 16, 0.6); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 12px;
-  }
-  .mock-box label {
-    display: block; font-family: 'Space Mono', monospace;
-    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
-    color: var(--gray2); margin-bottom: 4px;
-  }
-  .mock-box .val {
-    font-family: 'Space Mono', monospace; font-size: 0.88rem;
-    font-weight: 700; color: var(--white);
-  }
-  .mock-box .val.accent { color: var(--accent); }
-  .mock-banner {
-    background: var(--accent-dim); border: 1px solid var(--accent-border);
-    border-radius: 8px; padding: 11px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 700;
-    color: var(--accent);
-  }
-  .mock-files { display: flex; flex-direction: column; gap: 8px; }
-  .mock-file {
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(8, 12, 16, 0.55); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 12px; font-size: 0.78rem;
-  }
-  .mf-left { display: flex; align-items: center; gap: 10px; }
-  .mf-thumb {
-    width: 32px; height: 32px; border-radius: 6px;
-    background: linear-gradient(135deg, rgba(255, 107, 61,0.25), rgba(30,41,59,0.9));
-    border: 1px solid var(--accent-border); display: grid; place-items: center;
-    color: var(--accent); font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700;
-  }
-  .mf-name { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--white); font-size: 0.75rem; }
-  .mf-sub { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: var(--gray2); }
-  .mf-saved {
-    font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700;
-    color: var(--accent); background: var(--accent-dim); padding: 3px 8px; border-radius: 4px;
-  }
+  .prob-card h3 { margin-bottom: 8px; }
+  .prob-card p { font-size: 0.9rem; line-height: 1.65; }
 
-  /* ── PROBLEM / PAIN SECTION ── */
-  #problem {
-    background: var(--slate);
+  /* ── CAPABILITIES ── */
+  #features { background: var(--bg); }
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .feat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px 26px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .feat-card:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-2px);
+  }
+  .feat-card .icon-badge { margin-bottom: 18px; }
+  .feat-card h3 { margin-bottom: 8px; }
+  .feat-card p { font-size: 0.88rem; line-height: 1.65; }
+
+  /* ── TARGET WORKFLOWS ── */
+  #who {
+    background: var(--bg-alt);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
   }
-  .section-intro { max-width: 620px; margin-bottom: 52px; }
-  .section-intro p { margin-top: 14px; font-size: 1.02rem; }
-  .prob-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
-  }
-  .prob-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 28px 24px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .prob-card:hover { border-color: var(--accent-border); transform: translateY(-2px); }
-  .prob-icon {
-    width: 40px; height: 40px; border-radius: 10px;
-    background: var(--accent-dim); border: 1px solid var(--accent-border);
-    display: grid; place-items: center; color: var(--accent); margin-bottom: 16px;
-  }
-  .prob-icon svg { width: 20px; height: 20px; }
-  .prob-card h3 { margin-bottom: 8px; }
-  .prob-card p { font-size: 0.88rem; }
-
-  /* ── AUDIENCE / WHO IT'S FOR ── */
   .who-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
   }
   .who-card {
-    background: linear-gradient(160deg, var(--card), var(--slate));
-    border: 1px solid var(--border); border-radius: var(--r-lg);
-    padding: 32px 28px; position: relative; overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 30px 26px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
   }
   .who-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--accent), transparent);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--accent), rgba(255, 142, 104, 0.20));
+  }
+  .who-card:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-2px);
   }
   .who-tag {
-    display: inline-block; font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-dim); border: 1px solid var(--accent-border);
-    padding: 4px 10px; border-radius: 4px; margin-bottom: 16px;
+    display: inline-block;
+    align-self: flex-start;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-lt);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 16px;
   }
-  .who-card h3 { font-size: 1.25rem; margin-bottom: 10px; }
-  .who-card p { font-size: 0.9rem; margin-bottom: 18px; }
-  .who-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .who-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .who-card > p { font-size: 0.89rem; line-height: 1.65; }
+  .who-list {
+    list-style: none;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .who-list li {
-    font-size: 0.84rem; color: var(--white);
-    display: flex; align-items: center; gap: 8px;
+    font-size: 0.85rem;
+    color: #D4D9E2;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    line-height: 1.5;
   }
-  .who-list li span { color: var(--accent); font-weight: 700; }
+  .who-list .li-icon {
+    color: var(--accent-lt);
+    flex-shrink: 0;
+    margin-top: 3px;
+    display: grid;
+    place-items: center;
+  }
+  .who-list .li-icon svg { width: 14px; height: 14px; }
 
   /* ── COMPARISON TABLE ── */
-  #compare {
-    background: var(--slate);
-    border-top: 1px solid var(--border);
+  #compare { background: var(--bg); }
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow-x: auto;
+  }
+  .compare-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+  }
+  .compare-table th {
+    padding: 18px 20px;
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-muted);
     border-bottom: 1px solid var(--border);
   }
-  .table-wrap {
-    overflow-x: auto; border: 1px solid var(--border);
-    border-radius: var(--r-lg); background: var(--card);
+  .compare-table th.hi {
+    background: rgba(255, 107, 61, 0.10);
+    color: var(--accent-lt);
+    border-left: 1px solid var(--accent-border);
+    border-right: 1px solid var(--accent-border);
   }
-  table { width: 100%; border-collapse: collapse; min-width: 640px; }
-  th, td {
-    padding: 16px 20px; text-align: left;
-    border-bottom: 1px solid var(--border); font-size: 0.9rem;
+  .compare-table td {
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-  th {
-    font-family: 'Space Mono', monospace; font-size: 0.72rem;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray);
-    background: rgba(8, 12, 16, 0.55);
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td.feature {
+    color: var(--text);
+    font-weight: 500;
   }
-  th.hi, td.hi {
-    background: rgba(255, 107, 61, 0.07);
-    color: var(--white); font-weight: 700;
+  .compare-table td.hi {
+    background: rgba(255, 107, 61, 0.06);
+    border-left: 1px solid rgba(255, 107, 61, 0.20);
+    border-right: 1px solid rgba(255, 107, 61, 0.20);
+    color: var(--text);
+    font-weight: 600;
   }
-  th.hi { color: var(--accent); }
-  tr:last-child td { border-bottom: none; }
-  .ck { color: var(--accent); font-weight: 700; }
-  .no { color: var(--gray2); }
+  .cell-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .status-dot svg { width: 12px; height: 12px; }
+  .status-dot.accent {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--accent-lt);
+  }
+  .status-dot.yes {
+    background: var(--green-dim);
+    color: var(--green);
+  }
+  .status-dot.no {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-subtle);
+  }
 
-  /* ── TIERS / MONETIZATION ── */
-  .tier-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    max-width: 920px; margin: 0 auto;
+  /* ── PRICING ── */
+  #pricing {
+    background:
+      radial-gradient(ellipse 62% 48% at 50% 0%, rgba(255, 107, 61, 0.08), transparent 70%),
+      var(--bg-alt);
+    border-top: 1px solid var(--border);
   }
-  .tier-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r-lg); padding: 36px 32px;
-    display: flex; flex-direction: column; justify-content: space-between;
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 880px;
+    margin: 0 auto;
+    align-items: stretch;
   }
-  .tier-card.pro {
-    background: linear-gradient(160deg, rgba(255, 107, 61,0.12), var(--card));
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .price-card.featured {
     border-color: var(--accent-border);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 35px rgba(255, 107, 61,0.08);
+    background: linear-gradient(180deg, rgba(255, 107, 61, 0.09) 0%, var(--surface) 48%);
+    box-shadow: 0 22px 56px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 107, 61, 0.14) inset;
   }
-  .tier-pill {
-    display: inline-block; font-family: 'Space Mono', monospace;
-    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; padding: 4px 12px; border-radius: 999px;
-    background: rgba(148,163,184,0.12); color: var(--gray); margin-bottom: 16px;
+  .price-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-lt));
   }
-  .tier-card.pro .tier-pill {
-    background: var(--accent); color: #000000;
+  .price-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
   }
-  .tier-price {
-    font-family: 'Space Mono', monospace; font-size: 2.4rem; font-weight: 700;
-    color: var(--white); margin: 8px 0 4px;
+  .price-tier {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.08rem;
+    font-weight: 700;
   }
-  .tier-sub { font-size: 0.84rem; color: var(--gray2); margin-bottom: 24px; }
-  .tier-features {
-    list-style: none; display: flex; flex-direction: column; gap: 11px;
+  .price-pill {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .price-pill.neutral {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .price-pill.accent {
+    background: var(--accent-dim);
+    color: var(--accent-lt);
+    border: 1px solid var(--accent-border);
+  }
+  .price-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .price-amount sup {
+    font-size: 1.25rem;
+    vertical-align: top;
+    margin-top: 8px;
+    color: var(--accent-lt);
+  }
+  .price-period {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .price-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
     margin-bottom: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
   }
-  .tier-features li {
-    font-size: 0.9rem; color: var(--gray);
-    display: flex; align-items: flex-start; gap: 10px;
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #D4D9E2;
+    line-height: 1.5;
   }
-  .tier-features li strong { color: var(--white); }
+  .price-features li strong { color: var(--text); }
+  .price-features .ck {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    color: var(--accent-lt);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .price-features .ck svg { width: 11px; height: 11px; }
+  .tier-foot {
+    margin-top: auto;
+    padding: 12px 16px;
+    border-radius: var(--r-sm);
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .price-card.featured .tier-foot {
+    background: var(--accent-dim);
+    border-color: var(--accent-border);
+    color: var(--accent-lt);
+  }
+
+  /* ── CLOSING CTA ── */
+  .cta-band {
+    background: var(--bg-alt);
+    padding: 0 24px 96px;
+  }
+  .cta-box {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(255, 107, 61, 0.12) 0%, var(--surface) 60%);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--r-lg);
+    padding: 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-box h2 {
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    margin-bottom: 8px;
+  }
+  .cta-box p {
+    max-width: 540px;
+    font-size: 0.96rem;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
 
   /* ── FOOTER ── */
   footer {
-    border-top: 1px solid var(--border); padding: 40px 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    padding: 36px 24px;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
   }
   .footer-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.68rem; color: var(--gray2);
-    letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
   }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.82rem; color: var(--gray); text-decoration: none; }
-  .footer-links a:hover { color: var(--accent); }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent-lt); }
 
-  @media (max-width: 900px) {
-    .hero-grid, .tier-grid { grid-template-columns: 1fr; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
     .nav-links { display: none; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+    .feat-grid, .who-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 740px) {
+    section { padding: 72px 20px; }
+    #hero { padding: 64px 20px 72px; }
+    .problem-grid, .feat-grid, .who-grid, .price-grid, .config-grid {
+      grid-template-columns: 1fr;
+    }
+    .cta-box { padding: 32px 24px; }
+  }
+  @media (max-width: 520px) {
+    .hub-back span, .nav-sep, .logo-sub, .nav-status { display: none; }
+    .nav-inner { padding: 0 16px; }
+    .hero-metrics { gap: 14px; }
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-links { justify-content: center; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-left">
-    <a href="./" class="hub-back">← DTE Hub</a>
-    <div class="logo">
-      <span><span class="webp-shine">WEBP</span><span class="iq-mark">IQ</span></span>
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="./" class="hub-back" title="Back to DTE Solutions Hub">
+        <i data-lucide="arrow-left"></i>
+        <span>DTE Hub</span>
+      </a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+        </span>
+        <span>
+          <span style="display:block;line-height:1.15;">WEBP<em>IQ</em></span>
+          <span class="logo-sub" style="display:block;">Bulk Image Engine</span>
+        </span>
+      </a>
     </div>
+
+    <ul class="nav-links">
+      <li><a href="#problem">The Bottleneck</a></li>
+      <li><a href="#features">Capabilities</a></li>
+      <li><a href="#who">Workflows</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+
+    <a href="#pricing" class="nav-status">
+      <span class="dot" aria-hidden="true"></span>
+      Web &amp; Offline PWA
+    </a>
   </div>
-  <div class="nav-links">
-    <a href="#problem">The Bottleneck</a>
-    <a href="#who">Who It's For</a>
-    <a href="#compare">Why It Wins</a>
-    <a href="#pricing">Tiers &amp; Specs</a>
-  </div>
-  <span class="nav-pill">Commercial Tool · In Pre-Release</span>
 </nav>
 
-<section id="hero">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-badge">
-        <span class="dot"></span> 100% On-Device Web Worker Pipeline · Zero Cloud Uploads
-      </div>
-      <div class="hero-wordmark">
-        <span class="webp-shine">WEBP</span><span class="iq-mark">IQ</span>
-      </div>
-      <h1 class="hero-headline">
-        500 product photos, marketplace-sized, renamed, and zipped.<br/>
-        <span class="accent">Nothing ever leaves your device.</span>
-      </h1>
-      <p class="hero-sub">
-        Resellers and small shop owners shoot dozens of 4 MB phone photos a week. <span class="inline-brand"><span class="w">WEBP</span><span class="iq">IQ</span></span> converts JPG, PNG, and iPhone HEIC batches into lean, SEO-named WebP assets directly inside your browser.
-      </p>
-      <div class="hero-actions">
-        <span class="btn-accent" style="cursor:default;">Commercial Release Coming Soon ⚡</span>
-        <a href="#compare" class="btn-ghost">Compare vs. Free Tools</a>
-      </div>
-      <div class="hero-stats">
-        <div class="h-stat">
-          <div class="num">91%</div>
-          <div class="lbl">Avg Size Saved</div>
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot" aria-hidden="true"></span>
+          100% On-Device Pipeline · Zero Cloud Uploads
         </div>
-        <div class="h-stat">
-          <div class="num">500+</div>
-          <div class="lbl">Batch Capacity</div>
+        <h1 class="hero-headline">
+          Marketplace-ready photos,<br />
+          <span class="accent">in one drop.</span>
+        </h1>
+        <p class="hero-sub">
+          Turn hundreds of raw JPG, PNG, and iPhone HEIC photos into lean, marketplace-sized, SEO-named WebP assets in seconds—processed entirely inside your browser via multi-threaded Web Workers and WebAssembly.
+        </p>
+        <div class="hero-actions">
+          <a href="#features" class="btn-primary">
+            Explore Capabilities <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#compare" class="btn-ghost">
+            Compare vs. Free Tools
+          </a>
         </div>
-        <div class="h-stat">
-          <div class="num">0 B</div>
-          <div class="lbl">Server Uploads</div>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <strong><em>91%</em></strong>
+            <span>Average payload reduction</span>
+          </div>
+          <div class="hero-metric">
+            <strong>500<em>+</em></strong>
+            <span>Photos per local batch</span>
+          </div>
+          <div class="hero-metric">
+            <strong><em>0 B</em></strong>
+            <span>Uploaded to any server</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="hero-mock">
-      <div class="mock-top">
-        <div class="mock-dots"><span></span><span></span><span></span></div>
-        <div class="mock-top-title">WEBPIQ LOCAL STUDIO</div>
-        <div class="mock-top-badge">PRO ENGINE</div>
-      </div>
-      <div class="mock-body">
-        <div class="mock-controls">
-          <div class="mock-box">
-            <label>Marketplace Preset</label>
-            <div class="val accent">Etsy Listing (2000×2000)</div>
-          </div>
-          <div class="mock-box">
-            <label>Aspect Fit &amp; Fill</label>
-            <div class="val">Square Pad · Studio White</div>
-          </div>
-          <div class="mock-box">
-            <label>Bulk Rename Pattern</label>
-            <div class="val">vintage-denim-{nn}</div>
-          </div>
-          <div class="mock-box">
-            <label>Privacy &amp; Safety</label>
-            <div class="val accent">EXIF / GPS Stripped ✓</div>
-          </div>
-        </div>
-
-        <div class="mock-banner">
-          <span>✓ Saved 184.2 MB across 48 photos</span>
-          <span>93% smaller</span>
-        </div>
-
-        <div class="mock-files">
-          <div class="mock-file">
-            <div class="mf-left">
-              <div class="mf-thumb">WEBP</div>
-              <div>
-                <div class="mf-name">vintage-denim-01.webp</div>
-                <div class="mf-sub">IMG_4910.HEIC · 4.4 MB → 178 KB</div>
-              </div>
+      <!-- Compact Local Studio Preview -->
+      <div class="studio-card" role="region" aria-label="WebPIQ local batch conversion preview">
+        <div class="studio-top">
+          <div class="studio-brand">
+            <span class="logo-mark" aria-hidden="true"><i data-lucide="image"></i></span>
+            <div>
+              <strong>WebPIQ Local Studio</strong>
+              <small>48 Photos · Worker Pool Active</small>
             </div>
-            <span class="mf-saved">-96%</span>
           </div>
-          <div class="mock-file">
-            <div class="mf-left">
-              <div class="mf-thumb">WEBP</div>
-              <div>
-                <div class="mf-name">vintage-denim-02.webp</div>
-                <div class="mf-sub">IMG_4911.HEIC · 3.9 MB → 154 KB</div>
-              </div>
+          <span class="engine-pill">LOCAL · READY</span>
+        </div>
+
+        <div class="studio-body">
+          <div class="config-grid">
+            <div class="config-box">
+              <span class="micro-label">Marketplace Preset</span>
+              <div class="config-val accent">Shopify (2048×2048)</div>
             </div>
-            <span class="mf-saved">-96%</span>
-          </div>
-          <div class="mock-file">
-            <div class="mf-left">
-              <div class="mf-thumb">WEBP</div>
-              <div>
-                <div class="mf-name">vintage-denim-03.webp</div>
-                <div class="mf-sub">IMG_4912.JPG · 3.5 MB → 142 KB</div>
-              </div>
+            <div class="config-box">
+              <span class="micro-label">Fit &amp; Fill Mode</span>
+              <div class="config-val">Square Pad · White</div>
             </div>
-            <span class="mf-saved">-95%</span>
+            <div class="config-box">
+              <span class="micro-label">Bulk Rename Pattern</span>
+              <div class="config-val">vintage-denim-{nn}</div>
+            </div>
+            <div class="config-box">
+              <span class="micro-label">Privacy &amp; Safety</span>
+              <div class="config-val green">EXIF / GPS Stripped</div>
+            </div>
           </div>
+
+          <div class="batch-banner">
+            <div class="batch-left">
+              <i data-lucide="check-circle-2"></i>
+              Saved 184.2 MB across 48 photos
+            </div>
+            <span class="batch-pct">93% smaller</span>
+          </div>
+
+          <div class="file-queue">
+            <div class="file-item">
+              <div class="file-left">
+                <div class="file-badge">WEBP</div>
+                <div style="min-width:0;">
+                  <div class="file-name">vintage-denim-01.webp</div>
+                  <div class="file-sub">IMG_4910.HEIC · 4.4 MB → 178 KB</div>
+                </div>
+              </div>
+              <span class="file-saved">−96%</span>
+            </div>
+
+            <div class="file-item">
+              <div class="file-left">
+                <div class="file-badge">WEBP</div>
+                <div style="min-width:0;">
+                  <div class="file-name">vintage-denim-02.webp</div>
+                  <div class="file-sub">IMG_4911.HEIC · 3.9 MB → 154 KB</div>
+                </div>
+              </div>
+              <span class="file-saved">−96%</span>
+            </div>
+
+            <div class="file-item">
+              <div class="file-left">
+                <div class="file-badge">WEBP</div>
+                <div style="min-width:0;">
+                  <div class="file-name">vintage-denim-03.webp</div>
+                  <div class="file-sub">IMG_4912.JPG · 3.5 MB → 142 KB</div>
+                </div>
+              </div>
+              <span class="file-saved">−96%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="studio-footer">
+          <span>ZIP Archive Ready · Folder Tree Kept</span>
+          <span class="studio-tech">WASM + Web Workers</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="problem">
-  <div class="container">
-    <div class="section-intro">
-      <div class="eyebrow">The Bottleneck</div>
-      <h2>Why generic image converters fail real sellers.</h2>
-      <p>Squoosh and TinyPNG handle one image or a tiny batch with zero store presets—and cloud tools make you upload gigabytes of private photos to a remote server.</p>
-    </div>
-    <div class="prob-grid">
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="clock"></i></div>
-        <h3>The 200-Photo Reseller Backlog</h3>
-        <p>Shooting 40 items on an iPhone leaves you with 200+ HEIC/JPG files named <code>IMG_4821</code>. Cropping and renaming them one by one kills listing velocity.</p>
+  <!-- ═══ THE BOTTLENECK ═══ -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Bottleneck</div>
+        <h2>Why generic image converters fail real sellers.</h2>
+        <p>Single-image tools stall on real inventory volume, lack marketplace sizing presets, and cloud converters force you to upload gigabytes of private product shoots to third-party servers.</p>
       </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="map-pin-off"></i></div>
-        <h3>Hidden Home GPS Metadata</h3>
-        <p>Phone photos embed exact home latitude and longitude in EXIF headers. <span class="inline-brand"><span class="w">WEBP</span><span class="iq">IQ</span></span> re-encodes every frame clean so your home address never rides along in listing photos.</p>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="gauge"></i></div>
-        <h3>4 MB Photos Kill Storefront Speed</h3>
-        <p>Uncompressed phone photos cripple Shopify and WooCommerce mobile load times. Converting to WebP cuts payload size by ~90% with no visible quality loss.</p>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="cpu"></i></div>
-        <h3>Zero-Upload Local Execution</h3>
-        <p>Powered by multi-threaded Web Workers and WebAssembly SIMD. Process 500+ photos at once without freezing your tab or waiting on cloud uploads.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="who">
-  <div class="container">
-    <div class="section-intro">
-      <div class="eyebrow">Target Workflows</div>
-      <h2>Engineered for commerce, not command-line developers.</h2>
-      <p>Built specifically for people who care about listing speed, marketplace aspect ratios, and storefront performance.</p>
-    </div>
-    <div class="who-grid">
-      <div class="who-card">
-        <span class="who-tag">Priority 01 · Resellers</span>
-        <h3>Etsy, eBay, Poshmark, Vinted &amp; Mercari Sellers</h3>
-        <p>Turn a weekend photo shoot into marketplace-ready folders in seconds without touching Photoshop or Canva.</p>
-        <ul class="who-list">
-          <li><span>→</span> 1-click square padding with studio white or blurred fill</li>
-          <li><span>→</span> Automatic EXIF &amp; home GPS coordinate stripping</li>
-          <li><span>→</span> Companion JPG fallbacks for legacy uploaders</li>
-        </ul>
-      </div>
-      <div class="who-card">
-        <span class="who-tag">Priority 02 · Store Owners</span>
-        <h3>Shopify &amp; WooCommerce Merchants</h3>
-        <p>Fix sluggish product collection pages caused by raw 4 MB camera uploads and boost SEO with clean file naming.</p>
-        <ul class="who-list">
-          <li><span>→</span> Bulk SEO rename patterns like <code>{sku}-{nn}</code></li>
-          <li><span>→</span> Consistent aspect ratios across every product card</li>
-          <li><span>→</span> Instant 85–95% bandwidth reduction</li>
-        </ul>
-      </div>
-      <div class="who-card">
-        <span class="who-tag">Priority 03 · Freelancers &amp; Agencies</span>
-        <h3>Local Site Builders &amp; Web Consultants</h3>
-        <p>Drop a client's entire raw folder dump into <span class="inline-brand"><span class="w">WEBP</span><span class="iq">IQ</span></span>, preserve their folder hierarchy, and hand back a lightning-fast site.</p>
-        <ul class="who-list">
-          <li><span>→</span> Preserves nested folder structures inside the exported ZIP</li>
-          <li><span>→</span> Save custom per-client dimension &amp; quality presets</li>
-          <li><span>→</span> Instant post-batch GB savings report for client proof</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="problem-grid">
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="clock"></i></div>
+            <span class="card-num">01</span>
+          </div>
+          <h3>The 200-Photo Listing Backlog</h3>
+          <p>Shooting 40 items on an iPhone leaves you with 200+ raw HEIC and JPG files named <code>IMG_4821</code>. Cropping, padding, and renaming them individually destroys listing velocity.</p>
+        </article>
 
-<section id="compare">
-  <div class="container">
-    <div class="section-intro">
-      <div class="eyebrow">The Advantage</div>
-      <h2>Why <span class="inline-brand"><span class="w">WEBP</span><span class="iq">IQ</span></span> beats free online converters.</h2>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Capability</th>
-            <th>TinyPNG / Cloud Tools</th>
-            <th>Squoosh</th>
-            <th class="hi">WebPIQ Pro</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>100% Private (Never leaves device)</strong></td>
-            <td class="no">✗ Uploads to server</td>
-            <td class="ck">✓ Local</td>
-            <td class="hi">✓ 100% On-Device</td>
-          </tr>
-          <tr>
-            <td><strong>Batch Capacity</strong></td>
-            <td class="no">20 images max</td>
-            <td class="no">1 image at a time</td>
-            <td class="hi">✓ Unlimited (500+ via Web Workers)</td>
-          </tr>
-          <tr>
-            <td><strong>Marketplace Size &amp; Ratio Presets</strong></td>
-            <td class="no">✗ None</td>
-            <td class="no">✗ Manual pixel entry</td>
-            <td class="hi">✓ Etsy, Shopify, eBay, Poshmark, Vinted, Amazon</td>
-          </tr>
-          <tr>
-            <td><strong>Square-Pad (White or Blurred Fill)</strong></td>
-            <td class="no">✗ None</td>
-            <td class="no">✗ None</td>
-            <td class="hi">✓ Built-in Studio Pad &amp; Crop</td>
-          </tr>
-          <tr>
-            <td><strong>SEO Bulk Rename (<code>{sku}-{nn}</code> / CSV)</strong></td>
-            <td class="no">✗ None</td>
-            <td class="no">✗ None</td>
-            <td class="hi">✓ Pattern &amp; CSV Bulk Renamer</td>
-          </tr>
-          <tr>
-            <td><strong>Preserves Folder Structure in ZIP</strong></td>
-            <td class="no">✗ Flattens files</td>
-            <td class="no">✗ Single file download</td>
-            <td class="hi">✓ Full Folder Hierarchy Preserved</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="map-pin-off"></i></div>
+            <span class="card-num">02</span>
+          </div>
+          <h3>Hidden Home GPS Metadata</h3>
+          <p>Phone photos embed exact home latitude, longitude, and camera serial headers in EXIF tags. WebPIQ re-encodes every frame from raw pixels so your home location never ships with a listing.</p>
+        </article>
 
-<section id="pricing">
-  <div class="container">
-    <div class="section-intro" style="text-align:center; margin:0 auto 52px;">
-      <div class="eyebrow">Product Architecture &amp; Tiers</div>
-      <h2>Free hook. High-leverage Pro unlock.</h2>
-      <p>Try the core converter instantly in the browser—no account required. Unlock unlimited bulk workflows with a simple Pro license.</p>
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="gauge"></i></div>
+            <span class="card-num">03</span>
+          </div>
+          <h3>Bloated 4 MB Photos Slow Down Stores</h3>
+          <p>Uncompressed camera uploads drag down Shopify and WooCommerce mobile load times. Converting to tuned WebP cuts payload sizes by ~90% with crisp visual clarity.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="shield-check"></i></div>
+            <span class="card-num">04</span>
+          </div>
+          <h3>Cloud Upload Limits &amp; Privacy Risk</h3>
+          <p>Web converters throttle batch sizes to 20 files and send unreleased inventory to remote servers. WebPIQ runs 100% locally—fast, private, and functional even offline.</p>
+        </article>
+      </div>
     </div>
-    <div class="tier-grid">
-      <div class="tier-card">
-        <div>
-          <span class="tier-pill">Tier 01 · The Hook</span>
-          <h3>Free Browser MVP</h3>
-          <div class="tier-price">$0</div>
-          <div class="tier-sub">No upload · No account required</div>
-          <ul class="tier-features">
-            <li><span class="ck">✓</span> <span>Drag &amp; drop up to <strong>20 images per batch</strong></span></li>
-            <li><span class="ck">✓</span> <span>Convert <strong>JPG, PNG, and iPhone HEIC</strong> → WebP</span></li>
-            <li><span class="ck">✓</span> <span>Live quality slider with before/after byte savings</span></li>
-            <li><span class="ck">✓</span> <span>Custom max width or height resizing</span></li>
-            <li><span class="ck">✓</span> <span>Download individually or bundled as a ZIP</span></li>
-            <li><span class="ck">✓</span> <span>100% client-side execution</span></li>
+  </section>
+
+  <!-- ═══ CAPABILITIES ═══ -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Engineered Capabilities</div>
+        <h2>Built for high-volume commerce, right in the browser.</h2>
+        <p>Powered by a multi-threaded Web Worker pool, native Canvas + WebAssembly WebP encoding (<code>@jsquash/webp</code>), iPhone HEIC decoding, and client-side ZIP bundling.</p>
+      </div>
+
+      <div class="feat-grid">
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="cpu"></i></div>
+          <h3>Worker Pool &amp; WASM Fallback</h3>
+          <p>Processes 500+ high-resolution images across background threads without freezing the tab—using native Canvas WebP where supported and bundled WASM on Safari and iOS.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="layout-grid"></i></div>
+          <h3>8 Marketplace Presets</h3>
+          <p>Built-in dimension and aspect-ratio templates for Etsy (4:3), Shopify (2048²), eBay (1600px), Poshmark, Vinted (3:4), Mercari, Amazon (white pad), and Facebook Marketplace.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="crop"></i></div>
+          <h3>Smart Fit, Crop &amp; Studio Pad</h3>
+          <p>Choose shrink-to-fit, centered exact-ratio crop, or square padding with clean studio white or blurred photo backdrop fills—never upscaling smaller originals.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="tag"></i></div>
+          <h3>Bulk Pattern &amp; CSV Rename</h3>
+          <p>Rename entire shoots cleanly with <code>{sku}-{nn}</code> templates or pasted <code>old,new</code> CSV lists while preserving nested subfolder hierarchies inside your exported ZIP.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="files"></i></div>
+          <h3>Companion JPG Fallbacks</h3>
+          <p>Output an optimized JPG alongside every WebP in a single pass for legacy marketplace uploaders or clients that still require classic image formats.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="wifi-off"></i></div>
+          <h3>Installable Offline PWA</h3>
+          <p>Install WebPIQ directly on desktop or mobile via PWA—plus offline ECDSA P-256 license verification so Pro unlocks instantly with zero license-server calls.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TARGET WORKFLOWS ═══ -->
+  <section id="who">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Target Workflows</div>
+        <h2>Purpose-built for sellers, stores, and web studios.</h2>
+        <p>Designed around real listing pipelines, storefront speed, and client handoff workflows—with zero command-line friction.</p>
+      </div>
+
+      <div class="who-grid">
+        <article class="who-card">
+          <span class="who-tag">Marketplace Resellers</span>
+          <h3>Etsy, eBay, Poshmark, Vinted &amp; Mercari</h3>
+          <p>Turn a weekend photo shoot into marketplace-ready folders in seconds without opening Photoshop or Canva.</p>
+          <ul class="who-list">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> 1-click square padding with studio white or blurred fill</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Automatic EXIF &amp; home GPS coordinate stripping</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Optional companion JPG fallbacks for legacy uploaders</li>
           </ul>
-        </div>
-        <span class="btn-ghost" style="text-align:center; display:block;">Included in Base App</span>
+        </article>
+
+        <article class="who-card">
+          <span class="who-tag">E-Commerce Merchants</span>
+          <h3>Shopify &amp; WooCommerce Storefronts</h3>
+          <p>Eliminate slow collection pages caused by raw 4 MB camera uploads and strengthen image SEO with clean filenames.</p>
+          <ul class="who-list">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Bulk SEO rename patterns such as <code>{sku}-{nn}</code></li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Uniform aspect ratios across every product grid card</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Typical 85–95% image bandwidth reduction</li>
+          </ul>
+        </article>
+
+        <article class="who-card">
+          <span class="who-tag">Agencies &amp; Builders</span>
+          <h3>Freelancers &amp; Local Web Consultants</h3>
+          <p>Drop a client's entire raw folder dump into WebPIQ, keep their directory structure intact, and ship a faster site immediately.</p>
+          <ul class="who-list">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Preserves nested folder structures inside the exported ZIP</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Save reusable per-client dimension and quality presets</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Instant batch byte-savings summary for client handoff</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COMPARISON TABLE ═══ -->
+  <section id="compare">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Advantage</div>
+        <h2>How WebPIQ compares to standard converters.</h2>
+        <p>Built from the ground up for bulk commerce workflows rather than one-off file compression.</p>
       </div>
 
-      <div class="tier-card pro">
-        <div>
-          <span class="tier-pill">Tier 02 · Commercial Unlock</span>
-          <h3><span class="inline-brand"><span class="w">WEBP</span><span class="iq">IQ</span></span> Pro</h3>
-          <div class="tier-price">$14</div>
-          <div class="tier-sub">One-time cryptographic license key · Instant unlock</div>
-          <ul class="tier-features">
-            <li><span class="ck">✓</span> <span><strong>Unlimited batch size (500+ photos)</strong> via Web Workers</span></li>
-            <li><span class="ck">✓</span> <span><strong>1-Click Marketplace Presets</strong> (Etsy, Shopify, eBay, Poshmark, Vinted, Mercari, Amazon, FB)</span></li>
-            <li><span class="ck">✓</span> <span><strong>Square-pad or crop</strong> with studio white or blurred backdrop fill</span></li>
-            <li><span class="ck">✓</span> <span><strong>Automatic EXIF / GPS stripping</strong> for reseller privacy</span></li>
-            <li><span class="ck">✓</span> <span><strong>Bulk SKU rename</strong> (<code>{sku}-{nn}</code> or pasted CSV list)</span></li>
-            <li><span class="ck">✓</span> <span><strong>Companion JPG fallback</strong> alongside each WebP + saved presets</span></li>
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>TinyPNG / Cloud Tools</th>
+              <th>Squoosh</th>
+              <th class="hi">WebPIQ Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature">100% Private (never leaves device)</td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> Uploads to server</span></td>
+              <td><span class="cell-inline"><span class="status-dot yes"><i data-lucide="check"></i></span> Local</span></td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> 100% On-Device</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Batch Capacity</td>
+              <td>20 images max</td>
+              <td>1 image at a time</td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> Unlimited (500+ via Workers)</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Marketplace Size &amp; Ratio Presets</td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> None</span></td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> Manual pixels</span></td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> 8 Built-in + Custom Saved</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Square-Pad (White or Blurred Fill)</td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> None</span></td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> None</span></td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> Built-in Studio Pad &amp; Crop</span></td>
+            </tr>
+            <tr>
+              <td class="feature">SEO Bulk Rename (<code>{sku}-{nn}</code> / CSV)</td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> None</span></td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> None</span></td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> Pattern &amp; CSV Bulk Renamer</span></td>
+            </tr>
+            <tr>
+              <td class="feature">Folder Structure Preserved in ZIP</td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> Flattens files</span></td>
+              <td><span class="cell-inline"><span class="status-dot no"><i data-lucide="x"></i></span> Single file only</span></td>
+              <td class="hi"><span class="cell-inline"><span class="status-dot accent"><i data-lucide="check"></i></span> Full Folder Tree Preserved</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ═══ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow">Pricing</div>
+        <h2 id="pricing-heading">Free to convert. One-time upgrade for bulk power.</h2>
+        <p>Start converting immediately in your browser with zero account required—or unlock unlimited batches and marketplace automation with a single lifetime license.</p>
+      </div>
+
+      <div class="price-grid">
+        <article class="price-card">
+          <div class="price-header">
+            <h3 class="price-tier">WebPIQ Free</h3>
+            <span class="price-pill neutral">Starter</span>
+          </div>
+          <p class="price-amount"><sup>$</sup>0 <span class="price-period">/ forever</span></p>
+          <p class="price-sub">No uploads · No account required · Works offline</p>
+          <ul class="price-features">
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span>Drag &amp; drop up to <strong>20 images per batch</strong></span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span>Convert <strong>JPG, PNG, and iPhone HEIC</strong> to WebP</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span>Live quality slider with real-time byte savings</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span>Custom max width &amp; height resizing</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span>Automatic EXIF &amp; GPS stripping + ZIP download</span></li>
           </ul>
-        </div>
-        <span class="btn-accent" style="justify-content:center;">Paid Product · Launching Soon ⚡</span>
+          <div class="tier-foot">Included in Base Web App</div>
+        </article>
+
+        <article class="price-card featured">
+          <div class="price-header">
+            <h3 class="price-tier">WebPIQ Pro</h3>
+            <span class="price-pill accent">One-Time License</span>
+          </div>
+          <p class="price-amount"><sup>$</sup>14 <span class="price-period">/ one-time</span></p>
+          <p class="price-sub">No subscription · Offline cryptographic license key</p>
+          <ul class="price-features">
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span><strong>Unlimited batch size (500+ photos)</strong> via Web Workers</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span><strong>8 Marketplace Presets</strong> + unlimited custom saved presets</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span><strong>Square-pad or crop</strong> with studio white or blurred fill</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span><strong>Bulk SKU / CSV rename</strong> with folder structure kept in ZIP</span></li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> <span><strong>Companion JPG fallback</strong> output next to every WebP</span></li>
+          </ul>
+          <div class="tier-foot">Pre-Release · Commercial Rollout Upcoming</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CLOSING CTA ── -->
+  <div class="cta-band">
+    <div class="cta-box">
+      <div>
+        <h2>Zero uploads. Zero subscription bloat.</h2>
+        <p>WebPIQ brings studio-grade batch image preparation straight to your browser—engineered for sellers who value speed, privacy, and clean listings.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="./" class="btn-primary">
+          Explore DTE Ecosystem <i data-lucide="arrow-right"></i>
+        </a>
+        <a href="#features" class="btn-ghost">Review Architecture</a>
       </div>
     </div>
   </div>
-</section>
+</main>
 
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div>
-    <div class="logo">
-      <span><span class="webp-shine">WEBP</span><span class="iq-mark">IQ</span></span>
+  <div class="footer-inner">
+    <div>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+        </span>
+        <span>WEBP<em>IQ</em></span>
+      </a>
+      <div class="footer-sub">DTE Solutions LLC · Zero-Server Image Architecture</div>
     </div>
-    <div class="footer-sub">Engineered by DTE Solutions · Zero-Server Image Architecture</div>
-  </div>
-  <div class="footer-links">
-    <a href="./">Return to DTE Hub</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
+    <div class="footer-links">
+      <a href="https://dte-solutions.icu">DTE Nexus</a>
+      <a href="https://dte-solutions.icu/information-security-policy.html">Security Policy</a>
+      <a href="https://dte-solutions.icu/privacy-policy.html">Privacy Policy</a>
+    </div>
   </div>
 </footer>
 
-<script>
-  lucide.createIcons();
-</script>
+<script>window.lucide?.createIcons();</script>
 </body>
 </html>
