@@ -1,667 +1,1643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ResaleIQ — Strategic Intelligence Nexus</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ResaleIQ — Strategic Intelligence Nexus | DTE Solutions</title>
+<meta name="description" content="AI listing generation, fee-aware margin projection, multi-platform pricing intelligence, and inventory yield tracking for serious resellers—unified in one system." />
+<link rel="icon" type="image/png" href="/assets/transparentlogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gold:    #D4A217;
-    --gold-lt: #F0C84A;
-    --ink:     #141414;
-    --charcoal:#2C2C2C;
-    --cream:   #F4F0E6;
-    --warm:    #EDE8DA;
-    --muted:   #7A7468;
-    --border:  #DDD8CC;
-    --dark-bg: #111111;
-    --dark-card:#1C1C1C;
-    --dark-border:#2E2E2E;
-    --white:   #FFFFFF;
-    --r:       6px;
+    --bg:           #070706;
+    --bg-alt:       #0D0C0A;
+    --surface:      #131210;
+    --surface-2:    #1A1815;
+    --border:       rgba(255, 255, 255, 0.08);
+    --border-hi:    rgba(255, 255, 255, 0.15);
+
+    --gold:         #D4A217;
+    --gold-lt:      #F2C94C;
+    --gold-dim:     rgba(212, 162, 23, 0.11);
+    --gold-border:  rgba(212, 162, 23, 0.30);
+
+    --green:        #34D399;
+    --green-dim:    rgba(52, 211, 153, 0.11);
+    --green-border: rgba(52, 211, 153, 0.28);
+
+    --red:          #F87171;
+    --red-dim:      rgba(248, 113, 113, 0.10);
+
+    --text:         #F7F5F0;
+    --text-muted:   #A6A095;
+    --text-subtle:  #736D63;
+
+    --r-sm:         8px;
+    --r-md:         12px;
+    --r-lg:         18px;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Space Grotesk', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    line-height: 1.6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--cream);
+  h1, h2, h3, h4, .brand-font {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold-lt);
+    outline-offset: 2px;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 7, 6, 0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hub-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .hub-back:hover {
+    border-color: var(--gold-border);
+    color: var(--text);
+    background: var(--gold-dim);
+  }
+  .hub-back svg { width: 13px; height: 13px; }
+  .nav-sep {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
   }
   .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
-  .logo-icon {
-    width: 34px; height: 34px; background: var(--ink); border-radius: 6px;
-    display: grid; place-items: center;
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, rgba(212, 162, 23, 0.20), rgba(212, 162, 23, 0.06));
+    border: 1px solid var(--gold-border);
+    display: grid;
+    place-items: center;
+    color: var(--gold-lt);
+    box-shadow: 0 0 18px rgba(212, 162, 23, 0.14);
+    flex-shrink: 0;
   }
-  .logo-icon svg { width: 18px; height: 18px; }
-  .logo span { color: var(--ink); }
-  .logo em { color: var(--gold); font-style: normal; }
-  .nav-tagline {
-    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--muted); display: none;
+  .logo-mark svg { width: 17px; height: 17px; }
+  .logo em { color: var(--gold-lt); font-style: normal; }
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    line-height: 1.2;
   }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
   .nav-cta {
-    background: var(--ink); color: var(--white);
-    padding: 9px 22px; border-radius: var(--r);
-    font-size: 0.85rem; font-weight: 600; text-decoration: none;
-    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--gold);
+    color: #0D0A03;
+    padding: 9px 18px;
+    border-radius: var(--r-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   }
-  .nav-cta:hover { background: var(--charcoal); }
+  .nav-cta:hover {
+    background: var(--gold-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(212, 162, 23, 0.28);
+  }
+  .nav-cta svg { width: 14px; height: 14px; }
 
-  /* ── SECTIONS ── */
-  section { padding: 100px 5%; }
-  .container { max-width: 1100px; margin: 0 auto; }
-  .eyebrow {
-    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+  /* ── LAYOUT PRIMITIVES ── */
+  section { padding: 96px 24px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+
+  .section-head {
+    max-width: 620px;
+    margin-bottom: 52px;
   }
-  h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.15; }
-  h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; }
-  h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; }
-  h3 { font-size: 1.15rem; font-weight: 600; }
-  p { color: var(--muted); line-height: 1.75; }
+  .section-head.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 16px;
+    height: 1.5px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .section-head.center .eyebrow::before { display: none; }
+
+  h1 {
+    font-size: clamp(2.4rem, 4.7vw, 3.65rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.07;
+  }
+  h2 {
+    font-size: clamp(1.85rem, 3.3vw, 2.55rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: 1.06rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  p { color: var(--text-muted); }
+  .section-head p {
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--gold);
+    color: #0D0A03;
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--gold-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(212, 162, 23, 0.30);
+  }
+  .btn-primary svg, .btn-ghost svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-hi);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--gold-border);
+    background: var(--gold-dim);
+  }
 
   /* ── HERO ── */
   #hero {
-    padding: 120px 5% 100px;
-    background: var(--cream);
-    position: relative; overflow: hidden;
+    padding: 84px 24px 88px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 68% 52% at 74% 16%, rgba(212, 162, 23, 0.10), transparent 70%),
+      radial-gradient(ellipse 50% 45% at 12% 85%, rgba(212, 162, 23, 0.05), transparent 70%);
   }
-  #hero::before {
-    content: '';
-    position: absolute; top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(212,162,23,0.08) 0%, transparent 70%);
-    pointer-events: none;
+  .hero-grid {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 56px;
+    align-items: center;
   }
-  .hero-inner { max-width: 1100px; margin: 0 auto; }
-  .hero-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(212,162,23,0.1); border: 1px solid rgba(212,162,23,0.25);
-    border-radius: 100px; padding: 6px 14px;
-    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gold); font-weight: 600; margin-bottom: 28px;
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--gold-border);
+    background: var(--gold-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    font-weight: 600;
   }
-  .hero-label span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
+  .hero-badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold-lt);
+    box-shadow: 0 0 8px var(--gold-lt);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
   .hero-headline { margin-bottom: 20px; }
-  .hero-headline .line2 { color: var(--gold); }
+  .hero-headline .accent {
+    background: linear-gradient(120deg, var(--gold-lt), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .hero-sub {
-    font-size: 1.1rem; color: var(--muted); max-width: 540px;
-    margin-bottom: 40px; line-height: 1.75;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 495px;
+    margin-bottom: 32px;
   }
-  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 64px; }
-  .btn-primary {
-    background: var(--ink); color: var(--white);
-    padding: 14px 28px; border-radius: var(--r);
-    font-weight: 600; font-size: 0.95rem; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: transform 0.15s, box-shadow 0.15s;
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
   }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
-  .btn-secondary {
-    background: transparent; color: var(--ink);
-    padding: 14px 28px; border-radius: var(--r);
-    border: 1.5px solid var(--border); font-weight: 600; font-size: 0.95rem;
-    text-decoration: none; transition: border-color 0.2s;
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    gap: 20px;
+    max-width: 495px;
   }
-  .btn-secondary:hover { border-color: var(--ink); }
+  .hero-metric strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.15rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .hero-metric strong em {
+    color: var(--gold-lt);
+    font-style: normal;
+  }
+  .hero-metric span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+    line-height: 1.35;
+  }
 
-  /* Hero stats bar */
-  .hero-stats {
-    display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--r);
-    background: var(--white); overflow: hidden; max-width: 640px;
+  /* ── HERO TERMINAL PREVIEW CARD ── */
+  .terminal-card {
+    background: linear-gradient(180deg, #161411 0%, #0D0C0A 100%);
+    border: 1px solid rgba(212, 162, 23, 0.24);
+    border-radius: var(--r-lg);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.58),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    overflow: hidden;
   }
-  .stat {
-    flex: 1; padding: 18px 24px; border-right: 1px solid var(--border);
+  .terminal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.015);
   }
-  .stat:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700;
-    color: var(--ink); line-height: 1;
+  .terminal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .stat-num em { color: var(--gold); font-style: normal; }
-  .stat-label {
-    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); margin-top: 4px;
+  .terminal-brand strong {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.2;
   }
+  .terminal-brand small {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+  }
+  .module-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gold-lt);
+  }
+  .terminal-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .item-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .item-chip {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 10px;
+  }
+  .micro-label {
+    display: block;
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 3px;
+  }
+  .item-chip strong {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.84rem;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .route-banner {
+    background: linear-gradient(135deg, rgba(212, 162, 23, 0.13), rgba(212, 162, 23, 0.04));
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 13px 16px;
+  }
+  .route-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .route-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--gold-lt);
+  }
+  .route-title svg { width: 17px; height: 17px; }
+  .route-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .range-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(212, 162, 23, 0.18);
+  }
+  .range-cell span {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .range-cell strong {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+  .range-cell.mid strong { color: var(--gold-lt); }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .kpi-tile {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 13px;
+  }
+  .kpi-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .kpi-val.gold { color: var(--gold-lt); }
+  .kpi-val.green { color: var(--green); }
+  .kpi-val.red { color: var(--red); }
+
+  .listing-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .listing-box .micro-label {
+    color: var(--gold-lt);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .listing-box .micro-label svg { width: 13px; height: 13px; }
+  .listing-box p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #DED9CF;
+  }
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin-top: 9px;
+  }
+  .tag-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.69rem;
+    color: var(--gold-lt);
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 3px 8px;
+  }
+
+  .terminal-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(212, 162, 23, 0.045);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .vault-stats {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.76rem;
+  }
+  .vault-stats .pos { color: var(--green); font-weight: 700; }
+  .vault-stats .gold { color: var(--gold-lt); font-weight: 700; }
 
   /* ── PROBLEM ── */
   #problem {
-    background: var(--dark-bg);
-    padding: 100px 5%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
   }
-  #problem .eyebrow { color: var(--gold); }
-  #problem h2 { color: var(--white); }
-  #problem .lead { color: #888; max-width: 560px; margin: 16px 0 56px; font-size: 1.05rem; }
-  .pain-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px;
-    background: var(--dark-border); border: 1px solid var(--dark-border); border-radius: var(--r);
-    overflow: hidden;
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
   }
-  .pain-card {
-    background: var(--dark-card); padding: 32px 28px;
-    display: flex; flex-direction: column; gap: 12px;
+  .prob-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .pain-icon { font-size: 1.5rem; }
-  .pain-card h3 { color: var(--white); font-size: 1rem; }
-  .pain-card p { color: #777; font-size: 0.9rem; line-height: 1.65; }
+  .prob-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-2px);
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    display: grid;
+    place-items: center;
+    color: var(--gold-lt);
+    flex-shrink: 0;
+  }
+  .icon-badge svg { width: 20px; height: 20px; }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+  }
+  .prob-card h3 { margin-bottom: 8px; }
+  .prob-card p { font-size: 0.9rem; line-height: 1.65; }
 
-  /* ── WHAT ── */
-  #what { background: var(--cream); }
-  .what-intro { max-width: 580px; margin-bottom: 64px; }
-  .what-intro p { margin-top: 16px; font-size: 1.05rem; }
-
-  /* Four tool cards */
+  /* ── THE SUITE (4 TOOLS) ── */
+  #what { background: var(--bg); }
   .tools-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
   }
   .tool-card {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 10px; padding: 32px 28px;
-    position: relative; overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 32px 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .tool-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.07); }
   .tool-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0;
-    height: 3px; background: var(--gold);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--gold), rgba(242, 201, 76, 0.25));
+  }
+  .tool-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-2px);
+  }
+  .tool-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
   }
   .tool-tab {
-    display: inline-block; font-size: 0.65rem; letter-spacing: 0.16em;
-    text-transform: uppercase; font-weight: 700;
-    background: var(--warm); color: var(--muted);
-    padding: 4px 10px; border-radius: 4px; margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    color: var(--gold-lt);
+    padding: 5px 11px;
+    border-radius: 999px;
   }
-  .tool-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
-  .tool-card p { font-size: 0.9rem; line-height: 1.7; }
-  .tool-features { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .tool-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+  .tool-card > p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .tool-features {
+    list-style: none;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .tool-features li {
-    font-size: 0.82rem; color: var(--muted);
-    display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+    font-size: 0.86rem;
+    color: #D1CCC2;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
   }
-  .tool-features li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+  .tool-features .li-icon {
+    color: var(--gold-lt);
+    flex-shrink: 0;
+    margin-top: 3px;
+    display: grid;
+    place-items: center;
+  }
+  .tool-features .li-icon svg { width: 14px; height: 14px; }
 
-  /* ── HOW ── */
-  #how { background: var(--warm); }
-  .how-intro { max-width: 520px; margin-bottom: 64px; }
-  .how-intro p { margin-top: 16px; }
-  .steps {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0; position: relative;
+  /* ── HOW IT WORKS ── */
+  #how {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
-  .step {
-    padding: 40px 32px; background: var(--white);
-    border: 1px solid var(--border); margin: -0.5px;
-    position: relative;
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
   }
-  .step-num {
-    font-family: 'Space Mono', monospace; font-size: 2.5rem; font-weight: 700;
-    color: var(--gold); opacity: 0.3; line-height: 1; margin-bottom: 20px;
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 30px 26px;
   }
-  .step h3 { margin-bottom: 10px; }
-  .step p { font-size: 0.9rem; }
+  .step-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gold-lt);
+    margin-bottom: 18px;
+  }
+  .step-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+  .step-card p { font-size: 0.9rem; line-height: 1.65; }
 
-  /* ── WHO ── */
-  #who { background: var(--cream); }
-  .who-intro { max-width: 520px; margin-bottom: 56px; }
-  .who-intro p { margin-top: 16px; }
+  /* ── WHO IT'S FOR ── */
+  #who { background: var(--bg); }
   .who-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
   }
   .who-card {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 10px; padding: 28px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 26px 24px;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .who-emoji { font-size: 1.8rem; margin-bottom: 14px; }
-  .who-card h3 { font-size: 0.95rem; margin-bottom: 8px; }
-  .who-card p { font-size: 0.85rem; line-height: 1.65; }
+  .who-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-2px);
+  }
+  .who-card .icon-badge { margin-bottom: 18px; }
+  .who-card h3 { font-size: 1rem; margin-bottom: 8px; }
+  .who-card p { font-size: 0.87rem; line-height: 1.65; }
 
-  /* ── WHY DIFFERENT ── */
-  #why { background: var(--dark-bg); padding: 100px 5%; }
-  #why .eyebrow { color: var(--gold); }
-  #why h2 { color: var(--white); margin-bottom: 16px; }
-  #why .lead { color: #888; max-width: 560px; margin-bottom: 56px; font-size: 1.05rem; }
-
+  /* ── COMPETITIVE COMPARISON ── */
+  #why {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow-x: auto;
+  }
   .compare-table {
-    width: 100%; border-collapse: collapse;
-    background: var(--dark-card); border: 1px solid var(--dark-border); border-radius: 10px;
-    overflow: hidden;
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
   }
   .compare-table th {
-    padding: 16px 20px; text-align: left; font-size: 0.72rem;
-    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
-    background: #1A1A1A; color: #666; border-bottom: 1px solid var(--dark-border);
+    padding: 18px 20px;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
   }
-  .compare-table th.highlight { color: var(--gold); }
+  .compare-table th:first-child { text-align: left; }
+  .compare-table th small {
+    display: block;
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text-subtle);
+  }
+  .compare-table th.highlight {
+    background: rgba(212, 162, 23, 0.10);
+    color: var(--gold-lt);
+    border-left: 1px solid var(--gold-border);
+    border-right: 1px solid var(--gold-border);
+  }
   .compare-table td {
-    padding: 18px 20px; font-size: 0.88rem; color: #888;
-    border-bottom: 1px solid var(--dark-border);
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
   }
   .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table td.feature { color: var(--white); font-weight: 500; }
-  .compare-table td.yes { color: #4ADE80; text-align: center; }
-  .compare-table td.no { color: #666; text-align: center; }
-  .compare-table td.highlight-col { background: rgba(212,162,23,0.05); color: var(--gold); text-align: center; font-weight: 600; }
+  .compare-table td.feature {
+    text-align: left;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .compare-table td.highlight-col {
+    background: rgba(212, 162, 23, 0.06);
+    border-left: 1px solid rgba(212, 162, 23, 0.20);
+    border-right: 1px solid rgba(212, 162, 23, 0.20);
+    color: var(--gold-lt);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+  }
+  .compare-table td.price-cell {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+  }
+  .status-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    vertical-align: middle;
+  }
+  .status-icon svg { width: 13px; height: 13px; }
+  .status-icon.gold {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    color: var(--gold-lt);
+  }
+  .status-icon.yes {
+    background: var(--green-dim);
+    color: var(--green);
+  }
+  .status-icon.no {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-subtle);
+  }
 
   /* ── PRICING ── */
   #pricing {
-    background: var(--cream);
-    text-align: center;
+    background:
+      radial-gradient(ellipse 62% 48% at 50% 0%, rgba(212, 162, 23, 0.08), transparent 70%),
+      var(--bg);
   }
-  #pricing h2 { margin-bottom: 16px; }
-  #pricing .lead { color: var(--muted); max-width: 480px; margin: 0 auto 48px; }
-
   .pricing-card {
-    background: var(--white); border: 1px solid var(--border);
-    border-radius: 14px; padding: 48px 40px; max-width: 480px; margin: 0 auto;
-    position: relative; overflow: hidden;
+    max-width: 760px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(212, 162, 23, 0.08) 0%, var(--surface) 45%);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--r-lg);
+    padding: 40px 38px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.50);
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    gap: 36px;
+    align-items: center;
   }
   .pricing-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0;
-    height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt));
   }
-  .price-label {
-    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; margin-bottom: 16px;
+  .price-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .price-pill {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    color: var(--gold-lt);
+    margin-bottom: 18px;
+  }
+  .price-tier {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
   .price-amount {
-    font-family: 'Space Mono', monospace; font-size: 3.5rem; font-weight: 700;
-    color: var(--ink); line-height: 1;
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(2.6rem, 5vw, 3.3rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 10px;
   }
-  .price-amount sup { font-size: 1.5rem; vertical-align: top; margin-top: 10px; }
-  .price-amount sub { font-size: 1rem; font-weight: 400; color: var(--muted); }
-  .price-note { font-size: 0.82rem; color: var(--muted); margin: 12px 0 32px; }
-  .price-features { list-style: none; text-align: left; margin-bottom: 36px; display: flex; flex-direction: column; gap: 12px; }
-  .price-features li { font-size: 0.9rem; display: flex; gap: 10px; align-items: flex-start; }
-  .price-features li .check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
-  .btn-gold {
-    display: block; background: var(--gold); color: var(--ink);
-    padding: 16px 28px; border-radius: var(--r); font-weight: 700;
-    font-size: 0.95rem; text-decoration: none; text-align: center;
-    transition: background 0.2s, transform 0.15s;
+  .price-amount sup {
+    font-size: 1.35rem;
+    vertical-align: top;
+    margin-top: 6px;
+    color: var(--gold-lt);
   }
-  .btn-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
-  .pricing-fine { font-size: 0.78rem; color: var(--muted); margin-top: 16px; }
+  .price-period {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .price-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .price-left .btn-primary { width: 100%; }
+  .pricing-fine {
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+    margin-top: 12px;
+  }
+  .price-right {
+    border-left: 1px solid var(--border);
+    padding-left: 34px;
+  }
+  .price-right-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    margin-bottom: 16px;
+  }
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #DED9CF;
+    line-height: 1.5;
+  }
+  .price-features .ck {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    color: var(--gold-lt);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .price-features .ck svg { width: 11px; height: 11px; }
+
+  /* ── CLOSING CTA ── */
+  .cta-band { padding: 0 24px 96px; }
+  .cta-box {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(212, 162, 23, 0.12) 0%, var(--surface) 60%);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--r-lg);
+    padding: 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-box h2 {
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    margin-bottom: 8px;
+  }
+  .cta-box p {
+    max-width: 520px;
+    font-size: 0.96rem;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
 
   /* ── FOOTER ── */
   footer {
-    background: var(--dark-bg); padding: 40px 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--dark-border);
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+    padding: 36px 24px;
   }
-  .footer-logo { color: var(--white); font-weight: 700; font-size: 1rem; }
-  .footer-logo em { color: var(--gold); font-style: normal; }
-  .footer-sub { font-size: 0.72rem; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.8rem; color: #555; text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--gold); }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-sub {
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold-lt); }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    section { padding: 72px 6%; }
-    #hero { padding: 80px 6% 72px; }
-    .hero-stats { flex-direction: column; }
-    .stat { border-right: none; border-bottom: 1px solid var(--border); }
-    .stat:last-child { border-bottom: none; }
-    .who-grid { grid-template-columns: 1fr; gap: 16px; }
-    footer { flex-direction: column; text-align: center; }
-    .footer-links { justify-content: center; }
-    .compare-table { display: block; overflow-x: auto; }
-    nav .nav-tagline { display: none; }
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+    .steps-grid, .who-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
-  @media (min-width: 900px) { .nav-tagline { display: block; } }
+  @media (max-width: 760px) {
+    section { padding: 72px 20px; }
+    #hero { padding: 64px 20px 72px; }
+    .problem-grid, .tools-grid, .steps-grid, .who-grid, .pricing-card {
+      grid-template-columns: 1fr;
+    }
+    .price-right {
+      border-left: none;
+      border-top: 1px solid var(--border);
+      padding-left: 0;
+      padding-top: 26px;
+    }
+    .item-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cta-box { padding: 32px 24px; }
+  }
+  @media (max-width: 520px) {
+    .hub-back span, .nav-sep, .logo-sub { display: none; }
+    .nav-inner { padding: 0 16px; }
+    .hero-metrics { gap: 14px; }
+    .pricing-card { padding: 30px 22px; }
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-links { justify-content: center; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 15L10 5L16 15" stroke="#D4A217" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="10" cy="5" r="1.5" fill="#D4A217"/>
-      </svg>
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="./" class="hub-back" title="Back to DTE Solutions Hub">
+        <i data-lucide="arrow-left"></i>
+        <span>DTE Hub</span>
+      </a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 15L10 5L16 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="10" cy="5" r="1.5" fill="currentColor" />
+          </svg>
+        </span>
+        <span>
+          <span style="display:block;line-height:1.15;">RESALE<em>IQ</em></span>
+          <span class="logo-sub" style="display:block;">Intelligence Nexus</span>
+        </span>
+      </a>
     </div>
-    <div>
-      <div>RESALE<em>IQ</em></div>
-      <div class="nav-tagline">Strategic Intelligence Nexus</div>
-    </div>
+
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#what">The Suite</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#why">Compare</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+
+    <a href="https://resale-iq-xi.vercel.app/" target="_blank" rel="noopener noreferrer" class="nav-cta">
+      Start Free Trial <i data-lucide="arrow-up-right"></i>
+    </a>
   </div>
-  <a href="https://resale-iq-xi.vercel.app/" class="nav-cta" target="_blank">Start Free Trial</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-inner">
-    <div class="hero-label">
-      <span></span> Strategic Intelligence Nexus
-    </div>
-    <h1 class="hero-headline">
-      Stop guessing.<br>
-      <span class="line2">Start knowing.</span>
-    </h1>
-    <p class="hero-sub">
-      ResaleIQ is the intelligence platform built for resellers who treat their inventory like a business — not a hobby. Four precision tools. One system.
-    </p>
-    <div class="hero-actions">
-      <a href="https://resale-iq-xi.vercel.app/" class="btn-primary" target="_blank">
-        Get ResaleIQ →
-      </a>
-      <a href="#what" class="btn-secondary">See the tools</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num"><em>4</em></div>
-        <div class="stat-label">Tools in one system</div>
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot" aria-hidden="true"></span>
+          Strategic Intelligence Nexus · DTE Solutions
+        </div>
+        <h1 class="hero-headline">
+          Stop guessing.<br />
+          <span class="accent">Start knowing.</span>
+        </h1>
+        <p class="hero-sub">
+          ResaleIQ is the intelligence suite engineered for resellers who operate their inventory like a real business. Price accurately, route to the highest-yield marketplace, calculate true fee-adjusted margin, and generate ready-to-post copy in seconds.
+        </p>
+        <div class="hero-actions">
+          <a href="https://resale-iq-xi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Start 7-Day Free Trial <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#what" class="btn-ghost">
+            Explore the Suite
+          </a>
+        </div>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <strong><em>4</em> Tools</strong>
+            <span>Unified in one intelligence system</span>
+          </div>
+          <div class="hero-metric">
+            <strong>10<em>+</em> Apps</strong>
+            <span>Marketplace routing &amp; fee logic</span>
+          </div>
+          <div class="hero-metric">
+            <strong><em>10</em> Cats</strong>
+            <span>Category-specific price ranges</span>
+          </div>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">10<em>+</em></div>
-        <div class="stat-label">Platforms covered</div>
+
+      <!-- Compact Live Terminal Preview -->
+      <div class="terminal-card" role="region" aria-label="Sample ResaleIQ pricing, margin, and listing analysis">
+        <div class="terminal-top">
+          <div class="terminal-brand">
+            <span class="logo-mark" aria-hidden="true"><i data-lucide="zap"></i></span>
+            <div>
+              <strong>ResaleIQ Terminal</strong>
+              <small>Flip Pricer · Capital Projection</small>
+            </div>
+          </div>
+          <span class="module-pill">Live Example</span>
+        </div>
+
+        <div class="terminal-body">
+          <div class="item-strip">
+            <div class="item-chip">
+              <span class="micro-label">Item</span>
+              <strong>Dunk Low</strong>
+            </div>
+            <div class="item-chip">
+              <span class="micro-label">Category</span>
+              <strong>Sneakers</strong>
+            </div>
+            <div class="item-chip">
+              <span class="micro-label">Buy Cost</span>
+              <strong>$45.00</strong>
+            </div>
+            <div class="item-chip">
+              <span class="micro-label">Shipping</span>
+              <strong>$9.50</strong>
+            </div>
+          </div>
+
+          <div class="route-banner">
+            <div class="route-row">
+              <div class="route-title">
+                <i data-lucide="compass"></i>
+                Optimal Route: eBay
+              </div>
+              <span class="route-meta">+95% Est. ROI</span>
+            </div>
+            <div class="range-row">
+              <div class="range-cell">
+                <span>Low Comp</span>
+                <strong>$88.00</strong>
+              </div>
+              <div class="range-cell mid">
+                <span>Target List</span>
+                <strong>$112.00</strong>
+              </div>
+              <div class="range-cell">
+                <span>High Comp</span>
+                <strong>$135.00</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-tile">
+              <span class="micro-label">Net Profit</span>
+              <div class="kpi-val green">$42.94</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Net Margin</span>
+              <div class="kpi-val gold">38.3%</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Platform Fee (13%)</span>
+              <div class="kpi-val red">−$14.56</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Acquisition + Ship</span>
+              <div class="kpi-val">−$54.50</div>
+            </div>
+          </div>
+
+          <div class="listing-box">
+            <span class="micro-label"><i data-lucide="sparkles"></i> Neural Listing Output</span>
+            <p>Nike Dunk Low Retro Men's Size 10 — Gently Used, Clean Midsoles, Original Box Included. Ships Fast.</p>
+            <ul class="tag-list">
+              <li>#NikeDunkLow</li>
+              <li>#Streetwear</li>
+              <li>#MensSize10</li>
+              <li>#Authenticated</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="terminal-footer">
+          <span>The Vault · Portfolio Ledger</span>
+          <div class="vault-stats">
+            <span>Listed <strong>42</strong></span>
+            <span class="gold">Yield $3,480</span>
+            <span class="pos">Gross $11,920</span>
+          </div>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num"><em>0</em></div>
-        <div class="stat-label">Guesswork required</div>
+    </div>
+  </section>
+
+  <!-- ═══ THE PROBLEM ═══ -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Problem</div>
+        <h2>Reselling without intelligence is just gambling.</h2>
+        <p>Most resellers price by instinct, list on the wrong marketplace, underestimate platform fees, and lose visibility into the capital tied up in their own inventory.</p>
+      </div>
+
+      <div class="problem-grid">
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="clock"></i></div>
+            <span class="card-num">01</span>
+          </div>
+          <h3>Manual Pricing Eats Your Day</h3>
+          <p>Combing through sold comps across three or four platforms takes 15–20 minutes per item. At 20 items a day, hours of research stall listings that should go live in seconds.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="compass"></i></div>
+            <span class="card-num">02</span>
+          </div>
+          <h3>Wrong Platform, Wrong Buyer</h3>
+          <p>A pair of Nike Dunks commands completely different demand on StockX, eBay, Vinted, and Facebook Marketplace. Listing in the wrong channel leaves money sitting unsold.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="percent"></i></div>
+            <span class="card-num">03</span>
+          </div>
+          <h3>Platform Fees Erode Margin Silently</h3>
+          <p>Every marketplace takes a different cut. Overlooking Poshmark's 20% fee or combined payment and shipping deductions can turn a $40 projected flip into $12 overnight.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="layers"></i></div>
+            <span class="card-num">04</span>
+          </div>
+          <h3>Invisible Inventory Capital</h3>
+          <p>Without structured portfolio tracking, your working capital stays trapped in unlisted or stale stock—with no real-time read on active yield, sell-through, or gross revenue.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ THE SUITE (FOUR TOOLS) ═══ -->
+  <section id="what">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Solution</div>
+        <h2>Four precision tools. One intelligence system.</h2>
+        <p>ResaleIQ unifies AI listing generation, fee-aware profit projection, inventory tracking, and multi-platform pricing so you spend less time researching and more time liquidating.</p>
+      </div>
+
+      <div class="tools-grid">
+        <article class="tool-card">
+          <div class="tool-header">
+            <span class="tool-tab">01 · Generate</span>
+            <div class="icon-badge"><i data-lucide="sparkles"></i></div>
+          </div>
+          <h3>Neural Listing Terminal</h3>
+          <p>Enter your item details and generate a complete, marketplace-tuned listing—title, SEO copy, keywords, pricing rationale, and recommended platform—ready to post immediately.</p>
+          <ul class="tool-features">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Platform-specific listing copy for Vinted, Poshmark, Depop, Mercari, OfferUp &amp; Facebook</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Condition grading woven directly into pricing logic</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Market notes support for rare details, flaws, or styling context</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> AI-backed sell price recommendation with clear reasoning</li>
+          </ul>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-header">
+            <span class="tool-tab">02 · Profit</span>
+            <div class="icon-badge"><i data-lucide="calculator"></i></div>
+          </div>
+          <h3>Capital Projection</h3>
+          <p>Verify your exact net yield before you ever publish. Input sale price, acquisition cost, and shipping—ResaleIQ automatically deducts real marketplace fees as you type.</p>
+          <ul class="tool-features">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Accurate fee rules per marketplace (Vinted 0%, Poshmark 20%, eBay, Depop &amp; more)</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Instant net profit and margin calculation in real time</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Rapid go/no-go check to confirm whether a source is worth buying</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Eliminates hidden fee surprises and accidental break-even flips</li>
+          </ul>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-header">
+            <span class="tool-tab">03 · The Vault</span>
+            <div class="icon-badge"><i data-lucide="vault"></i></div>
+          </div>
+          <h3>Inventory Intelligence</h3>
+          <p>Your entire resale portfolio tracked in one ledger. Monitor every unit you have listed, held, or liquidated with live totals for active inventory yield and cumulative gross revenue.</p>
+          <ul class="tool-features">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Total units, active listings, and liquidated sales at a glance</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Active yield telemetry showing real-time value across current stock</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Cumulative gross revenue tracking across every completed flip</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Populated automatically after Neural Listing generation</li>
+          </ul>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-header">
+            <span class="tool-tab">04 · Flip Pricer</span>
+            <div class="icon-badge"><i data-lucide="sliders-horizontal"></i></div>
+          </div>
+          <h3>Multi-Platform Price Intelligence</h3>
+          <p>Select a category and enter item specs to receive routed pricing intelligence—showing the highest-converting marketplace, realistic price bands, and projected ROI.</p>
+          <ul class="tool-features">
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> 10 categories: Sneakers, Women's Shoes, Clothing, Handbags, Electronics, Collectibles, Home Goods, Jewelry, Sports Gear &amp; Tools</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Marketplace routing matched to each category's active buyer base</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Low, realistic, and high-end comp price ranges per item</li>
+            <li><span class="li-icon"><i data-lucide="arrow-right"></i></span> Automatic ROI projection directly from acquisition cost</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">How It Works</div>
+        <h2>Intelligence in three steps.</h2>
+        <p>Zero learning curve and zero manual tab-hopping. Enter the item details—ResaleIQ runs the pricing, fee, and listing stack automatically.</p>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <span class="step-pill">STEP 01</span>
+          <h3>Enter Your Item</h3>
+          <p>Input brand, category, condition, color, size, and acquisition cost. Add market notes for rare variants, flaws, or styling context that influence value.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-pill">STEP 02</span>
+          <h3>Generate the Intelligence</h3>
+          <p>ResaleIQ returns the optimal marketplace to list on, a low-to-high realistic price range, exact fee-adjusted margin, and a ready-to-publish SEO listing in seconds.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-pill">STEP 03</span>
+          <h3>List &amp; Track in The Vault</h3>
+          <p>Publish directly where the right buyers already shop, lock in your target yield before shipping, and monitor portfolio growth inside The Vault.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHO IT'S FOR ═══ -->
+  <section id="who">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Who It's For</div>
+        <h2>Built for resellers who mean business.</h2>
+        <p>Whether you flip five high-margin items a week or manage five hundred active listings, ResaleIQ scales with your volume.</p>
+      </div>
+
+      <div class="who-grid">
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="flame"></i></div>
+          <h3>Sneaker &amp; Streetwear Resellers</h3>
+          <p>Know whether a pair moves fastest on StockX, GOAT, or eBay—and verify realistic ROI before buying at retail or sourcing drops.</p>
+        </article>
+
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="tag"></i></div>
+          <h3>Clothing &amp; Thrift Flippers</h3>
+          <p>Generate platform-tuned listings for Vinted, Depop, and Poshmark in seconds without drafting titles or descriptions from scratch.</p>
+        </article>
+
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="briefcase"></i></div>
+          <h3>Handbag &amp; Luxury Resellers</h3>
+          <p>Route high-ticket pieces across The RealReal, eBay, and Poshmark by brand and condition—with clear net yield after commission tiers.</p>
+        </article>
+
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="laptop"></i></div>
+          <h3>Electronics Flippers</h3>
+          <p>Route to Swappa, eBay, or Facebook Marketplace using category pricing that accounts for fast depreciation and marketplace fee structures.</p>
+        </article>
+
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="home"></i></div>
+          <h3>Estate Sale &amp; Home Goods Sellers</h3>
+          <p>Price home goods, tools, and collectibles across Facebook Marketplace, Craigslist, OfferUp, and Mercari using real data instead of guesswork.</p>
+        </article>
+
+        <article class="who-card">
+          <div class="icon-badge"><i data-lucide="trending-up"></i></div>
+          <h3>Full-Time Resale Operators</h3>
+          <p>Run your entire operation from one terminal—from initial source underwriting to active yield and gross revenue across your full inventory.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COMPETITIVE COMPARISON ═══ -->
+  <section id="why">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Why ResaleIQ</div>
+        <h2>Everything you need. Nothing you don't.</h2>
+        <p>Most resale tools solve a single narrow task. ResaleIQ combines pricing intelligence, fee-aware margin math, AI listing generation, and inventory tracking at a fraction of a fragmented stack.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="highlight">ResaleIQ<small style="color:rgba(242,201,76,0.75);">All-in-One Suite</small></th>
+              <th>Crosslisting Tools<small>Vendoo, List Perfectly</small></th>
+              <th>AI Listing Tools<small>Nifty, Voolist</small></th>
+              <th>Price Scanners<small>Underpriced, Resylr</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature">AI listing generation</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon yes" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon yes" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Platform routing intelligence</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Real fee-aware margin calculation</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Inventory &amp; active yield tracking</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon yes" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Multi-category price intelligence</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon yes" aria-label="Included"><i data-lucide="check"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Price range (low / realistic / high)</td>
+              <td class="highlight-col"><span class="status-icon gold" aria-label="Included"><i data-lucide="check"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon no" aria-label="Not included"><i data-lucide="x"></i></span></td>
+              <td><span class="status-icon yes" aria-label="Included"><i data-lucide="check"></i></span></td>
+            </tr>
+            <tr>
+              <td class="feature">Monthly cost</td>
+              <td class="highlight-col">$19.99/mo</td>
+              <td class="price-cell">$25–$70/mo</td>
+              <td class="price-cell">$20–$40/mo</td>
+              <td class="price-cell">Free–$50/mo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ═══ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow">Pricing</div>
+        <h2 id="pricing-heading">One plan. Everything included.</h2>
+        <p>No upsells and no feature gating. Unlock all four intelligence modules the moment you start your trial.</p>
+      </div>
+
+      <article class="pricing-card">
+        <div class="price-left">
+          <span class="price-pill">All-Inclusive Access</span>
+          <h3 class="price-tier">ResaleIQ Pro</h3>
+          <p class="price-amount"><sup>$</sup>19.99 <span class="price-period">/ mo</span></p>
+          <p class="price-note">Cancel anytime. No contracts.</p>
+          <a href="https://resale-iq-xi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Start 7-Day Free Trial <i data-lucide="arrow-right"></i>
+          </a>
+          <p class="pricing-fine">7-day free trial · No credit card required to start.</p>
+        </div>
+
+        <div class="price-right">
+          <div class="price-right-label">Included in ResaleIQ Pro</div>
+          <ul class="price-features">
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Neural Listing Terminal — AI-generated, platform-optimized listings</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Capital Projection — real fee-aware margin calculation</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> The Vault — full inventory, active yield &amp; gross revenue ledger</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Flip Pricer — 10-category multi-platform price intelligence</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> All future marketplace rules and updates included</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ CLOSING CTA ═══ -->
+  <div class="cta-band">
+    <div class="cta-box">
+      <div>
+        <h2>Treat your inventory like a business.</h2>
+        <p>Run your next flip through ResaleIQ to price with precision, protect your margin after fees, and publish faster.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://resale-iq-xi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Launch ResaleIQ <i data-lucide="arrow-up-right"></i>
+        </a>
+        <a href="./" class="btn-ghost">Back to DTE Hub</a>
       </div>
     </div>
   </div>
-</section>
+</main>
 
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="container">
-    <div class="eyebrow">The problem</div>
-    <h2>Reselling without intelligence<br>is just gambling.</h2>
-    <p class="lead">
-      Most resellers price by instinct, post on the wrong platform, forget to account for fees, and have no clear picture of their own inventory. The result: slow sales, thin margins, and money left behind every single day.
-    </p>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <div class="pain-icon">⏱</div>
-        <h3>Pricing eats your time</h3>
-        <p>Manual price research — combing through sold listings on three platforms — takes 15–20 minutes per item. At 20 items a day, that's hours of work that should take seconds.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-icon">📍</div>
-        <h3>Wrong platform, wrong buyer</h3>
-        <p>A pair of Nike Dunks sells differently on StockX vs. Vinted vs. Facebook Marketplace. Posting in the wrong place means the right buyer never sees it.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-icon">💸</div>
-        <h3>Fees kill margin silently</h3>
-        <p>Every platform takes a cut — and they're all different. Forgetting to account for Poshmark's 20% or Depop's combined fees can turn a $40 profit into $12 before you notice.</p>
-      </div>
-      <div class="pain-card">
-        <div class="pain-icon">📦</div>
-        <h3>Inventory is invisible</h3>
-        <p>Without a system, your capital is locked up in items you've lost track of. You don't know your active yield, your sell-through rate, or where the bottlenecks are.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT -->
-<section id="what">
-  <div class="container">
-    <div class="what-intro">
-      <div class="eyebrow">The solution</div>
-      <h2>Four tools.<br>One intelligence system.</h2>
-      <p>ResaleIQ puts pricing intelligence, profit projection, inventory management, and AI listing generation in one place — so you spend less time researching and more time selling.</p>
-    </div>
-    <div class="tools-grid">
-
-      <div class="tool-card">
-        <div class="tool-tab">Generate</div>
-        <h3>Neural Listing Terminal</h3>
-        <p>Enter your item details and let ResaleIQ write a complete, platform-optimized listing — title, description, keywords, pricing suggestion, and the best platform to post it on.</p>
-        <ul class="tool-features">
-          <li>Platform-specific listing copy for Vinted, Poshmark, Depop, Mercari, OfferUp & Facebook</li>
-          <li>Condition grading built into pricing logic</li>
-          <li>Market notes field for rare details, defects, or styling context</li>
-          <li>AI-generated sell price recommendation with reasoning</li>
-        </ul>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-tab">Profit</div>
-        <h3>Capital Projection</h3>
-        <p>Know your exact net yield before you list. Enter the sale price, acquisition cost, and shipping — ResaleIQ calculates your true margin after platform fees are applied automatically.</p>
-        <ul class="tool-features">
-          <li>Real platform fee logic applied per marketplace (Vinted at 0%, Poshmark at 20%, and more)</li>
-          <li>Net yield displayed instantly as you type</li>
-          <li>Identifies whether the flip is actually worth your time</li>
-          <li>Stops you from selling at a loss you didn't see coming</li>
-        </ul>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-tab">The Vault</div>
-        <h3>Inventory Intelligence</h3>
-        <p>Your entire resale operation tracked in one place. Every item you've listed, liquidated, or held — with running totals for active yield and gross revenue across your portfolio.</p>
-        <ul class="tool-features">
-          <li>Total units, active listings, and liquidated items at a glance</li>
-          <li>Active yield — the real-time value of your current inventory</li>
-          <li>Gross revenue tracking across all your sales</li>
-          <li>Populated automatically after Neural Listing generation</li>
-        </ul>
-      </div>
-
-      <div class="tool-card">
-        <div class="tool-tab">Flip Pricer</div>
-        <h3>Multi-Platform Price Intelligence</h3>
-        <p>Select a category, enter your item details, and get platform-routed pricing intelligence — showing you where to sell, what to charge, and why that market is the right one for this specific item.</p>
-        <ul class="tool-features">
-          <li>10 categories: Women's Shoes, Sneakers, Clothing, Handbags, Electronics, Collectibles, Home Goods, Jewelry, Sports Gear, Tools</li>
-          <li>Platform routing specific to each category's buyer demographics</li>
-          <li>Low, realistic, and high-end price range per item</li>
-          <li>ROI projection from your acquisition cost</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- HOW -->
-<section id="how">
-  <div class="container">
-    <div class="how-intro">
-      <div class="eyebrow">How it works</div>
-      <h2>Intelligence in three steps.</h2>
-      <p>No learning curve. No manual research. You enter the item — ResaleIQ does the analysis.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Enter your item</h3>
-        <p>Input the brand, category, condition, color, size, and what you paid for it. Add any market notes that matter — defects, rarity, styling details.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>Get the intelligence</h3>
-        <p>ResaleIQ analyzes your item and returns: the right platform to sell on, a realistic price range, true margin after fees, and a ready-to-post listing — in seconds.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Sell with confidence</h3>
-        <p>Post your listing exactly where the right buyer already is, at the right price, knowing your margin before the item ships. Track it in The Vault as your inventory grows.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO -->
-<section id="who">
-  <div class="container">
-    <div class="who-intro">
-      <div class="eyebrow">Who it's for</div>
-      <h2>Built for resellers<br>who mean business.</h2>
-      <p>Whether you flip five items a week or five hundred, ResaleIQ scales with how seriously you take your operation.</p>
-    </div>
-    <div class="who-grid">
-      <div class="who-card">
-        <div class="who-emoji">👟</div>
-        <h3>Sneaker & Streetwear Resellers</h3>
-        <p>Know exactly whether a pair moves on StockX, GOAT, or eBay — and what the realistic ROI is before you buy at retail.</p>
-      </div>
-      <div class="who-card">
-        <div class="who-emoji">👗</div>
-        <h3>Clothing & Thrift Flippers</h3>
-        <p>Generate platform-specific listings for Vinted, Depop, and Poshmark without writing a single word from scratch.</p>
-      </div>
-      <div class="who-card">
-        <div class="who-emoji">💼</div>
-        <h3>Handbag & Luxury Resellers</h3>
-        <p>Get platform routing to The RealReal, eBay, and Poshmark based on brand and condition — and know your real net yield after their fees.</p>
-      </div>
-      <div class="who-card">
-        <div class="who-emoji">🖥️</div>
-        <h3>Electronics Flippers</h3>
-        <p>Route to Swappa, eBay, or Facebook Marketplace with category-specific pricing that accounts for fast depreciation and platform fee structures.</p>
-      </div>
-      <div class="who-card">
-        <div class="who-emoji">🏠</div>
-        <h3>Estate Sale & Home Goods Sellers</h3>
-        <p>Price home goods, tools, and collectibles across Facebook Marketplace, Craigslist, OfferUp, and Mercari — with intelligence instead of guesswork.</p>
-      </div>
-      <div class="who-card">
-        <div class="who-emoji">📈</div>
-        <h3>Full-Time Resale Operators</h3>
-        <p>Run your entire resale business through one system — from pricing a new source to tracking gross revenue and active yield across your full inventory.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY DIFFERENT -->
-<section id="why">
-  <div class="container">
-    <div class="eyebrow">Why ResaleIQ</div>
-    <h2>Everything you need.<br>Nothing you don't.</h2>
-    <p class="lead">
-      Other tools solve one piece of the puzzle. ResaleIQ is the only platform that handles pricing intelligence, margin calculation, listing generation, and inventory tracking in a single system — at a fraction of the cost of building a fragmented stack.
-    </p>
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th class="highlight">ResaleIQ</th>
-          <th>Crosslisting tools<br><small style="font-size:0.65rem;color:#444">Vendoo, List Perfectly</small></th>
-          <th>AI listing tools<br><small style="font-size:0.65rem;color:#444">Nifty, Voolist</small></th>
-          <th>Price scanners<br><small style="font-size:0.65rem;color:#444">Underpriced, Resylr</small></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="feature">AI listing generation</td>
-          <td class="highlight-col">✓</td>
-          <td class="yes">✓</td>
-          <td class="yes">✓</td>
-          <td class="no">✗</td>
-        </tr>
-        <tr>
-          <td class="feature">Platform routing intelligence</td>
-          <td class="highlight-col">✓</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-        </tr>
-        <tr>
-          <td class="feature">Real fee-aware margin calc</td>
-          <td class="highlight-col">✓</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-        </tr>
-        <tr>
-          <td class="feature">Inventory + yield tracking</td>
-          <td class="highlight-col">✓</td>
-          <td class="yes">✓</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-        </tr>
-        <tr>
-          <td class="feature">Multi-category price intelligence</td>
-          <td class="highlight-col">✓</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-          <td class="yes">✓</td>
-        </tr>
-        <tr>
-          <td class="feature">Price range (low / realistic / high)</td>
-          <td class="highlight-col">✓</td>
-          <td class="no">✗</td>
-          <td class="no">✗</td>
-          <td class="yes">✓</td>
-        </tr>
-        <tr>
-          <td class="feature">Monthly cost</td>
-          <td class="highlight-col">$19.99</td>
-          <td class="no">$25–$70</td>
-          <td class="no">$20–$40</td>
-          <td class="no">Free–$50</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="container">
-    <div class="eyebrow" style="text-align:center">Pricing</div>
-    <h2>One plan. Everything included.</h2>
-    <p class="lead">No upsells. No feature-gating. Full access to all four tools the moment you sign up.</p>
-    <div class="pricing-card">
-      <div class="price-label">ResaleIQ Pro — Monthly</div>
-      <div class="price-amount">
-        <sup>$</sup>19<sub>.99/mo</sub>
-      </div>
-      <p class="price-note">Cancel anytime. No contracts.</p>
-      <ul class="price-features">
-        <li><span class="check">✓</span> Neural Listing Terminal — AI-generated, platform-optimized listings</li>
-        <li><span class="check">✓</span> Capital Projection — real fee-aware margin calculation</li>
-        <li><span class="check">✓</span> The Vault — full inventory and yield tracking</li>
-        <li><span class="check">✓</span> Flip Pricer — 10-category multi-platform price intelligence</li>
-        <li><span class="check">✓</span> All future updates included</li>
-      </ul>
-      <a href="https://resale-iq-xi.vercel.app/" class="btn-gold" target="_blank">Start Free Trial →</a>
-      <p class="pricing-fine">7-day free trial. No credit card required to try.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div>
-    <div class="footer-logo">RESALE<em>IQ</em></div>
-    <div class="footer-sub">Strategic Intelligence Nexus · DTE Solutions LLC</div>
-  </div>
-  <div class="footer-links">
-    <a href="https://dte-solutions.icu">DTE Nexus</a>
-    <a href="https://dte-solutions.icu/information-security-policy.html">Security Policy</a>
-    <a href="https://dte-solutions.icu/privacy-policy.html">Privacy</a>
+  <div class="footer-inner">
+    <div>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 15L10 5L16 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="10" cy="5" r="1.5" fill="currentColor" />
+          </svg>
+        </span>
+        <span>RESALE<em>IQ</em></span>
+      </a>
+      <div class="footer-sub">Strategic Intelligence Nexus · DTE Solutions LLC · Quincy, IL</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://dte-solutions.icu">DTE Nexus</a>
+      <a href="https://dte-solutions.icu/information-security-policy.html">Security Policy</a>
+      <a href="https://dte-solutions.icu/privacy-policy.html">Privacy Policy</a>
+    </div>
   </div>
 </footer>
 
+<script>window.lucide?.createIcons();</script>
 </body>
 </html>
