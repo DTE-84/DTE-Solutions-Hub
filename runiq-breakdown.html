@@ -127,73 +127,55 @@
   }
   .btn-ghost:hover { border-color: var(--gray); color: var(--white); }
 
-  /* Hero mock UI */
   .hero-mock {
-    background: var(--card); border: 1px solid var(--border2);
-    border-radius: 14px; overflow: hidden;
+    min-width: 0; background: var(--card); border: 1px solid var(--border2);
+    border-radius: 16px; overflow: hidden;
   }
-  .mock-header {
-    background: var(--green); padding: 14px 20px;
-    display: flex; align-items: center; gap: 10px;
+  .mock-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border2); }
+  .mock-header strong { display: block; line-height: 1.2; }
+  .mock-header small, .mock-label {
+    display: block; color: #aaa; font-size: .68rem; font-weight: 700;
+    letter-spacing: .09em; text-transform: uppercase;
   }
-  .mock-header .icon { font-size: 1.1rem; }
-  .mock-header-text h4 { font-size: 0.95rem; font-weight: 700; color: #000; line-height: 1.2; }
-  .mock-header-text p { font-size: 0.7rem; color: rgba(0,0,0,0.6); }
-  .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-  .mock-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .mock-field {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 10px 14px;
+  .mock-header small, .mock-analysis .mock-label, .mock-totals > .mock-label { color: var(--green-lt); }
+  .mock-body, .mock-totals { padding: 20px; }
+  .mock-body { display: grid; gap: 12px; }
+  .mock-platforms, .mock-grid { display: grid; gap: 8px; }
+  .mock-platforms { grid-template-columns: repeat(4, minmax(0, 1fr)); font-size: clamp(.62rem, 1.5vw, .78rem); text-align: center; }
+  .mock-platforms span { padding: 6px 2px; }
+  .mock-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mock-box, .mock-platforms { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 9px 11px; }
+  .mock-value { display: block; font: 700 1rem/1.6 'Space Mono', monospace; }
+  .mock-value small { color: #aaa; font-size: .72rem; }
+  .mock-value.green { color: var(--green-lt); }
+  .mock-value.red { color: var(--red); }
+  .mock-action, .mock-platforms .selected { background: var(--green-lt); color: #080808; border-radius: 8px; font-weight: 700; }
+  .mock-action { padding: 9px; text-align: center; font-size: .84rem; }
+  .mock-action.secondary { background: var(--card2); border: 1px solid var(--border2); color: #bbb; }
+  .mock-verdict {
+    padding: 14px; text-align: center; color: #ffc145; background: #282013;
+    border: 1px solid #675121; border-radius: 12px; font-size: 1.2rem; font-weight: 700;
   }
-  .mock-field label {
-    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gray2); display: block; margin-bottom: 3px;
+  .mock-verdict span { display: block; font-size: 1.55rem; }
+  .mock-verdict::after {
+    content: ''; display: block; width: 70%; height: 5px; margin: 10px auto 0;
+    background: linear-gradient(90deg, #ffc145 45%, #141414 45%); border-radius: 5px;
   }
-  .mock-field .val {
-    font-family: 'Space Mono', monospace; font-size: 1.15rem;
-    font-weight: 700; color: var(--white);
+  .mock-analysis p { color: #ddd; font-size: .84rem; margin-top: 4px; }
+  .mock-warnings { display: flex; flex-wrap: wrap; list-style: none; gap: 5px; }
+  .mock-warnings li { color: #ffc145; background: #282013; border: 1px solid #675121; border-radius: 8px; padding: 3px 8px; font-size: .75rem; }
+  .mock-totals { background: linear-gradient(#142019, var(--card)); border-top: 1px solid var(--border2); }
+  .mock-totals dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; margin: 8px 0; }
+  .mock-totals dl > div + div { border-left: 1px solid var(--border2); }
+  .mock-history { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; font-size: .78rem; }
+  .mock-history span { color: var(--green-lt); }
+  .screenshot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
+  .screenshot-grid a { display: block; }
+  .screenshot-grid img { display: block; width: 100%; height: auto; border: 1px solid var(--border2); border-radius: 12px; }
+  .screenshot-grid figcaption { margin-top: 10px; color: #bbb; font-size: .9rem; }
+  @media (max-width: 600px) {
+    .screenshot-grid { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
   }
-  .mock-field .val.green { color: var(--green); }
-  .mock-field .val.red { color: var(--red); }
-  .mock-field-full {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 10px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .mock-field-full label {
-    font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gray2);
-  }
-  .mock-field-full .val {
-    font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--white);
-  }
-  .mock-btn {
-    background: var(--green); color: #000; border-radius: var(--r);
-    padding: 13px; text-align: center; font-weight: 700; font-size: 0.85rem;
-  }
-  .mock-result {
-    background: rgba(22,193,114,0.08); border: 1px solid var(--green-border);
-    border-radius: var(--r); padding: 14px 16px;
-  }
-  .mock-result-label {
-    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--green); margin-bottom: 6px;
-  }
-  .mock-result-verdict {
-    font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 2px;
-  }
-  .mock-result-note { font-size: 0.75rem; color: var(--gray); }
-  .mock-dashboard {
-    border-top: 1px solid var(--border); padding: 14px 20px;
-    display: flex; gap: 0;
-  }
-  .dash-stat { flex: 1; text-align: center; }
-  .dash-stat + .dash-stat { border-left: 1px solid var(--border); }
-  .dash-stat .d-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray2); }
-  .dash-stat .d-val { font-family: 'Space Mono', monospace; font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
-  .d-val.green { color: var(--green); }
-  .d-val.red { color: var(--red); }
-  .d-val.white { color: var(--white); }
 
   /* ── PROBLEM ── */
   #problem { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -288,7 +270,6 @@
     margin-top: 20px; padding: 12px 16px; border-radius: 6px;
     font-size: 0.82rem; font-weight: 600;
   }
-  .verdict-good { background: rgba(22,193,114,0.12); color: var(--green); border: 1px solid var(--green-border); }
   .verdict-bad { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
 
   /* ── PRICING ── */
@@ -324,9 +305,7 @@
   .price-features li .ck { color: var(--green); font-weight: 700; flex-shrink: 0; }
   .price-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
   .price-fine { font-size: 0.78rem; color: var(--gray2); margin-top: 14px; text-align: center; }
-  .vs-stack { margin-top: 16px; padding: 14px 16px; background: var(--card2); border-radius: var(--r); }
-  .vs-stack p { font-size: 0.78rem; color: var(--gray2); }
-  .vs-stack strong { color: var(--gray); }
+  .price-fine a { color: var(--green-lt); }
 
   /* ── FOOTER ── */
   footer {
@@ -344,56 +323,18 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .hero-grid { grid-template-columns: 1fr; }
-    .hero-mock { display: none; }
+    .hero-grid { gap: 36px; }
     .math-grid { grid-template-columns: 1fr; }
     section { padding: 72px 6%; }
     #hero { padding: 80px 6% 64px; }
   }
   @media (max-width: 500px) {
+    .nav-tag { display: none; }
+    .nav-cta { padding-inline: 12px; }
     footer { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
   }
 
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
-    display: none; align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal-content {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 32px; width: 100%; max-width: 400px;
-    position: relative;
-  }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: none; border: none; color: var(--gray); font-size: 24px;
-    cursor: pointer;
-  }
-  .modal-header { text-align: center; margin-bottom: 24px; }
-  .modal-icon {
-    width: 48px; height: 48px; border-radius: 12px;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    color: var(--green); display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-  }
-  .modal-header h3 { font-size: 1.2rem; margin-bottom: 8px; }
-  .modal-header p { font-size: 0.9rem; }
-  .modal-options { display: flex; flex-direction: column; gap: 12px; }
-  .modal-option {
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px; border-radius: 12px;
-    background: var(--bg); border: 1px solid var(--border2);
-    text-decoration: none; color: var(--white);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .modal-option:hover {
-    border-color: var(--green-border); background: var(--card2);
-  }
-  .modal-option h4 { font-size: 1rem; margin-bottom: 4px; }
-  .modal-option span { font-size: 0.8rem; color: var(--gray); }
 </style>
 </head>
 <body>
@@ -408,7 +349,7 @@
     </div>
     <div>
       <div>RUN<em>IQ</em></div>
-      <div class="nav-tag">Offer Intelligence for Spark Drivers</div>
+      <div class="nav-tag">Delivery offer analysis</div>
     </div>
   </div>
   <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="nav-cta">Get RunIQ — Free</a>
@@ -419,14 +360,14 @@
   <div class="hero-grid">
     <div class="hero-left">
       <div class="hero-badge">
-        <span class="dot"></span> Built by a Spark driver, for Spark drivers
+        <span class="dot"></span> Built by a Spark driver
       </div>
       <h1 class="hero-headline">
         Know your worth<br>
         <span class="accent">before you drive.</span>
       </h1>
       <p class="hero-sub">
-        RunIQ evaluates every Walmart Spark offer in seconds — calculating your real earnings after gas, deadhead miles, and time cost. Stop guessing. Start knowing when to accept and when to pass.
+        Evaluate Spark, DoorDash, Uber Eats, and Instacart offers. See how fuel, unpaid return miles, and estimated time affect what you’ll earn before you decide whether to take the delivery.
       </p>
       <div class="hero-actions">
         <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="btn-green">Get RunIQ — Free →</a>
@@ -434,60 +375,59 @@
       </div>
     </div>
 
-    <!-- MOCK UI -->
-    <div class="hero-mock">
+    <div class="hero-mock" role="group" aria-label="RunIQ offer evaluation preview">
       <div class="mock-header">
-        <div class="icon">⚡</div>
-        <div class="mock-header-text">
-          <h4>RunIQ</h4>
-          <p>Know your worth before you drive</p>
-        </div>
+        <span class="logo-mark" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+        <div><strong>RunIQ</strong><small>Drive smarter</small></div>
       </div>
       <div class="mock-body">
-        <div class="mock-row">
-          <div class="mock-field">
-            <label>Base + Tips Pay</label>
-            <div class="val">$12.50</div>
-          </div>
-          <div class="mock-field">
-            <label>Est. Tips</label>
-            <div class="val green">$5.00</div>
-          </div>
+        <div>
+          <span class="mock-label">Platform</span>
+          <div class="mock-platforms"><span class="selected">Spark</span><span>DoorDash</span><span>Uber Eats</span><span>Instacart</span></div>
         </div>
-        <div class="mock-row">
-          <div class="mock-field">
-            <label>Total Miles</label>
-            <div class="val">5.2 mi</div>
-          </div>
-          <div class="mock-field">
-            <label>Est. Time</label>
-            <div class="val">30 min</div>
-          </div>
+        <div class="mock-grid">
+          <div class="mock-box"><span class="mock-label">Base + tips</span><span class="mock-value">$28.46</span></div>
+          <div class="mock-box"><span class="mock-label">Est. tips</span><span class="mock-value green">$5.00</span></div>
+          <div class="mock-box"><span class="mock-label">Total miles</span><span class="mock-value">12 <small>mi</small></span></div>
+          <div class="mock-box"><span class="mock-label">Est. time</span><span class="mock-value">45 <small>min</small></span></div>
+          <div class="mock-box"><span class="mock-label">Deadhead</span><span class="mock-value">11 <small>mi</small></span></div>
+          <div class="mock-box"><span class="mock-label">Items</span><span class="mock-value">31</span></div>
         </div>
-        <div class="mock-field-full">
-          <label>Miles Back (Deadhead)</label>
-          <div class="val">3.5 mi</div>
+        <div class="mock-box"><span class="mock-label">Drop-off zone</span>Unspecified</div>
+        <div class="mock-box">
+          <span class="mock-label">Vehicle settings</span>
+          <span class="mock-value">28 <small>mpg</small> · $3.29 <small>/gal</small></span>
         </div>
-        <div class="mock-btn">⚡ Evaluate Offer</div>
-        <div class="mock-result">
-          <div class="mock-result-label">✓ Offer Analysis</div>
-          <div class="mock-result-verdict">Accept — $1.98 net/mile</div>
-          <div class="mock-result-note">After gas cost. Above your $1.50 threshold.</div>
+        <div class="mock-action">Evaluate Offer</div>
+        <div class="mock-verdict"><span aria-hidden="true">🤔</span>Fair Offer</div>
+        <div class="mock-box mock-analysis">
+          <span class="mock-label">RunIQ analysis</span>
+          <p>This offer estimates $34.34 per hour after fuel, but the $1.24 per mile is below the $1.50 target. The 11 unpaid return miles make up 48% of the trip.</p>
+        </div>
+        <ul class="mock-warnings">
+          <li>11 of 23 miles are unpaid</li>
+          <li>$1.24/mi vs. $1.50 target</li>
+          <li>31 items may add time</li>
+        </ul>
+        <div class="mock-grid">
+          <div class="mock-box"><span class="mock-label">Net profit</span><span class="mock-value green">$25.76</span></div>
+          <div class="mock-box"><span class="mock-label">Hourly rate</span><span class="mock-value green">$34.34/hr</span></div>
+          <div class="mock-box"><span class="mock-label">Per mile</span><span class="mock-value green">$1.24/mi</span></div>
+          <div class="mock-box"><span class="mock-label">Gas cost</span><span class="mock-value">−$2.70</span></div>
+        </div>
+        <div class="mock-grid">
+          <div class="mock-action secondary">Clear</div>
+          <div class="mock-action">Accept Offer</div>
         </div>
       </div>
-      <div class="mock-dashboard">
-        <div class="dash-stat">
-          <div class="d-label">Total Pay</div>
-          <div class="d-val white">$16.00</div>
-        </div>
-        <div class="dash-stat">
-          <div class="d-label">Tips</div>
-          <div class="d-val green">$4.00</div>
-        </div>
-        <div class="dash-stat">
-          <div class="d-label">Gas</div>
-          <div class="d-val red">-$0.15</div>
-        </div>
+      <div class="mock-totals">
+        <span class="mock-label">All-time running totals</span>
+        <dl>
+          <div><dt class="mock-label">Pay</dt><dd class="mock-value">$160.37</dd></div>
+          <div><dt class="mock-label">Tips</dt><dd class="mock-value green">$62.61</dd></div>
+          <div><dt class="mock-label">Gas</dt><dd class="mock-value red">−$8.84</dd></div>
+        </dl>
+        <div class="mock-box mock-history"><time datetime="2026-11-22">Nov 22, 2026</time><span>3 offers</span><strong>$160.37</strong></div>
       </div>
     </div>
   </div>
@@ -529,18 +469,18 @@
     <div class="features-header">
       <div class="eyebrow">What RunIQ does</div>
       <h2>Everything you need to make smarter decisions, faster.</h2>
-      <p>Enter the offer details, hit evaluate, and RunIQ tells you exactly what this run is worth — net of gas, net of your time, net of the miles you're not getting paid for.</p>
+      <p>Enter the offer details to estimate earnings after fuel, compare hourly and per-mile rates, and see what could make the delivery less worthwhile.</p>
     </div>
     <div class="feat-grid">
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="zap"></i></div>
         <h3>Instant Offer Evaluation</h3>
-        <p>Enter base pay, estimated tips, total miles, and estimated time. RunIQ calculates your real rate per mile and per hour in under two seconds.</p>
+        <p>Enter the offer manually or scan a screenshot and check the extracted details. RunIQ estimates pay per mile and hourly earnings after fuel.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="fuel"></i></div>
         <h3>Real Gas Cost Calculation</h3>
-        <p>Set your vehicle's MPG and your local gas price once. RunIQ deducts the actual fuel cost from every offer automatically — including deadhead miles back to your zone.</p>
+        <p>Set your vehicle's MPG and your local gas price once. RunIQ estimates fuel cost using both the delivery miles and any unpaid miles back to your zone.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="corner-down-left"></i></div>
@@ -550,7 +490,7 @@
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="calendar"></i></div>
         <h3>Daily Dashboard</h3>
-        <p>Track every offer you evaluate throughout the day. See your total pay, tips earned, and gas cost at a glance — so you know exactly what your shift actually netted.</p>
+        <p>Save offers you decide to take and review your pay, tips, and estimated fuel costs in your offer history.</p>
       </div>
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="car"></i></div>
@@ -560,7 +500,7 @@
       <div class="feat-card">
         <div class="feat-icon"><i data-lucide="smartphone"></i></div>
         <h3>Works on Any Device</h3>
-        <p>RunIQ is a lightweight SaaS application — no app store download required. Install it directly to your device and open it right from your car in the Walmart lot.</p>
+        <p>Open RunIQ in your browser on your phone or computer.</p>
       </div>
     </div>
   </div>
@@ -571,31 +511,51 @@
   <div class="container">
     <div class="how-header">
       <div class="eyebrow">How it works</div>
-      <h2>Three inputs.<br>One clear answer.</h2>
-      <p>No learning curve. Built for the parking lot, not the office.</p>
+      <h2>From offer to decision.</h2>
+      <p>Review the numbers while you’re parked and deciding on your next delivery.</p>
     </div>
     <div class="how-steps">
       <div class="how-step">
         <div class="step-num-circle">01</div>
         <div class="step-content">
           <h3>Enter the offer</h3>
-          <p>When an offer comes in, tap in the base pay, estimated tip, total miles, estimated time, and deadhead miles back. Takes about 15 seconds.</p>
+          <p>Choose a platform and enter the offered pay, delivery miles, estimated time, and any unpaid return miles. Add tips, item count, or a drop-off zone when available.</p>
         </div>
       </div>
       <div class="how-step">
         <div class="step-num-circle">02</div>
         <div class="step-content">
           <h3>Hit Evaluate Offer</h3>
-          <p>RunIQ runs the math instantly — calculating your net earnings per mile and per hour after gas cost, including the miles Spark isn't paying you for.</p>
+          <p>Compare estimated earnings after fuel, hourly earnings, and offer pay per mile across the full distance.</p>
         </div>
       </div>
       <div class="how-step">
         <div class="step-num-circle">03</div>
         <div class="step-content">
           <h3>Accept or pass with confidence</h3>
-          <p>You see the real number. If it clears your threshold, take it. If it doesn't, pass — and know you made the right call. Your daily dashboard updates either way.</p>
+          <p>Review the rating and warnings before making your decision in the delivery app. Use Accept Offer in RunIQ to save it to your history.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots" aria-labelledby="screenshots-heading">
+  <div class="container">
+    <h2 id="screenshots-heading">A Spark offer from entry to analysis</h2>
+    <div class="screenshot-grid">
+      <figure>
+        <a href="assets/runiq/offer-entry.jpg"><img src="assets/runiq/offer-entry.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ offer form with Spark selected, showing pay, mileage, time, item count and vehicle settings."></a>
+        <figcaption>Enter the offer and vehicle details.</figcaption>
+      </figure>
+      <figure>
+        <a href="assets/runiq/offer-rating.jpg"><img src="assets/runiq/offer-rating.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ rates the example as a Fair Offer after evaluation."></a>
+        <figcaption>Evaluate the offer and see its rating.</figcaption>
+      </figure>
+      <figure>
+        <a href="assets/runiq/offer-analysis.jpg"><img src="assets/runiq/offer-analysis.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ analysis with deadhead and per-mile warnings, plus estimated profit, hourly rate, pay per mile and fuel cost."></a>
+        <figcaption>Review the analysis and earnings estimates.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -606,7 +566,7 @@
     <div class="math-header">
       <div class="eyebrow">The math</div>
       <h2>Two offers. Very different realities.</h2>
-      <p>Spark shows you base pay and miles. RunIQ shows you what you actually keep after the cost of getting there and back.</p>
+      <p>These examples use a $1.50 target for offer pay per mile, calculated over the delivery and return miles. The fuel deduction is shown separately.</p>
     </div>
     <div class="math-grid">
       <div class="math-card">
@@ -619,9 +579,9 @@
           <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$1.28</span></div>
           <div class="math-line"><span class="k">Estimated time</span><span class="v white">30 min</span></div>
           <div class="math-line"><span class="k">Net earnings</span><span class="v green">$11.22</span></div>
-          <div class="math-line"><span class="k">Net per mile</span><span class="v green">$1.29/mi</span></div>
+          <div class="math-line"><span class="k">Offer pay per mile</span><span class="v white">$1.44/mi</span></div>
         </div>
-        <div class="math-verdict verdict-good">✓ Above threshold — worth taking</div>
+        <div class="math-verdict verdict-bad">Just below the $1.50/mi target</div>
       </div>
 
       <div class="math-card accent">
@@ -634,9 +594,9 @@
           <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$2.37</span></div>
           <div class="math-line"><span class="k">Estimated time</span><span class="v white">45 min</span></div>
           <div class="math-line"><span class="k">Net earnings</span><span class="v red">$7.63</span></div>
-          <div class="math-line"><span class="k">Net per mile</span><span class="v red">$0.47/mi</span></div>
+          <div class="math-line"><span class="k">Offer pay per mile</span><span class="v red">$0.62/mi</span></div>
         </div>
-        <div class="math-verdict verdict-bad">✗ Below threshold — pass on this one</div>
+        <div class="math-verdict verdict-bad">Well below the $1.50/mi target</div>
       </div>
     </div>
   </div>
@@ -646,29 +606,26 @@
 <section id="pricing">
   <div class="container">
     <div class="eyebrow">Pricing</div>
-    <h2>Free during Beta.</h2>
-    <p>No subscription. No monthly fee. Download and use it on every run for free.</p>
+    <h2>Start free.</h2>
+    <p>Start with free manual entry, daily offer evaluations, and a limited number of screenshot scans. RunIQ Pro raises the daily limits.</p>
     <div class="price-block">
-      <div class="price-badge">Free Download</div>
+      <div class="price-badge">Free plan</div>
       <div class="price-big"><sup>$</sup>0.00</div>
-      <p class="price-type">100% Free while in early access</p>
+      <p class="price-type">Manual entry with daily evaluation and scan limits</p>
       <ul class="price-features">
-        <li><span class="ck">✓</span> Instant offer evaluation with net rate calculation</li>
+        <li><span class="ck">✓</span> Offer ratings and estimated earnings</li>
         <li><span class="ck">✓</span> Real gas cost deduction per your vehicle</li>
         <li><span class="ck">✓</span> Deadhead miles accounting built in</li>
-        <li><span class="ck">✓</span> Daily dashboard — total pay, tips, and gas</li>
+        <li><span class="ck">✓</span> Offer history with pay, tips, and estimated fuel costs</li>
         <li><span class="ck">✓</span> Vehicle settings (MPG + gas price)</li>
-        <li><span class="ck">✓</span> Works on any device — bookmark it, use it anywhere</li>
-        <li><span class="ck">✓</span> All future updates included</li>
+        <li><span class="ck">✓</span> Use RunIQ in your browser</li>
       </ul>
       <hr class="price-divider"/>
       <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="btn-green" style="display:block;text-align:center;font-size:0.95rem;font-weight:700;padding:15px;">
         Launch RunIQ →
       </a>
-      <p class="price-fine">Delivered instantly. No app store. Add to your home screen in one tap.</p>
-      <div class="vs-stack">
-        <p>Decline one bad offer using RunIQ and it pays for itself. <strong>One run.</strong></p>
-      </div>
+      <p class="price-fine">Open RunIQ in your browser to get started.</p>
+      <p class="price-fine"><a href="https://runiq-ashen.vercel.app/pricing">See RunIQ Pro plans</a></p>
     </div>
   </div>
 </section>
@@ -693,47 +650,7 @@
   </div>
 </footer>
 
-<!-- DOWNLOAD MODAL -->
-<div id="downloadModal" class="modal-overlay">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeDownloadModal()">&times;</button>
-    <div class="modal-header">
-      <div class="modal-icon"><i data-lucide="download"></i></div>
-      <h3>Download RunIQ</h3>
-      <p>Select your device to install the app.</p>
-    </div>
-    <div class="modal-options">
-      <a href="https://runiq-ashen.vercel.app/auth?install=android" class="modal-option">
-        <i data-lucide="smartphone"></i>
-        <div>
-          <h4>Android</h4>
-          <span>Install SaaS Application</span>
-        </div>
-      </a>
-      <a href="https://runiq-ashen.vercel.app/auth?install=ios" class="modal-option">
-        <i data-lucide="apple"></i>
-        <div>
-          <h4>iOS / iPhone</h4>
-          <span>Install SaaS Application</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-  function openDownloadModal(e) {
-    if(e) e.preventDefault();
-    document.getElementById('downloadModal').classList.add('active');
-  }
-  function closeDownloadModal() {
-    document.getElementById('downloadModal').classList.remove('active');
-  }
-</script>
-
-<script>
-  lucide.createIcons();
-</script>
+<script>window.lucide?.createIcons();</script>
 
 </body>
 </html>
