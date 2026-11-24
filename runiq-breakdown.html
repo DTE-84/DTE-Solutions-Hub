@@ -1,670 +1,1758 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>RunIQ — Know Your Worth Before You Drive</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/lucide@latest"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RunIQ — Delivery Offer Intelligence | DTE Solutions</title>
+<meta name="description" content="Evaluate Spark, DoorDash, Uber Eats, and Instacart delivery offers in seconds. Factor in real fuel cost, unpaid deadhead return miles, and estimated hourly rate before you accept." />
+<link rel="icon" type="image/png" href="/assets/transparentlogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --green:     #16C172;
-    --green-lt:  #22E88A;
-    --green-dim: rgba(22,193,114,0.12);
-    --green-border: rgba(22,193,114,0.25);
-    --bg:        #0A0A0A;
-    --card:      #141414;
-    --card2:     #1A1A1A;
-    --border:    #222222;
-    --border2:   #2A2A2A;
-    --white:     #FFFFFF;
-    --gray:      #888888;
-    --gray2:     #555555;
-    --red:       #F87171;
-    --r:         8px;
+    --bg:           #060807;
+    --bg-alt:       #0A0E0C;
+    --surface:      #101512;
+    --surface-2:    #161D19;
+    --border:       rgba(255, 255, 255, 0.08);
+    --border-hi:    rgba(255, 255, 255, 0.14);
+
+    --green:        #16C172;
+    --green-lt:     #22E88A;
+    --green-dim:    rgba(22, 193, 114, 0.10);
+    --green-border: rgba(22, 193, 114, 0.28);
+
+    --amber:        #F5B731;
+    --amber-dim:    rgba(245, 183, 49, 0.10);
+    --amber-border: rgba(245, 183, 49, 0.28);
+
+    --red:          #F87171;
+    --red-dim:      rgba(248, 113, 113, 0.10);
+    --red-border:   rgba(248, 113, 113, 0.26);
+
+    --text:         #F4F7F5;
+    --text-muted:   #9BA6A0;
+    --text-subtle:  #68736D;
+
+    --r-sm:         8px;
+    --r-md:         12px;
+    --r-lg:         18px;
   }
 
   html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
-    color: var(--white);
-    line-height: 1.6;
+    color: var(--text);
+    line-height: 1.65;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+  h1, h2, h3, h4, .brand-font {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--green-lt);
+    outline-offset: 2px;
+  }
+
+  /* ── NAVIGATION ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6, 8, 7, 0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 62px;
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hub-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .hub-back:hover {
+    border-color: var(--green-border);
+    color: var(--text);
+    background: var(--green-dim);
+  }
+  .hub-back svg { width: 13px; height: 13px; }
+  .nav-sep {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
   }
   .logo {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
   .logo-mark {
-    width: 32px; height: 32px; border-radius: 6px;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    display: grid; place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, rgba(22, 193, 114, 0.18), rgba(22, 193, 114, 0.06));
+    border: 1px solid var(--green-border);
+    display: grid;
+    place-items: center;
+    color: var(--green-lt);
+    box-shadow: 0 0 18px rgba(22, 193, 114, 0.14);
+    flex-shrink: 0;
   }
-  .logo-mark svg { width: 16px; height: 16px; }
-  .logo span { color: var(--white); }
-  .logo em { color: var(--green); font-style: normal; }
-  .nav-tag {
-    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--gray2);
+  .logo-mark svg { width: 17px; height: 17px; }
+  .logo em { color: var(--green-lt); font-style: normal; }
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    line-height: 1.2;
   }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
   .nav-cta {
-    background: var(--green); color: #000;
-    padding: 9px 20px; border-radius: var(--r);
-    font-size: 0.85rem; font-weight: 700; text-decoration: none;
-    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--green);
+    color: #04120B;
+    padding: 9px 18px;
+    border-radius: var(--r-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
   }
-  .nav-cta:hover { background: var(--green-lt); }
+  .nav-cta:hover {
+    background: var(--green-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(22, 193, 114, 0.25);
+  }
+  .nav-cta svg { width: 14px; height: 14px; }
 
-  /* ── LAYOUT ── */
-  section { padding: 100px 5%; }
-  .container { max-width: 1080px; margin: 0 auto; }
-  .eyebrow {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+  /* ── LAYOUT PRIMITIVES ── */
+  section { padding: 96px 24px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+
+  .section-head {
+    max-width: 600px;
+    margin-bottom: 52px;
   }
-  h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
-  h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
-  h3 { font-size: 1rem; font-weight: 600; }
-  p { color: var(--gray); line-height: 1.75; }
+  .section-head.center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green-lt);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 16px;
+    height: 1.5px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+  .section-head.center .eyebrow::before { display: none; }
+
+  h1 {
+    font-size: clamp(2.35rem, 4.6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+  }
+  h2 {
+    font-size: clamp(1.85rem, 3.3vw, 2.55rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  p { color: var(--text-muted); }
+  .section-head p {
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--green);
+    color: #04120B;
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--green-lt);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(22, 193, 114, 0.28);
+  }
+  .btn-primary svg, .btn-ghost svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text);
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-hi);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--green-border);
+    background: var(--green-dim);
+  }
 
   /* ── HERO ── */
   #hero {
-    padding: 110px 5% 90px;
-    position: relative; overflow: hidden;
-  }
-  #hero::before {
-    content: '';
-    position: absolute; top: -300px; left: 50%; transform: translateX(-50%);
-    width: 800px; height: 500px;
-    background: radial-gradient(ellipse, rgba(22,193,114,0.07) 0%, transparent 65%);
-    pointer-events: none;
+    padding: 84px 24px 88px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 50% at 72% 15%, rgba(22, 193, 114, 0.09), transparent 70%),
+      radial-gradient(ellipse 50% 45% at 15% 85%, rgba(22, 193, 114, 0.05), transparent 70%);
   }
   .hero-grid {
-    max-width: 1080px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 60px; align-items: center;
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 56px;
+    align-items: center;
   }
   .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--green-border); background: var(--green-dim);
-    border-radius: 100px; padding: 6px 14px; margin-bottom: 24px;
-    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--green); font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--green-border);
+    background: var(--green-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-lt);
+    font-weight: 600;
   }
-  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero-badge .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-lt);
+    box-shadow: 0 0 8px var(--green-lt);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
   .hero-headline { margin-bottom: 20px; }
-  .hero-headline .accent { color: var(--green); }
-  .hero-sub { font-size: 1.05rem; margin-bottom: 36px; max-width: 440px; }
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-green {
-    background: var(--green); color: #000;
-    padding: 13px 26px; border-radius: var(--r);
-    font-weight: 700; font-size: 0.9rem; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: background 0.2s, transform 0.15s;
+  .hero-headline .accent {
+    background: linear-gradient(120deg, var(--green-lt), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
-  .btn-green:hover { background: var(--green-lt); transform: translateY(-1px); }
-  .btn-ghost {
-    background: transparent; color: var(--gray);
-    padding: 13px 26px; border-radius: var(--r);
-    border: 1px solid var(--border2); font-weight: 500; font-size: 0.9rem;
-    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 490px;
+    margin-bottom: 32px;
   }
-  .btn-ghost:hover { border-color: var(--gray); color: var(--white); }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    gap: 20px;
+    max-width: 490px;
+  }
+  .hero-metric strong {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.15rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .hero-metric span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+    line-height: 1.35;
+  }
 
-  .hero-mock {
-    min-width: 0; background: var(--card); border: 1px solid var(--border2);
-    border-radius: 16px; overflow: hidden;
+  /* ── HERO PRODUCT PREVIEW CARD ── */
+  .preview-card {
+    background: linear-gradient(180deg, #111714 0%, #0B0F0D 100%);
+    border: 1px solid rgba(22, 193, 114, 0.22);
+    border-radius: var(--r-lg);
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    overflow: hidden;
   }
-  .mock-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--border2); }
-  .mock-header strong { display: block; line-height: 1.2; }
-  .mock-header small, .mock-label {
-    display: block; color: #aaa; font-size: .68rem; font-weight: 700;
-    letter-spacing: .09em; text-transform: uppercase;
+  .preview-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.015);
   }
-  .mock-header small, .mock-analysis .mock-label, .mock-totals > .mock-label { color: var(--green-lt); }
-  .mock-body, .mock-totals { padding: 20px; }
-  .mock-body { display: grid; gap: 12px; }
-  .mock-platforms, .mock-grid { display: grid; gap: 8px; }
-  .mock-platforms { grid-template-columns: repeat(4, minmax(0, 1fr)); font-size: clamp(.62rem, 1.5vw, .78rem); text-align: center; }
-  .mock-platforms span { padding: 6px 2px; }
-  .mock-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mock-box, .mock-platforms { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 9px 11px; }
-  .mock-value { display: block; font: 700 1rem/1.6 'Space Mono', monospace; }
-  .mock-value small { color: #aaa; font-size: .72rem; }
-  .mock-value.green { color: var(--green-lt); }
-  .mock-value.red { color: var(--red); }
-  .mock-action, .mock-platforms .selected { background: var(--green-lt); color: #080808; border-radius: 8px; font-weight: 700; }
-  .mock-action { padding: 9px; text-align: center; font-size: .84rem; }
-  .mock-action.secondary { background: var(--card2); border: 1px solid var(--border2); color: #bbb; }
-  .mock-verdict {
-    padding: 14px; text-align: center; color: #ffc145; background: #282013;
-    border: 1px solid #675121; border-radius: 12px; font-size: 1.2rem; font-weight: 700;
+  .preview-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .mock-verdict span { display: block; font-size: 1.55rem; }
-  .mock-verdict::after {
-    content: ''; display: block; width: 70%; height: 5px; margin: 10px auto 0;
-    background: linear-gradient(90deg, #ffc145 45%, #141414 45%); border-radius: 5px;
+  .preview-brand strong {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.2;
   }
-  .mock-analysis p { color: #ddd; font-size: .84rem; margin-top: 4px; }
-  .mock-warnings { display: flex; flex-wrap: wrap; list-style: none; gap: 5px; }
-  .mock-warnings li { color: #ffc145; background: #282013; border: 1px solid #675121; border-radius: 8px; padding: 3px 8px; font-size: .75rem; }
-  .mock-totals { background: linear-gradient(#142019, var(--card)); border-top: 1px solid var(--border2); }
-  .mock-totals dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); text-align: center; margin: 8px 0; }
-  .mock-totals dl > div + div { border-left: 1px solid var(--border2); }
-  .mock-history { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 8px; font-size: .78rem; }
-  .mock-history span { color: var(--green-lt); }
-  .screenshot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
-  .screenshot-grid a { display: block; }
-  .screenshot-grid img { display: block; width: 100%; height: auto; border: 1px solid var(--border2); border-radius: 12px; }
-  .screenshot-grid figcaption { margin-top: 10px; color: #bbb; font-size: .9rem; }
-  @media (max-width: 600px) {
-    .screenshot-grid { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+  .preview-brand small {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-lt);
   }
+  .platform-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--green-lt);
+  }
+  .preview-body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .input-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .input-chip {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 10px;
+  }
+  .micro-label {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 3px;
+  }
+  .input-chip strong {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .vehicle-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border);
+    font-size: 0.76rem;
+    color: var(--text-muted);
+  }
+  .vehicle-bar span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .vehicle-bar svg { width: 13px; height: 13px; color: var(--green-lt); }
+  .vehicle-bar strong {
+    font-family: 'Space Mono', monospace;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(245, 183, 49, 0.12), rgba(245, 183, 49, 0.04));
+    border: 1px solid var(--amber-border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .verdict-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .verdict-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--amber);
+  }
+  .verdict-title svg { width: 18px; height: 18px; }
+  .verdict-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(245, 183, 49, 0.85);
+    background: rgba(245, 183, 49, 0.12);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .verdict-bar {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+  .verdict-bar span {
+    display: block;
+    width: 48%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #E89A1C, var(--amber));
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .kpi-tile {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 13px;
+  }
+  .kpi-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .kpi-val.green { color: var(--green-lt); }
+  .kpi-val.amber { color: var(--amber); }
+  .kpi-val.red { color: var(--red); }
+
+  .analysis-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .analysis-box .micro-label {
+    color: var(--green-lt);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .analysis-box .micro-label svg { width: 13px; height: 13px; }
+  .analysis-box p {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #CBD4CF;
+  }
+  .flag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin-top: 10px;
+  }
+  .flag-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--amber);
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    border-radius: 6px;
+    padding: 3px 8px;
+  }
+  .flag-list svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+  .preview-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(22, 193, 114, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .ledger-stats {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.76rem;
+  }
+  .ledger-stats .pos { color: var(--green-lt); font-weight: 700; }
+  .ledger-stats .neg { color: var(--red); font-weight: 700; }
 
   /* ── PROBLEM ── */
-  #problem { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .problem-inner { max-width: 1080px; margin: 0 auto; }
+  #problem {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-alt);
+  }
   .problem-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px;
-    background: var(--border); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
-    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
   }
-  .prob-card { background: var(--card); padding: 28px 24px; }
-  .prob-icon {
-    width: 38px; height: 38px; border-radius: 8px;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    display: grid; place-items: center; margin-bottom: 12px;
-    color: var(--green);
+  .prob-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .prob-icon svg { width: 20px; height: 20px; stroke-width: 2.2px; }
-  .prob-card h3 { margin-bottom: 8px; font-size: 0.95rem; }
-  .prob-card p { font-size: 0.85rem; line-height: 1.65; }
+  .prob-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-2px);
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    display: grid;
+    place-items: center;
+    color: var(--green-lt);
+  }
+  .icon-badge svg { width: 20px; height: 20px; }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+  }
+  .prob-card h3 { margin-bottom: 8px; }
+  .prob-card p { font-size: 0.9rem; line-height: 1.65; }
 
-  /* ── FEATURES ── */
-  #features { background: var(--card); }
-  .features-header { max-width: 520px; margin-bottom: 60px; }
-  .features-header p { margin-top: 14px; }
+  /* ── CAPABILITIES ── */
+  #features { background: var(--bg); }
   .feat-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
   }
   .feat-card {
-    background: var(--bg); border: 1px solid var(--border2);
-    border-radius: 10px; padding: 28px 24px;
-    transition: border-color 0.2s;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 28px 26px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
   }
-  .feat-card:hover { border-color: var(--green-border); }
-  .feat-icon {
-    width: 38px; height: 38px; border-radius: 8px;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    display: grid; place-items: center; margin-bottom: 16px; font-size: 1rem;
-    color: var(--green);
+  .feat-card:hover {
+    border-color: var(--green-border);
+    transform: translateY(-2px);
   }
-  .feat-icon svg { width: 20px; height: 20px; stroke-width: 2.2px; }
+  .feat-card .icon-badge { margin-bottom: 18px; }
   .feat-card h3 { margin-bottom: 8px; }
-  .feat-card p { font-size: 0.85rem; line-height: 1.65; }
+  .feat-card p { font-size: 0.88rem; line-height: 1.65; }
 
-  /* ── HOW ── */
-  #how { }
-  .how-header { max-width: 520px; margin-bottom: 60px; }
-  .how-header p { margin-top: 14px; }
-  .how-steps { display: flex; flex-direction: column; gap: 2px; max-width: 700px; }
-  .how-step {
-    display: flex; gap: 28px; align-items: flex-start;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 28px;
+  /* ── HOW IT WORKS ── */
+  #how {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
-  .step-num-circle {
-    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    display: grid; place-items: center;
-    font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; color: var(--green);
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
   }
-  .step-content h3 { margin-bottom: 6px; }
-  .step-content p { font-size: 0.88rem; }
-
-  /* ── MATH ── */
-  #math { background: var(--card); }
-  .math-header { max-width: 540px; margin-bottom: 56px; }
-  .math-header p { margin-top: 14px; }
-  .math-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-  }
-  .math-card {
-    background: var(--bg); border: 1px solid var(--border2);
-    border-radius: 10px; padding: 32px 28px;
-  }
-  .math-card.accent { border-color: var(--green-border); background: var(--green-dim); }
-  .math-label {
-    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--gray2); margin-bottom: 16px;
-  }
-  .math-card.accent .math-label { color: var(--green); }
-  .math-example { display: flex; flex-direction: column; gap: 10px; }
-  .math-line {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.88rem; padding-bottom: 10px; border-bottom: 1px solid var(--border);
-  }
-  .math-line:last-child { border-bottom: none; padding-bottom: 0; }
-  .math-line .k { color: var(--gray); }
-  .math-line .v { font-family: 'Space Mono', monospace; font-weight: 700; }
-  .math-line .v.green { color: var(--green); }
-  .math-line .v.red { color: var(--red); }
-  .math-line .v.white { color: var(--white); }
-  .math-verdict {
-    margin-top: 20px; padding: 12px 16px; border-radius: 6px;
-    font-size: 0.82rem; font-weight: 600;
-  }
-  .verdict-bad { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
-
-  /* ── PRICING ── */
-  #pricing { text-align: center; }
-  #pricing h2 { margin-bottom: 12px; }
-  #pricing > .container > p { max-width: 480px; margin: 0 auto 40px; color: #bbb; }
-  .price-grid {
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px; max-width: 820px; margin: 0 auto;
-  }
-  .price-block {
-    background: var(--card); border: 1px solid var(--border2);
-    border-radius: 14px; padding: clamp(24px, 4vw, 40px);
-    display: flex; flex-direction: column; align-items: center;
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 30px 26px;
     position: relative;
   }
-  .price-block::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0;
-    height: 3px; border-radius: 14px 14px 0 0;
+  .step-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--green-lt);
+    margin-bottom: 18px;
+  }
+  .step-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+  .step-card p { font-size: 0.9rem; line-height: 1.65; }
+
+  /* ── PRODUCT WALKTHROUGH / SCREENSHOTS ── */
+  #screenshots { background: var(--bg); }
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .shot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .shot-card:hover {
+    border-color: var(--green-border);
+    transform: translateY(-2px);
+  }
+  .shot-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .shot-step {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green-lt);
+  }
+  .shot-expand {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-subtle);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: color 0.2s;
+  }
+  .shot-expand:hover { color: var(--green-lt); }
+  .shot-expand svg { width: 13px; height: 13px; }
+
+  /* Phone bezel cleanly crops Android system status & nav bars */
+  .device-frame {
+    background: #050706;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    padding: 10px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  }
+  .device-screen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1080 / 2088;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #070A08;
+    display: block;
+    cursor: zoom-in;
+  }
+  .device-screen img {
+    position: absolute;
+    left: 0;
+    top: -5%;
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .shot-caption h3 {
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+  }
+  .shot-caption p {
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  /* ── THE MATH ── */
+  #math {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .math-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .math-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 30px 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .math-card.borderline {
+    border-color: var(--amber-border);
+  }
+  .math-card.decline {
+    border-color: var(--red-border);
+    background: linear-gradient(180deg, rgba(248, 113, 113, 0.05) 0%, var(--surface) 45%);
+  }
+  .math-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .math-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .math-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .math-tag.amber {
+    color: var(--amber);
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+  }
+  .math-tag.red {
+    color: var(--red);
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+  }
+  .math-example {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .math-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .math-line:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .math-line .k { color: var(--text-muted); }
+  .math-line .v {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .math-line .v.green { color: var(--green-lt); }
+  .math-line .v.amber { color: var(--amber); }
+  .math-line .v.red { color: var(--red); }
+
+  .math-verdict {
+    margin-top: 22px;
+    padding: 13px 16px;
+    border-radius: var(--r-sm);
+    font-size: 0.84rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .math-verdict svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .verdict-amber {
+    background: var(--amber-dim);
+    color: var(--amber);
+    border: 1px solid var(--amber-border);
+  }
+  .verdict-red {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+  }
+
+  /* ── PRICING ── */
+  #pricing {
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 0%, rgba(22, 193, 114, 0.07), transparent 70%),
+      var(--bg);
+  }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 860px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .price-card.featured {
+    border-color: var(--green-border);
+    background: linear-gradient(180deg, rgba(22, 193, 114, 0.08) 0%, var(--surface) 48%);
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(22, 193, 114, 0.14) inset;
+  }
+  .price-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
     background: linear-gradient(90deg, var(--green), var(--green-lt));
   }
-  .price-badge {
-    display: inline-block;
-    background: var(--green-dim); border: 1px solid var(--green-border);
-    border-radius: 100px; padding: 4px 14px;
-    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--green); margin-bottom: 20px;
+  .price-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
   }
-  .price-big {
+  .price-tier {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .price-pill {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .price-pill.neutral {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .price-pill.accent {
+    background: var(--green-dim);
+    color: var(--green-lt);
+    border: 1px solid var(--green-border);
+  }
+  .price-amount {
     font-family: 'Space Mono', monospace;
-    font-size: clamp(2.6rem, 6vw, 3.8rem); font-weight: 700; line-height: 1;
-    color: var(--white); margin-bottom: 6px;
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 8px;
   }
-  .price-big sup { font-size: 1.4rem; vertical-align: top; margin-top: 12px; color: var(--green); }
-  .price-period { font: 500 .9rem "Space Grotesk", sans-serif; color: #bbb; white-space: nowrap; }
-  .price-type { font-size: 0.9rem; color: #bbb; margin-bottom: 24px; }
-  .price-features { list-style: none; text-align: left; width: 100%; margin-bottom: 28px; display: flex; flex-direction: column; gap: 12px; }
-  .price-features li { font-size: 0.88rem; display: flex; gap: 10px; color: #ccc; }
-  .price-features li .ck { color: var(--green); font-weight: 700; flex-shrink: 0; }
-  .price-block .btn-green { width: 100%; margin-top: auto; }
-  @media (max-width: 650px) {
-    .price-grid { grid-template-columns: 1fr; max-width: 440px; }
+  .price-amount sup {
+    font-size: 1.25rem;
+    vertical-align: top;
+    margin-top: 8px;
+    color: var(--green-lt);
+  }
+  .price-period {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .price-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 26px;
+    min-height: 24px;
+  }
+  .price-sub strong {
+    color: var(--green-lt);
+    font-weight: 600;
+  }
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+  }
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: #D2DBD6;
+    line-height: 1.5;
+  }
+  .price-features .ck {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-dim);
+    color: var(--green-lt);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .price-features .ck svg { width: 11px; height: 11px; }
+  .price-card .btn-primary,
+  .price-card .btn-ghost {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  /* ── CLOSING CTA ── */
+  .cta-band {
+    padding: 0 24px 96px;
+  }
+  .cta-box {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(22, 193, 114, 0.11) 0%, var(--surface) 60%);
+    border: 1px solid var(--green-border);
+    border-radius: var(--r-lg);
+    padding: 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-box h2 {
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    margin-bottom: 8px;
+  }
+  .cta-box p {
+    max-width: 520px;
+    font-size: 0.96rem;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
-    padding: 36px 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
+    background: var(--bg-alt);
+    padding: 36px 24px;
   }
-  .footer-left .logo { font-size: 1rem; }
-  .footer-sub { font-size: 0.68rem; color: var(--gray2); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.78rem; color: var(--gray2); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--green); }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-sub {
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--green-lt); }
+
+  /* ── LIGHTBOX MODAL ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(3, 5, 4, 0.92);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-inner {
+    position: relative;
+    width: min(90vw, 390px, 38vh);
+    text-align: center;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-hi);
+    background: var(--surface);
+    color: var(--text);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .lightbox-close:hover {
+    border-color: var(--green-border);
+    color: var(--green-lt);
+  }
+  .lightbox-close svg { width: 18px; height: 18px; }
+  .lightbox .device-frame {
+    margin: 0 auto;
+  }
+  .lightbox-caption {
+    margin-top: 14px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-grid { gap: 36px; }
-    .math-grid { grid-template-columns: 1fr; }
-    section { padding: 72px 6%; }
-    #hero { padding: 80px 6% 64px; }
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 44px;
+    }
+    .feat-grid, .steps-grid, .screenshot-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
-  @media (max-width: 500px) {
-    .nav-tag { display: none; }
-    .nav-cta { padding-inline: 12px; }
-    footer { flex-direction: column; text-align: center; }
+  @media (max-width: 720px) {
+    section { padding: 72px 20px; }
+    #hero { padding: 64px 20px 72px; }
+    .problem-grid, .feat-grid, .steps-grid, .math-grid, .price-grid {
+      grid-template-columns: 1fr;
+    }
+    .screenshot-grid {
+      grid-template-columns: 1fr;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .input-summary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cta-box {
+      padding: 32px 24px;
+    }
+  }
+  @media (max-width: 520px) {
+    .hub-back span, .nav-sep, .logo-sub { display: none; }
+    .nav-inner { padding: 0 16px; }
+    .hero-metrics { gap: 14px; }
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
     .footer-links { justify-content: center; }
   }
-
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 3L13.5 9H17L12 13L13.5 17L10 14L6.5 17L8 13L3 9H6.5L10 3Z" fill="#16C172"/>
-      </svg>
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="./" class="hub-back" title="Back to DTE Solutions Hub">
+        <i data-lucide="arrow-left"></i>
+        <span>DTE Hub</span>
+      </a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+        <span>
+          <span style="display:block;line-height:1.15;">RUN<em>IQ</em></span>
+          <span class="logo-sub" style="display:block;">Offer Intelligence</span>
+        </span>
+      </a>
     </div>
-    <div>
-      <div>RUN<em>IQ</em></div>
-      <div class="nav-tag">Delivery offer analysis</div>
-    </div>
+
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#features">Capabilities</a></li>
+      <li><a href="#screenshots">Walkthrough</a></li>
+      <li><a href="#math">The Math</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+
+    <a href="https://runiq-ashen.vercel.app/auth" target="_blank" rel="noopener noreferrer" class="nav-cta">
+      Launch Free <i data-lucide="arrow-up-right"></i>
+    </a>
   </div>
-  <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="nav-cta">Get RunIQ — Free</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-grid">
-    <div class="hero-left">
-      <div class="hero-badge">
-        <span class="dot"></span> Built by a Spark driver
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="dot" aria-hidden="true"></span>
+          Built by a Spark Driver · DTE Solutions
+        </div>
+        <h1 class="hero-headline">
+          Know your true margin<br />
+          <span class="accent">before you drive.</span>
+        </h1>
+        <p class="hero-sub">
+          Evaluate Spark, DoorDash, Uber Eats, and Instacart offers in seconds. RunIQ factors in real fuel burn, unpaid deadhead return miles, and shift time so every accept-or-pass decision is backed by hard numbers.
+        </p>
+        <div class="hero-actions">
+          <a href="https://runiq-ashen.vercel.app/auth" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Start Free — No Card Needed <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#screenshots" class="btn-ghost">
+            See It in Action
+          </a>
+        </div>
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <strong>4 Apps</strong>
+            <span>Spark, DoorDash, Uber Eats &amp; Instacart</span>
+          </div>
+          <div class="hero-metric">
+            <strong>Full Trip</strong>
+            <span>Delivery + deadhead return miles</span>
+          </div>
+          <div class="hero-metric">
+            <strong>OCR Scan</strong>
+            <span>Manual entry or screenshot parse</span>
+          </div>
+        </div>
       </div>
-      <h1 class="hero-headline">
-        Know your worth<br>
-        <span class="accent">before you drive.</span>
-      </h1>
-      <p class="hero-sub">
-        Evaluate Spark, DoorDash, Uber Eats, and Instacart offers. See how fuel, unpaid return miles, and estimated time affect what you’ll earn before you decide whether to take the delivery.
-      </p>
-      <div class="hero-actions">
-        <a href="https://runiq-ashen.vercel.app/auth" target="_blank" class="btn-green">Get RunIQ — Free →</a>
-        <a href="#how" class="btn-ghost">See how it works</a>
+
+      <!-- Compact Live Evaluation Preview -->
+      <div class="preview-card" role="region" aria-label="Sample RunIQ Spark offer evaluation">
+        <div class="preview-top">
+          <div class="preview-brand">
+            <span class="logo-mark" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+            <div>
+              <strong>RunIQ</strong>
+              <small>Drive Smarter</small>
+            </div>
+          </div>
+          <span class="platform-pill">Spark · Live Example</span>
+        </div>
+
+        <div class="preview-body">
+          <div class="input-summary">
+            <div class="input-chip">
+              <span class="micro-label">Gross Pay</span>
+              <strong>$28.46</strong>
+            </div>
+            <div class="input-chip">
+              <span class="micro-label">Delivery</span>
+              <strong>12 mi</strong>
+            </div>
+            <div class="input-chip">
+              <span class="micro-label">Deadhead</span>
+              <strong>11 mi</strong>
+            </div>
+            <div class="input-chip">
+              <span class="micro-label">Est. Time</span>
+              <strong>45 min</strong>
+            </div>
+          </div>
+
+          <div class="vehicle-bar">
+            <span><i data-lucide="gauge"></i> Vehicle: <strong>28 MPG</strong> · <strong>$3.29/gal</strong></span>
+            <span>31 items · $5.00 est. tip</span>
+          </div>
+
+          <div class="verdict-box">
+            <div class="verdict-row">
+              <div class="verdict-title">
+                <i data-lucide="scale"></i>
+                Fair Offer
+              </div>
+              <span class="verdict-meta">23 total mi · 48% deadhead</span>
+            </div>
+            <div class="verdict-bar" aria-hidden="true"><span></span></div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-tile">
+              <span class="micro-label">Net Profit</span>
+              <div class="kpi-val green">$25.76</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Est. Hourly</span>
+              <div class="kpi-val green">$34.34/hr</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Pay Per Mile</span>
+              <div class="kpi-val amber">$1.24/mi</div>
+            </div>
+            <div class="kpi-tile">
+              <span class="micro-label">Fuel Cost</span>
+              <div class="kpi-val red">−$2.70</div>
+            </div>
+          </div>
+
+          <div class="analysis-box">
+            <span class="micro-label"><i data-lucide="brain"></i> RunIQ Analysis</span>
+            <p>Strong hourly return ($34.34/hr after fuel), but $1.24/mi falls below your $1.50 target because 11 unpaid return miles account for 48% of the trip.</p>
+            <ul class="flag-list">
+              <li><i data-lucide="alert-triangle"></i> 11 of 23 mi unpaid</li>
+              <li><i data-lucide="alert-triangle"></i> Below $1.50/mi target</li>
+              <li><i data-lucide="alert-triangle"></i> 31 items load risk</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="preview-footer">
+          <span>Shift Ledger · Nov 22 (3 offers)</span>
+          <div class="ledger-stats">
+            <span>Pay <strong>$160.37</strong></span>
+            <span class="pos">+$62.61 tips</span>
+            <span class="neg">−$8.84 gas</span>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="hero-mock" role="group" aria-label="RunIQ offer evaluation preview">
-      <div class="mock-header">
-        <span class="logo-mark" aria-hidden="true"><i data-lucide="sparkles"></i></span>
-        <div><strong>RunIQ</strong><small>Drive smarter</small></div>
+  <!-- ═══ THE PROBLEM ═══ -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Problem</div>
+        <h2>Every mispriced offer costs you time, fuel, and margin.</h2>
+        <p>Delivery apps highlight headline payout while leaving out the operating costs that decide whether a run actually pays.</p>
       </div>
-      <div class="mock-body">
-        <div>
-          <span class="mock-label">Platform</span>
-          <div class="mock-platforms"><span class="selected">Spark</span><span>DoorDash</span><span>Uber Eats</span><span>Instacart</span></div>
-        </div>
-        <div class="mock-grid">
-          <div class="mock-box"><span class="mock-label">Base + tips</span><span class="mock-value">$28.46</span></div>
-          <div class="mock-box"><span class="mock-label">Est. tips</span><span class="mock-value green">$5.00</span></div>
-          <div class="mock-box"><span class="mock-label">Total miles</span><span class="mock-value">12 <small>mi</small></span></div>
-          <div class="mock-box"><span class="mock-label">Est. time</span><span class="mock-value">45 <small>min</small></span></div>
-          <div class="mock-box"><span class="mock-label">Deadhead</span><span class="mock-value">11 <small>mi</small></span></div>
-          <div class="mock-box"><span class="mock-label">Items</span><span class="mock-value">31</span></div>
-        </div>
-        <div class="mock-box"><span class="mock-label">Drop-off zone</span>Unspecified</div>
-        <div class="mock-box">
-          <span class="mock-label">Vehicle settings</span>
-          <span class="mock-value">28 <small>mpg</small> · $3.29 <small>/gal</small></span>
-        </div>
-        <div class="mock-action">Evaluate Offer</div>
-        <div class="mock-verdict"><span aria-hidden="true">🤔</span>Fair Offer</div>
-        <div class="mock-box mock-analysis">
-          <span class="mock-label">RunIQ analysis</span>
-          <p>This offer estimates $34.34 per hour after fuel, but the $1.24 per mile is below the $1.50 target. The 11 unpaid return miles make up 48% of the trip.</p>
-        </div>
-        <ul class="mock-warnings">
-          <li>11 of 23 miles are unpaid</li>
-          <li>$1.24/mi vs. $1.50 target</li>
-          <li>31 items may add time</li>
-        </ul>
-        <div class="mock-grid">
-          <div class="mock-box"><span class="mock-label">Net profit</span><span class="mock-value green">$25.76</span></div>
-          <div class="mock-box"><span class="mock-label">Hourly rate</span><span class="mock-value green">$34.34/hr</span></div>
-          <div class="mock-box"><span class="mock-label">Per mile</span><span class="mock-value green">$1.24/mi</span></div>
-          <div class="mock-box"><span class="mock-label">Gas cost</span><span class="mock-value">−$2.70</span></div>
-        </div>
-        <div class="mock-grid">
-          <div class="mock-action secondary">Clear</div>
-          <div class="mock-action">Accept Offer</div>
-        </div>
+
+      <div class="problem-grid">
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="clock"></i></div>
+            <span class="card-num">01</span>
+          </div>
+          <h3>Split-Second Mental Math</h3>
+          <p>When an offer pings, you have seconds to respond. Estimating fuel burn, round-trip mileage, and effective hourly rate in your head under a timer leads to unprofitable accepts.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="map-pin"></i></div>
+            <span class="card-num">02</span>
+          </div>
+          <h3>Unpaid Deadhead Miles</h3>
+          <p>The drive back to your pickup zone never appears on the offer card. Those unpaid return miles consume both fuel and shift time—quietly turning a decent-looking run into a break-even trip.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="fuel"></i></div>
+            <span class="card-num">03</span>
+          </div>
+          <h3>Hidden Fuel Drag</h3>
+          <p>At 24.5 MPG and $3.60/gal, every 15-mile round trip takes over $2.20 straight out of your pocket. Platforms show gross pay; RunIQ shows net take-home before you commit.</p>
+        </article>
+
+        <article class="prob-card">
+          <div class="card-top">
+            <div class="icon-badge"><i data-lucide="bar-chart-3"></i></div>
+            <span class="card-num">04</span>
+          </div>
+          <h3>No Shift-Level Visibility</h3>
+          <p>Without a clean ledger of accepted offers, tips, and estimated gas spend, it is impossible to tell which zones, hours, and order types actually generate your best return.</p>
+        </article>
       </div>
-      <div class="mock-totals">
-        <span class="mock-label">All-time running totals</span>
-        <dl>
-          <div><dt class="mock-label">Pay</dt><dd class="mock-value">$160.37</dd></div>
-          <div><dt class="mock-label">Tips</dt><dd class="mock-value green">$62.61</dd></div>
-          <div><dt class="mock-label">Gas</dt><dd class="mock-value red">−$8.84</dd></div>
-        </dl>
-        <div class="mock-box mock-history"><time datetime="2026-11-22">Nov 22, 2026</time><span>3 offers</span><strong>$160.37</strong></div>
+    </div>
+  </section>
+
+  <!-- ═══ CAPABILITIES ═══ -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Capabilities</div>
+        <h2>Precision unit economics for every delivery run.</h2>
+        <p>Enter an offer manually or scan a screenshot to calculate net profit, hourly rate, per-mile yield, and risk flags in one clear view.</p>
+      </div>
+
+      <div class="feat-grid">
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="zap"></i></div>
+          <h3>Instant Offer Evaluation</h3>
+          <p>Type in offer details or scan a screenshot to extract pay, mileage, time, and item count automatically—delivering an immediate net-profit and rating breakdown.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="fuel"></i></div>
+          <h3>Vehicle-Calibrated Fuel Math</h3>
+          <p>Save your car's MPG and local fuel price once in Vehicle Settings. Every evaluation automatically deducts accurate round-trip gas cost tailored to what you drive.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="corner-down-left"></i></div>
+          <h3>Deadhead Miles Accounting</h3>
+          <p>Factor unpaid return-to-zone miles directly into total trip distance, true pay-per-mile, and fuel burn—so remote drop-offs never catch your margin off guard.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="alert-triangle"></i></div>
+          <h3>Automated Risk Flags</h3>
+          <p>RunIQ highlights red flags before you tap accept—including excessive deadhead ratios, below-target per-mile rates, heavy item counts, and unknown drop-off zones.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="calendar"></i></div>
+          <h3>Daily &amp; All-Time Ledger</h3>
+          <p>Log accepted runs with one tap to maintain running totals for gross pay, estimated tips, and fuel expenses—giving you clear daily and cumulative performance tracking.</p>
+        </article>
+
+        <article class="feat-card">
+          <div class="icon-badge"><i data-lucide="smartphone"></i></div>
+          <h3>Zero-Install Web Access</h3>
+          <p>Built as a fast, mobile-first web application that runs directly in your browser on iOS, Android, or desktop—ready between runs with no app store friction.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">How It Works</div>
+        <h2>From offer screen to clear decision in three steps.</h2>
+        <p>Designed to be fast enough to use while parked between deliveries—without slowing down your shift.</p>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <span class="step-pill">STEP 01</span>
+          <h3>Enter or Scan the Offer</h3>
+          <p>Select your platform and enter gross pay, delivery distance, estimated time, and unpaid return miles—or scan an offer screenshot and confirm the extracted fields.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-pill">STEP 02</span>
+          <h3>Evaluate the Real Numbers</h3>
+          <p>Tap Evaluate Offer to see net earnings after fuel, effective hourly rate, full-trip pay per mile, and contextual risk warnings against your target thresholds.</p>
+        </article>
+
+        <article class="step-card">
+          <span class="step-pill">STEP 03</span>
+          <h3>Decide &amp; Log Your Shift</h3>
+          <p>Accept or decline in your delivery app with complete clarity. When you take a run, tap Accept Offer in RunIQ to record it straight into your daily and all-time totals.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRODUCT WALKTHROUGH ═══ -->
+  <section id="screenshots" aria-labelledby="screenshots-heading">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Product Walkthrough</div>
+        <h2 id="screenshots-heading">Inside a real Spark offer evaluation.</h2>
+        <p>Follow an actual $28.46 Spark delivery from offer entry to instant rating and full unit-economics analysis. Click any screen to enlarge.</p>
+      </div>
+
+      <div class="screenshot-grid">
+        <figure class="shot-card">
+          <div class="shot-meta">
+            <span class="shot-step">01 · Offer Input</span>
+            <button type="button" class="shot-expand" data-src="assets/runiq/offer-entry.jpg" data-caption="01 · Offer Input — Platform selection, gross pay, delivery &amp; deadhead miles, item count, and saved vehicle settings.">
+              <i data-lucide="maximize-2"></i> Expand
+            </button>
+          </div>
+          <div class="device-frame">
+            <a href="assets/runiq/offer-entry.jpg" class="device-screen lightbox-trigger" data-caption="01 · Offer Input — Platform selection, gross pay, delivery &amp; deadhead miles, item count, and saved vehicle settings.">
+              <img src="assets/runiq/offer-entry.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ offer entry screen with Spark selected, $28.46 pay, 12 delivery miles, 11 deadhead miles, 45 minutes, 31 items, and 28 MPG vehicle settings." />
+            </a>
+          </div>
+          <figcaption class="shot-caption">
+            <h3>Offer &amp; Vehicle Setup</h3>
+            <p>Select Spark, enter pay, delivery distance, deadhead miles, and items—calibrated automatically to your saved MPG and gas price.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot-card">
+          <div class="shot-meta">
+            <span class="shot-step">02 · Instant Verdict</span>
+            <button type="button" class="shot-expand" data-src="assets/runiq/offer-rating.jpg" data-caption="02 · Instant Verdict — RunIQ scores the offer immediately as a Fair Offer with a visual strength bar.">
+              <i data-lucide="maximize-2"></i> Expand
+            </button>
+          </div>
+          <div class="device-frame">
+            <a href="assets/runiq/offer-rating.jpg" class="device-screen lightbox-trigger" data-caption="02 · Instant Verdict — RunIQ scores the offer immediately as a Fair Offer with a visual strength bar.">
+              <img src="assets/runiq/offer-rating.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ evaluation button and Fair Offer rating card with amber strength meter." />
+            </a>
+          </div>
+          <figcaption class="shot-caption">
+            <h3>One-Tap Offer Rating</h3>
+            <p>Get an immediate visual verdict—Fair Offer—with a strength meter before diving into the line-by-line metrics.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="shot-card">
+          <div class="shot-meta">
+            <span class="shot-step">03 · Telemetry &amp; Flags</span>
+            <button type="button" class="shot-expand" data-src="assets/runiq/offer-analysis.jpg" data-caption="03 · Telemetry &amp; Flags — Contextual RunIQ analysis, warning indicators, net profit, hourly rate, per-mile pay, and fuel cost.">
+              <i data-lucide="maximize-2"></i> Expand
+            </button>
+          </div>
+          <div class="device-frame">
+            <a href="assets/runiq/offer-analysis.jpg" class="device-screen lightbox-trigger" data-caption="03 · Telemetry &amp; Flags — Contextual RunIQ analysis, warning indicators, net profit, hourly rate, per-mile pay, and fuel cost.">
+              <img src="assets/runiq/offer-analysis.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ analysis detailing 48% deadhead drag, five risk alerts, $25.76 net profit, $34.34 hourly rate, $1.24 per mile, and -$2.70 gas cost." />
+            </a>
+          </div>
+          <figcaption class="shot-caption">
+            <h3>Full Breakdown &amp; Warnings</h3>
+            <p>Review narrative analysis, deadhead and load-risk warnings, net profit ($25.76), hourly rate ($34.34/hr), and fuel deduction (−$2.70).</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ THE MATH ═══ -->
+  <section id="math">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Math</div>
+        <h2>Two offers. Very different realities.</h2>
+        <p>Both examples use the same vehicle profile (24.5 MPG at $3.60/gal) and a $1.50/mi target measured across total delivery and return miles.</p>
+      </div>
+
+      <div class="math-grid">
+        <article class="math-card borderline">
+          <div class="math-head">
+            <h3 class="math-title">Offer A — Short Run</h3>
+            <span class="math-tag amber">Borderline</span>
+          </div>
+          <div class="math-example">
+            <div class="math-line"><span class="k">Base + tip pay</span><span class="v">$12.50</span></div>
+            <div class="math-line"><span class="k">Delivery distance</span><span class="v">5.2 mi</span></div>
+            <div class="math-line"><span class="k">Deadhead miles back</span><span class="v">3.5 mi</span></div>
+            <div class="math-line"><span class="k">Total miles driven</span><span class="v">8.7 mi</span></div>
+            <div class="math-line"><span class="k">Fuel cost (24.5 MPG · $3.60/gal)</span><span class="v red">−$1.28</span></div>
+            <div class="math-line"><span class="k">Estimated time</span><span class="v">30 min</span></div>
+            <div class="math-line"><span class="k">Net earnings after fuel</span><span class="v green">$11.22</span></div>
+            <div class="math-line"><span class="k">Est. hourly rate (after fuel)</span><span class="v green">$22.44/hr</span></div>
+            <div class="math-line"><span class="k">Offer pay per total mile</span><span class="v amber">$1.44/mi</span></div>
+          </div>
+          <div class="math-verdict verdict-amber">
+            <i data-lucide="scale"></i>
+            Just below the $1.50/mi target, with solid $22.44/hr net pace
+          </div>
+        </article>
+
+        <article class="math-card decline">
+          <div class="math-head">
+            <h3 class="math-title">Offer B — Hidden Value Trap</h3>
+            <span class="math-tag red">Decline</span>
+          </div>
+          <div class="math-example">
+            <div class="math-line"><span class="k">Base + tip pay</span><span class="v">$10.00</span></div>
+            <div class="math-line"><span class="k">Delivery distance</span><span class="v">9.1 mi</span></div>
+            <div class="math-line"><span class="k">Deadhead miles back</span><span class="v">7.0 mi</span></div>
+            <div class="math-line"><span class="k">Total miles driven</span><span class="v">16.1 mi</span></div>
+            <div class="math-line"><span class="k">Fuel cost (24.5 MPG · $3.60/gal)</span><span class="v red">−$2.37</span></div>
+            <div class="math-line"><span class="k">Estimated time</span><span class="v">45 min</span></div>
+            <div class="math-line"><span class="k">Net earnings after fuel</span><span class="v red">$7.63</span></div>
+            <div class="math-line"><span class="k">Est. hourly rate (after fuel)</span><span class="v red">$10.17/hr</span></div>
+            <div class="math-line"><span class="k">Offer pay per total mile</span><span class="v red">$0.62/mi</span></div>
+          </div>
+          <div class="math-verdict verdict-red">
+            <i data-lucide="alert-triangle"></i>
+            Well below the $1.50/mi target — deadhead cuts hourly pay in half
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ═══ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="container">
+      <div class="section-head center">
+        <div class="eyebrow">Pricing</div>
+        <h2 id="pricing-heading">Start free. Upgrade when you drive full-time.</h2>
+        <p>Evaluate delivery offers every day at zero cost, or upgrade to RunIQ Pro for high-volume evaluations and screenshot scanning.</p>
+      </div>
+
+      <div class="price-grid">
+        <article class="price-card">
+          <div class="price-header">
+            <h3 class="price-tier">RunIQ Free</h3>
+            <span class="price-pill neutral">Starter</span>
+          </div>
+          <p class="price-amount"><sup>$</sup>0 <span class="price-period">/ forever</span></p>
+          <p class="price-sub">Manual entry and daily screenshot scans</p>
+          <ul class="price-features">
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> 40 offer evaluations per day</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> 5 screenshot scans per day</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Offer ratings, net profit &amp; fuel estimates</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Saved offers with pay, tips &amp; gas totals</li>
+          </ul>
+          <a href="https://runiq-ashen.vercel.app/auth" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+            Get Started Free <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
+
+        <article class="price-card featured">
+          <div class="price-header">
+            <h3 class="price-tier">RunIQ Pro</h3>
+            <span class="price-pill accent">Most Popular</span>
+          </div>
+          <p class="price-amount"><sup>$</sup>9.99 <span class="price-period">/ month</span></p>
+          <p class="price-sub">Or <strong>$79.99/year</strong> (save 33%) · 7-day free trial</p>
+          <ul class="price-features">
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> 400 offer evaluations per day</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> 150 screenshot scans per day</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> Unlimited saved trips with daily &amp; all-time totals</li>
+            <li><span class="ck" aria-hidden="true"><i data-lucide="check"></i></span> 7-day free trial included on the monthly plan</li>
+          </ul>
+          <a href="https://runiq-ashen.vercel.app/pricing" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            View Pro Plans <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CLOSING CTA ═══ -->
+  <div class="cta-band">
+    <div class="cta-box">
+      <div>
+        <h2>Stop guessing in the parking lot.</h2>
+        <p>Run your next Spark, DoorDash, Uber Eats, or Instacart offer through RunIQ and see your true take-home before you turn the key.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://runiq-ashen.vercel.app/auth" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Launch RunIQ Free <i data-lucide="arrow-up-right"></i>
+        </a>
+        <a href="./" class="btn-ghost">Back to DTE Hub</a>
       </div>
     </div>
   </div>
-</section>
+</main>
 
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="problem-inner container">
-    <div class="eyebrow">The problem</div>
-    <h2>Every bad offer costs you<br>real time and real money.</h2>
-    <div class="problem-grid">
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="brain"></i></div>
-        <h3>The math is instant and invisible</h3>
-        <p>An offer shows up. You have seconds to decide. Doing the gas-versus-miles-versus-time math in your head while in a parking lot is how you take bad offers.</p>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="map-pin"></i></div>
-        <h3>Deadhead miles kill your rate</h3>
-        <p>The miles to pick up and the miles back to your zone aren't in the offer. But they eat your gas and your time — and they're the difference between a good run and a break-even one.</p>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="fuel"></i></div>
-        <h3>Gas cost is invisible until it isn't</h3>
-        <p>At $3.60/gal and 24.5 MPG, every mile costs you money. Offers don't show you that. RunIQ does — before you tap accept.</p>
-      </div>
-      <div class="prob-card">
-        <div class="prob-icon"><i data-lucide="bar-chart-2"></i></div>
-        <h3>No visibility on your actual day</h3>
-        <p>Without tracking, you don't know what you've really made, what you've spent on gas, or whether your shift was actually worth it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="container">
-    <div class="features-header">
-      <div class="eyebrow">What RunIQ does</div>
-      <h2>Everything you need to make smarter decisions, faster.</h2>
-      <p>Enter the offer details to estimate earnings after fuel, compare hourly and per-mile rates, and see what could make the delivery less worthwhile.</p>
-    </div>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="zap"></i></div>
-        <h3>Instant Offer Evaluation</h3>
-        <p>Enter the offer manually or scan a screenshot and check the extracted details. RunIQ estimates pay per mile and hourly earnings after fuel.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="fuel"></i></div>
-        <h3>Real Gas Cost Calculation</h3>
-        <p>Set your vehicle's MPG and your local gas price once. RunIQ estimates fuel cost using both the delivery miles and any unpaid miles back to your zone.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="corner-down-left"></i></div>
-        <h3>Deadhead Miles Accounting</h3>
-        <p>The miles back to your zone after the drop aren't paid miles — but they cost you gas and time. RunIQ factors them into every evaluation, not just the delivery distance.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="calendar"></i></div>
-        <h3>Daily Dashboard</h3>
-        <p>Save offers you decide to take and review your pay, tips, and estimated fuel costs in your offer history.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="car"></i></div>
-        <h3>Vehicle Settings</h3>
-        <p>Set your MPG and current gas price once in Vehicle Settings. Every evaluation after that is automatically calibrated to your specific car and local fuel cost.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i data-lucide="smartphone"></i></div>
-        <h3>Works on Any Device</h3>
-        <p>Open RunIQ in your browser on your phone or computer.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="container">
-    <div class="how-header">
-      <div class="eyebrow">How it works</div>
-      <h2>From offer to decision.</h2>
-      <p>Review the numbers while you’re parked and deciding on your next delivery.</p>
-    </div>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="step-num-circle">01</div>
-        <div class="step-content">
-          <h3>Enter the offer</h3>
-          <p>Choose a platform and enter the offered pay, delivery miles, estimated time, and any unpaid return miles. Add tips, item count, or a drop-off zone when available.</p>
-        </div>
-      </div>
-      <div class="how-step">
-        <div class="step-num-circle">02</div>
-        <div class="step-content">
-          <h3>Hit Evaluate Offer</h3>
-          <p>Compare estimated earnings after fuel, hourly earnings, and offer pay per mile across the full distance.</p>
-        </div>
-      </div>
-      <div class="how-step">
-        <div class="step-num-circle">03</div>
-        <div class="step-content">
-          <h3>Accept or pass with confidence</h3>
-          <p>Review the rating and warnings before making your decision in the delivery app. Use Accept Offer in RunIQ to save it to your history.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="screenshots" aria-labelledby="screenshots-heading">
-  <div class="container">
-    <h2 id="screenshots-heading">A Spark offer from entry to analysis</h2>
-    <div class="screenshot-grid">
-      <figure>
-        <a href="assets/runiq/offer-entry.jpg"><img src="assets/runiq/offer-entry.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ offer form with Spark selected, showing pay, mileage, time, item count and vehicle settings."></a>
-        <figcaption>Enter the offer and vehicle details.</figcaption>
-      </figure>
-      <figure>
-        <a href="assets/runiq/offer-rating.jpg"><img src="assets/runiq/offer-rating.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ rates the example as a Fair Offer after evaluation."></a>
-        <figcaption>Evaluate the offer and see its rating.</figcaption>
-      </figure>
-      <figure>
-        <a href="assets/runiq/offer-analysis.jpg"><img src="assets/runiq/offer-analysis.jpg" width="1080" height="2340" loading="lazy" alt="RunIQ analysis with deadhead and per-mile warnings, plus estimated profit, hourly rate, pay per mile and fuel cost."></a>
-        <figcaption>Review the analysis and earnings estimates.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- THE MATH -->
-<section id="math">
-  <div class="container">
-    <div class="math-header">
-      <div class="eyebrow">The math</div>
-      <h2>Two offers. Very different realities.</h2>
-      <p>These examples use a $1.50 target for offer pay per mile, calculated over the delivery and return miles. The fuel deduction is shown separately.</p>
-    </div>
-    <div class="math-grid">
-      <div class="math-card">
-        <div class="math-label">Offer A — Looks decent</div>
-        <div class="math-example">
-          <div class="math-line"><span class="k">Base + tip pay</span><span class="v white">$12.50</span></div>
-          <div class="math-line"><span class="k">Total miles (delivery)</span><span class="v white">5.2 mi</span></div>
-          <div class="math-line"><span class="k">Deadhead miles back</span><span class="v white">3.5 mi</span></div>
-          <div class="math-line"><span class="k">Total miles driven</span><span class="v white">8.7 mi</span></div>
-          <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$1.28</span></div>
-          <div class="math-line"><span class="k">Estimated time</span><span class="v white">30 min</span></div>
-          <div class="math-line"><span class="k">Net earnings</span><span class="v green">$11.22</span></div>
-          <div class="math-line"><span class="k">Offer pay per mile</span><span class="v white">$1.44/mi</span></div>
-        </div>
-        <div class="math-verdict verdict-bad">Just below the $1.50/mi target</div>
-      </div>
-
-      <div class="math-card accent">
-        <div class="math-label">Offer B — Looks similar</div>
-        <div class="math-example">
-          <div class="math-line"><span class="k">Base + tip pay</span><span class="v white">$10.00</span></div>
-          <div class="math-line"><span class="k">Total miles (delivery)</span><span class="v white">9.1 mi</span></div>
-          <div class="math-line"><span class="k">Deadhead miles back</span><span class="v white">7.0 mi</span></div>
-          <div class="math-line"><span class="k">Total miles driven</span><span class="v white">16.1 mi</span></div>
-          <div class="math-line"><span class="k">Gas cost (24.5mpg/$3.60)</span><span class="v red">-$2.37</span></div>
-          <div class="math-line"><span class="k">Estimated time</span><span class="v white">45 min</span></div>
-          <div class="math-line"><span class="k">Net earnings</span><span class="v red">$7.63</span></div>
-          <div class="math-line"><span class="k">Offer pay per mile</span><span class="v red">$0.62/mi</span></div>
-        </div>
-        <div class="math-verdict verdict-bad">Well below the $1.50/mi target</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" aria-labelledby="pricing-heading">
-  <div class="container">
-    <div class="eyebrow">Pricing</div>
-    <h2 id="pricing-heading">Start free. Upgrade when you need more.</h2>
-    <p>Evaluate delivery offers for free. RunIQ Pro gives you more daily evaluations and screenshot scans.</p>
-    <div class="price-grid">
-      <article class="price-block">
-        <h3 class="price-badge">RunIQ Free</h3>
-        <p class="price-big"><sup>$</sup>0</p>
-        <p class="price-type">Manual entry and screenshot scanning</p>
-        <ul class="price-features">
-          <li><span class="ck" aria-hidden="true">✓</span> 40 offer evaluations per day</li>
-          <li><span class="ck" aria-hidden="true">✓</span> 5 screenshot scans per day</li>
-          <li><span class="ck" aria-hidden="true">✓</span> Offer ratings, estimated earnings, and fuel costs</li>
-          <li><span class="ck" aria-hidden="true">✓</span> Saved offers with pay, tips, and fuel estimates</li>
-        </ul>
-        <a href="https://runiq-ashen.vercel.app/auth" class="btn-green">Get started free →</a>
-      </article>
-      <article class="price-block">
-        <h3 class="price-badge">RunIQ Pro</h3>
-        <p class="price-big"><sup>$</sup>9.99 <span class="price-period">/ month</span></p>
-        <p class="price-type">$79.99 per year also available</p>
-        <ul class="price-features">
-          <li><span class="ck" aria-hidden="true">✓</span> 400 offer evaluations per day</li>
-          <li><span class="ck" aria-hidden="true">✓</span> 150 screenshot scans per day</li>
-          <li><span class="ck" aria-hidden="true">✓</span> Unlimited saved trips with daily and all-time totals</li>
-          <li><span class="ck" aria-hidden="true">✓</span> 7-day free trial on the monthly plan</li>
-        </ul>
-        <a href="https://runiq-ashen.vercel.app/pricing" class="btn-green">View Pro plans →</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="footer-left">
-    <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 3L13.5 9H17L12 13L13.5 17L10 14L6.5 17L8 13L3 9H6.5L10 3Z" fill="#16C172"/>
-        </svg>
-      </div>
-      <div>RUN<em>IQ</em></div>
+  <div class="footer-inner">
+    <div>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+        <span>RUN<em>IQ</em></span>
+      </a>
+      <div class="footer-sub">DTE Solutions LLC · Quincy, IL</div>
     </div>
-    <div class="footer-sub">DTE Solutions LLC · Quincy, IL</div>
-  </div>
-  <div class="footer-links">
-    <a href="https://dte-solutions.icu">DTE Nexus</a>
-    <a href="https://dte-solutions.icu/information-security-policy.html">Security</a>
-    <a href="https://dte-solutions.icu/privacy-policy.html">Privacy</a>
+    <div class="footer-links">
+      <a href="https://dte-solutions.icu">DTE Nexus</a>
+      <a href="https://dte-solutions.icu/information-security-policy.html">Security Policy</a>
+      <a href="https://dte-solutions.icu/privacy-policy.html">Privacy Policy</a>
+    </div>
   </div>
 </footer>
 
-<script>window.lucide?.createIcons();</script>
+<!-- ═══ LIGHTBOX MODAL ═══ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded screenshot preview">
+  <div class="lightbox-inner">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close preview">
+      <i data-lucide="x"></i>
+    </button>
+    <div class="device-frame">
+      <div class="device-screen" style="cursor: default;">
+        <img id="lightboxImg" src="" alt="" />
+      </div>
+    </div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
 
+<script>
+  window.lucide?.createIcons();
+
+  (function () {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const closeBtn = document.getElementById('lightboxClose');
+
+    function openLightbox(src, caption, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || caption || 'RunIQ screenshot';
+      lightboxCaption.textContent = caption || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.lightbox-trigger').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const img = link.querySelector('img');
+        openLightbox(link.getAttribute('href'), link.dataset.caption, img?.alt);
+      });
+    });
+
+    document.querySelectorAll('.shot-expand').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        openLightbox(btn.dataset.src, btn.dataset.caption, btn.dataset.caption);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  })();
+</script>
 </body>
 </html>
