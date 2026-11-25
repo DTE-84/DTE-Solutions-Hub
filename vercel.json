@@ -1,5 +1,12 @@
 {
   "buildCommand": "echo 'Static Site'",
   "outputDirectory": ".",
-  "framework": null
+  "framework": null,
+  "redirects": [
+    {
+      "source": "/runiq-landing.html",
+      "destination": "/runiq-breakdown.html",
+      "permanent": true
+    }
+  ]
 }
