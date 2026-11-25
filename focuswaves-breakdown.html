@@ -631,6 +631,47 @@
     color: var(--text);
   }
 
+  /* ── ACCESS TIERS ── */
+  .tier-card-pro {
+    border-color: var(--wave-border);
+    background: linear-gradient(165deg, rgba(67, 176, 248, 0.13), rgba(212, 231, 138, 0.04) 52%, rgba(11, 17, 36, 0.96));
+    box-shadow: 0 24px 60px -24px rgba(2, 5, 16, 0.9), 0 0 36px -14px rgba(67, 176, 248, 0.2);
+  }
+  .tier-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 6px 0 10px;
+  }
+  .tier-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .tier-list li svg {
+    width: 15px;
+    height: 15px;
+    color: var(--wave-lt);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .tier-card-pro .tier-list li svg { color: var(--citron); }
+  .tier-price-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--citron-border);
+    background: var(--citron-dim);
+    color: var(--citron);
+  }
+
   /* ── CTA BAND ── */
   .cta-band { padding: 36px 24px 96px; }
   .cta-box {
@@ -1061,16 +1102,68 @@
     </div>
   </section>
 
+  <!-- ═══ ACCESS TIERS ═══ -->
+  <section id="access" class="band-alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">06 · Free Preview &amp; Pro Studio</div>
+        <h2>Try the acoustic engine free. Unlock the full studio with Pro.</h2>
+        <p>Start listening in seconds with 3 core ADHD protocols—then upgrade to FocusWaves Pro for all 15 frequency programs, speaker-safe isochronic synthesis, and full executive-function tooling.</p>
+      </div>
+
+      <div class="roadmap-grid">
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Free Preview</span>
+            <span class="badge-wave">LIVE NOW</span>
+          </div>
+          <h3>Starter Acoustic Console</h3>
+          <p>Zero-friction browser preview so anyone can test real-time Web Audio synthesis immediately.</p>
+          <ul class="tier-list">
+            <li><i data-lucide="check"></i> 3 core protocols (Deep Focus Alpha, Clarity Beta, Zen Mind Theta)</li>
+            <li><i data-lucide="check"></i> Stereo Binaural Beats + Brown Noise masking</li>
+            <li><i data-lucide="check"></i> 15m &amp; 25m timed sprint blocks + Single-Task Anchor</li>
+            <li><i data-lucide="check"></i> Live 60fps canvas oscilloscope &amp; local session summary</li>
+          </ul>
+          <a href="https://focus-waves.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="margin-top:auto;">
+            Try Free Preview
+            <i data-lucide="arrow-up-right"></i>
+          </a>
+        </article>
+
+        <article class="card tier-card-pro">
+          <div class="feature-top">
+            <span class="layer-pill">FocusWaves Pro</span>
+            <span class="tier-price-tag">Pricing TBA · Founding Access</span>
+          </div>
+          <h3>Complete ADHD Focus Studio</h3>
+          <p>Full acoustic customization, distraction-free execution tools, and native mobile app access.</p>
+          <ul class="tier-list">
+            <li><i data-lucide="check"></i> All 15 calibrated neural protocols (Delta Sleep to 40 Hz Gamma)</li>
+            <li><i data-lucide="check"></i> Speaker-safe Isochronic entrainment mode (no headphones required)</li>
+            <li><i data-lucide="check"></i> Full Brown, Pink &amp; White colored noise mixer</li>
+            <li><i data-lucide="check"></i> 45m, 60m &amp; Continuous blocks + Distraction-Free Focus Mode</li>
+            <li><i data-lucide="check"></i> Brain-Dump Parking Lot + Android &amp; iOS mobile app access</li>
+          </ul>
+          <a href="mailto:dte.solutions.llc@gmail.com?subject=FocusWaves%20Pro%20Founding%20Access" class="btn-primary" style="margin-top:auto;">
+            Request Founding Access
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ CLOSING CTA ═══ -->
   <div class="cta-band">
     <div class="cta-box">
       <div>
         <h2>Quiet the noise. Lock into one block.</h2>
-        <p>Open FocusWaves directly in your browser—no sign-up, no subscription wall, and instant real-time acoustic synthesis.</p>
+        <p>Test the 3-protocol Free Preview directly in your browser with instant real-time acoustic synthesis—or request Founding Access to FocusWaves Pro.</p>
       </div>
       <div class="cta-actions">
         <a href="https://focus-waves.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">
-          Launch FocusWaves
+          Try Free Preview
           <i data-lucide="arrow-up-right"></i>
         </a>
         <a href="./" class="btn-ghost">
