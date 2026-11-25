@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FocusWaves — Acoustic Focus &amp; ADHD Entrainment Studio | DTE Solutions</title>
+<meta name="description" content="Real-time Web Audio binaural beats, speaker-safe isochronic pulses, brown/pink noise masking, and ADHD executive-function tooling running 100% locally in your browser." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.dte-solutions.icu/focuswaves-breakdown.html" />
+<meta property="og:title" content="FocusWaves — Acoustic Focus, Engineered for ADHD | DTE Solutions" />
+<meta property="og:description" content="15 calibrated neural protocols, dual binaural/isochronic DSP synthesis, brown/pink noise masking, single-task anchor, and brain-dump parking lot." />
+<link rel="icon" type="image/png" href="/assets/transparentlogo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* FocusWaves Original Palette — Midnight Horizon (Derived from the FocusWaves Emblem) */
+    --bg:             #070B18;
+    --bg-alt:         #0A1022;
+    --surface:        #10182E;
+    --surface-2:      #15203C;
+    --border:         rgba(148, 184, 230, 0.12);
+    --border-hi:      rgba(148, 184, 230, 0.24);
+
+    --wave:           #43B0F8;
+    --wave-lt:        #7AC8FF;
+    --wave-dim:       rgba(67, 176, 248, 0.12);
+    --wave-border:    rgba(67, 176, 248, 0.34);
+
+    --citron:         #D4E78A;
+    --citron-lt:      #E7F3B5;
+    --citron-dim:     rgba(212, 231, 138, 0.11);
+    --citron-border:  rgba(212, 231, 138, 0.32);
+
+    --indigo:         #7C93FF;
+    --indigo-dim:     rgba(124, 147, 255, 0.12);
+    --indigo-border:  rgba(124, 147, 255, 0.32);
+
+    --violet:         #B69DF8;
+    --violet-dim:     rgba(182, 157, 248, 0.12);
+    --violet-border:  rgba(182, 157, 248, 0.32);
+
+    --amber:          #F5C26B;
+    --amber-dim:      rgba(245, 194, 107, 0.12);
+    --amber-border:   rgba(245, 194, 107, 0.32);
+
+    --text:           #EEF4FA;
+    --text-muted:     #97A7C0;
+    --text-subtle:    #6B7E9E;
+
+    --r-sm:           9px;
+    --r-md:           14px;
+    --r-lg:           20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(ellipse 70% 50% at 14% -5%, rgba(67, 176, 248, 0.15), transparent 58%),
+      radial-gradient(ellipse 55% 45% at 88% 6%, rgba(212, 231, 138, 0.09), transparent 55%),
+      radial-gradient(circle at 50% 35%, rgba(30, 58, 122, 0.16), transparent 65%);
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text);
+  }
+
+  .serif-accent {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--wave);
+    outline-offset: 2px;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    color: var(--wave-lt);
+    background: var(--wave-dim);
+    border: 1px solid rgba(67, 176, 248, 0.24);
+    padding: 1px 6px;
+    border-radius: 5px;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 11, 24, 0.86);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav-left { display: flex; align-items: center; gap: 14px; }
+  .hub-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .hub-back:hover {
+    border-color: var(--wave-border);
+    color: var(--text);
+    background: var(--wave-dim);
+  }
+  .hub-back svg { width: 13px; height: 13px; }
+  .nav-sep { width: 1px; height: 22px; background: var(--border); }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .logo-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: linear-gradient(145deg, rgba(67, 176, 248, 0.22), rgba(212, 231, 138, 0.12));
+    border: 1px solid var(--wave-border);
+    display: grid;
+    place-items: center;
+    color: var(--wave-lt);
+    box-shadow: 0 0 18px rgba(67, 176, 248, 0.18);
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 18px; height: 18px; }
+  .logo em { color: var(--wave); font-style: normal; }
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--citron);
+    opacity: 0.85;
+    line-height: 1.2;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #5AC4FF, #349BE8);
+    color: #070B18;
+    padding: 9px 18px;
+    border-radius: var(--r-sm);
+    font-size: 0.84rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+  }
+  .nav-cta:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 22px rgba(67, 176, 248, 0.32);
+  }
+  .nav-cta svg { width: 14px; height: 14px; }
+
+  /* ── LAYOUT ── */
+  section { padding: 88px 24px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .band-alt {
+    background: rgba(10, 16, 34, 0.72);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head { max-width: 660px; margin-bottom: 48px; }
+  .section-head p { color: var(--text-muted); margin-top: 14px; font-size: 1rem; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--citron);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 16px;
+    height: 1.5px;
+    background: var(--citron);
+    border-radius: 2px;
+  }
+
+  h1 {
+    font-size: clamp(2.35rem, 4.6vw, 3.55rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+  }
+  h2 {
+    font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #5AC4FF, #349BE8);
+    color: #070B18;
+    padding: 13px 24px;
+    border-radius: var(--r-sm);
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(67, 176, 248, 0.34);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    border: 1px solid var(--border-hi);
+    padding: 13px 22px;
+    border-radius: var(--r-sm);
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    border-color: var(--wave-border);
+    background: var(--wave-dim);
+  }
+  .btn-primary svg, .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* ── HERO ── */
+  #hero { padding: 80px 24px 72px; }
+  .hero-grid {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 52px;
+    align-items: center;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--wave-border);
+    background: var(--wave-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--wave-lt);
+    margin-bottom: 22px;
+  }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--wave);
+    box-shadow: 0 0 10px var(--wave);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .hero-copy h1 .wave-word { color: var(--wave); }
+  .hero-copy h1 .citron-word { color: var(--citron); }
+  .hero-copy p {
+    margin: 20px 0 30px;
+    font-size: 1.04rem;
+    color: var(--text-muted);
+    max-width: 520px;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-meta svg { width: 13px; height: 13px; color: var(--citron); }
+
+  /* ── CONSOLE MOCKUP CARD ── */
+  .console-frame {
+    background: linear-gradient(165deg, rgba(20, 30, 56, 0.9), rgba(11, 17, 36, 0.96));
+    border: 1px solid var(--border-hi);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 28px 72px -24px rgba(2, 5, 16, 0.92), 0 0 44px -16px rgba(67, 176, 248, 0.24);
+  }
+  .console-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(7, 11, 24, 0.78);
+  }
+  .console-dots { display: flex; gap: 6px; }
+  .console-dots span {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(148, 184, 230, 0.22);
+  }
+  .console-dots span:first-child { background: var(--wave); }
+  .console-dots span:nth-child(2) { background: var(--citron); }
+  .console-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .console-body { padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+  .console-track-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .track-name { font-size: 1.25rem; font-weight: 800; }
+  .track-sub { font-size: 0.78rem; color: var(--text-muted); }
+  .badge-wave {
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--wave-dim);
+    border: 1px solid var(--wave-border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--wave-lt);
+    white-space: nowrap;
+  }
+  .anchor-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #070C1B;
+    border: 1px solid var(--citron-border);
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .anchor-box svg { width: 15px; height: 15px; color: var(--citron); flex-shrink: 0; }
+  .wave-box {
+    background: #070C1B;
+    border: 1px solid rgba(67, 176, 248, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .wave-bars {
+    height: 78px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+  .wave-bars span {
+    flex: 1;
+    border-radius: 99px;
+    background: linear-gradient(to top, rgba(67, 176, 248, 0.22), var(--wave) 65%, var(--citron));
+    animation: barWave 1.7s ease-in-out infinite alternate;
+  }
+  @keyframes barWave {
+    0% { transform: scaleY(0.45); opacity: 0.72; }
+    100% { transform: scaleY(1); opacity: 1; }
+  }
+  .wave-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--text-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 10px;
+  }
+  .console-chips {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .console-chip {
+    background: #0B1226;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .console-chip .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-subtle);
+  }
+  .console-chip .val {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 2px;
+  }
+  .console-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(7, 11, 24, 0.72);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-subtle);
+  }
+  .console-footer strong { color: var(--citron); }
+
+  /* ── STAT STRIP ── */
+  .stat-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(10, 16, 34, 0.78);
+    padding: 36px 24px;
+  }
+  .stat-bar {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .stat-item {
+    border-left: 1px solid var(--border);
+    padding-left: 20px;
+  }
+  .stat-item:first-child { border-left: none; padding-left: 0; }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--wave-lt), var(--citron));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ── GRIDS & CARDS ── */
+  .pain-grid, .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .features-grid, .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: linear-gradient(165deg, rgba(20, 30, 56, 0.76), rgba(11, 17, 36, 0.94));
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: var(--wave-border); transform: translateY(-2px); }
+  .card p { font-size: 0.9rem; color: var(--text-muted); }
+
+  .icon-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--wave-dim);
+    border: 1px solid var(--wave-border);
+    color: var(--wave-lt);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .icon-badge.citron { background: var(--citron-dim); border-color: var(--citron-border); color: var(--citron); }
+  .icon-badge.amber { background: var(--amber-dim); border-color: var(--amber-border); color: var(--amber); }
+  .icon-badge.violet { background: var(--violet-dim); border-color: var(--violet-border); color: var(--violet); }
+  .icon-badge svg { width: 20px; height: 20px; }
+
+  .pain-scenario {
+    margin-top: auto;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(7, 11, 24, 0.75);
+    border-left: 2px solid var(--wave);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .feature-top { display: flex; align-items: center; justify-content: space-between; }
+  .layer-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--citron);
+  }
+  .feature-tag {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--wave-lt);
+    padding-top: 8px;
+  }
+  .feature-tag svg { width: 13px; height: 13px; }
+
+  /* ── TABLE ── */
+  .table-card {
+    background: linear-gradient(165deg, rgba(20, 30, 56, 0.78), rgba(11, 17, 36, 0.95));
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  th {
+    background: rgba(7, 11, 24, 0.85);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-subtle);
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 16px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  tr:last-child td { border-bottom: none; }
+  .band-cell {
+    font-weight: 700;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .band-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .hz-cell { font-family: 'JetBrains Mono', monospace; color: var(--wave-lt); font-size: 0.8rem; white-space: nowrap; }
+
+  /* ── STACK PILLS ── */
+  .stack-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .stack-pill {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border-hi);
+    background: var(--surface);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text);
+  }
+
+  /* ── CTA BAND ── */
+  .cta-band { padding: 36px 24px 96px; }
+  .cta-box {
+    max-width: 1120px;
+    margin: 0 auto;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--wave-border);
+    background: linear-gradient(135deg, rgba(67, 176, 248, 0.13), rgba(212, 231, 138, 0.06) 55%, rgba(16, 24, 46, 0.96));
+    padding: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-box p { color: var(--text-muted); max-width: 540px; margin-top: 10px; }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    background: #050812;
+  }
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-subtle); margin-top: 6px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 22px; font-size: 0.82rem; color: var(--text-muted); }
+  .footer-links a:hover { color: var(--wave-lt); }
+
+  @media (max-width: 920px) {
+    .hero-grid, .pain-grid, .steps-grid, .features-grid, .roadmap-grid { grid-template-columns: 1fr; }
+    .stat-bar { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-left: none; padding-left: 0; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .stat-bar, .console-chips { grid-template-columns: 1fr; }
+    .cta-box { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="./" class="hub-back">
+        <i data-lucide="arrow-left"></i>
+        Hub
+      </a>
+      <span class="nav-sep"></span>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <i data-lucide="audio-waveform"></i>
+        </span>
+        <div>
+          <div>Focus<em>Waves</em></div>
+          <div class="logo-sub">Acoustic Studio · 2026</div>
+        </div>
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#frequencies">Frequencies</a></li>
+      <li><a href="#roadmap">Mobile Path</a></li>
+    </ul>
+
+    <a href="https://dte-84.github.io/FocusWaves/" target="_blank" rel="noopener noreferrer" class="nav-cta">
+      Launch App
+      <i data-lucide="arrow-up-right"></i>
+    </a>
+  </div>
+</nav>
+
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Live Web App · Native Mobile Wrap Next
+        </div>
+        <h1>
+          Acoustic Focus,
+          <br />
+          <span class="serif-accent wave-word">engineered for </span><span class="citron-word">ADHD.</span>
+        </h1>
+        <p>
+          FocusWaves combines a real-time Web Audio binaural &amp; isochronic synthesizer, brown/pink sensory noise masking, and a distraction-free executive cockpit—running 100% locally in your browser with zero accounts or streaming lag.
+        </p>
+        <div class="hero-actions">
+          <a href="https://dte-84.github.io/FocusWaves/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Launch FocusWaves
+            <i data-lucide="arrow-up-right"></i>
+          </a>
+          <a href="#architecture" class="btn-ghost">
+            Inspect Architecture
+            <i data-lucide="arrow-down"></i>
+          </a>
+        </div>
+        <div class="hero-meta">
+          <span><i data-lucide="cpu"></i> Real-Time Web Audio DSP</span>
+          <span><i data-lucide="headphones"></i> Binaural + Speaker-Safe Isochronic</span>
+          <span><i data-lucide="shield-check"></i> Zero-Server Local Telemetry</span>
+        </div>
+      </div>
+
+      <!-- Acoustic Console Preview -->
+      <div class="console-frame" aria-label="FocusWaves live console preview">
+        <div class="console-bar">
+          <div class="console-dots"><span></span><span></span><span></span></div>
+          <div class="console-title">FocusWaves · DSP Console</div>
+          <span class="badge-wave">LIVE SYNTH</span>
+        </div>
+
+        <div class="console-body">
+          <div class="console-track-row">
+            <div>
+              <div class="track-name">Deep Focus</div>
+              <div class="track-sub">Deep Work &amp; Distraction Filtering · 45m Block</div>
+            </div>
+            <span class="badge-wave">ALPHA · 10 Hz</span>
+          </div>
+
+          <div class="anchor-box">
+            <i data-lucide="target"></i>
+            <span>Objective: Ship Q3 analytics schema before noon</span>
+          </div>
+
+          <div class="wave-box">
+            <div class="wave-bars" aria-hidden="true">
+              <span style="height:36%;animation-delay:0.0s"></span>
+              <span style="height:64%;animation-delay:0.1s"></span>
+              <span style="height:48%;animation-delay:0.2s"></span>
+              <span style="height:82%;animation-delay:0.3s"></span>
+              <span style="height:95%;animation-delay:0.4s"></span>
+              <span style="height:68%;animation-delay:0.5s"></span>
+              <span style="height:54%;animation-delay:0.6s"></span>
+              <span style="height:88%;animation-delay:0.7s"></span>
+              <span style="height:74%;animation-delay:0.8s"></span>
+              <span style="height:46%;animation-delay:0.9s"></span>
+              <span style="height:70%;animation-delay:1.0s"></span>
+              <span style="height:92%;animation-delay:1.1s"></span>
+              <span style="height:60%;animation-delay:1.2s"></span>
+              <span style="height:42%;animation-delay:1.3s"></span>
+            </div>
+            <div class="wave-meta">
+              <span>L: 195.0 Hz</span>
+              <span>Δ 10 Hz Binaural + Brown Noise</span>
+              <span>R: 205.0 Hz</span>
+            </div>
+          </div>
+
+          <div class="console-chips">
+            <div class="console-chip">
+              <div class="lbl">Entrainment</div>
+              <div class="val">Binaural Stereo</div>
+            </div>
+            <div class="console-chip">
+              <div class="lbl">Masking Layer</div>
+              <div class="val">Brown · 38%</div>
+            </div>
+            <div class="console-chip">
+              <div class="lbl">Parking Lot</div>
+              <div class="val">2 Parked</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="console-footer">
+          <span>Zero MP3 Loops · Web Audio API + Canvas 2D</span>
+          <strong>ACOUSTIC STUDIO</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STAT STRIP ═══ -->
+  <div class="stat-wrap">
+    <div class="stat-bar">
+      <div class="stat-item">
+        <div class="stat-num">15</div>
+        <div class="stat-label">Calibrated neural frequency<br />protocols across 6 states</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0.5–40 Hz</div>
+        <div class="stat-label">Full Delta-through-Gamma<br />oscillator spectrum</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Dual DSP</div>
+        <div class="stat-label">Stereo Binaural Beats &amp;<br />speaker-safe Isochronic mode</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client-side synthesis &amp;<br />local privacy telemetry</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE PROBLEM ═══ -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">01 · The ADHD Friction Problem</div>
+        <h2>Generic playlists weren't built for neurodivergent executive function.</h2>
+        <p>ADHD focus rarely breaks because of a lack of willpower—it breaks at task initiation, sudden sensory interruptions, and mid-session context switching.</p>
+      </div>
+
+      <div class="pain-grid">
+        <article class="card">
+          <div class="icon-badge amber"><i data-lucide="zap-off"></i></div>
+          <h3>Task Initiation Paralysis</h3>
+          <p>Staring at a blank screen with 12 tabs open drains working memory before minute one. Heavy menus, logins, and playlist hunting become another barrier to starting.</p>
+          <div class="pain-scenario">"I spent 20 minutes picking a focus playlist and forgot what I actually sat down to build."</div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge"><i data-lucide="volume-2"></i></div>
+          <h3>Sensory Spike Derailment</h3>
+          <p>Pure silence amplifies every hallway footstep, notification buzz, and HVAC click—while raw sine waves alone become fatiguing after ten minutes.</p>
+          <div class="pain-scenario">"One sudden sound in the next room pulls me completely out of deep work."</div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge violet"><i data-lucide="git-branch"></i></div>
+          <h3>The Mid-Session Thought Spiral</h3>
+          <p>A stray reminder pops up mid-sprint. Switching tabs to handle it "for 30 seconds" turns into a 40-minute derailment and an unfinished work block.</p>
+          <div class="pain-scenario">"If I don't write it down immediately I'll lose it—but leaving my workspace kills my momentum."</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOUR LAYERS (ARCHITECTURE) ═══ -->
+  <section id="architecture" class="band-alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">02 · System Architecture</div>
+        <h2>Four engineered layers in one distraction-free cockpit.</h2>
+        <p>FocusWaves pairs real-time acoustic synthesis with practical ADHD executive-function guardrails so users can lock in with a single click.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Layer 01</span>
+            <div class="icon-badge"><i data-lucide="audio-waveform"></i></div>
+          </div>
+          <h3>Dual-Mode Web Audio DSP Engine</h3>
+          <p>Generates real-time stereo Binaural Beats (<code>baseFreq ± beatFreq/2</code> hard-panned L/R for headphones) and speaker-safe Isochronic pulses (LFO amplitude-modulated carrier) with smooth 350ms fade envelopes—zero pops, zero static MP3 loops.</p>
+          <span class="feature-tag"><i data-lucide="activity"></i> 60fps AnalyserNode Canvas Oscilloscope</span>
+        </article>
+
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Layer 02</span>
+            <div class="icon-badge citron"><i data-lucide="waves"></i></div>
+          </div>
+          <h3>ADHD Colored Noise Sensory Masking</h3>
+          <p>Synthesizes seamless looped Brown (Brownian), Pink (1/f), and White noise buffers passed through tailored biquad low-pass filters. Independent Noise Layer Mix control lets listeners wrap crisp carriers in warm acoustic cushioning.</p>
+          <span class="feature-tag"><i data-lucide="sliders"></i> Real-Time Low-Pass Filtered Buffers</span>
+        </article>
+
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Layer 03</span>
+            <div class="icon-badge amber"><i data-lucide="target"></i></div>
+          </div>
+          <h3>Executive Function Guardrails</h3>
+          <p>Includes a Single-Task Anchor input ("What is your ONE objective?"), 1-tap quick-launch ADHD presets (15m Initiation, 45m Deep Focus, Sensory Reset), a real countdown timer with harmonic completion chime, and a 2-second Brain-Dump Parking Lot.</p>
+          <span class="feature-tag"><i data-lucide="maximize-2"></i> Full Distraction-Free Focus Mode</span>
+        </article>
+
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Layer 04</span>
+            <div class="icon-badge violet"><i data-lucide="shield-check"></i></div>
+          </div>
+          <h3>Deterministic Local Telemetry &amp; Media Controls</h3>
+          <p>Tracks focused minutes, completed blocks, active daily streaks, and dominant wave band inside client-side <code>localStorage</code>. Registers native <code>MediaSession</code> handlers so keyboard keys and mobile lock screens control playback seamlessly.</p>
+          <span class="feature-tag"><i data-lucide="lock"></i> Zero Accounts · Zero Tracking</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FREQUENCY MATRIX ═══ -->
+  <section id="frequencies">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">03 · Neural Frequency Spectrum</div>
+        <h2>15 curated protocols spanning Delta through Gamma.</h2>
+        <p>Every preset in the library pairs a target differential frequency with a recommended default session block and colored-noise masking profile.</p>
+      </div>
+
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Band</th>
+                <th>Frequency</th>
+                <th>Cognitive State</th>
+                <th>Primary ADHD Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="band-cell"><span class="band-dot" style="background:#7C93FF"></span>Delta</span></td>
+                <td class="hz-cell">0.5 – 4 Hz</td>
+                <td>Deep Rest &amp; Nervous System Downregulation</td>
+                <td>Quieting racing thoughts for evening wind-down and sleep preparation.</td>
+              </tr>
+              <tr>
+                <td><span class="band-cell"><span class="band-dot" style="background:#B69DF8"></span>Theta</span></td>
+                <td class="hz-cell">4 – 8 Hz</td>
+                <td>Divergent Ideation &amp; Emotional Reset</td>
+                <td>Cooling sensory overstimulation and unlocking associative brainstorming.</td>
+              </tr>
+              <tr>
+                <td><span class="band-cell"><span class="band-dot" style="background:#43B0F8"></span>Alpha</span></td>
+                <td class="hz-cell">8 – 13 Hz</td>
+                <td>Calm Alertness &amp; Flow Entry</td>
+                <td>Sustained deep work and bridging task-initiation friction without burnout.</td>
+              </tr>
+              <tr>
+                <td><span class="band-cell"><span class="band-dot" style="background:#D4E78A"></span>Beta</span></td>
+                <td class="hz-cell">13 – 30 Hz</td>
+                <td>Active Execution &amp; Analytical Focus</td>
+                <td>Time-boxed deadline sprints, inbox clearing, and structured admin work.</td>
+              </tr>
+              <tr>
+                <td><span class="band-cell"><span class="band-dot" style="background:#F5C26B"></span>Gamma</span></td>
+                <td class="hz-cell">30 – 50 Hz</td>
+                <td>High-Order Cognitive Binding</td>
+                <td>Short, high-intensity sprints demanding rapid synthesis and working memory.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section class="band-alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">04 · Execution Flow</div>
+        <h2>From open tab to locked-in focus in under ten seconds.</h2>
+      </div>
+
+      <div class="steps-grid">
+        <article class="card">
+          <span class="layer-pill">STEP 01</span>
+          <h3>Anchor One Objective</h3>
+          <p>Type a single concrete outcome into the console's Single-Task Anchor and choose a 15, 25, 45, or 60-minute sprint block.</p>
+        </article>
+        <article class="card">
+          <span class="layer-pill">STEP 02</span>
+          <h3>Dial Your Acoustic Layer</h3>
+          <p>Tap a 1-click ADHD preset or pick from 15 protocols. Toggle Binaural or Speaker-Safe Isochronic mode and blend in Brown or Pink noise.</p>
+        </article>
+        <article class="card">
+          <span class="layer-pill">STEP 03</span>
+          <h3>Enter Focus Mode &amp; Park Stray Thoughts</h3>
+          <p>Collapse everything outside the console + Parking Lot. Dump distracting thoughts in two seconds and let the harmonic completion chime log your block automatically.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STACK & MOBILE ROADMAP ═══ -->
+  <section id="roadmap">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">05 · Engineering Stack &amp; Mobile Path</div>
+        <h2>Web-first DSP foundation, architected for a seamless native mobile wrap.</h2>
+        <p>Because the entire synthesis engine, UI, and state layer run deterministically inside a Vite + React SPA with zero server dependency, transitioning to mobile requires zero backend rewrites.</p>
+      </div>
+
+      <div class="roadmap-grid">
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Phase 01 · Live Now</span>
+            <div class="icon-badge"><i data-lucide="globe"></i></div>
+          </div>
+          <h3>Production Web Console</h3>
+          <p>Live static SPA deployed via GitHub Actions with full Web Audio DSP synthesis, 60fps Canvas visualizer, local telemetry, and Media Session lock-screen hooks.</p>
+          <div class="stack-pills">
+            <span class="stack-pill">React 18</span>
+            <span class="stack-pill">TypeScript</span>
+            <span class="stack-pill">Web Audio API</span>
+            <span class="stack-pill">Canvas 2D</span>
+            <span class="stack-pill">Tailwind CSS</span>
+            <span class="stack-pill">Vite</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="feature-top">
+            <span class="layer-pill">Phase 02 · Next</span>
+            <div class="icon-badge citron"><i data-lucide="smartphone"></i></div>
+          </div>
+          <h3>PWA &amp; Capacitor Native Mobile Wrap</h3>
+          <p>Next milestone wraps the exact production build into an installable PWA and native iOS/Android Capacitor shell—adding native background audio playback while locked, offline caching, and gentle haptic block-completion cues.</p>
+          <div class="stack-pills">
+            <span class="stack-pill">PWA Manifest</span>
+            <span class="stack-pill">Capacitor</span>
+            <span class="stack-pill">iOS / Android Audio</span>
+            <span class="stack-pill">Haptics</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CLOSING CTA ═══ -->
+  <div class="cta-band">
+    <div class="cta-box">
+      <div>
+        <h2>Quiet the noise. Lock into one block.</h2>
+        <p>Open FocusWaves directly in your browser—no sign-up, no subscription wall, and instant real-time acoustic synthesis.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://dte-84.github.io/FocusWaves/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          Launch FocusWaves
+          <i data-lucide="arrow-up-right"></i>
+        </a>
+        <a href="./" class="btn-ghost">
+          Return to DTE Hub
+          <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#hero" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <i data-lucide="audio-waveform"></i>
+        </span>
+        <span>Focus<em>Waves</em></span>
+      </a>
+      <div class="footer-sub">DTE Solutions LLC · Acoustic Focus &amp; Neurodivergent Productivity</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://dte-solutions.icu">DTE Nexus</a>
+      <a href="https://dte-84.github.io/FocusWaves/" target="_blank" rel="noopener noreferrer">Launch App</a>
+      <a href="https://dte-solutions.icu/information-security-policy.html">Security Policy</a>
+      <a href="https://dte-solutions.icu/privacy-policy.html">Privacy Policy</a>
+      <a href="https://dte-solutions.icu/terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>window.lucide?.createIcons();</script>
+</body>
+</html>
